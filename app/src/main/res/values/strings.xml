@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ThunderScout</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string-array name="defenses_array">
+        <item>Low Bar</item>
+        <item>Portcullis</item>
+        <item>Chival de Frise</item>
+        <item>Moat</item>
+        <item>Ramparts</item>
+        <item>Drawbridge</item>
+        <item>Sallyport</item>
+        <item>Rock Wall</item>
+        <item>Rough Terrain</item>
+    </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+
+</resources>

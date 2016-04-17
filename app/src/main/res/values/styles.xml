@@ -1,0 +1,44 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:alertDialogTheme">@style/AlertDialog</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/colorPrimaryDark
+        </item>
+
+        <item name="android:timePickerDialogTheme" tools:targetApi="lollipop">@style/AlertDialog
+        </item>
+        <item name="android:datePickerDialogTheme" tools:targetApi="lollipop">@style/AlertDialog
+        </item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AlertDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.DialogWhenLarge" parent="Theme.AppCompat.DialogWhenLarge"> <!--TODO find why this is acting weird-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/colorPrimaryDark
+        </item>
+
+        <item name="android:timePickerDialogTheme" tools:targetApi="lollipop">@style/AlertDialog
+        </item>
+        <item name="android:datePickerDialogTheme" tools:targetApi="lollipop">@style/AlertDialog
+        </item>
+    </style>
+
+</resources>
