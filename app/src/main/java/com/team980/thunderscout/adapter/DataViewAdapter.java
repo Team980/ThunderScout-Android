@@ -97,6 +97,7 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
                 childList.add(data);
                 Log.d("Adding Data", "Adding new child to parent");
                 notifyChildItemInserted(i, childList.size() - 1); //TODO verify this
+                notifyParentItemChanged(i); //This forces the parent to update
                 return;
             }
         }
@@ -140,7 +141,7 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
             teamNumber.setText(String.valueOf(tw.getTeamNumber()));
             descriptor.setText(tw.getDescriptor());
 
-            //TODO expand/collapse button based on childs
+            //TODO expand/collapse button based on childs; find better button than I
 
             infoButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {

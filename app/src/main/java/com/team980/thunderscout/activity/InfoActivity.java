@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.adapter.DefenseAdapter;
 import com.team980.thunderscout.adapter.RankedDefenseAdapter;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.TeamWrapper;
@@ -30,12 +31,64 @@ public class InfoActivity extends AppCompatActivity {
         if (isAggregate) {
             TeamWrapper team = (TeamWrapper) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_TEAM");
 
-            setTitle("Team Info: " + team.getTeamNumber());
+            setTitle("Team Info: Team " + team.getTeamNumber());
 
             setContentView(R.layout.activity_info_team);
 
-            TextView teamNumber = (TextView) findViewById(R.id.info_teamNumber);
-            teamNumber.setText(team.getTeamNumber());
+            TextView numberOfMatches = (TextView) findViewById(R.id.info_numberOfMatches);
+            numberOfMatches.setText(team.getNumberOfMatches() + " matches");
+
+            //TODO AverageCrossingStats
+            //TODO AverageScoringStats
+
+            RecyclerView autoDefensesCrossed = (RecyclerView) findViewById(R.id.info_autoListCumulativeDefensesCrossed);
+            autoDefensesCrossed.setLayoutManager(new LinearLayoutManager(this));
+
+            DefenseAdapter listDefensesAdapter = new DefenseAdapter(team.getAverageScoutData().getCumulativeAutoDefensesCrossed());
+            autoDefensesCrossed.setAdapter(listDefensesAdapter);
+
+            TextView avgDefensesBreached = (TextView) findViewById(R.id.info_teleopAverageDefensesBreached);
+            avgDefensesBreached.setText("Breached an average of "
+                    + team.getAverageScoutData().getAverageTeleopDefensesBreached() + " defenses each match");
+
+            TextView totalDefensesBreached = (TextView) findViewById(R.id.info_teleopCumulativeDefensesBreached);
+            totalDefensesBreached.setText("Breached a total of "
+                    + team.getAverageScoutData().getCumulativeTeleopDefensesBreached() + " defenses");
+
+            TextView avgGoalsScored = (TextView) findViewById(R.id.info_teleopAverageGoalsScored);
+            avgGoalsScored.setText("Scored an average of "
+                    + team.getAverageScoutData().getAverageTeleopGoalsScored() + " boulders each match");
+
+            TextView totalGoalsScored = (TextView) findViewById(R.id.info_teleopCumulativeGoalsScored);
+            totalGoalsScored.setText("Scored a total of "
+                    + team.getAverageScoutData().getCumulativeTeleopGoalsScored() + " boulders");
+
+            //RecyclerView listDefensesBreached = (RecyclerView) findViewById(R.id.info_teleopListCumulativeDefensesBreached);
+            //listDefensesBreached.setLayoutManager(new LinearLayoutManager(this));
+
+            //TODO CumulativeListDefensesBreached
+            //RankedDefenseAdapter listDefensesAdapter =
+                    //new RankedDefenseAdapter(team.getAverageScoutData().getCumulativeTeleopDefensesCrossed());
+            //listDefensesBreached.setAdapter(listDefensesAdapter);
+
+            if (team.getAverageScoutData().getTeleopLowGoals()) {
+                LinearLayout lowGoalContainer = (LinearLayout) findViewById(R.id.info_teleopLowGoalContainer);
+                lowGoalContainer.setVisibility(View.VISIBLE);
+
+                //TODO AverageRank
+            }
+
+            if (team.getAverageScoutData().getTeleopHighGoals()) {
+                LinearLayout highGoalContainer = (LinearLayout) findViewById(R.id.info_teleopHighGoalContainer);
+                highGoalContainer.setVisibility(View.VISIBLE);
+
+                //TODO AverageRank
+
+            }
+
+            //TODO DriverSkillRank
+
+            //TODO CommentsList
         } else {
             ScoutData data = (ScoutData) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_SCOUT");
 

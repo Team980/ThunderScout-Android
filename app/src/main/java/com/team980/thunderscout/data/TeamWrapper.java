@@ -32,15 +32,21 @@ public class TeamWrapper implements ParentListItem, Serializable {
         for (ScoutData data : dataToInsert) {
             childItems.add(data);
         }
+
+        averageData = new AverageScoutData(childItems);
     }
 
     public String getTeamNumber() {
         return teamNumber;
     }
 
+    public int getNumberOfMatches() {
+        return childItems.size();
+    }
+
     public String getDescriptor() {
-        return "Test Data";
-    } //TODO generate descriptor based on user settings
+        return getNumberOfMatches() + " matches";
+    } //TODO generate descriptor based on sorting settings; fix grammar issues
 
     @Override
     public List<ScoutData> getChildItemList() {

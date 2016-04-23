@@ -10,11 +10,8 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.Rank;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class RankedDefenseAdapter extends RecyclerView.Adapter<RankedDefenseAdapter.RankedDefenseViewHolder> {
@@ -34,7 +31,7 @@ public class RankedDefenseAdapter extends RecyclerView.Adapter<RankedDefenseAdap
     public RankedDefenseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View dataView = inflater.inflate(R.layout.data_view, parent, false);
+        View dataView = inflater.inflate(R.layout.two_item_view, parent, false);
 
         return new RankedDefenseViewHolder(dataView);
     }

@@ -39,7 +39,10 @@ public class AverageScoutData implements Serializable {
         List<Defense> defenses = new ArrayList<>();
 
         for (ScoutData d : data) {
-            defenses.add(d.getAutoDefenseCrossed());
+
+            if (d.getAutoCrossingStats() == CrossingStats.CROSSED) {
+                defenses.add(d.getAutoDefenseCrossed());
+            }
         }
 
         return defenses;
