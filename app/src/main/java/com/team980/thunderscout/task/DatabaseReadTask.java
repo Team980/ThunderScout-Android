@@ -14,10 +14,10 @@ import com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ServerDataDbHelper;
 import com.team980.thunderscout.data.enumeration.CrossingStats;
 import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.Rank;
 import com.team980.thunderscout.data.enumeration.ScoringStats;
-import com.team980.thunderscout.data.object.Rank;
-import com.team980.thunderscout.data.object.RankedDefense;
 
+import java.util.EnumMap;
 import java.util.List;
 
 /**
@@ -75,7 +75,7 @@ public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
                 ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED,
                 ScoutDataTable.COLUMN_NAME_AUTO_SCORING_STATS,
                 ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSES_BREACHED,
-                ScoutDataTable.COLUMN_NAME_TELEOP_LIST_DEFENSES_BREACHED,
+                ScoutDataTable.COLUMN_NAME_TELEOP_MAP_DEFENSES_BREACHED,
                 ScoutDataTable.COLUMN_NAME_TELEOP_GOALS_SCORED,
                 ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS,
                 ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS,
@@ -155,12 +155,12 @@ public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
 
         data.setTeleopDefensesBreached(teleopDefensesBreached);
 
-        byte[] serializedList = cursor.getBlob(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_LIST_DEFENSES_BREACHED));
+        byte[] serializedMap = cursor.getBlob(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_MAP_DEFENSES_BREACHED));
 
-        List<RankedDefense> teleopListDefensesBreached = (List<RankedDefense>) ThunderScout.deserializeObject(serializedList);
+        EnumMap<Defense, Rank> teleopMapDefensesBreached = (EnumMap<Defense, Rank>) ThunderScout.deserializeObject(serializedMap);
 
-        data.setTeleopListDefensesBreached(teleopListDefensesBreached);
+        data.getTeleopMapDefensesBreached().putAll(teleopMapDefensesBreached);
 
         float teleopGoalsScored = cursor.getFloat(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_GOALS_SCORED));

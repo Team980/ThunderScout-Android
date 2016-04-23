@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.object.Rank;
+import com.team980.thunderscout.data.enumeration.Rank;
 
 public class RankedCounterCompoundView extends FrameLayout implements View.OnClickListener {
 

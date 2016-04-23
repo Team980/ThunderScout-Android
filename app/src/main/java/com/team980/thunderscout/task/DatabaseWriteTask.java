@@ -12,8 +12,8 @@ import com.team980.thunderscout.data.ServerDataContract;
 import com.team980.thunderscout.data.ServerDataDbHelper;
 import com.team980.thunderscout.data.enumeration.CrossingStats;
 import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.Rank;
 import com.team980.thunderscout.data.enumeration.ScoringStats;
-import com.team980.thunderscout.data.object.Rank;
 
 public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
@@ -65,8 +65,8 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSES_BREACHED, data.getTeleopDefensesBreached());
 
-        byte[] listTeleopDefensesBreached = ThunderScout.serializeObject(data.getTeleopListDefensesBreached());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LIST_DEFENSES_BREACHED, listTeleopDefensesBreached);
+        byte[] listTeleopDefensesBreached = ThunderScout.serializeObject(data.getTeleopMapDefensesBreached());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MAP_DEFENSES_BREACHED, listTeleopDefensesBreached);
 
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GOALS_SCORED, data.getTeleopGoalsScored());
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS, data.getTeleopLowGoals());

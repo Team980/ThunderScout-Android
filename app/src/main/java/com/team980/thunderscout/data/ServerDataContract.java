@@ -20,7 +20,7 @@ public final class ServerDataContract {
         public static final String COLUMN_NAME_AUTO_SCORING_STATS = "auto_scoring_stats";
 
         public static final String COLUMN_NAME_TELEOP_DEFENSES_BREACHED = "teleop_defenses_breached";
-        public static final String COLUMN_NAME_TELEOP_LIST_DEFENSES_BREACHED = "teleop_list_defenses_breached";
+        public static final String COLUMN_NAME_TELEOP_MAP_DEFENSES_BREACHED = "teleop_map_defenses_breached";
 
         public static final String COLUMN_NAME_TELEOP_GOALS_SCORED = "teleop_goals_scored";
         public static final String COLUMN_NAME_TELEOP_LOW_GOALS = "teleop_low_goals";
@@ -32,3 +32,4 @@ public final class ServerDataContract {
         public static final String COLUMN_NAME_COMMENTS = "comments";
     }
 }
+

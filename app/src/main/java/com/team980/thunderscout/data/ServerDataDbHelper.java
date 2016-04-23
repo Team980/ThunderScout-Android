@@ -28,7 +28,7 @@ public class ServerDataDbHelper extends SQLiteOpenHelper {
                     ScoutDataTable.COLUMN_NAME_AUTO_SCORING_STATS + TEXT_TYPE + COMMA_SEP +
 
                     ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSES_BREACHED + FLOAT_TYPE + COMMA_SEP +
-                    ScoutDataTable.COLUMN_NAME_TELEOP_LIST_DEFENSES_BREACHED + BLOB_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_TELEOP_MAP_DEFENSES_BREACHED + BLOB_TYPE + COMMA_SEP +
 
                     ScoutDataTable.COLUMN_NAME_TELEOP_GOALS_SCORED + FLOAT_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS + INTEGER_TYPE + COMMA_SEP +

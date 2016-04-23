@@ -7,21 +7,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.object.RankedDefense;
+import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.Rank;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class RankedDefenseAdapter extends RecyclerView.Adapter<RankedDefenseAdapter.RankedDefenseViewHolder> {
 
-    private ArrayList<RankedDefense> defenseList;
+    private EnumMap<Defense, Rank> defenseMap;
 
     public RankedDefenseAdapter() {
-        defenseList = new ArrayList<>();
+        defenseMap = new EnumMap<>(Defense.class);
     }
 
-    public RankedDefenseAdapter(List<RankedDefense> list) {
-        defenseList = (ArrayList<RankedDefense>) list;
+    public RankedDefenseAdapter(EnumMap<Defense, Rank> map) {
+        defenseMap = map;
     }
 
 
@@ -35,23 +40,24 @@ public class RankedDefenseAdapter extends RecyclerView.Adapter<RankedDefenseAdap
     }
 
     @Override
-    public void onBindViewHolder(RankedDefenseViewHolder holder, int position) {
-        RankedDefense defense = defenseList.get(position);
+    public void onBindViewHolder(RankedDefenseViewHolder holder, int i) {
+        Set<Defense> entries = defenseMap.keySet();
+        Defense def = (Defense) entries.toArray()[i];
 
-        String def = defense.getDefense().toString();
-        String rank = defense.getRank().getDescription();
+        Collection<Rank> values = defenseMap.values();
+        Rank rank = (Rank) values.toArray()[i];
 
-        holder.bind(def, rank);
+        holder.bind(def.toString(), rank.getDescription());
     }
 
     @Override
     public int getItemCount() {
-        return defenseList.size();
+        return defenseMap.size();
     }
 
-    public void add(RankedDefense def) {
-        defenseList.add(def);
-        notifyItemInserted(defenseList.size() - 1);
+    public void add(Defense def, Rank rank) {
+        defenseMap.put(def, rank);
+        notifyItemInserted(defenseMap.size() - 1);
     }
 
     public class RankedDefenseViewHolder extends RecyclerView.ViewHolder {

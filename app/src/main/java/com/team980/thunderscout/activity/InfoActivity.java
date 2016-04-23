@@ -71,7 +71,7 @@ public class InfoActivity extends AppCompatActivity {
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
             listDefensesBreached.setLayoutManager(mLayoutManager);
 
-            RankedDefenseAdapter listDefensesAdapter = new RankedDefenseAdapter(data.getTeleopListDefensesBreached());
+            RankedDefenseAdapter listDefensesAdapter = new RankedDefenseAdapter(data.getTeleopMapDefensesBreached());
             listDefensesBreached.setAdapter(listDefensesAdapter);
 
             TextView goalsScored = (TextView) findViewById(R.id.info_teleopGoalsScored);
