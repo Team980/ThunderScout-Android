@@ -1,35 +1,46 @@
 package com.team980.thunderscout.data;
 
-import com.team980.thunderscout.data.object.CrossingStats;
-import com.team980.thunderscout.data.object.Defense;
-import com.team980.thunderscout.data.object.Rank;
-import com.team980.thunderscout.data.object.RankedDefense;
-import com.team980.thunderscout.data.object.ScoringStats;
+import com.team980.thunderscout.data.enumeration.CrossingStats;
+import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.Rank;
+import com.team980.thunderscout.data.enumeration.ScoringStats;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.EnumMap;
 
-public class ScoutData implements Serializable {
+/**
+ * Implements data for one team from one match.
+ */
+public class ScoutData implements Serializable { //TODO why do driverSkill, comments have teleop in the name
 
-    public float teleopDefensesBreached;
-    public List<RankedDefense> teleopListDefensesBreached;
-    public float teleopGoalsScored;
-    public boolean teleopLowGoals;
-    public boolean teleopHighGoals;
-    public Rank teleopDriverSkill;
-    public String teleopComments;
     private String teamNumber;
     private long dateAdded;
+
     private CrossingStats autoCrossingStats;
     private Defense autoDefenseCrossed;
     private ScoringStats autoScoringStats;
+
+    private float teleopDefensesBreached;
+    private EnumMap<Defense, Rank> teleopMapDefensesBreached;
+    private float teleopGoalsScored;
+
+    private boolean teleopLowGoals;
+    private boolean teleopHighGoals;
+    private Rank teleopLowGoalRank;
+    private Rank teleopHighGoalRank;
+
+    private Rank teleopDriverSkill;
+    private String teleopComments;
 
     public ScoutData() {
         autoCrossingStats = CrossingStats.NONE;
         autoScoringStats = ScoringStats.NONE;
 
-        teleopListDefensesBreached = new ArrayList<>();
+        teleopMapDefensesBreached = new EnumMap<>(Defense.class);
+
+        //default values
+        teleopLowGoalRank = Rank.NOT_ATTEMPTED;
+        teleopHighGoalRank = Rank.NOT_ATTEMPTED;
     }
 
     public String getTeamNumber() {
@@ -80,14 +91,8 @@ public class ScoutData implements Serializable {
         this.teleopDefensesBreached = teleopDefensesBreached;
     }
 
-    public List<RankedDefense> getTeleopListDefensesBreached() {
-        return teleopListDefensesBreached;
-    }
-
-    //todo phase out set(List) for add(RankedDefense)?
-    @Deprecated
-    public void setTeleopListDefensesBreached(List<RankedDefense> teleopListDefensesBreached) {
-        this.teleopListDefensesBreached = teleopListDefensesBreached;
+    public EnumMap<Defense, Rank> getTeleopMapDefensesBreached() {
+        return teleopMapDefensesBreached;
     }
 
     public float getTeleopGoalsScored() {
@@ -112,6 +117,22 @@ public class ScoutData implements Serializable {
 
     public void setTeleopHighGoals(boolean teleopHighGoals) {
         this.teleopHighGoals = teleopHighGoals;
+    }
+
+    public Rank getTeleopLowGoalRank() {
+        return teleopLowGoalRank;
+    }
+
+    public void setTeleopLowGoalRank(Rank teleopLowGoalRank) {
+        this.teleopLowGoalRank = teleopLowGoalRank;
+    }
+
+    public Rank getTeleopHighGoalRank() {
+        return teleopHighGoalRank;
+    }
+
+    public void setTeleopHighGoalRank(Rank teleopHighGoalRank) {
+        this.teleopHighGoalRank = teleopHighGoalRank;
     }
 
     public Rank getTeleopDriverSkill() {

@@ -25,15 +25,14 @@ import android.widget.Toast;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.adapter.ViewPagerAdapter;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.object.Defense;
-import com.team980.thunderscout.data.object.RankedDefense;
+import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.Rank;
 import com.team980.thunderscout.task.DatabaseWriteTask;
 import com.team980.thunderscout.thread.ClientConnectionThread;
 import com.team980.thunderscout.view.CounterCompoundView;
 import com.team980.thunderscout.view.RankedSliderCompoundView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.EnumMap;
 
 public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
@@ -63,6 +62,7 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
 
         getSupportActionBar().setTitle("Scout");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 
@@ -181,21 +181,22 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
             EditText teamNumberField = (EditText) findViewById(R.id.teleop_editTextTeamNumber);
             scoutData.setTeamNumber(teamNumberField.getText().toString());
 
+            scoutData.setDateAdded(System.currentTimeMillis());
+
             CounterCompoundView defensesBreached = (CounterCompoundView) findViewById(R.id.teleop_counterBreach);
             scoutData.setTeleopDefensesBreached(defensesBreached.getValue());
 
-            List<RankedDefense> list = new ArrayList<>();
+            EnumMap<Defense, Rank> teleopDefensesBreached = scoutData.getTeleopMapDefensesBreached(); //This is a REFERENCE!
+
             for (Defense d : Defense.values()) {
                 CheckBox checkBox = (CheckBox) findViewById(d.getTeleopID());
 
                 if (checkBox.isChecked()) {
                     RankedSliderCompoundView slider = (RankedSliderCompoundView) findViewById(d.getTeleopSliderID());
 
-                    RankedDefense rd = new RankedDefense(d, slider.getRankValue());
-                    list.add(rd);
+                    teleopDefensesBreached.put(d, slider.getRankValue());
                 }
             }
-            scoutData.setTeleopListDefensesBreached(list);
 
             CounterCompoundView goalsScored = (CounterCompoundView) findViewById(R.id.teleop_counterScore);
             scoutData.setTeleopGoalsScored(goalsScored.getValue());
@@ -206,17 +207,19 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
             CheckBox highGoals = (CheckBox) findViewById(R.id.teleop_goalHigh);
             scoutData.setTeleopHighGoals(highGoals.isChecked());
 
+            RankedSliderCompoundView lowGoalSlider = (RankedSliderCompoundView) findViewById(R.id.teleop_sliderLowGoal);
+            scoutData.setTeleopLowGoalRank(lowGoalSlider.getRankValue());
+
+            RankedSliderCompoundView highGoalSlider = (RankedSliderCompoundView) findViewById(R.id.teleop_sliderHighGoals);
+            scoutData.setTeleopHighGoalRank(highGoalSlider.getRankValue());
+
             RankedSliderCompoundView driverSkill = (RankedSliderCompoundView) findViewById(R.id.teleop_sliderSkill);
             scoutData.setTeleopDriverSkill(driverSkill.getRankValue());
 
             EditText comments = (EditText) findViewById(R.id.teleop_comments);
             scoutData.setTeleopComments(comments.getText().toString());
 
-            //TODO run code based on ID again
-
             if (v.getId() == R.id.fab_save) {
-
-                scoutData.setDateAdded(System.currentTimeMillis());
 
                 DatabaseWriteTask task = new DatabaseWriteTask(scoutData, this);
                 task.execute();
@@ -238,7 +241,7 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
                 for (BluetoothDevice device : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
                     if (device.getAddress().equals(address)) {
                         ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, this,
-                                findViewById(R.id.teleop_coordinatorLayout));
+                                findViewById(R.id.coordinatorLayout)); //TODO find a better way to notify than snackbar
                         connectThread.start();
 
                         Toast info = Toast.makeText(this, "Sending data to " + device.getName() + "...", Toast.LENGTH_LONG);

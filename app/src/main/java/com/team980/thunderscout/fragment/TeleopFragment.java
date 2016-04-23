@@ -53,16 +53,12 @@ public class TeleopFragment extends Fragment {
 
             EditText teamNumber = (EditText) getView().findViewById(R.id.teleop_editTextTeamNumber);
             scoutData.setTeamNumber(teamNumber.getText().toString());
-
-            //TODO add all the data
         }
 
         if (this.isVisible() && isVisibleToUser && scoutData != null) { //Returning
 
             EditText teamNumber = (EditText) getView().findViewById(R.id.teleop_editTextTeamNumber);
             teamNumber.setText(scoutData.getTeamNumber(), TextView.BufferType.NORMAL);
-
-            //TODO add all the data
         }
     }
 }

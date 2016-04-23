@@ -1,4 +1,4 @@
-package com.team980.thunderscout.data.object;
+package com.team980.thunderscout.data.enumeration;
 
 public enum Rank {
 
@@ -31,9 +31,14 @@ public enum Rank {
 
     public int getId() {
         return id;
-    }
+    } //TODO store as string constant in Db
 
+    @Deprecated
     public String getDescription() {
         return String.valueOf(id);
+    }
+
+    public String getShortDescription() { //TODO one word description
+        return getDescription();
     }
 }

@@ -17,9 +17,9 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.activity.ScoutActivity;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.object.CrossingStats;
-import com.team980.thunderscout.data.object.Defense;
-import com.team980.thunderscout.data.object.ScoringStats;
+import com.team980.thunderscout.data.enumeration.CrossingStats;
+import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.ScoringStats;
 
 public class AutoFragment extends Fragment implements AdapterView.OnItemSelectedListener,
         RadioGroup.OnCheckedChangeListener {
@@ -107,8 +107,6 @@ public class AutoFragment extends Fragment implements AdapterView.OnItemSelected
 
             EditText teamNumber = (EditText) getView().findViewById(R.id.auto_editTextTeamNumber);
             scoutData.setTeamNumber(teamNumber.getText().toString());
-
-            //todo fill in all the data
         }
 
         if (this.isVisible() && isVisibleToUser && scoutData != null) { //Returning
@@ -118,8 +116,6 @@ public class AutoFragment extends Fragment implements AdapterView.OnItemSelected
 
             AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.app_bar_layout);
             appBarLayout.setExpanded(true, true);
-
-            //todo fill in all the data
         }
     }
 

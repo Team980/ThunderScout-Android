@@ -7,13 +7,21 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 
+import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.adapter.DataViewAdapter;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ServerDataDbHelper;
+import com.team980.thunderscout.data.enumeration.CrossingStats;
+import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.ScoringStats;
+import com.team980.thunderscout.data.object.Rank;
+import com.team980.thunderscout.data.object.RankedDefense;
+
+import java.util.List;
 
 /**
- * TODO Rewrite this class
+ * TODO Rewrite this class to remove redundancy, add sorting/filtering parameters
  */
 @Deprecated()
 public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
@@ -62,7 +70,19 @@ public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
         String[] projection = {
                 ScoutDataTable._ID,
                 ScoutDataTable.COLUMN_NAME_TEAM_NUMBER,
-                ScoutDataTable.COLUMN_NAME_DATE_ADDED
+                ScoutDataTable.COLUMN_NAME_DATE_ADDED,
+                ScoutDataTable.COLUMN_NAME_AUTO_CROSSING_STATS,
+                ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED,
+                ScoutDataTable.COLUMN_NAME_AUTO_SCORING_STATS,
+                ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSES_BREACHED,
+                ScoutDataTable.COLUMN_NAME_TELEOP_LIST_DEFENSES_BREACHED,
+                ScoutDataTable.COLUMN_NAME_TELEOP_GOALS_SCORED,
+                ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS,
+                ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS,
+                ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_RANK,
+                ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOAL_RANK,
+                ScoutDataTable.COLUMN_NAME_DRIVER_SKILL,
+                ScoutDataTable.COLUMN_NAME_COMMENTS //TODO update with dataSource
         };
 
         // How you want the results sorted in the resulting Cursor
@@ -87,51 +107,97 @@ public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
         }
 
         if (cursor.moveToFirst()) {
-            ScoutData data = new ScoutData();
-
-            String teamNumber = cursor.getString(
-                    cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TEAM_NUMBER));
-
-            data.setTeamNumber(teamNumber);
-
-            String dateAdded = cursor.getString(
-                    cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_DATE_ADDED));
-
-            try {
-                data.setDateAdded(Long.valueOf(dateAdded));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            //TODO do the other fields
-
-            publishProgress(data);
+            initScoutData(cursor);
         }
 
         while (cursor.moveToNext()) {
-            ScoutData data = new ScoutData();
-
-            String teamNumber = cursor.getString(
-                    cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TEAM_NUMBER));
-
-            data.setTeamNumber(teamNumber);
-
-            String dateAdded = cursor.getString(
-                    cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_DATE_ADDED));
-
-            try {
-                data.setDateAdded(Long.valueOf(dateAdded));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            //TODO do the other fields
-
-            publishProgress(data);
+            initScoutData(cursor);
         }
 
         cursor.close();
         return null;
+    }
+
+    private void initScoutData(Cursor cursor) {
+        ScoutData data = new ScoutData();
+
+        String teamNumber = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TEAM_NUMBER));
+
+        data.setTeamNumber(teamNumber);
+
+        String dateAdded = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_DATE_ADDED));
+
+        try {
+            data.setDateAdded(Long.valueOf(dateAdded));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        CrossingStats autoCrossingStats = CrossingStats.valueOf(cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_CROSSING_STATS)));
+
+        data.setAutoCrossingStats(autoCrossingStats);
+
+        Defense autoDefenseCrossed = Defense.valueOf(cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED)));
+
+        data.setAutoDefenseCrossed(autoDefenseCrossed);
+
+        ScoringStats autoScoringStats = ScoringStats.valueOf(cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_SCORING_STATS)));
+
+        data.setAutoScoringStats(autoScoringStats);
+
+        float teleopDefensesBreached = cursor.getFloat(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSES_BREACHED));
+
+        data.setTeleopDefensesBreached(teleopDefensesBreached);
+
+        byte[] serializedList = cursor.getBlob(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_LIST_DEFENSES_BREACHED));
+
+        List<RankedDefense> teleopListDefensesBreached = (List<RankedDefense>) ThunderScout.deserializeObject(serializedList);
+
+        data.setTeleopListDefensesBreached(teleopListDefensesBreached);
+
+        float teleopGoalsScored = cursor.getFloat(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_GOALS_SCORED));
+
+        data.setTeleopGoalsScored(teleopGoalsScored);
+
+        int teleopLowGoals = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS));
+
+        data.setTeleopLowGoals(teleopLowGoals != 0); //This converts int to boolean surprisingly
+
+        int teleopHighGoals = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS));
+
+        data.setTeleopHighGoals(teleopHighGoals != 0); //I2B conversion
+
+        Rank teleopLowGoalRank = Rank.fromId(cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_RANK)));
+
+        data.setTeleopLowGoalRank(teleopLowGoalRank);
+
+        Rank teleopHighGoalRank = Rank.fromId(cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOAL_RANK)));
+
+        data.setTeleopLowGoalRank(teleopHighGoalRank);
+
+        int skill = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_DRIVER_SKILL));
+
+        data.setTeleopDriverSkill(Rank.fromId(skill));
+
+        String comments = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_COMMENTS));
+
+        data.setTeleopComments(comments);
+
+        publishProgress(data);
     }
 
     @Override

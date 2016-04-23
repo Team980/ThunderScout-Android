@@ -9,7 +9,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.object.Rank;
+import com.team980.thunderscout.data.enumeration.Rank;
 
 public class RankedSliderCompoundView extends FrameLayout implements SeekBar.OnSeekBarChangeListener {
 

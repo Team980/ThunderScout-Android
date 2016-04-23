@@ -1,7 +1,8 @@
-package com.team980.thunderscout.data.object;
+package com.team980.thunderscout.data.enumeration;
 
 import com.team980.thunderscout.R;
 
+//TODO name() vs toString() for use in enums
 public enum Defense {
     LOW_BAR(R.id.teleop_defenseLowBar, R.id.teleop_sliderLowBar),
     PORTCULLIS(R.id.teleop_defensePortcullis, R.id.teleop_sliderPortcullis),
@@ -27,5 +28,11 @@ public enum Defense {
 
     public int getTeleopSliderID() {
         return sliderId;
+    }
+
+    @Deprecated
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

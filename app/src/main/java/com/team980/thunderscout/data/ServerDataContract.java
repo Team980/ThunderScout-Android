@@ -13,6 +13,7 @@ public final class ServerDataContract {
         public static final String TABLE_NAME = "server_data";
         public static final String COLUMN_NAME_TEAM_NUMBER = "team";
         public static final String COLUMN_NAME_DATE_ADDED = "date_added";
+        //public static final String COLUMN_NAME_DATA_SOURCE = "data_source"; TODO implement data source field
 
         public static final String COLUMN_NAME_AUTO_CROSSING_STATS = "auto_crossing_stats";
         public static final String COLUMN_NAME_AUTO_DEFENSE_CROSSED = "auto_defense_crossed";
@@ -20,10 +21,14 @@ public final class ServerDataContract {
 
         public static final String COLUMN_NAME_TELEOP_DEFENSES_BREACHED = "teleop_defenses_breached";
         public static final String COLUMN_NAME_TELEOP_LIST_DEFENSES_BREACHED = "teleop_list_defenses_breached";
+
         public static final String COLUMN_NAME_TELEOP_GOALS_SCORED = "teleop_goals_scored";
         public static final String COLUMN_NAME_TELEOP_LOW_GOALS = "teleop_low_goals";
         public static final String COLUMN_NAME_TELEOP_HIGH_GOALS = "teleop_high_goals";
-        public static final String COLUMN_NAME_TELEOP_DRIVER_SKILL = "teleop_driver_skill";
-        public static final String COLUMN_NAME_TELEOP_COMMENTS = "teleop_comments";
+        public static final String COLUMN_NAME_TELEOP_LOW_GOAL_RANK = "teleop_low_goal_rank";
+        public static final String COLUMN_NAME_TELEOP_HIGH_GOAL_RANK = "teleop_high_goal_rank";
+
+        public static final String COLUMN_NAME_DRIVER_SKILL = "driver_skill";
+        public static final String COLUMN_NAME_COMMENTS = "comments";
     }
 }

@@ -6,13 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ServerDataContract;
 import com.team980.thunderscout.data.ServerDataDbHelper;
-import com.team980.thunderscout.data.object.CrossingStats;
-import com.team980.thunderscout.data.object.Defense;
-import com.team980.thunderscout.data.object.RankedDefense;
-import com.team980.thunderscout.data.object.ScoringStats;
+import com.team980.thunderscout.data.enumeration.CrossingStats;
+import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.ScoringStats;
+import com.team980.thunderscout.data.object.Rank;
 
 public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
@@ -64,23 +65,21 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSES_BREACHED, data.getTeleopDefensesBreached());
 
-        StringBuilder sb = new StringBuilder();
-        for (RankedDefense de : data.getTeleopListDefensesBreached()) {
-            sb.append(de.toString());
-            sb.append("~"); //WOOT WOOT TILDE SEPARATOR TODO serialize
-        }
+        byte[] listTeleopDefensesBreached = ThunderScout.serializeObject(data.getTeleopListDefensesBreached());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LIST_DEFENSES_BREACHED, listTeleopDefensesBreached);
 
-        // Readable version
-        if (sb.length() > 0) {
-            sb.setLength(sb.length() - 1);
-        }
-
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LIST_DEFENSES_BREACHED, sb.toString()); //TODO sliders
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GOALS_SCORED, data.getTeleopGoalsScored());
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS, data.getTeleopLowGoals());
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleopHighGoals());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_DRIVER_SKILL, data.getTeleopDriverSkill().getId());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_COMMENTS, data.getTeleopComments());
+
+        Rank teleopLowGoalRank = data.getTeleopLowGoalRank();
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_RANK, teleopLowGoalRank.getId());
+
+        Rank teleopHighGoalRank = data.getTeleopHighGoalRank();
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOAL_RANK, teleopHighGoalRank.getId());
+
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DRIVER_SKILL, data.getTeleopDriverSkill().getId());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getTeleopComments());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -107,5 +106,4 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
         //Runs on UI thread after execution
         super.onPostExecute(o);
     }
-
 }

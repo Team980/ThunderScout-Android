@@ -1,8 +1,11 @@
 package com.team980.thunderscout.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,12 +17,13 @@ import android.view.View;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.adapter.DataViewAdapter;
-import com.team980.thunderscout.data.object.TeamWrapper;
+import com.team980.thunderscout.data.TeamWrapper;
+import com.team980.thunderscout.task.DatabaseClearTask;
 import com.team980.thunderscout.task.DatabaseReadTask;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener {
 
     private DataViewAdapter adapter;
 
@@ -71,12 +75,13 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_delete) {
-            //TODO confirmation dialog
-
-            //TODO launch query instead of directly calling clearData()
-
-            //TODO find a way to trigger a full refresh of the adapter
+        if (id == R.id.action_delete && adapter.getItemCount() > 0) {
+            new AlertDialog.Builder(this, R.style.AlertDialog)
+                    .setTitle("Are you sure?")
+                    .setMessage("This will delete all scout data in your local database and the data cannot be recovered!")
+                    .setIcon(R.drawable.ic_warning_white_24dp)
+                    .setPositiveButton(android.R.string.yes, this)
+                    .setNegativeButton(android.R.string.no, null).show();
         }
 
         if (id == R.id.action_settings) {
@@ -85,6 +90,18 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) { //TODO get this to work
+        super.onSaveInstanceState(savedInstanceState);
+        adapter.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        adapter.onRestoreInstanceState(savedInstanceState);
     }
 
     /**
@@ -104,6 +121,15 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     public void onRefresh() {
         DatabaseReadTask query = new DatabaseReadTask(adapter, this, swipeContainer);
         query.execute();
+    }
+
+    /**
+     * Alert dialog shown to confirm cancellation
+     */
+    @Override
+    public void onClick(DialogInterface dialog, int whichButton) {
+        DatabaseClearTask clearTask = new DatabaseClearTask(adapter, this);
+        clearTask.execute();
     }
 
 }

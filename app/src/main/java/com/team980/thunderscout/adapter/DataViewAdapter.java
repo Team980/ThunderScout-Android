@@ -17,7 +17,7 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.activity.InfoActivity;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.object.TeamWrapper;
+import com.team980.thunderscout.data.TeamWrapper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
     public DataViewAdapter(Context context, @NonNull List<? extends ParentListItem> parentItemList) {
         super(parentItemList);
 
-        mInflator = LayoutInflater.from(context);
+        mInflator = LayoutInflater.from(context); //TODO move to ViewGroup.getContext()
 
         this.context = context;
     }
@@ -106,6 +106,20 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
         notifyParentItemInserted(teamList.size() - 1); //TODO verify this
     }
 
+    /**
+     * Removes all the data from the list.
+     * Called by the database emptier.
+     */
+    public void clearData() {
+        if (getParentItemList().size() == 0) {
+            //list is empty
+            return;
+        }
+
+        notifyParentItemRangeRemoved(0, getParentItemList().size());
+        getParentItemList().removeAll(getParentItemList());
+    }
+
     public class TeamViewHolder extends ParentViewHolder {
 
         private TextView teamNumber;
@@ -125,6 +139,8 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
         public void bind(final TeamWrapper tw) {
             teamNumber.setText(String.valueOf(tw.getTeamNumber()));
             descriptor.setText(tw.getDescriptor());
+
+            //TODO expand/collapse button based on childs
 
             infoButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
