@@ -7,14 +7,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.activity.ScoutActivity;
 import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.view.RankedSliderCompoundView;
 
-public class TeleopFragment extends Fragment {
+public class TeleopFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
     private ScoutData scoutData;
 
@@ -26,6 +30,17 @@ public class TeleopFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        for (Defense defense : Defense.values()) {
+            CheckBox def = (CheckBox) view.findViewById(defense.getTeleopID());
+            def.setOnCheckedChangeListener(this);
+        }
+
+        CheckBox lowGoal = (CheckBox) view.findViewById(R.id.teleop_goalLow);
+        lowGoal.setOnCheckedChangeListener(this);
+
+        CheckBox highGoal = (CheckBox) view.findViewById(R.id.teleop_goalHigh);
+        highGoal.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -39,6 +54,31 @@ public class TeleopFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        for (Defense defense : Defense.values()) {
+            if (buttonView.getId() == defense.getTeleopID()) {
+                toggleVisibility((RankedSliderCompoundView) getView().findViewById(defense.getTeleopSliderID()), isChecked);
+                return;
+            }
+        }
+
+        if (buttonView.getId() == R.id.teleop_goalLow) {
+            toggleVisibility((RankedSliderCompoundView) getView().findViewById(R.id.teleop_sliderLowGoal), isChecked);
+        } else if (buttonView.getId() == R.id.teleop_goalHigh) {
+            toggleVisibility((RankedSliderCompoundView) getView().findViewById(R.id.teleop_sliderHighGoal), isChecked);
+        }
+    }
+
+    public void toggleVisibility(RankedSliderCompoundView view, boolean visibility) {
+        if (visibility) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**

@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.Rank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +58,7 @@ public class DefenseAdapter extends RecyclerView.Adapter<DefenseAdapter.DefenseV
         public DefenseViewHolder(View itemView) {
             super(itemView);
 
-            defense = (TextView) itemView.findViewById(R.id.data_defense);
+            defense = (TextView) itemView.findViewById(R.id.data_key);
         }
 
         public void bind(String defText) {

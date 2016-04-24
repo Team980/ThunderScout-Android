@@ -210,7 +210,7 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
             RankedSliderCompoundView lowGoalSlider = (RankedSliderCompoundView) findViewById(R.id.teleop_sliderLowGoal);
             scoutData.setTeleopLowGoalRank(lowGoalSlider.getRankValue());
 
-            RankedSliderCompoundView highGoalSlider = (RankedSliderCompoundView) findViewById(R.id.teleop_sliderHighGoals);
+            RankedSliderCompoundView highGoalSlider = (RankedSliderCompoundView) findViewById(R.id.teleop_sliderHighGoal);
             scoutData.setTeleopHighGoalRank(highGoalSlider.getRankValue());
 
             RankedSliderCompoundView driverSkill = (RankedSliderCompoundView) findViewById(R.id.teleop_sliderSkill);

@@ -27,9 +27,9 @@ public class RankedSliderCompoundView extends FrameLayout implements SeekBar.OnS
 
         inflater.inflate(R.layout.view_slider, this);
 
-        rank = Rank.FAILED;
+        rank = Rank.NOT_ATTEMPTED;
 
-        min = 0;
+        min = 1;
         max = 3;
 
         AppCompatSeekBar s = (AppCompatSeekBar) findViewById(R.id.sliderVal);

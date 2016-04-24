@@ -93,7 +93,13 @@ public class AverageScoutData implements Serializable {
                 ranks.add(potentials.get(d));
             }
 
-            defenses.put(d, new AverageRank(ranks));
+            AverageRank newRank = new AverageRank(ranks);
+
+            if (newRank.getAverageRank() == Rank.NOT_ATTEMPTED) {
+                continue;
+            }
+
+            defenses.put(d, newRank);
         }
 
         return defenses;
@@ -167,7 +173,9 @@ public class AverageScoutData implements Serializable {
         ArrayList<String> comments = new ArrayList<>();
 
         for (ScoutData d : data) {
-            comments.add(d.getTeleopComments());
+            if (d.getTeleopComments() != null) {
+                comments.add(d.getTeleopComments());
+            }
         }
 
         return comments;

@@ -19,19 +19,17 @@ public class AverageRank {
         return ranks.size();
     }
 
-    public float getOccurrenceFloat(Rank rank) {
-        float occurrences = 0.0f;
+    public Rank getAverageRank() {
+        int id = 0;
 
-        for (Rank r : ranks) {
-            if (r.equals(rank)) {
-                occurrences++;
-            }
+        for (Rank rank : ranks) {
+            id += rank.getId();
         }
 
-        return occurrences / ranks.size();
-    }
+        if (ranks.isEmpty()) {
+            return Rank.NOT_ATTEMPTED;
+        }
 
-    public float getOccurrencePercent(Rank rank) {
-        return getOccurrenceFloat(rank) * 100;
+        return Rank.fromId(id / ranks.size());
     }
 }

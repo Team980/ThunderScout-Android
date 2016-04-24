@@ -108,7 +108,8 @@
                 <com.team980.thunderscout.view.RankedSliderCompoundView
                     android:id="@+id/teleop_sliderLowBar"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -130,7 +131,8 @@
                 <com.team980.thunderscout.view.RankedSliderCompoundView
                     android:id="@+id/teleop_sliderPortcullis"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -152,7 +154,8 @@
                 <com.team980.thunderscout.view.RankedSliderCompoundView
                     android:id="@+id/teleop_sliderFries"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -174,7 +177,8 @@
                 <com.team980.thunderscout.view.RankedSliderCompoundView
                     android:id="@+id/teleop_sliderMoat"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -196,7 +200,8 @@
                 <com.team980.thunderscout.view.RankedSliderCompoundView
                     android:id="@+id/teleop_sliderRamparts"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -218,7 +223,8 @@
                 <com.team980.thunderscout.view.RankedSliderCompoundView
                     android:id="@+id/teleop_sliderDrawbridge"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -240,7 +246,8 @@
                 <com.team980.thunderscout.view.RankedSliderCompoundView
                     android:id="@+id/teleop_sliderSallyport"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -269,7 +276,8 @@
                 <com.team980.thunderscout.view.RankedSliderCompoundView
                     android:id="@+id/teleop_sliderRockWall"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -291,7 +299,8 @@
                 <com.team980.thunderscout.view.RankedSliderCompoundView
                     android:id="@+id/teleop_sliderRoughTerrain"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -329,7 +338,8 @@
                 <com.team980.thunderscout.view.RankedSliderCompoundView
                     android:id="@+id/teleop_sliderLowGoal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -349,9 +359,10 @@
                     android:text="High Goals" />
 
                 <com.team980.thunderscout.view.RankedSliderCompoundView
-                    android:id="@+id/teleop_sliderHighGoals"
+                    android:id="@+id/teleop_sliderHighGoal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 

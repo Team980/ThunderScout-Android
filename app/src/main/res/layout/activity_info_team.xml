@@ -45,9 +45,49 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- TODO average crossing stats -->
+            <TextView
+                android:id="@+id/info_autoCrossingStatsNone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Did nothing in {PERCENTAGE} of matches"
+                android:textSize="14sp" />
 
-            <!-- TODO average scoring stats -->
+            <TextView
+                android:id="@+id/info_autoCrossingStatsReached"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reached a defense in {PERCENTAGE} of matches"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/info_autoCrossingStatsCrossed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="Crossed a defense in {PERCENTAGE} of matches"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/info_autoScoringStatsNone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Did not score in {PERCENTAGE} of matches"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/info_autoScoringStatsLow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scored a low goal in {PERCENTAGE} of matches"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/info_autoScoringStatsHigh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scored a high goal in {PERCENTAGE} of matches"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -99,17 +139,17 @@
                 android:id="@+id/info_teleopCumulativeDefensesBreached"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="Breached a total of $NUMBER$ defenses"
-                android:textSize="14sp"
-                android:layout_marginBottom="4dp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/info_teleopAverageGoalsScored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="Scored an average of $NUMBER$ boulders each match"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/info_teleopCumulativeGoalsScored"
@@ -169,7 +209,13 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <!-- TODO AverageRank -->
+                <TextView
+                    android:id="@+id/info_teleopLowGoalAverageRank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right"
+                    android:text="Average Rank"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -187,8 +233,13 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <!-- TODO AverageRank -->
-
+                <TextView
+                    android:id="@+id/info_teleopHighGoalAverageRank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right"
+                    android:text="Average Rank"
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -208,7 +259,12 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- TODO AverageRank -->
+            <TextView
+                android:id="@+id/info_driverSkillAverageRank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Average Rank"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -227,7 +283,11 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- TODO RecyclerView -->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/info_listComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never" />
         </LinearLayout>
 
     </LinearLayout>

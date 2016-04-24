@@ -8,7 +8,7 @@ import static com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
 
 public class ServerDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 923; //TODO go back to 1 when testing is complete. Will we reach 980?
+    public static final int DATABASE_VERSION = 930; //TODO go back to 1 when testing is complete. Will we reach 980?
 
     public static final String DATABASE_NAME = "ThunderScout_2016_DEV_TEST_VERSION.db";
 
