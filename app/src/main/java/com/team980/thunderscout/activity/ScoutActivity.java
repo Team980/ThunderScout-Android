@@ -48,7 +48,11 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        scoutData = new ScoutData(); //TODO cache this if the user wishes to
+        if (savedInstanceState != null) {
+            scoutData = (ScoutData) savedInstanceState.getSerializable("ScoutData");
+        } else {
+            scoutData = new ScoutData(); //TODO cache this if the user wishes to
+        }
 
         setContentView(R.layout.activity_scout);
 
@@ -101,6 +105,11 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putSerializable("ScoutData", scoutData);
+    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

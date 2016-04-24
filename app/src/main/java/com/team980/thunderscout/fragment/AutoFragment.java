@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.activity.ScoutActivity;
-import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.CrossingStats;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.ScoringStats;
@@ -24,7 +23,7 @@ import com.team980.thunderscout.data.enumeration.ScoringStats;
 public class AutoFragment extends Fragment implements AdapterView.OnItemSelectedListener,
         RadioGroup.OnCheckedChangeListener {
 
-    private ScoutData scoutData;
+    ScoutActivity scoutActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,8 +48,7 @@ public class AutoFragment extends Fragment implements AdapterView.OnItemSelected
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        ScoutActivity scoutActivity = (ScoutActivity) getActivity();
-        scoutData = scoutActivity.getData();
+        scoutActivity = (ScoutActivity) getActivity();
     }
 
     @Override
@@ -62,35 +60,35 @@ public class AutoFragment extends Fragment implements AdapterView.OnItemSelected
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { //Spinner
         String itemSelected = (String) parent.getItemAtPosition(position);
         Defense defense = Defense.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
-        scoutData.setAutoDefenseCrossed(defense);
+        scoutActivity.getData().setAutoDefenseCrossed(defense); //TODO crash on orientation change
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) { //RadioGroup
         switch (checkedId) {
             case R.id.auto_buttonNoAction:
-                scoutData.setAutoCrossingStats(CrossingStats.NONE);
+                scoutActivity.getData().setAutoCrossingStats(CrossingStats.NONE);
                 toggleDefenseVisibility(View.GONE);
                 toggleScoringVisibility(View.GONE);
                 break;
             case R.id.auto_buttonReachedDefense:
-                scoutData.setAutoCrossingStats(CrossingStats.REACHED);
+                scoutActivity.getData().setAutoCrossingStats(CrossingStats.REACHED);
                 toggleDefenseVisibility(View.VISIBLE);
                 toggleScoringVisibility(View.GONE);
                 break;
             case R.id.auto_buttonCrossedDefense:
-                scoutData.setAutoCrossingStats(CrossingStats.CROSSED);
+                scoutActivity.getData().setAutoCrossingStats(CrossingStats.CROSSED);
                 toggleDefenseVisibility(View.VISIBLE);
                 toggleScoringVisibility(View.VISIBLE);
                 break;
             case R.id.auto_buttonNoGoal:
-                scoutData.setAutoScoringStats(ScoringStats.NONE);
+                scoutActivity.getData().setAutoScoringStats(ScoringStats.NONE);
                 break;
             case R.id.auto_buttonLowGoal:
-                scoutData.setAutoScoringStats(ScoringStats.LOW_GOAL);
+                scoutActivity.getData().setAutoScoringStats(ScoringStats.LOW_GOAL);
                 break;
             case R.id.auto_buttonHighGoal:
-                scoutData.setAutoScoringStats(ScoringStats.HIGH_GOAL);
+                scoutActivity.getData().setAutoScoringStats(ScoringStats.HIGH_GOAL);
                 break;
         }
     }
@@ -103,16 +101,16 @@ public class AutoFragment extends Fragment implements AdapterView.OnItemSelected
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if (this.isVisible() && !isVisibleToUser && scoutData != null) { //Leaving
+        if (this.isVisible() && !isVisibleToUser && scoutActivity.getData() != null) { //Leaving
 
             EditText teamNumber = (EditText) getView().findViewById(R.id.auto_editTextTeamNumber);
-            scoutData.setTeamNumber(teamNumber.getText().toString());
+            scoutActivity.getData().setTeamNumber(teamNumber.getText().toString());
         }
 
-        if (this.isVisible() && isVisibleToUser && scoutData != null) { //Returning
+        if (this.isVisible() && isVisibleToUser && scoutActivity.getData() != null) { //Returning
 
             EditText teamNumber = (EditText) getView().findViewById(R.id.auto_editTextTeamNumber);
-            teamNumber.setText(scoutData.getTeamNumber(), TextView.BufferType.NORMAL);
+            teamNumber.setText(scoutActivity.getData().getTeamNumber(), TextView.BufferType.NORMAL);
 
             AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.app_bar_layout);
             appBarLayout.setExpanded(true, true);
