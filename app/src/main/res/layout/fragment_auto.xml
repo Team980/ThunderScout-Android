@@ -11,19 +11,20 @@
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
-        <TextView
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/auto_tilTeamNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="Team Number" />
+            android:hint="Team Number">
 
-        <EditText
-            android:id="@+id/auto_editTextTeamNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:ems="4"
-            android:inputType="number" />
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/auto_editTextTeamNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:inputType="number" />
+
+        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
@@ -40,7 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Crossing Statistics" />
+            android:text="Crossing Statistics"
+            android:textSize="18sp" />
 
         <RadioGroup
             android:id="@+id/auto_radioGroupCrossing"
@@ -92,7 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="5dp"
-            android:text="Defense Crossed" />
+            android:text="Defense Crossed"
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/auto_spinnerDefenses"
@@ -118,7 +121,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Scoring Statistics" />
+            android:text="Scoring Statistics"
+            android:textSize="18sp" />
 
         <RadioGroup
             android:id="@+id/auto_radioGroupScoring"

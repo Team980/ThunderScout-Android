@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sort_team_number"
+        android:title="By team number" />
+    <item
+        android:id="@+id/sort_average_defenses_breached"
+        android:title="By average defenses breached" />
+    <item
+        android:id="@+id/sort_total_defenses_breached"
+        android:title="By total defenses breached" />
+    <item
+        android:id="@+id/sort_average_goals_scored"
+        android:title="By average boulders scored" />
+    <item
+        android:id="@+id/sort_total_goals_scored"
+        android:title="By total boulders scored" />
+</menu>

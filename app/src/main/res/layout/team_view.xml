@@ -2,11 +2,10 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="72dp"
     android:layout_marginTop="10dp"
     app:cardCornerRadius="0dp"
-    app:cardElevation="8dp"
-    app:contentPadding="12dp">
+    app:contentPaddingLeft="16dp">
 
     <TextView
         android:id="@+id/team_teamNumber"
@@ -17,18 +16,35 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/team_descriptor"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Test Data"
-        android:textSize="15sp" />
+        android:layout_marginRight="64dp">
+
+        <TextView
+            android:id="@+id/team_descriptor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Test Data"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/team_numberOfMatches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/team_descriptor"
+            android:text="Number of Matches"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
 
     <ImageButton
         android:id="@+id/team_infoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentRight="true"
         android:layout_gravity="right|center_vertical"
         android:background="#00000000"

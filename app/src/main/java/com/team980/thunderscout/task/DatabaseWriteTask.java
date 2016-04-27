@@ -48,6 +48,8 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
         long date = data.getDateAdded();
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, date);
 
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getDataSource());
+
         CrossingStats cs = data.getAutoCrossingStats();
         if (cs != null) {
             values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSING_STATS, data.getAutoCrossingStats().toString());

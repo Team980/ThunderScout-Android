@@ -2,15 +2,18 @@ package com.team980.thunderscout.data.enumeration;
 
 public enum Rank {
 
-    NOT_ATTEMPTED(0), //did not try // did nothing
-    FAILED(1), //tried and failed
-    SUCCEEDED_BUT_SLOW(2), //took a while but managed to get something done
-    FAST_AS_LIGHTNING(3); //team 330
+    NOT_ATTEMPTED(0, "Did not attempt"), //did not try // did nothing
+    FAILED(1, "Tried and failed"), //tried and failed
+    SUCCEEDED_BUT_SLOW(2, "Managed with effort"), //took a while but managed to get something done
+    FAST_AS_LIGHTNING(3, "Quickly and effortlessly"); //team 330
 
     int id;
 
-    Rank(int id) {
+    String description;
+
+    Rank(int id, String desc) {
         this.id = id;
+        description = desc;
     }
 
     public static Rank fromId(int id) {
@@ -35,10 +38,6 @@ public enum Rank {
 
     @Deprecated
     public String getDescription() {
-        return String.valueOf(id);
-    }
-
-    public String getShortDescription() { //TODO one word description
-        return getDescription();
+        return id + ": " + description;
     }
 }

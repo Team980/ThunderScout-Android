@@ -132,10 +132,13 @@ public class InfoActivity extends AppCompatActivity {
             setContentView(R.layout.activity_info_scout);
 
             TextView teamNumber = (TextView) findViewById(R.id.info_teamNumber);
-            teamNumber.setText(data.getTeamNumber());
+            teamNumber.setText("Team " + data.getTeamNumber());
 
             TextView dateAdded = (TextView) findViewById(R.id.info_dateAdded);
             dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(data.getDateAdded()));
+
+            TextView dataSource = (TextView) findViewById(R.id.info_dataSource);
+            dataSource.setText("Source: " + data.getDataSource());
 
             TextView autoDefenseStats = (TextView) findViewById(R.id.info_autoDefenseStats);
             if (data.getAutoCrossingStats() == CrossingStats.NONE) {

@@ -21,18 +21,28 @@ import com.team980.thunderscout.data.TeamWrapper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
+import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.getComparator;
 
 public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.TeamViewHolder, DataViewAdapter.ScoutViewHolder> {
 
     private LayoutInflater mInflator;
 
+    private ArrayList<TeamWrapper> teams;
+
     private Context context;
+
+    private TeamWrapper.TeamComparator sortMode = SORT_TEAM_NUMBER;
 
     public DataViewAdapter(Context context, @NonNull List<? extends ParentListItem> parentItemList) {
         super(parentItemList);
 
         mInflator = LayoutInflater.from(context); //TODO move to ViewGroup.getContext()
+
+        teams = (ArrayList<TeamWrapper>) getParentItemList();
 
         this.context = context;
     }
@@ -63,25 +73,28 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
         scoutViewHolder.bind(scoutData);
     }
 
+    @Override
+    public int getItemCount() {
+        return super.getItemCount();
+    }
+
     /**
      * Adds an entry to the view. Called by the database reader.
      *
      * @param data ScoutData to insert
      */
     public void addScoutData(ScoutData data) {
-        ArrayList<TeamWrapper> teamList = (ArrayList) getParentItemList();
-
         Log.d("Adding Data", "Fetching parent item list");
 
-        for (int i = 0; i < teamList.size(); i++) {
-            TeamWrapper tw = teamList.get(i);
+        for (int i = 0; i < teams.size(); i++) {
+            TeamWrapper tw = teams.get(i);
             Log.d("Adding Data", "Looping: " + i);
 
             if (tw.getTeamNumber().equals(data.getTeamNumber())) {
                 //Pre-existing team
                 Log.d("Adding Data", "Pre existing team: " + data.getTeamNumber());
 
-                ArrayList<ScoutData> childList = (ArrayList) tw.getChildItemList();
+                ArrayList<ScoutData> childList = (ArrayList<ScoutData>) tw.getChildItemList();
 
                 Log.d("Adding Data", "Fetching child item list");
 
@@ -98,13 +111,17 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
                 Log.d("Adding Data", "Adding new child to parent");
                 notifyChildItemInserted(i, childList.size() - 1); //TODO verify this
                 notifyParentItemChanged(i); //This forces the parent to update
+
+                sort(sortMode);
                 return;
             }
         }
         //New team
         Log.d("Adding Data", "Adding new parent to list");
-        teamList.add(new TeamWrapper(data.getTeamNumber(), data));
-        notifyParentItemInserted(teamList.size() - 1); //TODO verify this
+        teams.add(new TeamWrapper(data.getTeamNumber(), data));
+        notifyParentItemInserted(teams.size() - 1); //TODO verify this
+
+        sort(sortMode);
     }
 
     /**
@@ -112,19 +129,28 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
      * Called by the database emptier.
      */
     public void clearData() {
-        if (getParentItemList().size() == 0) {
+        if (teams.size() == 0) {
             //list is empty
             return;
         }
 
-        notifyParentItemRangeRemoved(0, getParentItemList().size());
-        getParentItemList().removeAll(getParentItemList());
+        notifyParentItemRangeRemoved(0, teams.size());
+        getParentItemList().removeAll(teams);
+    }
+
+    public void sort(TeamWrapper.TeamComparator mode) {
+        sortMode = mode;
+
+        Collections.sort(teams, getComparator(sortMode));
+        notifyParentItemRangeChanged(0, teams.size());
     }
 
     public class TeamViewHolder extends ParentViewHolder {
 
         private TextView teamNumber;
         private TextView descriptor;
+
+        private TextView numberOfMatches;
 
         private ImageButton infoButton;
 
@@ -134,12 +160,20 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
             teamNumber = (TextView) itemView.findViewById(R.id.team_teamNumber);
             descriptor = (TextView) itemView.findViewById(R.id.team_descriptor);
 
+            numberOfMatches = (TextView) itemView.findViewById(R.id.team_numberOfMatches);
+
             infoButton = (ImageButton) itemView.findViewById(R.id.team_infoButton);
         }
 
         public void bind(final TeamWrapper tw) {
             teamNumber.setText(String.valueOf(tw.getTeamNumber()));
-            descriptor.setText(tw.getDescriptor());
+            descriptor.setText(tw.getDescriptor(sortMode));
+
+            if (sortMode == TeamWrapper.TeamComparator.SORT_TEAM_NUMBER) {
+                numberOfMatches.setVisibility(View.GONE);
+            } else {
+                numberOfMatches.setText(tw.getNumberOfMatches() + " matches");
+            }
 
             //TODO expand/collapse button based on childs; find better button than I
 

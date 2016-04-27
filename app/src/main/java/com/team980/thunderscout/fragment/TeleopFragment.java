@@ -4,12 +4,13 @@ package com.team980.thunderscout.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
@@ -30,6 +31,9 @@ public class TeleopFragment extends Fragment implements CompoundButton.OnChecked
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        NestedScrollView teleopScroll = (NestedScrollView) view.findViewById(R.id.teleop_scrollView);
+        teleopScroll.setOnScrollChangeListener((ScoutActivity) getActivity());
 
         for (Defense defense : Defense.values()) {
             CheckBox def = (CheckBox) view.findViewById(defense.getTeleopID());
@@ -91,13 +95,13 @@ public class TeleopFragment extends Fragment implements CompoundButton.OnChecked
 
         if (this.isVisible() && !isVisibleToUser && scoutData != null) { //Leaving
 
-            EditText teamNumber = (EditText) getView().findViewById(R.id.teleop_editTextTeamNumber);
+            AppCompatEditText teamNumber = (AppCompatEditText) getView().findViewById(R.id.teleop_editTextTeamNumber);
             scoutData.setTeamNumber(teamNumber.getText().toString());
         }
 
         if (this.isVisible() && isVisibleToUser && scoutData != null) { //Returning
 
-            EditText teamNumber = (EditText) getView().findViewById(R.id.teleop_editTextTeamNumber);
+            AppCompatEditText teamNumber = (AppCompatEditText) getView().findViewById(R.id.teleop_editTextTeamNumber);
             teamNumber.setText(scoutData.getTeamNumber(), TextView.BufferType.NORMAL);
         }
     }

@@ -15,6 +15,7 @@ public class ScoutData implements Serializable { //TODO why do driverSkill, comm
 
     private String teamNumber;
     private long dateAdded;
+    private String dataSource;
 
     private CrossingStats autoCrossingStats;
     private Defense autoDefenseCrossed;
@@ -57,6 +58,14 @@ public class ScoutData implements Serializable { //TODO why do driverSkill, comm
 
     public void setDateAdded(long d) {
         dateAdded = d;
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String d) {
+        dataSource = d;
     }
 
     public CrossingStats getAutoCrossingStats() {

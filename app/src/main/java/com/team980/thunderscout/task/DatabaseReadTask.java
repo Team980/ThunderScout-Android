@@ -18,7 +18,6 @@ import com.team980.thunderscout.data.enumeration.Rank;
 import com.team980.thunderscout.data.enumeration.ScoringStats;
 
 import java.util.EnumMap;
-import java.util.List;
 
 /**
  * TODO Rewrite this class to remove redundancy, add sorting/filtering parameters
@@ -71,6 +70,7 @@ public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
                 ScoutDataTable._ID,
                 ScoutDataTable.COLUMN_NAME_TEAM_NUMBER,
                 ScoutDataTable.COLUMN_NAME_DATE_ADDED,
+                ScoutDataTable.COLUMN_NAME_DATA_SOURCE,
                 ScoutDataTable.COLUMN_NAME_AUTO_CROSSING_STATS,
                 ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED,
                 ScoutDataTable.COLUMN_NAME_AUTO_SCORING_STATS,
@@ -82,7 +82,7 @@ public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
                 ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_RANK,
                 ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOAL_RANK,
                 ScoutDataTable.COLUMN_NAME_DRIVER_SKILL,
-                ScoutDataTable.COLUMN_NAME_COMMENTS //TODO update with dataSource
+                ScoutDataTable.COLUMN_NAME_COMMENTS
         };
 
         // How you want the results sorted in the resulting Cursor
@@ -134,6 +134,11 @@ public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+
+        String dataSource = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_DATA_SOURCE));
+
+        data.setDataSource(dataSource);
 
         CrossingStats autoCrossingStats = CrossingStats.valueOf(cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_CROSSING_STATS)));

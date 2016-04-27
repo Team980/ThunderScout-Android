@@ -5,11 +5,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -103,13 +103,13 @@ public class AutoFragment extends Fragment implements AdapterView.OnItemSelected
 
         if (this.isVisible() && !isVisibleToUser && scoutActivity.getData() != null) { //Leaving
 
-            EditText teamNumber = (EditText) getView().findViewById(R.id.auto_editTextTeamNumber);
+            AppCompatEditText teamNumber = (AppCompatEditText) getView().findViewById(R.id.auto_editTextTeamNumber);
             scoutActivity.getData().setTeamNumber(teamNumber.getText().toString());
         }
 
         if (this.isVisible() && isVisibleToUser && scoutActivity.getData() != null) { //Returning
 
-            EditText teamNumber = (EditText) getView().findViewById(R.id.auto_editTextTeamNumber);
+            AppCompatEditText teamNumber = (AppCompatEditText) getView().findViewById(R.id.auto_editTextTeamNumber);
             teamNumber.setText(scoutActivity.getData().getTeamNumber(), TextView.BufferType.NORMAL);
 
             AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.app_bar_layout);

@@ -13,7 +13,7 @@ public final class ServerDataContract {
         public static final String TABLE_NAME = "server_data";
         public static final String COLUMN_NAME_TEAM_NUMBER = "team";
         public static final String COLUMN_NAME_DATE_ADDED = "date_added";
-        //public static final String COLUMN_NAME_DATA_SOURCE = "data_source"; TODO implement data source field
+        public static final String COLUMN_NAME_DATA_SOURCE = "data_source";
 
         public static final String COLUMN_NAME_AUTO_CROSSING_STATS = "auto_crossing_stats";
         public static final String COLUMN_NAME_AUTO_DEFENSE_CROSSED = "auto_defense_crossed";
