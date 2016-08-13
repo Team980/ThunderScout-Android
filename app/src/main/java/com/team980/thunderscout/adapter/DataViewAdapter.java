@@ -152,8 +152,6 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
 
         private TextView numberOfMatches;
 
-        private ImageButton infoButton;
-
         public TeamViewHolder(View itemView) {
             super(itemView);
 
@@ -161,8 +159,6 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
             descriptor = (TextView) itemView.findViewById(R.id.team_descriptor);
 
             numberOfMatches = (TextView) itemView.findViewById(R.id.team_numberOfMatches);
-
-            infoButton = (ImageButton) itemView.findViewById(R.id.team_infoButton);
         }
 
         public void bind(final TeamWrapper tw) {
@@ -175,16 +171,7 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
                 numberOfMatches.setText(tw.getNumberOfMatches() + " matches");
             }
 
-            //TODO expand/collapse button based on childs; find better button than I
-
-            infoButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, InfoActivity.class);
-                    launchInfoActivity.putExtra("com.team980.thunderscout.IS_AGGREGATE_DATA", true);
-                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_TEAM", tw);
-                    context.startActivity(launchInfoActivity);
-                }
-            });
+            //TODO expand/collapse button based on children
         }
     }
 
@@ -208,7 +195,6 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
             infoButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent launchInfoActivity = new Intent(context, InfoActivity.class);
-                    launchInfoActivity.putExtra("com.team980.thunderscout.IS_AGGREGATE_DATA", false);
                     launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
                     context.startActivity(launchInfoActivity);
                 }

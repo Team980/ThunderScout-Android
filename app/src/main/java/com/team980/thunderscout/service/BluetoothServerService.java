@@ -18,7 +18,7 @@ public class BluetoothServerService extends Service {
 
         //init notification
         mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_bluetooth_connected_white_24dp)
+                .setSmallIcon(R.drawable.ic_file_upload_white_24dp)
                 .setContentTitle("ThunderScout Server is running")
                 .setContentText("Waiting for scout data to be sent") //TODO make the notification more useful; new icon
                 .setOngoing(true);

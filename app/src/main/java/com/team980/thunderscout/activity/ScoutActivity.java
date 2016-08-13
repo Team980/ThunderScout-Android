@@ -262,6 +262,8 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
                         finish();
                     }
                 }
+            } else if (v.getId() == R.id.buttonSendSheets) {
+                //TODO send to Google Sheets
             }
         }
     }

@@ -5,6 +5,14 @@
         android:key="pref_isServer"
         android:summary="Run the app in Bluetooth server mode"
         android:title="ThunderScout Server" />
+    <ListPreference
+        android:defaultValue="saveLocally"
+        android:dependency="pref_isServer"
+        android:key="pref_serverStorageTask"
+        android:entries="@array/server_storage_task"
+        android:entryValues="@array/server_storage_task_values"
+        android:summary="Method of storage for data received via bluetooth server"
+        android:title="Server Storage Task" />
     <com.team980.thunderscout.util.BluetoothDevicePreference
         android:defaultValue="Master Scout"
         android:dialogTitle="Select your server device"

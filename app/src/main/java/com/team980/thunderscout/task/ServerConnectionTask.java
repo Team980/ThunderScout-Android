@@ -2,7 +2,9 @@ package com.team980.thunderscout.task;
 
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -77,9 +79,14 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         super.onPostExecute(o);
 
         if (o != null) {
-            //Put the fetched ScoutData in the local database
-            DatabaseWriteTask writeTask = new DatabaseWriteTask(o, context);
-            writeTask.execute();
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            if (prefs.getString("pref_serverStorageTask", "SAVE").equals("SAVE")) {
+                //Put the fetched ScoutData in the local database
+                DatabaseWriteTask writeTask = new DatabaseWriteTask(o, context);
+                writeTask.execute();
+            } else if (prefs.getString("pref_serverStorageTask", "SAVE").equals("SEND_SHEETS")) {
+                //TODO sync with Google Sheets
+            }
         } else {
             Log.d("ServerConnectionTask", "Failed to start DatabaseWriteTask!");
         }

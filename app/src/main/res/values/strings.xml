@@ -12,4 +12,14 @@
         <item>Rock Wall</item>
         <item>Rough Terrain</item>
     </string-array>
+
+    <string-array name="server_storage_task">
+        <item>Save to local device</item>
+        <item>Send to Google Sheets</item>
+    </string-array>
+
+    <string-array name="server_storage_task_values">
+        <item>SAVE</item>
+        <item>SEND_SHEETS</item>
+    </string-array>
 </resources>
