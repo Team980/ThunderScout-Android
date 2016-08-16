@@ -33,7 +33,7 @@
             android:name=".activity.InfoActivity"
             android:label="Info"
             android:parentActivityName=".activity.MainActivity"
-            android:theme="@style/ThunderScout.BaseTheme" />
+            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
         <activity
             android:name=".activity.SettingsActivity"
             android:label="Settings"

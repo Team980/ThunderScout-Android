@@ -64,7 +64,7 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
 
         getSupportActionBar().setTitle("Scout");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 

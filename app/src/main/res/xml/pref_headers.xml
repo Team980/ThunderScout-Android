@@ -4,22 +4,27 @@
 
     <header
         android:fragment="com.team980.thunderscout.activity.SettingsActivity$GeneralPreferenceFragment"
+        android:icon="@drawable/ic_settings_white_24dp"
         android:title="General"/>
 
     <!--<header TODO this is a great reference of how the modular system should work
         android:fragment="com.team980.thunderscout.activity.SettingsActivity$ScoutPreferenceFragment"
+        android:icon="@drawable/ic_settings_bluetooth_white_24dp"
         android:title="@string/pref_header_scout" />
 
         <header
         android:fragment="com.team980.thunderscout.activity.SettingsActivity$BluetoothServerPreferenceFragment"
+        android:icon="@drawable/ic_settings_bluetooth_white_24dp"
         android:title="@string/pref_header_bluetooth_server" />
 
         <header
         android:fragment="com.team980.thunderscout.activity.SettingsActivity$SheetsIntegrationPreferenceFragment"
+        android:icon="@drawable/ic_settings_bluetooth_white_24dp"
         android:title="@string/pref_header_google_sheets_integration" />
 
         <header
         android:fragment="com.team980.thunderscout.activity.SettingsActivity$DataViewPreferenceFragment"
+        android:icon="@drawable/ic_settings_bluetooth_white_24dp"
         android:title="@string/pref_header_data_view" />-->
 
 </preference-headers>

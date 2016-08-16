@@ -27,7 +27,7 @@ import java.util.List;
 import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
 import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.getComparator;
 
-public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.TeamViewHolder, DataViewAdapter.ScoutViewHolder> {
+public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.TeamViewHolder, DataViewAdapter.ScoutViewHolder> implements ExpandableRecyclerAdapter.ExpandCollapseListener {
 
     private LayoutInflater mInflator;
 
@@ -45,6 +45,8 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
         teams = (ArrayList<TeamWrapper>) getParentItemList();
 
         this.context = context;
+
+        setExpandCollapseListener(this);
     }
 
     // onCreate ...
@@ -145,6 +147,16 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
         notifyParentItemRangeChanged(0, teams.size());
     }
 
+    @Override
+    public void onListItemExpanded(int position) {
+
+    }
+
+    @Override
+    public void onListItemCollapsed(int position) {
+
+    }
+
     public class TeamViewHolder extends ParentViewHolder {
 
         private TextView teamNumber;
@@ -170,8 +182,6 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
             } else {
                 numberOfMatches.setText(tw.getNumberOfMatches() + " matches");
             }
-
-            //TODO expand/collapse button based on children
         }
     }
 
@@ -191,6 +201,14 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
 
         public void bind(final ScoutData scoutData) {
             dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(scoutData.getDateAdded()));
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent launchInfoActivity = new Intent(context, InfoActivity.class);
+                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
+                    context.startActivity(launchInfoActivity);
+                }
+            });
 
             infoButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
