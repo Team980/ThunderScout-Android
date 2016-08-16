@@ -16,6 +16,7 @@ public class ScoutData implements Serializable { //TODO why do driverSkill, comm
     private String teamNumber;
     private long dateAdded;
     private String dataSource;
+    //TODO sharing/sync status
 
     private CrossingStats autoCrossingStats;
     private Defense autoDefenseCrossed;

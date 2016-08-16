@@ -1,4 +1,4 @@
-package com.team980.thunderscout.sheets;
+/*package com.team980.thunderscout.sheets;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -23,7 +23,7 @@ public class GoogleSheetsHelper {
      * Attempt to resolve a missing, out-of-date, invalid or disabled Google
      * Play Services installation via a user dialog, if possible.
      */
-    private void acquireGooglePlayServices(Context context) {
+    /*private void acquireGooglePlayServices(Context context) {
         GoogleApiAvailability apiAvailability =
                 GoogleApiAvailability.getInstance();
         final int connectionStatusCode =
@@ -31,7 +31,7 @@ public class GoogleSheetsHelper {
         if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
             showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
         }
-    }
+    }*/
 
 
     /**
@@ -41,21 +41,21 @@ public class GoogleSheetsHelper {
      * @param connectionStatusCode code describing the presence (or lack of)
      *                             Google Play Services on this device.
      */
-    void showGooglePlayServicesAvailabilityErrorDialog(
+    /*void showGooglePlayServicesAvailabilityErrorDialog(
             final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(
-                ,
+                null,
                 connectionStatusCode,
                 1002);
         dialog.show();
-    }
+    }*/
 
     /**
      * An asynchronous task that handles the Google Sheets API call.
      * Placing the API calls in their own task ensures the UI stays responsive.
      */
-    private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
+    /*private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
         private com.google.api.services.sheets.v4.Sheets mService = null;
         private Exception mLastError = null;
 
@@ -66,17 +66,17 @@ public class GoogleSheetsHelper {
                     transport, jsonFactory, credential)
                     .setApplicationName("Google Sheets API Android Quickstart")
                     .build();
-        }
+        }*/
 
         /**
          * Background task to call Google Sheets API.
          *
          * @param params no parameters needed for this task.
          */
-        @Override
-        protected List<String> doInBackground(Void... params) {
-            return null;
-        }
+        //@Override
+        //protected List<String> doInBackground(Void... params) {
+            //return null;
+        //}
 
         /**
          * Fetch a list of names and majors of students in a sample spreadsheet:
@@ -85,7 +85,7 @@ public class GoogleSheetsHelper {
          * @return List of names and majors
          * @throws IOException
          */
-        private List<String> getDataFromApi() throws IOException {
+       /* private List<String> getDataFromApi() throws IOException {
             String spreadsheetId = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
             String range = "Class Data!A2:E";
             List<String> results = new ArrayList<String>();
@@ -120,4 +120,4 @@ public class GoogleSheetsHelper {
             }
         }
     }
-}
+}*/

@@ -48,7 +48,7 @@
         android:scaleType="center"
         android:src="@drawable/ic_send_white_24dp"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/accent"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp" />
 

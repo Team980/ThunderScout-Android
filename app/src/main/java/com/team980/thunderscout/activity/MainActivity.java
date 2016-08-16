@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         swipeContainer.setOnRefreshListener(this);
 
-        swipeContainer.setColorSchemeResources(R.color.colorPrimary);
+        swipeContainer.setColorSchemeResources(R.color.primary);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
         DatabaseReadTask query = new DatabaseReadTask(adapter, this, swipeContainer);
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         int id = item.getItemId();
 
         if (id == R.id.action_delete && adapter.getItemCount() > 0) {
-            new AlertDialog.Builder(this, R.style.AlertDialog)
+            new AlertDialog.Builder(this)
                     .setTitle("Are you sure?")
                     .setMessage("This will delete all scout data in your local database and the data cannot be recovered!")
                     .setIcon(R.drawable.ic_warning_white_24dp)
