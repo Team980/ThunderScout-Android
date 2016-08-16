@@ -41,4 +41,13 @@
 
     </RelativeLayout>
 
+    <ImageButton
+        android:id="@+id/team_expandButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right|center_vertical"
+        android:background="#00000000"
+        android:src="@drawable/ic_arrow_drop_down_white_24dp" />
+
 </android.support.v7.widget.CardView>

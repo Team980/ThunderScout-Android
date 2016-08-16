@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) { //TODO get this to work
+    protected void onSaveInstanceState(Bundle savedInstanceState) { //TODO this doesn't do what's advertised
         super.onSaveInstanceState(savedInstanceState);
         adapter.onSaveInstanceState(savedInstanceState);
     }

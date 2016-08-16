@@ -27,7 +27,7 @@ import java.util.List;
 import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
 import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.getComparator;
 
-public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.TeamViewHolder, DataViewAdapter.ScoutViewHolder> implements ExpandableRecyclerAdapter.ExpandCollapseListener {
+public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.TeamViewHolder, DataViewAdapter.ScoutViewHolder> {
 
     private LayoutInflater mInflator;
 
@@ -45,8 +45,6 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
         teams = (ArrayList<TeamWrapper>) getParentItemList();
 
         this.context = context;
-
-        setExpandCollapseListener(this);
     }
 
     // onCreate ...
@@ -147,15 +145,7 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
         notifyParentItemRangeChanged(0, teams.size());
     }
 
-    @Override
-    public void onListItemExpanded(int position) {
 
-    }
-
-    @Override
-    public void onListItemCollapsed(int position) {
-
-    }
 
     public class TeamViewHolder extends ParentViewHolder {
 
@@ -164,6 +154,8 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
 
         private TextView numberOfMatches;
 
+        private ImageButton expandButton;
+
         public TeamViewHolder(View itemView) {
             super(itemView);
 
@@ -171,6 +163,8 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
             descriptor = (TextView) itemView.findViewById(R.id.team_descriptor);
 
             numberOfMatches = (TextView) itemView.findViewById(R.id.team_numberOfMatches);
+
+            expandButton = (ImageButton) itemView.findViewById(R.id.team_expandButton);
         }
 
         public void bind(final TeamWrapper tw) {
@@ -182,6 +176,32 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
             } else {
                 numberOfMatches.setText(tw.getNumberOfMatches() + " matches");
             }
+
+            expandButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isExpanded()) {
+                        collapseView();
+                        expandButton.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp);
+                    } else {
+                        expandView();
+                        expandButton.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp);
+                    }
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isExpanded()) {
+                        collapseView();
+                        expandButton.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp);
+                    } else {
+                        expandView();
+                        expandButton.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp);
+                    }
+                }
+            });
         }
     }
 

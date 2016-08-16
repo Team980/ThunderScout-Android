@@ -3,8 +3,7 @@
     package="com.team980.thunderscout">
 
     <uses-feature
-        android:name="android.bluetooth"
-        android:required="true" />
+        android:name="android.bluetooth" />
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
