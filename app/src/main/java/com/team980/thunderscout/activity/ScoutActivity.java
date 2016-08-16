@@ -138,7 +138,7 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this) //TODO specify newer icon
                 .setTitle("Are you sure you want to exit?")
                 .setMessage("The data currently in the scouting form will be lost!")
                 .setNegativeButton(android.R.string.no, null)
