@@ -1,4 +1,18 @@
-<PreferenceScreen>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="saveLocally"
+        android:key="server_storage_task"
+        android:entries="@array/server_storage_task"
+        android:entryValues="@array/server_storage_task_values"
+        android:summary="Method of storage for data received via bluetooth server"
+        android:title="Server Storage Task" />
+    <com.team980.thunderscout.preferences.BluetoothDevicePreference
+        android:defaultValue="Master Scout"
+        android:dialogTitle="Select your server device"
+        android:key="bt_server_device"
+        android:summary="Server device (must be paired first!)"
+        android:title="Server Device" />
 
     <!-- These are examples from the tutorial -->
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->

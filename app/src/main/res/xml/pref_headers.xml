@@ -10,12 +10,12 @@
     <header
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$ScoutPreferenceFragment"
         android:icon="@drawable/ic_send_white_24dp"
-        android:title="Match Scouting" />
+        android:title="Scouting" />
 
-        <header
-            android:fragment="com.team980.thunderscout.preferences.SettingsActivity$BluetoothServerPreferenceFragment"
+    <header
+        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$BluetoothServerPreferenceFragment"
         android:icon="@drawable/ic_settings_bluetooth_white_24dp"
-            android:title="Bluetooth Server" />
+        android:title="Bluetooth Server" />
 
     <!--<header
     android:fragment="com.team980.thunderscout.preferences.SettingsActivity$SheetsIntegrationPreferenceFragment"

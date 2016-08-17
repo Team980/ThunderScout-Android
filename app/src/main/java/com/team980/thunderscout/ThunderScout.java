@@ -82,13 +82,6 @@ public class ThunderScout extends Application {
         super.onCreate();
         Log.d("THUNDERSCOUT", "Application.onCreate");
 
-
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (!mBluetoothAdapter.isEnabled()) {
-            Log.d("THUNDERSCOUT", "Enabling Bluetooth as it's off");
-            mBluetoothAdapter.enable(); //TODO prompt user
-        }
-
         Log.d("THUNDERSCOUT", "Fetching shared prefences");
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean runServer = sharedPref.getBoolean("pref_isServer", false);
@@ -96,6 +89,12 @@ public class ThunderScout extends Application {
         if (runServer) { //TODO I must be launching multiple instances?
             Log.d("THUNDERSCOUT", "Starting service...");
             startService(new Intent(this, BluetoothServerService.class));
+
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (!mBluetoothAdapter.isEnabled()) {
+                Log.d("THUNDERSCOUT", "Enabling Bluetooth as it's off");
+                mBluetoothAdapter.enable(); //TODO prompt user
+            }
         }
         Log.d("THUNDERSCOUT", "Finished onCreate");
 
