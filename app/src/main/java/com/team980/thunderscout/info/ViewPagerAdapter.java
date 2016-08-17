@@ -1,11 +1,11 @@
-package com.team980.thunderscout.adapter;
+package com.team980.thunderscout.info;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.team980.thunderscout.fragment.AutoFragment;
-import com.team980.thunderscout.fragment.TeleopFragment;
+import com.team980.thunderscout.match.AutoFragment;
+import com.team980.thunderscout.match.TeleopFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 

@@ -1,4 +1,4 @@
-package com.team980.thunderscout.adapter;
+package com.team980.thunderscout.info;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.activity.InfoActivity;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.TeamWrapper;
 

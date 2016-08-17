@@ -1,4 +1,4 @@
-package com.team980.thunderscout.thread;
+package com.team980.thunderscout.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
 
-import com.team980.thunderscout.bluetooth.BluetoothInfo;
 import com.team980.thunderscout.data.ScoutData;
 
 import java.io.IOException;

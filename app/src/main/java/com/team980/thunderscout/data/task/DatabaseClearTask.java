@@ -1,4 +1,4 @@
-package com.team980.thunderscout.task;
+package com.team980.thunderscout.data.task;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.team980.thunderscout.adapter.DataViewAdapter;
 import com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ServerDataDbHelper;
+import com.team980.thunderscout.info.DataViewAdapter;
 
 public class DatabaseClearTask extends AsyncTask<Void, Integer, Void> {
 

@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
-import com.team980.thunderscout.service.BluetoothServerService;
+import com.team980.thunderscout.bluetooth.BluetoothServerService;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

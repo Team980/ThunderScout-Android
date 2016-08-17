@@ -1,4 +1,4 @@
-package com.team980.thunderscout.fragment;
+package com.team980.thunderscout.match;
 
 
 import android.content.Context;
@@ -14,10 +14,9 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.activity.ScoutActivity;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.view.RankedSliderCompoundView;
+import com.team980.thunderscout.util.RankedSliderCompoundView;
 
 public class TeleopFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 

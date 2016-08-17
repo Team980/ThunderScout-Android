@@ -1,4 +1,4 @@
-package com.team980.thunderscout.task;
+package com.team980.thunderscout.bluetooth;
 
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.data.task.DatabaseWriteTask;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

@@ -1,4 +1,4 @@
-package com.team980.thunderscout.activity;
+package com.team980.thunderscout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,11 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.team980.thunderscout.R;
-import com.team980.thunderscout.adapter.DataViewAdapter;
 import com.team980.thunderscout.data.TeamWrapper;
-import com.team980.thunderscout.task.DatabaseClearTask;
-import com.team980.thunderscout.task.DatabaseReadTask;
+import com.team980.thunderscout.data.task.DatabaseClearTask;
+import com.team980.thunderscout.data.task.DatabaseReadTask;
+import com.team980.thunderscout.info.DataViewAdapter;
+import com.team980.thunderscout.match.ScoutActivity;
+import com.team980.thunderscout.preferences.SettingsActivity;
 
 import java.util.ArrayList;
 

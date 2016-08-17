@@ -1,4 +1,4 @@
-package com.team980.thunderscout.activity;
+package com.team980.thunderscout.match;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -29,14 +29,14 @@ import android.widget.Toast;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.ThunderScout;
-import com.team980.thunderscout.adapter.ViewPagerAdapter;
+import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.Rank;
-import com.team980.thunderscout.task.DatabaseWriteTask;
-import com.team980.thunderscout.thread.ClientConnectionThread;
-import com.team980.thunderscout.view.CounterCompoundView;
-import com.team980.thunderscout.view.RankedSliderCompoundView;
+import com.team980.thunderscout.data.task.DatabaseWriteTask;
+import com.team980.thunderscout.info.ViewPagerAdapter;
+import com.team980.thunderscout.util.CounterCompoundView;
+import com.team980.thunderscout.util.RankedSliderCompoundView;
 
 import java.util.EnumMap;
 

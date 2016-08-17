@@ -1,4 +1,4 @@
-package com.team980.thunderscout.service;
+package com.team980.thunderscout.bluetooth;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.thread.ServerListenerThread;
 
 public class BluetoothServerService extends Service {
 

@@ -1,4 +1,4 @@
-package com.team980.thunderscout.thread;
+package com.team980.thunderscout.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
@@ -7,9 +7,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
-
-import com.team980.thunderscout.bluetooth.BluetoothInfo;
-import com.team980.thunderscout.task.ServerConnectionTask;
 
 import java.io.IOException;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.team980.thunderscout.activity;
+package com.team980.thunderscout.info;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.adapter.RankedDefenseAdapter;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.CrossingStats;
 import com.team980.thunderscout.data.enumeration.ScoringStats;

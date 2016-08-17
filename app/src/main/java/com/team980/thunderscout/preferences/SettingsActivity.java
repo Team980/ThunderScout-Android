@@ -1,4 +1,4 @@
-package com.team980.thunderscout.activity;
+package com.team980.thunderscout.preferences;
 
 
 import android.annotation.TargetApi;
@@ -18,7 +18,6 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.util.AppCompatPreferenceActivity;
 
 import java.util.List;
 

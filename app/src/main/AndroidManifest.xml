@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/ThunderScout.BaseTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,22 +24,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ScoutActivity"
+            android:name=".match.ScoutActivity"
             android:label="Scout"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
-            android:name=".activity.InfoActivity"
+            android:name=".info.InfoActivity"
             android:label="Info"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name=".preferences.SettingsActivity"
             android:label="Settings"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
 
-        <service android:name=".service.BluetoothServerService" />
+        <service android:name=".bluetooth.BluetoothServerService" />
     </application>
 
 </manifest>

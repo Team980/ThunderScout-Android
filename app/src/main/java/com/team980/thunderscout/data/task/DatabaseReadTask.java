@@ -1,4 +1,4 @@
-package com.team980.thunderscout.task;
+package com.team980.thunderscout.data.task;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.team980.thunderscout.ThunderScout;
-import com.team980.thunderscout.adapter.DataViewAdapter;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ServerDataDbHelper;
@@ -16,6 +15,7 @@ import com.team980.thunderscout.data.enumeration.CrossingStats;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.Rank;
 import com.team980.thunderscout.data.enumeration.ScoringStats;
+import com.team980.thunderscout.info.DataViewAdapter;
 
 import java.util.EnumMap;
 

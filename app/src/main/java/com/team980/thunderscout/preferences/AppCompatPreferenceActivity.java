@@ -1,4 +1,4 @@
-package com.team980.thunderscout.util;
+package com.team980.thunderscout.preferences;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.team980.thunderscout.fragment;
+package com.team980.thunderscout.match;
 
 
 import android.content.Context;
@@ -15,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.activity.ScoutActivity;
 import com.team980.thunderscout.data.enumeration.CrossingStats;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.ScoringStats;
