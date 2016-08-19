@@ -20,7 +20,7 @@ public class TSNotificationManager {
     private NotificationCompat.Builder btTransferError;
     private int lastUsedId = 1;
 
-    private TSNotificationManager(Context context) {
+    private TSNotificationManager(Context context) { //TODO add click intents
         this.context = context;
 
         //init notifications
@@ -84,14 +84,14 @@ public class TSNotificationManager {
 
     public void showBtTransferSuccessful(String deviceName, int id) {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        btTransferSuccessful.setContentText("Data [received from|sent to]  " + deviceName);
+        btTransferSuccessful.setContentText("Data [received from|sent to] " + deviceName);
 
         mNotifyMgr.notify(id, btTransferSuccessful.build());
     }
 
     public void showBtTransferError(String deviceName, int id) {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        btTransferError.setContentText("Failed to [receive|send] data [from|to]  " + deviceName);
+        btTransferError.setContentText("Failed to [receive|send] data [from|to] " + deviceName);
 
         mNotifyMgr.notify(id, btTransferError.build());
     }

@@ -60,6 +60,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         ScoutData data = null;
         try {
             data = (ScoutData) fromScoutStream.readObject();
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
@@ -93,13 +94,13 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
         if (o != null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            if (prefs.getString("pref_serverStorageTask", "SAVE").equals("SAVE")) { //TODO modularize the saving mechanism
+            //if (prefs.getString("pref_serverStorageTask", "SAVE").equals("SAVE")) { //TODO modularize the saving mechanism
                 //Put the fetched ScoutData in the local database
                 DatabaseWriteTask writeTask = new DatabaseWriteTask(o, context);
                 writeTask.execute();
-            } else if (prefs.getString("pref_serverStorageTask", "SAVE").equals("SEND_SHEETS")) {
+            //} else if (prefs.getString("pref_serverStorageTask", "SAVE").equals("SEND_SHEETS")) {
                 //TODO sync with Google Sheets
-            }
+            //}
         } else {
             Log.d("ServerConnectionTask", "Failed to start DatabaseWriteTask!");
         }
