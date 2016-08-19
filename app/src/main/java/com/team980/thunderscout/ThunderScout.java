@@ -84,7 +84,7 @@ public class ThunderScout extends Application {
 
         Log.d("THUNDERSCOUT", "Fetching shared prefences");
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean runServer = sharedPref.getBoolean("pref_isServer", false);
+        boolean runServer = sharedPref.getBoolean("enable_bluetooth_server", false);
 
         if (runServer) { //TODO I must be launching multiple instances?
             Log.d("THUNDERSCOUT", "Starting service...");

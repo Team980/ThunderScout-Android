@@ -3,34 +3,27 @@ package com.team980.thunderscout.bluetooth;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 
-import com.team980.thunderscout.R;
+import com.team980.thunderscout.util.TSNotificationManager;
 
 public class BluetoothServerService extends Service {
 
-    private NotificationCompat.Builder mBuilder;
-
     private ServerListenerThread acceptThread;
 
-    public void onCreate() {
+    private TSNotificationManager notificationManager;
 
-        //init notification
-        mBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp)
-                .setContentTitle("ThunderScout Server is running")
-                .setContentText("Waiting for scout data to be sent") //TODO make the notification more useful; new icon
-                .setOngoing(true);
+    public void onCreate() {
+        notificationManager = TSNotificationManager.getInstance(this);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        startForeground(1, mBuilder.build());
+        startForeground(1, notificationManager.buildBtServerRunning());
 
-        acceptThread = new ServerListenerThread(getApplicationContext());
+        acceptThread = new ServerListenerThread(getApplicationContext(), this);
         acceptThread.start();
 
-        // If we get killed, after returning from here, restart
+        // If we get killed, after returning from here, restart - TODO is this why it runs twice?
         return START_STICKY;
     }
 

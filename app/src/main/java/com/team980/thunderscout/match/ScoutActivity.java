@@ -243,21 +243,17 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
 
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-                String address = prefs.getString("pref_serverDevice", null);
-                //TODO prompt for device?
+                String address = prefs.getString("bt_server_device", null);
 
                 for (BluetoothDevice device : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
                     if (device.getAddress().equals(address)) {
                         scoutData.setDataSource(device.getName());
 
-                        ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, this,
-                                findViewById(R.id.coordinatorLayout)); //TODO find a better way to notify than snackbar
+                        ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, this);
                         connectThread.start();
 
                         Toast info = Toast.makeText(this, "Sending data to " + device.getName() + "...", Toast.LENGTH_LONG);
                         info.show();
-
-                        //TODO notification
 
                         finish();
                     }

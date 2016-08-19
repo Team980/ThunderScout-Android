@@ -6,11 +6,10 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.widget.Toast;
 
 import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.util.TSNotificationManager;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,19 +21,20 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
     private BluetoothAdapter mBluetoothAdapter;
 
+    private TSNotificationManager notificationManager;
+
     private ScoutData scoutData;
 
     private Context context;
 
-    private View v;
-
-
-    public ClientConnectionThread(BluetoothDevice device, ScoutData data, Context context, View v) {
+    public ClientConnectionThread(BluetoothDevice device, ScoutData data, Context context) {
         // Use a temporary object that is later assigned to mmSocket,
         // because mmSocket is final
         BluetoothSocket tmp = null;
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        notificationManager = TSNotificationManager.getInstance(context);
 
         // Get a BluetoothSocket to connect with the given BluetoothDevice
         try {
@@ -47,13 +47,13 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
         scoutData = data;
 
         this.context = context;
-
-        this.v = v;
     }
 
     public void run() {
         // Cancel discovery because it will slow down the connection
         mBluetoothAdapter.cancelDiscovery();
+
+        int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName());
 
         try {
             // Connect the device through the socket. This will block
@@ -61,6 +61,8 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             mmSocket.connect();
         } catch (IOException connectException) {
             // Unable to connect; close the socket and get out
+            notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
+                    notificationId);
             try {
                 mmSocket.close();
             } catch (IOException closeException) {
@@ -81,7 +83,8 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             ooStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            postToastMessage(e.getMessage());
+            notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
+                    notificationId);
             return;
         }
 
@@ -94,20 +97,19 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             ooStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            postToastMessage(e.getMessage());
+            notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
+                    notificationId);
             return;
         }
 
-        //TODO confirmation
-
-        Snackbar.make(v, "Data send successful!", Snackbar.LENGTH_SHORT).show();
+        notificationManager.showBtTransferSuccessful(mmSocket.getRemoteDevice().getName(),
+                notificationId);
 
         try {
             ooStream.close();
             ioStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-            postToastMessage(e.getMessage());
         }
     }
 
@@ -117,7 +119,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
     public void cancel() {
         try {
             mmSocket.close();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
     }
 

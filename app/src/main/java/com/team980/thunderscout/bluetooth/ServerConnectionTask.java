@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.task.DatabaseWriteTask;
+import com.team980.thunderscout.util.TSNotificationManager;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,10 +22,14 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
     private Context context;
 
+    private TSNotificationManager notificationManager;
+
     public ServerConnectionTask(BluetoothSocket socket, Context context) {
         mmSocket = socket;
 
         this.context = context;
+
+        notificationManager = TSNotificationManager.getInstance(context);
     }
 
     @Override
@@ -35,6 +40,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
     @Override
     protected ScoutData doInBackground(Void[] params) {
+        int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName());
 
         ObjectInputStream fromScoutStream;
         ObjectOutputStream toScoutStream;
@@ -45,6 +51,8 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             fromScoutStream = new ObjectInputStream(mmSocket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
+            notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
+                    notificationId);
             return null;
         }
 
@@ -54,6 +62,8 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             data = (ScoutData) fromScoutStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
+                    notificationId);
             return null;
         }
 
@@ -64,6 +74,8 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             e.printStackTrace();
         }
 
+        notificationManager.showBtTransferSuccessful(mmSocket.getRemoteDevice().getName(),
+                notificationId);
         return data;
     }
 
@@ -81,7 +93,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
         if (o != null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            if (prefs.getString("pref_serverStorageTask", "SAVE").equals("SAVE")) {
+            if (prefs.getString("pref_serverStorageTask", "SAVE").equals("SAVE")) { //TODO modularize the saving mechanism
                 //Put the fetched ScoutData in the local database
                 DatabaseWriteTask writeTask = new DatabaseWriteTask(o, context);
                 writeTask.execute();

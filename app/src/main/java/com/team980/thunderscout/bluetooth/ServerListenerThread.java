@@ -18,7 +18,9 @@ public class ServerListenerThread extends Thread {
 
     private Context context;
 
-    public ServerListenerThread(Context context) {
+    private BluetoothServerService serverService;
+
+    public ServerListenerThread(Context context, BluetoothServerService service) {
         // Use a temporary object that is later assigned to mmServerSocket,
         // because mmServerSocket is final
         BluetoothServerSocket tmp = null;
@@ -33,6 +35,8 @@ public class ServerListenerThread extends Thread {
         mmServerSocket = tmp;
 
         this.context = context;
+
+        serverService = service;
     }
 
     public void run() {
