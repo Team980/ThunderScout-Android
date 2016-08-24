@@ -2,10 +2,13 @@ package com.team980.thunderscout.data.task;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
+import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ServerDataContract;
@@ -20,10 +23,15 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
     private final ScoutData data;
     private Context context;
 
+    private LocalBroadcastManager localBroadcastManager;
+
     public DatabaseWriteTask(ScoutData data, Context context) {
         this.data = data;
 
         this.context = context;
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(context);
+
     }
 
     @Override
@@ -107,5 +115,8 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
     protected void onPostExecute(Void o) {
         //Runs on UI thread after execution
         super.onPostExecute(o);
+
+        Intent intent = new Intent(MainActivity.ACTION_REFRESH_VIEW_PAGER);
+        localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
     }
 }
