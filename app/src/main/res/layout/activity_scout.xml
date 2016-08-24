@@ -24,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
             app:tabGravity="fill"
             app:tabMode="fixed"
             app:tabPaddingEnd="30dp"
