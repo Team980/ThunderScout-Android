@@ -76,7 +76,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         }
 
         notificationManager.showBtTransferSuccessful(mmSocket.getRemoteDevice().getName(),
-                notificationId);
+                notificationId); //TODO find a better way
         return data;
     }
 

@@ -103,7 +103,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
         }
 
         notificationManager.showBtTransferSuccessful(mmSocket.getRemoteDevice().getName(),
-                notificationId);
+                notificationId); //TODO find a better way
 
         try {
             ooStream.close();
