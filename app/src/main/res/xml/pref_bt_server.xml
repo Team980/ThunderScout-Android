@@ -1,9 +1,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="false"
         android:key="enable_bluetooth_server"
-        android:summary="Run the app in Bluetooth server mode"
+        android:summary="Enable the app's Bluetooth Server"
         android:title="Enable Bluetooth Server" />
 
     <!-- These are examples from the tutorial -->

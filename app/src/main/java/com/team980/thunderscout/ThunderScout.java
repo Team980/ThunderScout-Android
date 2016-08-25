@@ -78,7 +78,7 @@ public class ThunderScout extends Application {
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate() { //TODO move to main activity
         super.onCreate();
         Log.d("THUNDERSCOUT", "Application.onCreate");
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="56dp"
     app:cardBackgroundColor="#FF616161"
+    android:elevation="1dp"
     app:cardCornerRadius="0dp"
     app:contentPaddingLeft="16dp"> <!--TODO child divider UI refresh-->
 

@@ -2,10 +2,13 @@ package com.team980.thunderscout.util;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class TSNotificationManager {
 
@@ -28,9 +31,26 @@ public class TSNotificationManager {
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp)
                 .setContentTitle("Bluetooth server is running")
                 .setContentText("Open for connections via Bluetooth") //todo new icon
-                .setOngoing(true) //TODO remove ugly time
+                .setOngoing(true)
+                .setPriority(Notification.PRIORITY_LOW)
                 .setColor(context.getResources().getColor(R.color.primary))
+                .setShowWhen(false)
                 .setGroup("TS_SERVER_RUNNING");
+
+
+        PendingIntent serverSettingsIntent = PendingIntent.getActivity(context, 1,
+                new Intent(context, SettingsActivity.class),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        btServerRunning.setContentIntent(serverSettingsIntent);
+
+        NotificationCompat.Action openServerSetting = new NotificationCompat.Action(
+                R.drawable.ic_settings_white_24dp,
+                "SERVER SETTINGS",
+                serverSettingsIntent
+        );
+
+        btServerRunning.addAction(openServerSetting);
 
         btTransferInProgress = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp) //TODO find icon
@@ -72,6 +92,7 @@ public class TSNotificationManager {
         return btServerRunning.build();
     }
 
+    @Deprecated
     public int showBtTransferInProgress(String deviceName) {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         lastUsedId++;
@@ -82,6 +103,7 @@ public class TSNotificationManager {
         return lastUsedId;
     }
 
+    @Deprecated
     public void showBtTransferSuccessful(String deviceName, int id) {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         btTransferSuccessful.setContentText("Data [received from|sent to] " + deviceName);
@@ -89,6 +111,7 @@ public class TSNotificationManager {
         mNotifyMgr.notify(id, btTransferSuccessful.build());
     }
 
+    @Deprecated
     public void showBtTransferError(String deviceName, int id) {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         btTransferError.setContentText("Failed to [receive|send] data [from|to] " + deviceName);
