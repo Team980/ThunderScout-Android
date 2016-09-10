@@ -12,13 +12,13 @@
         android:orientation="horizontal">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/auto_tilTeamNumber"
+            android:id="@+id/summary_tilTeamNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Team Number">
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/auto_editTextTeamNumber"
+                android:id="@+id/summary_edittextTeamNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="6"

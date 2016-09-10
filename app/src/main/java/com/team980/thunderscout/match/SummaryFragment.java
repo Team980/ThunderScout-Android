@@ -50,13 +50,13 @@ public class SummaryFragment extends Fragment {
 
         if (this.isVisible() && !isVisibleToUser && scoutData != null) { //Leaving
 
-            AppCompatEditText teamNumber = (AppCompatEditText) getView().findViewById(R.id.teleop_editTextTeamNumber);
+            AppCompatEditText teamNumber = (AppCompatEditText) getView().findViewById(R.id.summary_edittextTeamNumber);
             scoutData.setTeamNumber(teamNumber.getText().toString());
         }
 
         if (this.isVisible() && isVisibleToUser && scoutData != null) { //Returning
 
-            AppCompatEditText teamNumber = (AppCompatEditText) getView().findViewById(R.id.teleop_editTextTeamNumber);
+            AppCompatEditText teamNumber = (AppCompatEditText) getView().findViewById(R.id.summary_edittextTeamNumber);
             teamNumber.setText(scoutData.getTeamNumber(), TextView.BufferType.NORMAL);
         }
     }
