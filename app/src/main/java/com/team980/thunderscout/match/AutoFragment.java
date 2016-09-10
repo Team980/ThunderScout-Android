@@ -15,12 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.enumeration.CrossingStats;
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.ScoringStats;
 
-public class AutoFragment extends Fragment implements AdapterView.OnItemSelectedListener,
-        RadioGroup.OnCheckedChangeListener {
+public class AutoFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     ScoutActivity scoutActivity;
 
@@ -35,12 +32,6 @@ public class AutoFragment extends Fragment implements AdapterView.OnItemSelected
 
         Spinner defense = (Spinner) view.findViewById(R.id.auto_spinnerDefenses);
         defense.setOnItemSelectedListener(this);
-
-        RadioGroup crossing = (RadioGroup) view.findViewById(R.id.auto_radioGroupCrossing);
-        crossing.setOnCheckedChangeListener(this);
-
-        RadioGroup scoring = (RadioGroup) view.findViewById(R.id.auto_radioGroupScoring);
-        scoring.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -60,36 +51,6 @@ public class AutoFragment extends Fragment implements AdapterView.OnItemSelected
         String itemSelected = (String) parent.getItemAtPosition(position);
         Defense defense = Defense.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
         scoutActivity.getData().setAutoDefenseCrossed(defense); //TODO crash on orientation change
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) { //RadioGroup
-        switch (checkedId) {
-            case R.id.auto_buttonNoAction:
-                scoutActivity.getData().setAutoCrossingStats(CrossingStats.NONE);
-                toggleDefenseVisibility(View.GONE);
-                toggleScoringVisibility(View.GONE);
-                break;
-            case R.id.auto_buttonReachedDefense:
-                scoutActivity.getData().setAutoCrossingStats(CrossingStats.REACHED);
-                toggleDefenseVisibility(View.VISIBLE);
-                toggleScoringVisibility(View.GONE);
-                break;
-            case R.id.auto_buttonCrossedDefense:
-                scoutActivity.getData().setAutoCrossingStats(CrossingStats.CROSSED);
-                toggleDefenseVisibility(View.VISIBLE);
-                toggleScoringVisibility(View.VISIBLE);
-                break;
-            case R.id.auto_buttonNoGoal:
-                scoutActivity.getData().setAutoScoringStats(ScoringStats.NONE);
-                break;
-            case R.id.auto_buttonLowGoal:
-                scoutActivity.getData().setAutoScoringStats(ScoringStats.LOW_GOAL);
-                break;
-            case R.id.auto_buttonHighGoal:
-                scoutActivity.getData().setAutoScoringStats(ScoringStats.HIGH_GOAL);
-                break;
-        }
     }
 
     /**
@@ -114,26 +75,6 @@ public class AutoFragment extends Fragment implements AdapterView.OnItemSelected
             AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.app_bar_layout);
             appBarLayout.setExpanded(true, true);
         }
-    }
-
-    /**
-     * @param visibility View.VISIBILE, View.INVISIBLE, or View.GONE
-     */
-    private void toggleDefenseVisibility(int visibility) {
-
-        View defense = getView().findViewById(R.id.auto_layoutDefense);
-
-        defense.setVisibility(visibility);
-    }
-
-    /**
-     * @param visibility View.VISIBILE, View.INVISIBLE, or View.GONE
-     */
-    private void toggleScoringVisibility(int visibility) {
-
-        View scoring = getView().findViewById(R.id.auto_layoutScoring);
-
-        scoring.setVisibility(visibility);
     }
 
     @Override

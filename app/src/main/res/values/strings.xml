@@ -2,6 +2,7 @@
     <string name="app_name">ThunderScout</string>
 
     <string-array name="defenses_array">
+        <item>None</item>
         <item>Low Bar</item>
         <item>Portcullis</item>
         <item>Chival de Frise</item>
@@ -11,6 +12,12 @@
         <item>Sallyport</item>
         <item>Rock Wall</item>
         <item>Rough Terrain</item>
+    </string-array>
+
+    <string-array name="scaling_stats_array">
+        <item>None</item>
+        <item>Partial</item>
+        <item>Full</item>
     </string-array>
 
     <string-array name="server_storage_task">

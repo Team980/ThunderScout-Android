@@ -13,10 +13,7 @@ import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ServerDataContract;
 import com.team980.thunderscout.data.ServerDataDbHelper;
-import com.team980.thunderscout.data.enumeration.CrossingStats;
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.Rank;
-import com.team980.thunderscout.data.enumeration.ScoringStats;
 
 public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
@@ -58,7 +55,7 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getDataSource());
 
-        CrossingStats cs = data.getAutoCrossingStats();
+        /*CrossingStats cs = data.getAutoCrossingStats();
         if (cs != null) {
             values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSING_STATS, data.getAutoCrossingStats().toString());
         }
@@ -89,7 +86,7 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOAL_RANK, teleopHighGoalRank.getId());
 
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DRIVER_SKILL, data.getTeleopDriverSkill().getId());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getTeleopComments());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getTeleopComments());*/
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;

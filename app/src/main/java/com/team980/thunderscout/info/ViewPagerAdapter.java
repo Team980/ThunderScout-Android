@@ -5,18 +5,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.team980.thunderscout.match.AutoFragment;
+import com.team980.thunderscout.match.SummaryFragment;
 import com.team980.thunderscout.match.TeleopFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 
-    private String tabTitles[] = new String[]{"Auto", "Teleop"};
+    private String tabTitles[] = new String[]{"Auto", "Teleop", "Summary"};
     private Fragment tabs[];
 
     public ViewPagerAdapter(final FragmentManager fm) {
         super(fm);
 
-        tabs = new Fragment[]{new AutoFragment(), new TeleopFragment()};
+        tabs = new Fragment[]{new AutoFragment(), new TeleopFragment(), new SummaryFragment()};
     }
 
     @Override
@@ -27,7 +28,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override

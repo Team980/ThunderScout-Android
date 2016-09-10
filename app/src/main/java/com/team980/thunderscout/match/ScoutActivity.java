@@ -32,11 +32,9 @@ import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.Rank;
 import com.team980.thunderscout.data.task.DatabaseWriteTask;
 import com.team980.thunderscout.info.ViewPagerAdapter;
 import com.team980.thunderscout.util.CounterCompoundView;
-import com.team980.thunderscout.util.RankedSliderCompoundView;
 
 import java.util.EnumMap;
 
@@ -116,7 +114,7 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
     @Override
     public void onPageSelected(int position) {
         switch (position) {
-            case 1: //TELEOP tab
+            case 2: //SUMMARY tab
                 fab.show();
                 fab.setClickable(true);
                 break;
@@ -155,79 +153,15 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
         if (v.getId() == R.id.fab) {
             NestedScrollView scrollView = (NestedScrollView) findViewById(R.id.teleop_scrollView);
 
-            TextInputLayout tilTeamNumber = (TextInputLayout) findViewById(R.id.teleop_tilTeamNumber);
-            if (tilTeamNumber.getEditText().getText().toString().isEmpty()) {
-                tilTeamNumber.setError("This field is required");
-                scrollView.scrollTo(0, scrollView.getTop());
-                return;
-            }
-
-            if (!ThunderScout.isInteger(tilTeamNumber.getEditText().getText().toString())) {
-                tilTeamNumber.setError("This must be an integer!");
-                scrollView.scrollTo(0, scrollView.getTop());
-                return;
-            }
-
-            tilTeamNumber.setErrorEnabled(false);
-
-            TextInputLayout comments = (TextInputLayout) findViewById(R.id.teleop_tilComments);
-            if (comments.getEditText().getText().toString().isEmpty()) {
-                comments.setError("This field is required");
-                scrollView.scrollTo(0, scrollView.getBottom());
-                return;
-            }
-
-            comments.setErrorEnabled(false);
+            //Check errors
 
             showToolbar();
         } else {
 
-            AppCompatEditText teamNumber = (AppCompatEditText) findViewById(R.id.teleop_editTextTeamNumber);
+            //Init scoutData
 
-            AppCompatEditText comments = (AppCompatEditText) findViewById(R.id.teleop_comments);
-
-            scoutData.setTeamNumber(teamNumber.getText().toString());
-
-            scoutData.setDateAdded(System.currentTimeMillis());
-
-            CounterCompoundView defensesBreached = (CounterCompoundView) findViewById(R.id.teleop_counterBreach);
-            scoutData.setTeleopDefensesBreached(defensesBreached.getValue());
-
-            EnumMap<Defense, Rank> teleopDefensesBreached = scoutData.getTeleopMapDefensesBreached(); //This is a REFERENCE!
-
-            for (Defense d : Defense.values()) {
-                CheckBox checkBox = (CheckBox) findViewById(d.getTeleopID());
-
-                if (checkBox.isChecked()) {
-                    RankedSliderCompoundView slider = (RankedSliderCompoundView) findViewById(d.getTeleopSliderID());
-
-                    teleopDefensesBreached.put(d, slider.getRankValue());
-                }
-            }
-
-            CounterCompoundView goalsScored = (CounterCompoundView) findViewById(R.id.teleop_counterScore);
-            scoutData.setTeleopGoalsScored(goalsScored.getValue());
-
-            CheckBox lowGoals = (CheckBox) findViewById(R.id.teleop_goalLow);
-            scoutData.setTeleopLowGoals(lowGoals.isChecked());
-
-            CheckBox highGoals = (CheckBox) findViewById(R.id.teleop_goalHigh);
-            scoutData.setTeleopHighGoals(highGoals.isChecked());
-
-            RankedSliderCompoundView lowGoalSlider = (RankedSliderCompoundView) findViewById(R.id.teleop_sliderLowGoal);
-            scoutData.setTeleopLowGoalRank(lowGoalSlider.getRankValue());
-
-            RankedSliderCompoundView highGoalSlider = (RankedSliderCompoundView) findViewById(R.id.teleop_sliderHighGoal);
-            scoutData.setTeleopHighGoalRank(highGoalSlider.getRankValue());
-
-            RankedSliderCompoundView driverSkill = (RankedSliderCompoundView) findViewById(R.id.teleop_sliderSkill);
-            scoutData.setTeleopDriverSkill(driverSkill.getRankValue());
-
-            scoutData.setTeleopComments(comments.getText().toString());
-
+            //TODO: modular
             if (v.getId() == R.id.buttonSave) {
-
-                scoutData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
 
                 DatabaseWriteTask task = new DatabaseWriteTask(scoutData, this);
                 task.execute();
@@ -239,7 +173,9 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
 
                 finish();
 
-            } else if (v.getId() == R.id.buttonSendBluetooth) {
+            }
+
+            if (v.getId() == R.id.buttonSendBluetooth) {
 
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -258,7 +194,9 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
                         finish();
                     }
                 }
-            } else if (v.getId() == R.id.buttonSendSheets) {
+            }
+
+            if (v.getId() == R.id.buttonSendSheets) {
                 //TODO send to Google Sheets
             }
         }

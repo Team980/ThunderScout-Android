@@ -31,7 +31,7 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.CounterCompoundView, 0, 0);
-        max = a.getFloat(R.styleable.CounterCompoundView_max, 10);
+        max = a.getFloat(R.styleable.CounterCompoundView_max, 100); //Default max: 100
         min = a.getFloat(R.styleable.CounterCompoundView_min, 0);
         count = a.getFloat(R.styleable.CounterCompoundView_count, 1);
 

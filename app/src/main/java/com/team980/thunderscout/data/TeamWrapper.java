@@ -47,14 +47,6 @@ public class TeamWrapper implements ParentListItem, Serializable {
 
     public String getDescriptor(TeamComparator sortMode) {
         switch (sortMode) {
-            case SORT_AVERAGE_DEFENSES_BREACHED:
-                return getAverageScoutData().getAverageTeleopDefensesBreached() + " defenses breached";
-            case SORT_TOTAL_DEFENSES_BREACHED:
-                return getAverageScoutData().getCumulativeTeleopDefensesBreached() + " defenses breached";
-            case SORT_AVERAGE_GOALS_SCORED:
-                return getAverageScoutData().getAverageTeleopGoalsScored() + " boulders scored";
-            case SORT_TOTAL_GOALS_SCORED:
-                return getAverageScoutData().getCumulativeTeleopGoalsScored() + " boulders scored";
             default:
                 return getNumberOfMatches() + " matches"; //TODO make the layout change?
         }
@@ -82,30 +74,6 @@ public class TeamWrapper implements ParentListItem, Serializable {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Integer.valueOf(o1.getTeamNumber())
                         .compareTo(Integer.valueOf(o2.getTeamNumber()));
-            }
-        },
-        SORT_AVERAGE_DEFENSES_BREACHED {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Float.valueOf(o1.getAverageScoutData().getAverageTeleopDefensesBreached())
-                        .compareTo(o2.getAverageScoutData().getAverageTeleopDefensesBreached());
-            }
-        },
-        SORT_TOTAL_DEFENSES_BREACHED {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Float.valueOf(o1.getAverageScoutData().getCumulativeTeleopDefensesBreached())
-                        .compareTo(o2.getAverageScoutData().getCumulativeTeleopDefensesBreached());
-            }
-        },
-        SORT_AVERAGE_GOALS_SCORED {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Integer.valueOf(o1.getAverageScoutData().getAverageTeleopGoalsScored())
-                        .compareTo(o2.getAverageScoutData().getAverageTeleopGoalsScored());
-            }
-        },
-        SORT_TOTAL_GOALS_SCORED {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Integer.valueOf(o1.getAverageScoutData().getCumulativeTeleopGoalsScored())
-                        .compareTo(o2.getAverageScoutData().getCumulativeTeleopGoalsScored());
             }
         };
 

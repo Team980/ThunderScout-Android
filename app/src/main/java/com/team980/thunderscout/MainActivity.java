@@ -32,11 +32,7 @@ import com.team980.thunderscout.preferences.SettingsActivity;
 
 import java.util.ArrayList;
 
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_AVERAGE_DEFENSES_BREACHED;
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_AVERAGE_GOALS_SCORED;
 import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TOTAL_DEFENSES_BREACHED;
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TOTAL_GOALS_SCORED;
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
         PopupMenu.OnMenuItemClickListener, SearchView.OnQueryTextListener {
@@ -201,18 +197,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         switch (item.getItemId()) {
             case R.id.sort_team_number:
                 adapter.sort(SORT_TEAM_NUMBER);
-                return true;
-            case R.id.sort_average_defenses_breached:
-                adapter.sort(SORT_AVERAGE_DEFENSES_BREACHED);
-                return true;
-            case R.id.sort_total_defenses_breached:
-                adapter.sort(SORT_TOTAL_DEFENSES_BREACHED);
-                return true;
-            case R.id.sort_average_goals_scored:
-                adapter.sort(SORT_AVERAGE_GOALS_SCORED);
-                return true;
-            case R.id.sort_total_goals_scored:
-                adapter.sort(SORT_TOTAL_GOALS_SCORED);
                 return true;
             default:
                 return false;

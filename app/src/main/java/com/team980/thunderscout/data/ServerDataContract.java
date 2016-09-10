@@ -8,7 +8,7 @@ public final class ServerDataContract {
     private ServerDataContract() {
     }
 
-    /* Inner class that defines the table contents */
+    /* Inner class that defines the table contents */ //TODO reimplement
     public static abstract class ScoutDataTable implements BaseColumns {
         public static final String TABLE_NAME = "server_data";
         public static final String COLUMN_NAME_TEAM_NUMBER = "team";

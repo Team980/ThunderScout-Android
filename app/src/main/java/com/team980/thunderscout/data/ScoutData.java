@@ -1,9 +1,7 @@
 package com.team980.thunderscout.data;
 
-import com.team980.thunderscout.data.enumeration.CrossingStats;
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.Rank;
-import com.team980.thunderscout.data.enumeration.ScoringStats;
+import com.team980.thunderscout.data.enumeration.ScalingStats;
 
 import java.io.Serializable;
 import java.util.EnumMap;
@@ -11,39 +9,49 @@ import java.util.EnumMap;
 /**
  * Implements data for one team from one match.
  */
-public class ScoutData implements Serializable { //TODO why do driverSkill, comments have teleop in the name
+public class ScoutData implements Serializable {
 
+    /**
+     * ScoutData Version 2
+     */
+    private static final long serialVersionUID = 2;
+
+    // INIT
     private String teamNumber;
+
     private long dateAdded;
-    private String dataSource;
+    private String dataSource; //TODO add when scouting
     //TODO sharing/sync status
 
-    private CrossingStats autoCrossingStats;
+    // AUTO
     private Defense autoDefenseCrossed;
-    private ScoringStats autoScoringStats;
 
-    private float teleopDefensesBreached;
-    private EnumMap<Defense, Rank> teleopMapDefensesBreached;
-    private float teleopGoalsScored;
+    private int autoHighGoals;
+    private int autoLowGoals;
+    private int autoMissedGoals;
 
-    private boolean teleopLowGoals;
-    private boolean teleopHighGoals;
-    private Rank teleopLowGoalRank;
-    private Rank teleopHighGoalRank;
+    // TELEOP
+    private EnumMap<Defense, Integer> teleopDefenseCrossings;
 
-    private Rank teleopDriverSkill;
-    private String teleopComments;
+    private int teleopHighGoals;
+    private int teleopLowGoals;
+    private int teleopMissedGoals;
+
+    // SUMMARY
+    private ScalingStats scalingStats;
+    private boolean challengedTower;
+
+    private String troubleWith;
+    private String comments;
 
     public ScoutData() {
-        autoCrossingStats = CrossingStats.NONE;
-        autoScoringStats = ScoringStats.NONE;
-
-        teleopMapDefensesBreached = new EnumMap<>(Defense.class);
+        teleopDefenseCrossings = new EnumMap<>(Defense.class);
 
         //default values
-        teleopLowGoalRank = Rank.NOT_ATTEMPTED;
-        teleopHighGoalRank = Rank.NOT_ATTEMPTED;
+        scalingStats = ScalingStats.NONE;
     }
+
+    // --- INIT ---
 
     public String getTeamNumber() {
         return teamNumber;
@@ -69,13 +77,7 @@ public class ScoutData implements Serializable { //TODO why do driverSkill, comm
         dataSource = d;
     }
 
-    public CrossingStats getAutoCrossingStats() {
-        return autoCrossingStats;
-    }
-
-    public void setAutoCrossingStats(CrossingStats autoCrossingStats) {
-        this.autoCrossingStats = autoCrossingStats;
-    }
+    // --- AUTO ---
 
     public Defense getAutoDefenseCrossed() {
         return autoDefenseCrossed;
@@ -85,79 +87,91 @@ public class ScoutData implements Serializable { //TODO why do driverSkill, comm
         this.autoDefenseCrossed = autoDefenseCrossed;
     }
 
-    public ScoringStats getAutoScoringStats() {
-        return autoScoringStats;
+    public int getAutoLowGoals() {
+        return autoLowGoals;
     }
 
-    public void setAutoScoringStats(ScoringStats autoScoringStats) {
-        this.autoScoringStats = autoScoringStats;
+    public void setAutoLowGoals(int autoLowGoals) {
+        this.autoLowGoals = autoLowGoals;
     }
 
-    public float getTeleopDefensesBreached() {
-        return teleopDefensesBreached;
+    public int getAutoHighGoals() {
+        return autoHighGoals;
     }
 
-    public void setTeleopDefensesBreached(float teleopDefensesBreached) {
-        this.teleopDefensesBreached = teleopDefensesBreached;
+    public void setAutoHighGoals(int autoHighGoals) {
+        this.autoHighGoals = autoHighGoals;
     }
 
-    public EnumMap<Defense, Rank> getTeleopMapDefensesBreached() {
-        return teleopMapDefensesBreached;
+    public int getAutoMissedGoals() {
+        return autoMissedGoals;
     }
 
-    public float getTeleopGoalsScored() {
-        return teleopGoalsScored;
+    public void setAutoMissedGoals(int autoMissedGoals) {
+        this.autoMissedGoals = autoMissedGoals;
     }
 
-    public void setTeleopGoalsScored(float teleopGoalsScored) {
-        this.teleopGoalsScored = teleopGoalsScored;
+    // --- TELEOP ---
+
+    public EnumMap<Defense, Integer> getTeleopDefenseCrossings() {
+        return teleopDefenseCrossings;
     }
 
-    public boolean getTeleopLowGoals() {
+    public int getTeleopLowGoals() {
         return teleopLowGoals;
     }
 
-    public void setTeleopLowGoals(boolean teleopLowGoals) {
+    public void setTeleopLowGoals(int teleopLowGoals) {
         this.teleopLowGoals = teleopLowGoals;
     }
 
-    public boolean getTeleopHighGoals() {
+    public int getTeleopHighGoals() {
         return teleopHighGoals;
     }
 
-    public void setTeleopHighGoals(boolean teleopHighGoals) {
+    public void setTeleopHighGoals(int teleopHighGoals) {
         this.teleopHighGoals = teleopHighGoals;
     }
 
-    public Rank getTeleopLowGoalRank() {
-        return teleopLowGoalRank;
+    public int getTeleopMissedGoals() {
+        return teleopMissedGoals;
     }
 
-    public void setTeleopLowGoalRank(Rank teleopLowGoalRank) {
-        this.teleopLowGoalRank = teleopLowGoalRank;
+    public void setTeleopMissedGoals(int teleopMissedGoals) {
+        this.teleopMissedGoals = teleopMissedGoals;
     }
 
-    public Rank getTeleopHighGoalRank() {
-        return teleopHighGoalRank;
+    // --- SUMMARY ---
+
+    public ScalingStats getScalingStats() {
+        return scalingStats;
     }
 
-    public void setTeleopHighGoalRank(Rank teleopHighGoalRank) {
-        this.teleopHighGoalRank = teleopHighGoalRank;
+    public void setScalingStats(ScalingStats scalingStats) {
+        this.scalingStats = scalingStats;
     }
 
-    public Rank getTeleopDriverSkill() {
-        return teleopDriverSkill;
+    public boolean hasChallengedTower() {
+        return challengedTower;
     }
 
-    public void setTeleopDriverSkill(Rank teleopDriverSkill) {
-        this.teleopDriverSkill = teleopDriverSkill;
+    public void setChallengedTower(boolean challengedTower) {
+        this.challengedTower = challengedTower;
     }
 
-    public String getTeleopComments() {
-        return teleopComments;
+    public String getTroubleWith() {
+        return troubleWith;
     }
 
-    public void setTeleopComments(String teleopComments) {
-        this.teleopComments = teleopComments;
+    public void setTroubleWith(String troubleWith) {
+        this.troubleWith = troubleWith;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

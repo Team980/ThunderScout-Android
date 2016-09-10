@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.CrossingStats;
-import com.team980.thunderscout.data.enumeration.ScoringStats;
 
 import java.text.SimpleDateFormat;
 
@@ -39,7 +37,7 @@ public class InfoActivity extends AppCompatActivity {
         TextView dataSource = (TextView) findViewById(R.id.info_dataSource);
         dataSource.setText("Source: " + data.getDataSource());
 
-        TextView autoDefenseStats = (TextView) findViewById(R.id.info_autoDefenseStats);
+        /*TextView autoDefenseStats = (TextView) findViewById(R.id.info_autoDefenseStats);
         if (data.getAutoCrossingStats() == CrossingStats.NONE) {
             autoDefenseStats.setText("Did not cross a defense");
         } else {
@@ -87,7 +85,7 @@ public class InfoActivity extends AppCompatActivity {
         driverSkill.setText(data.getTeleopDriverSkill().getDescription());
 
         TextView comments = (TextView) findViewById(R.id.info_comments);
-        comments.setText(data.getTeleopComments());
+        comments.setText(data.getTeleopComments());*/
     }
 }
 

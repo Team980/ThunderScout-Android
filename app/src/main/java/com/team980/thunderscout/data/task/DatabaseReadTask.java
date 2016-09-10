@@ -11,10 +11,7 @@ import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ServerDataDbHelper;
-import com.team980.thunderscout.data.enumeration.CrossingStats;
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.Rank;
-import com.team980.thunderscout.data.enumeration.ScoringStats;
 import com.team980.thunderscout.info.DataViewAdapter;
 
 import java.util.EnumMap;
@@ -140,7 +137,7 @@ public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
 
         data.setDataSource(dataSource);
 
-        CrossingStats autoCrossingStats = CrossingStats.valueOf(cursor.getString(
+        /*CrossingStats autoCrossingStats = CrossingStats.valueOf(cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_CROSSING_STATS)));
 
         data.setAutoCrossingStats(autoCrossingStats);
@@ -200,7 +197,7 @@ public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
         String comments = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_COMMENTS));
 
-        data.setTeleopComments(comments);
+        data.setTeleopComments(comments);*/
 
         publishProgress(data);
     }

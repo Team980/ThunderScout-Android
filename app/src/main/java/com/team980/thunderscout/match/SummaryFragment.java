@@ -17,13 +17,13 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
 
-public class TeleopFragment extends Fragment {
+public class SummaryFragment extends Fragment {
 
     private ScoutData scoutData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_teleop, container, false);
+        return inflater.inflate(R.layout.fragment_summary, container, false);
     }
 
     @Override

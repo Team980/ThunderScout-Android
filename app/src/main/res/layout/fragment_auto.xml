@@ -28,59 +28,7 @@
 
     </LinearLayout>
 
-
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Crossing Statistics"
-            android:textSize="18sp" />
-
-        <RadioGroup
-            android:id="@+id/auto_radioGroupCrossing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:checkedButton="@+id/auto_buttonNoAction"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@id/auto_buttonNoAction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="None" />
-
-            <RadioButton
-                android:id="@+id/auto_buttonReachedDefense"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:text="Reached" />
-
-            <RadioButton
-                android:id="@+id/auto_buttonCrossedDefense"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="Crossed" />
-
-        </RadioGroup>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/auto_layoutDefense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -107,53 +55,25 @@
 
     </LinearLayout>
 
-
     <LinearLayout
-        android:id="@+id/auto_layoutScoring"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
+        <com.team980.thunderscout.util.CounterCompoundView
+            android:id="@+id/auto_counterLowGoals"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Scoring Statistics"
-            android:textSize="18sp" />
+            android:layout_height="wrap_content" />
 
-        <RadioGroup
-            android:id="@+id/auto_radioGroupScoring"
+        <com.team980.thunderscout.util.CounterCompoundView
+            android:id="@+id/auto_counterHighGoals"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checkedButton="@+id/auto_buttonNoGoal"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content" />
 
-            <RadioButton
-                android:id="@id/auto_buttonNoGoal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="None" />
+        <com.team980.thunderscout.util.CounterCompoundView
+            android:id="@+id/auto_counterMissedGoals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-            <RadioButton
-                android:id="@+id/auto_buttonLowGoal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:text="Low Goal" />
-
-            <RadioButton
-                android:id="@+id/auto_buttonHighGoal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="High Goal" />
-
-        </RadioGroup>
     </LinearLayout>
 
 </LinearLayout>
