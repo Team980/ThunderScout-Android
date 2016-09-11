@@ -10,7 +10,7 @@ public class ServerDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
 
-    public static final String DATABASE_NAME = "ThunderScout_2016_CHAMPIONSHIPS.db"; //TODO
+    public static final String DATABASE_NAME = "ThunderScout_2016_V2.db"; //TODO settle on a DB name!?
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String FLOAT_TYPE = " REAL";
@@ -24,21 +24,19 @@ public class ServerDataDbHelper extends SQLiteOpenHelper {
                     ScoutDataTable.COLUMN_NAME_DATE_ADDED + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_DATA_SOURCE + TEXT_TYPE + COMMA_SEP +
 
-                    ScoutDataTable.COLUMN_NAME_AUTO_CROSSING_STATS + TEXT_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED + TEXT_TYPE + COMMA_SEP +
-                    ScoutDataTable.COLUMN_NAME_AUTO_SCORING_STATS + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOALS + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_AUTO_MISSED_GOALS + INTEGER_TYPE + COMMA_SEP +
 
-                    ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSES_BREACHED + FLOAT_TYPE + COMMA_SEP +
-                    ScoutDataTable.COLUMN_NAME_TELEOP_MAP_DEFENSES_BREACHED + BLOB_TYPE + COMMA_SEP +
-
-                    ScoutDataTable.COLUMN_NAME_TELEOP_GOALS_SCORED + FLOAT_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSE_CROSSINGS + BLOB_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_RANK + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOAL_RANK + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_GOALS + INTEGER_TYPE + COMMA_SEP +
 
-
-                    ScoutDataTable.COLUMN_NAME_DRIVER_SKILL + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_SCALING_STATS + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_CHALLENGED_TOWER + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_TROUBLE_WITH + TEXT_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_COMMENTS + TEXT_TYPE + ")";
 
     private static final String SQL_DELETE_ENTRIES =

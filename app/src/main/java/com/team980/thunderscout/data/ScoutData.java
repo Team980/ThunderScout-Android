@@ -48,7 +48,9 @@ public class ScoutData implements Serializable {
         teleopDefenseCrossings = new EnumMap<>(Defense.class);
 
         //default values
+        autoDefenseCrossed = Defense.NONE;
         scalingStats = ScalingStats.NONE;
+        challengedTower = false;
     }
 
     // --- INIT ---

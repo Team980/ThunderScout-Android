@@ -13,7 +13,7 @@ import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ServerDataContract;
 import com.team980.thunderscout.data.ServerDataDbHelper;
-import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.ScalingStats;
 
 public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
@@ -48,45 +48,33 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
+
+        // Init
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER, data.getTeamNumber());
-
-        long date = data.getDateAdded();
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, date);
-
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, data.getDateAdded());
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getDataSource());
 
-        /*CrossingStats cs = data.getAutoCrossingStats();
-        if (cs != null) {
-            values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSING_STATS, data.getAutoCrossingStats().toString());
-        }
+        // Auto
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED, data.getAutoDefenseCrossed().toString());
 
-        Defense d = data.getAutoDefenseCrossed();
-        if (d != null) {
-            values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED, data.getAutoDefenseCrossed().toString());
-        }
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOALS, data.getAutoLowGoals());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS, data.getAutoHighGoals());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_GOALS, data.getAutoMissedGoals());
 
-        ScoringStats ss = data.getAutoScoringStats();
-        if (ss != null) {
-            values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_SCORING_STATS, data.getAutoScoringStats().toString());
-        }
+        // Teleop
+        byte[] listDefenseCrossings = ThunderScout.serializeObject(data.getTeleopDefenseCrossings());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSE_CROSSINGS, listDefenseCrossings);
 
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSES_BREACHED, data.getTeleopDefensesBreached());
-
-        byte[] listTeleopDefensesBreached = ThunderScout.serializeObject(data.getTeleopMapDefensesBreached());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MAP_DEFENSES_BREACHED, listTeleopDefensesBreached);
-
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GOALS_SCORED, data.getTeleopGoalsScored());
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS, data.getTeleopLowGoals());
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleopHighGoals());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_GOALS, data.getTeleopMissedGoals());
 
-        Rank teleopLowGoalRank = data.getTeleopLowGoalRank();
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_RANK, teleopLowGoalRank.getId());
-
-        Rank teleopHighGoalRank = data.getTeleopHighGoalRank();
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOAL_RANK, teleopHighGoalRank.getId());
-
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DRIVER_SKILL, data.getTeleopDriverSkill().getId());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getTeleopComments());*/
+        // Summary
+        ScalingStats scalingStats = data.getScalingStats();
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_SCALING_STATS, scalingStats.toString());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_CHALLENGED_TOWER, data.hasChallengedTower());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
+        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;

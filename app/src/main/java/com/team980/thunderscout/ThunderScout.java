@@ -78,7 +78,7 @@ public class ThunderScout extends Application {
     }
 
     @Override
-    public void onCreate() { //TODO move to main activity
+    public void onCreate() { //TODO move to main activity as this is probably why it takes forever to launch
         super.onCreate();
         Log.d("THUNDERSCOUT", "Application.onCreate");
 
