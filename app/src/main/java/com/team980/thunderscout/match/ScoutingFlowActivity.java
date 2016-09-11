@@ -154,24 +154,34 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         switch (button.getId()) {
             case R.id.teleop_previewLowBar:
                 image = getResources().getDrawable(R.mipmap.low_bar);
+                break;
             case R.id.teleop_previewPortcullis:
                 image = getResources().getDrawable(R.mipmap.portcullis);
+                break;
             case R.id.teleop_previewChivalDeFrise:
                 image = getResources().getDrawable(R.mipmap.chival_de_frise);
+                break;
             case R.id.teleop_previewMoat:
                 image = getResources().getDrawable(R.mipmap.moat);
+                break;
             case R.id.teleop_previewRamparts:
                 image = getResources().getDrawable(R.mipmap.ramparts);
+                break;
             case R.id.teleop_previewDrawbridge:
                 image = getResources().getDrawable(R.mipmap.drawbridge);
+                break;
             case R.id.teleop_previewSallyport:
                 image = getResources().getDrawable(R.mipmap.sallyport);
+                break;
             case R.id.teleop_previewRockWall:
                 image = getResources().getDrawable(R.mipmap.rock_wall);
+                break;
             case R.id.teleop_previewRoughTerrain:
                 image = getResources().getDrawable(R.mipmap.rough_terrain);
+                break;
             default:
-                image = getResources().getDrawable(R.mipmap.ic_launcher); //should never happen
+                image = getResources().getDrawable(R.mipmap.ic_launcher);
+                break;
         }
 
         ImagePreviewDialog dialog = new ImagePreviewDialog();

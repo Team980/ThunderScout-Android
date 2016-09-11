@@ -31,18 +31,29 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Low Bar" />
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/teleop_previewLowBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="showImagePreview"
-                android:src="@drawable/ic_info_white_24dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp"
+                    android:text="Low Bar" />
+
+                <ImageButton
+                    android:id="@+id/teleop_previewLowBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="showImagePreview"
+                    android:src="@drawable/ic_info_white_24dp" />
+
+            </LinearLayout>
 
             <com.team980.thunderscout.util.CounterCompoundView
                 android:id="@+id/teleop_counterLowBar"
@@ -65,18 +76,29 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Portcullis" />
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/teleop_previewPortcullis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="showImagePreview"
-                    android:src="@drawable/ic_info_white_24dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        android:text="Portcullis" />
+
+                    <ImageButton
+                        android:id="@+id/teleop_previewPortcullis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:onClick="showImagePreview"
+                        android:src="@drawable/ic_info_white_24dp" />
+
+                </LinearLayout>
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterPortcullis"
@@ -92,18 +114,29 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Chival de Frise" />
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/teleop_previewChivalDeFrise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="showImagePreview"
-                    android:src="@drawable/ic_info_white_24dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        android:text="Chival de Frise" />
+
+                    <ImageButton
+                        android:id="@+id/teleop_previewChivalDeFrise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:onClick="showImagePreview"
+                        android:src="@drawable/ic_info_white_24dp" />
+
+                </LinearLayout>
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterChivalDeFrise"
@@ -119,18 +152,29 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Moat" />
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/teleop_previewMoat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="showImagePreview"
-                    android:src="@drawable/ic_info_white_24dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        android:text="Moat" />
+
+                    <ImageButton
+                        android:id="@+id/teleop_previewMoat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:onClick="showImagePreview"
+                        android:src="@drawable/ic_info_white_24dp" />
+
+                </LinearLayout>
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterMoat"
@@ -146,18 +190,29 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Ramparts" />
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/teleop_previewRamparts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="showImagePreview"
-                    android:src="@drawable/ic_info_white_24dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        android:text="Ramparts" />
+
+                    <ImageButton
+                        android:id="@+id/teleop_previewRamparts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:onClick="showImagePreview"
+                        android:src="@drawable/ic_info_white_24dp" />
+
+                </LinearLayout>
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterRamparts"
@@ -173,18 +228,29 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Drawbridge" />
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/teleop_previewDrawbridge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="showImagePreview"
-                    android:src="@drawable/ic_info_white_24dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        android:text="Drawbridge" />
+
+                    <ImageButton
+                        android:id="@+id/teleop_previewDrawbridge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:onClick="showImagePreview"
+                        android:src="@drawable/ic_info_white_24dp" />
+
+                </LinearLayout>
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterDrawbridge"
@@ -200,18 +266,29 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Sallyport" />
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_info_white_24dp"
-                    android:onClick="showImagePreview"
-                    android:id="@+id/teleop_previewSallyport"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        android:text="Sallyport" />
+
+                    <ImageButton
+                        android:id="@+id/teleop_previewSallyport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:onClick="showImagePreview"
+                        android:src="@drawable/ic_info_white_24dp" />
+
+                </LinearLayout>
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterSallyport"
@@ -227,18 +304,29 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Rock Wall" />
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_info_white_24dp"
-                    android:onClick="showImagePreview"
-                    android:id="@+id/teleop_previewRockWall"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        android:text="Rock Wall" />
+
+                    <ImageButton
+                        android:id="@+id/teleop_previewRockWall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:onClick="showImagePreview"
+                        android:src="@drawable/ic_info_white_24dp" />
+
+                </LinearLayout>
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterRockWall"
@@ -254,18 +342,29 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Rough Terrain" />
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_info_white_24dp"
-                    android:onClick="showImagePreview"
-                    android:id="@+id/teleop_previewRoughTerrain"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        android:text="Rough Terrain" />
+
+                    <ImageButton
+                        android:id="@+id/teleop_previewRoughTerrain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:onClick="showImagePreview"
+                        android:src="@drawable/ic_info_white_24dp" />
+
+                </LinearLayout>
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterRoughTerrain"
@@ -293,27 +392,51 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Low Goals" />
+                android:orientation="horizontal">
 
-            <com.team980.thunderscout.util.CounterCompoundView
-                android:id="@+id/teleop_counterLowGoals"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="High Goals" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Low Goals" />
 
-            <com.team980.thunderscout.util.CounterCompoundView
-                android:id="@+id/teleop_counterHighGoals"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                    <com.team980.thunderscout.util.CounterCompoundView
+                        android:id="@+id/teleop_counterLowGoals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="High Goals" />
+
+                    <com.team980.thunderscout.util.CounterCompoundView
+                        android:id="@+id/teleop_counterHighGoals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -324,7 +447,8 @@
             <com.team980.thunderscout.util.CounterCompoundView
                 android:id="@+id/teleop_counterMissedGoals"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
         </LinearLayout>
 
