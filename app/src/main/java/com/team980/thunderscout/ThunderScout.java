@@ -1,7 +1,6 @@
 package com.team980.thunderscout;
 
 import android.app.Application;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -78,7 +77,7 @@ public class ThunderScout extends Application {
     }
 
     @Override
-    public void onCreate() { //TODO move to main activity as this is probably why it takes forever to launch
+    public void onCreate() { //This isn't why loading is slow
         super.onCreate();
         Log.d("THUNDERSCOUT", "Application.onCreate");
 
@@ -89,12 +88,6 @@ public class ThunderScout extends Application {
         if (runServer) { //TODO I must be launching multiple instances?
             Log.d("THUNDERSCOUT", "Starting service...");
             startService(new Intent(this, BluetoothServerService.class));
-
-            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            if (!mBluetoothAdapter.isEnabled()) {
-                Log.d("THUNDERSCOUT", "Enabling Bluetooth as it's off");
-                mBluetoothAdapter.enable(); //TODO prompt user
-            }
         }
         Log.d("THUNDERSCOUT", "Finished onCreate");
 

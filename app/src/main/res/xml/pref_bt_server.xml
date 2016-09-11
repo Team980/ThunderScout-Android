@@ -2,8 +2,8 @@
 
     <SwitchPreference
         android:defaultValue="false"
-        android:key="enable_bluetooth_server"
-        android:summary="Enable the app's Bluetooth Server"
+        android:key="enable_bt_server"
+        android:summary="Enable the Bluetooth Server"
         android:title="Enable Bluetooth Server" />
 
     <!-- These are examples from the tutorial -->

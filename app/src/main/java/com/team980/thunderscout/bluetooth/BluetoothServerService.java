@@ -1,6 +1,7 @@
 package com.team980.thunderscout.bluetooth;
 
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.IBinder;
 
@@ -19,6 +20,11 @@ public class BluetoothServerService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         startForeground(1, notificationManager.buildBtServerRunning());
+
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!mBluetoothAdapter.isEnabled()) {
+            mBluetoothAdapter.enable(); //TODO prompt user
+        }
 
         acceptThread = new ServerListenerThread(getApplicationContext(), this);
         acceptThread.start();

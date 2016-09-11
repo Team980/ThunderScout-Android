@@ -1,6 +1,7 @@
 package com.team980.thunderscout.preferences;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.bluetooth.BluetoothServerService;
 
 import java.util.List;
 
@@ -30,14 +32,14 @@ import java.util.List;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) { //Implement behavior changes triggered by setting changes here - TODO make seperate listeners for each fragment, possibly move fragments into full classes?
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) { //Implement behavior changes triggered by setting changes here
         if (key.equals("enable_bluetooth_server")) {
             Boolean isServer = sharedPreferences.getBoolean("enable_bluetooth_server", false);
 
             if (isServer) {
-                //findPreference("bt_server_device").setEnabled(false);
+                startService(new Intent(this, BluetoothServerService.class));
             } else {
-                //findPreference("bt_server_device").setEnabled(true);
+                stopService(new Intent(this, BluetoothServerService.class));
             }
         }
     }
@@ -177,7 +179,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || ScoutPreferenceFragment.class.getName().equals(fragmentName)
+                || MatchScoutPreferenceFragment.class.getName().equals(fragmentName)
                 || BluetoothServerPreferenceFragment.class.getName().equals(fragmentName);
     }
 
@@ -221,23 +223,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class ScoutPreferenceFragment extends PreferenceFragment {
+    public static class MatchScoutPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_scout);
+            addPreferencesFromResource(R.xml.pref_match_scout);
 
             if (!getResources().getBoolean(R.bool.preferences_prefer_dual_pane)) {
                 SettingsActivity activity = (SettingsActivity) getActivity();
 
-                activity.getSupportActionBar().setTitle("Scouting");
+                activity.getSupportActionBar().setTitle("Match scouting");
             }
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("server_storage_task"));
+            //bindPreferenceSummaryToValue(findPreference("server_storage_task"));
             bindPreferenceSummaryToValue(findPreference("bt_server_device"));
         }
     }
@@ -256,7 +258,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
             if (!getResources().getBoolean(R.bool.preferences_prefer_dual_pane)) {
                 SettingsActivity activity = (SettingsActivity) getActivity();
 
-                activity.getSupportActionBar().setTitle("Bluetooth Server");
+                activity.getSupportActionBar().setTitle("Bluetooth server");
             }
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences

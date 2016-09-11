@@ -1,30 +1,28 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- These settings headers are only used on tablets. (Since when were comments in tutorials so wrong!?) -->
-
     <header
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_settings_white_24dp"
         android:title="General"/>
 
     <header
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$ScoutPreferenceFragment"
+        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$MatchScoutPreferenceFragment"
         android:icon="@drawable/ic_send_white_24dp"
-        android:title="Scouting" />
+        android:title="Match scouting" />
 
     <header
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$BluetoothServerPreferenceFragment"
         android:icon="@drawable/ic_settings_bluetooth_white_24dp"
-        android:title="Bluetooth Server" />
+        android:title="Bluetooth server" />
 
     <!--<header
-    android:fragment="com.team980.thunderscout.preferences.SettingsActivity$SheetsIntegrationPreferenceFragment"
+    android:fragment="com.team980.thunderscout.preferences.SettingsActivity$LinkedSheetsPreferenceFragment"
     android:icon="@drawable/ic_settings_bluetooth_white_24dp"
-    android:title="Google Sheets integration" />
+    android:title="Linked spreadsheets" />
 
     <header
-    android:fragment="com.team980.thunderscout.preferences.SettingsActivity$DataViewPreferenceFragment"
+    android:fragment="com.team980.thunderscout.preferences.SettingsActivity$LocalStoragePreferenceFragment"
     android:icon="@drawable/ic_settings_bluetooth_white_24dp"
-    android:title="Data view" />-->
+    android:title="Local storage" />-->
 
 </preference-headers>
