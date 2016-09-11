@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
@@ -149,8 +150,15 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
         if (v.getId() == R.id.fab) {
             initScoutData();
 
-            if (scoutData.getTeamNumber() == null) {
+            EditText teamNumber = (EditText) findViewById(R.id.scout_teamNumber);
 
+            if (teamNumber.getText().toString().isEmpty()) {
+                teamNumber.setError("This field is required"); //Not AppCompat or definitively Material, but still ok
+                return;
+            }
+
+            if (!ThunderScout.isInteger(teamNumber.getText().toString())) {
+                teamNumber.setError("This must be an integer!");
                 return;
             }
 
