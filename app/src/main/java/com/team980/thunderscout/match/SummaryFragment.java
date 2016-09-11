@@ -4,18 +4,19 @@ package com.team980.thunderscout.match;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.Spinner;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.data.enumeration.ScalingStats;
 
-public class SummaryFragment extends Fragment {
+public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedListener, CheckBox.OnClickListener {
 
-    private ScoutData scoutData;
+    private ScoutActivity scoutActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,8 +32,7 @@ public class SummaryFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        ScoutActivity scoutActivity = (ScoutActivity) getActivity();
-        scoutData = scoutActivity.getData();
+        scoutActivity = (ScoutActivity) getActivity();
     }
 
     @Override
@@ -40,24 +40,24 @@ public class SummaryFragment extends Fragment {
         super.onDetach();
     }
 
-    /**
-     * Called when view state changes for this fragment
-     *
-     * @param isVisibleToUser
-     */
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.summary_checkboxHasChallenged) {
+            CheckBox checkBox = (CheckBox) view;
 
-        if (this.isVisible() && !isVisibleToUser && scoutData != null) { //Leaving
-
-            AppCompatEditText teamNumber = (AppCompatEditText) getView().findViewById(R.id.summary_edittextTeamNumber);
-            scoutData.setTeamNumber(teamNumber.getText().toString());
+            scoutActivity.getData().setChallengedTower(checkBox.isChecked());
         }
+    }
 
-        if (this.isVisible() && isVisibleToUser && scoutData != null) { //Returning
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String itemSelected = (String) parent.getItemAtPosition(position);
+        ScalingStats scalingStats = ScalingStats.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
+        scoutActivity.getData().setScalingStats(scalingStats);
+    }
 
-            AppCompatEditText teamNumber = (AppCompatEditText) getView().findViewById(R.id.summary_edittextTeamNumber);
-            teamNumber.setText(scoutData.getTeamNumber(), TextView.BufferType.NORMAL);
-        }
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        //do nothing
     }
 }

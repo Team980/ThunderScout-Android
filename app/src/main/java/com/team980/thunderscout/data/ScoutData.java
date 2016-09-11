@@ -16,11 +16,13 @@ public class ScoutData implements Serializable {
      */
     private static final long serialVersionUID = 2;
 
+    public static final String SOURCE_LOCAL_DEVICE = "This device";
+
+
     // INIT
     private String teamNumber;
-
     private long dateAdded;
-    private String dataSource; //TODO add when scouting
+    private String dataSource;
     //TODO sharing/sync status
 
     // AUTO
@@ -50,7 +52,34 @@ public class ScoutData implements Serializable {
         //default values
         autoDefenseCrossed = Defense.NONE;
         scalingStats = ScalingStats.NONE;
-        challengedTower = false;
+    }
+
+    /**
+     * Copy constructor
+     */
+    public ScoutData(ScoutData other) {
+        //Init
+        setTeamNumber(other.getTeamNumber());
+        setDateAdded(other.getDateAdded());
+        setDataSource(other.getDataSource());
+
+        //Auto
+        setAutoDefenseCrossed(other.getAutoDefenseCrossed());
+        setAutoLowGoals(other.getAutoLowGoals());
+        setAutoHighGoals(other.getAutoHighGoals());
+        setAutoMissedGoals(other.getAutoMissedGoals());
+
+        //Teleop
+        getTeleopDefenseCrossings().putAll(other.getTeleopDefenseCrossings());
+        setTeleopLowGoals(other.getTeleopLowGoals());
+        setTeleopHighGoals(other.getTeleopHighGoals());
+        setTeleopMissedGoals(other.getTeleopMissedGoals());
+
+        //Summary
+        setScalingStats(other.getScalingStats());
+        setChallengedTower(other.hasChallengedTower());
+        setTroubleWith(other.getTroubleWith());
+        setComments(other.getComments());
     }
 
     // --- INIT ---

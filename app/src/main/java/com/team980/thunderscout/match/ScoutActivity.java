@@ -1,8 +1,5 @@
 package com.team980.thunderscout.match;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
@@ -11,24 +8,20 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
@@ -38,12 +31,13 @@ import com.team980.thunderscout.util.CounterCompoundView;
 
 import java.util.EnumMap;
 
-public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, NestedScrollView.OnScrollChangeListener {
+public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+
+    private ViewPagerAdapter viewPagerAdapter;
 
     private ScoutData scoutData;
 
     private FloatingActionButton fab;
-    private boolean isToolbarAnimating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +52,18 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
         setContentView(R.layout.activity_scout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.addView(View.inflate(this, R.layout.team_number, null));
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Scout");
+        getSupportActionBar().setTitle("Scout: Team");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(this);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -119,8 +115,7 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
                 fab.setClickable(true);
                 break;
 
-            default: //AUTO tab
-                hideToolbar();
+            default: //Other tabs
 
                 fab.hide();
                 fab.setClickable(false);
@@ -139,6 +134,7 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
         new AlertDialog.Builder(this) //TODO specify newer icon
                 .setTitle("Are you sure you want to exit?")
                 .setMessage("The data currently in the scouting form will be lost!")
+                .setIcon(R.drawable.ic_warning_white_24dp)
                 .setNegativeButton(android.R.string.no, null)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -151,19 +147,19 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fab) {
-            NestedScrollView scrollView = (NestedScrollView) findViewById(R.id.teleop_scrollView);
+            initScoutData();
 
-            //Check errors
+            if (scoutData.getTeamNumber() == null) {
 
-            showToolbar();
-        } else {
-
-            //Init scoutData
+                return;
+            }
 
             //TODO: modular
-            if (v.getId() == R.id.buttonSave) {
+            if (v.getId() == R.id.buttonSave) { //Saving locally
 
-                DatabaseWriteTask task = new DatabaseWriteTask(scoutData, this);
+                scoutData.setDataSource(ScoutData.SOURCE_LOCAL_DEVICE);
+
+                DatabaseWriteTask task = new DatabaseWriteTask(new ScoutData(scoutData), this);
                 task.execute();
 
                 Toast info = Toast.makeText(this, "Storing data...", Toast.LENGTH_LONG);
@@ -171,11 +167,9 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
 
                 //TODO notification
 
-                finish();
-
             }
 
-            if (v.getId() == R.id.buttonSendBluetooth) {
+            if (v.getId() == R.id.buttonSendBluetooth) { //Sending via BT
 
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -191,103 +185,86 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
                         Toast info = Toast.makeText(this, "Sending data to " + device.getName() + "...", Toast.LENGTH_LONG);
                         info.show();
 
-                        finish();
                     }
                 }
             }
 
-            if (v.getId() == R.id.buttonSendSheets) {
+            if (v.getId() == R.id.buttonSendSheets) { //Saving to Sheets
                 //TODO send to Google Sheets
             }
+
+            finish();
         }
-    }
-
-    @Override
-    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        hideToolbar();
-    }
-
-    @SuppressLint("NewApi")
-    private void showToolbar() {
-        // previously invisible view
-        Toolbar toolbar = (Toolbar) findViewById(R.id.sendToolbar);
-
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) { //No lollipop, no animation
-            toolbar.setVisibility(View.VISIBLE);
-
-            fab.hide();
-            fab.setClickable(false);
-            return;
-        }
-
-        // get the center for the clipping circle
-        int cx = toolbar.getWidth() / 2;
-        int cy = toolbar.getHeight() / 2;
-
-        // get the final radius for the clipping circle
-        float finalRadius = (float) Math.hypot(cx, cy);
-
-        // create the animator for this view (the start radius is zero)
-        Animator anim = ViewAnimationUtils.createCircularReveal(toolbar, cx, cy, 0, finalRadius);
-
-        // make the view visible and start the animation
-        toolbar.setVisibility(View.VISIBLE);
-        anim.start();
-
-        fab.hide();
-        fab.setClickable(false);
-    }
-
-    @SuppressLint("NewApi")
-    private void hideToolbar() {
-        // previously visible view
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.sendToolbar);
-
-        if (isToolbarAnimating) {
-            return;
-        }
-
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) { //No lollipop, no animation
-            toolbar.setVisibility(View.GONE);
-
-            fab.show();
-            fab.setClickable(true);
-            return;
-        }
-
-        // get the center for the clipping circle
-        int cx = toolbar.getWidth() / 2;
-        int cy = toolbar.getHeight() / 2;
-
-        // get the initial radius for the clipping circle
-        float initialRadius = (float) Math.hypot(cx, cy);
-
-        // create the animation (the final radius is zero)
-        Animator anim =
-                null;
-        anim = ViewAnimationUtils.createCircularReveal(toolbar, cx, cy, initialRadius, 0);
-
-
-        // make the view invisible when the animation is done
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                toolbar.setVisibility(View.GONE);
-
-                fab.show();
-                fab.setClickable(true);
-
-                isToolbarAnimating = false;
-            }
-        });
-
-        // start the animation
-        anim.start();
-        isToolbarAnimating = true;
     }
 
     public ScoutData getData() {
         return scoutData;
+    }
+
+    private void initScoutData() {
+        // Init
+        EditText teamNumber = (EditText) findViewById(R.id.scout_teamNumber);
+
+        scoutData.setTeamNumber(teamNumber.getText().toString());
+
+        scoutData.setDateAdded(System.currentTimeMillis());
+
+        // Auto
+        View autoView = viewPagerAdapter.getItem(0).getView();
+
+        CounterCompoundView autoLowGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterLowGoals);
+
+        scoutData.setAutoLowGoals((int) autoLowGoals.getValue());
+
+        CounterCompoundView autoHighGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterHighGoals);
+
+        scoutData.setAutoHighGoals((int) autoHighGoals.getValue());
+
+        CounterCompoundView autoMissedGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterMissedGoals);
+
+        scoutData.setAutoMissedGoals((int) autoMissedGoals.getValue());
+
+        // Teleop
+        View teleopView = viewPagerAdapter.getItem(1).getView();
+
+        EnumMap<Defense, Integer> mapDefenseCrossings = new EnumMap<>(Defense.class);
+
+        for (Defense defense : Defense.values()) {
+            if (defense == Defense.NONE) {
+                continue;
+            }
+
+            CounterCompoundView defenseCounter = (CounterCompoundView) teleopView.findViewById(defense.getCounterId());
+            mapDefenseCrossings.put(defense, (int) defenseCounter.getValue());
+        }
+
+        scoutData.getTeleopDefenseCrossings().putAll(mapDefenseCrossings);
+
+        CounterCompoundView teleopLowGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterLowGoals);
+
+        scoutData.setTeleopLowGoals((int) teleopLowGoals.getValue());
+
+        CounterCompoundView teleopHighGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterHighGoals);
+
+        scoutData.setTeleopHighGoals((int) teleopHighGoals.getValue());
+
+        CounterCompoundView teleopMissedGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterMissedGoals);
+
+        scoutData.setTeleopMissedGoals((int) teleopMissedGoals.getValue());
+
+        // Summary
+        View summaryView = viewPagerAdapter.getItem(2).getView();
+
+        CheckBox challengedTower = (CheckBox) summaryView.findViewById(R.id.summary_checkboxHasChallenged);
+
+        scoutData.setChallengedTower(challengedTower.isChecked());
+
+        EditText troubleWith = (EditText) summaryView.findViewById(R.id.summary_edittextTroubleWith);
+
+        scoutData.setTroubleWith(troubleWith.getText().toString());
+
+        EditText comments = (EditText) summaryView.findViewById(R.id.summary_edittextComments);
+
+        scoutData.setComments(comments.getText().toString());
     }
 }
