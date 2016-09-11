@@ -20,13 +20,6 @@
         <item>Full</item>
     </string-array>
 
-    <string-array name="server_storage_task">
-        <item>Save to local device</item>
-        <item>Send to Google Sheets</item>
-    </string-array>
-
-    <string-array name="server_storage_task_values">
-        <item>SAVE</item>
-        <item>SEND_SHEETS</item>
-    </string-array>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

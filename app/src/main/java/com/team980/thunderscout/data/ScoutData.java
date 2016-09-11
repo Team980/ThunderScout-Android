@@ -70,6 +70,7 @@ public class ScoutData implements Serializable {
         setAutoMissedGoals(other.getAutoMissedGoals());
 
         //Teleop
+        teleopDefenseCrossings = new EnumMap<>(Defense.class);
         getTeleopDefenseCrossings().putAll(other.getTeleopDefenseCrossings());
         setTeleopLowGoals(other.getTeleopLowGoals());
         setTeleopHighGoals(other.getTeleopHighGoals());

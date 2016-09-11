@@ -3,10 +3,6 @@ package com.team980.thunderscout.info;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
@@ -14,6 +10,7 @@ import com.team980.thunderscout.data.ScoutData;
 
 import java.text.SimpleDateFormat;
 
+@Deprecated
 public class InfoActivity extends AppCompatActivity {
 
     @Override

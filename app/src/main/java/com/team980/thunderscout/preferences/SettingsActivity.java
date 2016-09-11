@@ -33,8 +33,8 @@ import java.util.List;
 public class SettingsActivity extends AppCompatPreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) { //Implement behavior changes triggered by setting changes here
-        if (key.equals("enable_bluetooth_server")) {
-            Boolean isServer = sharedPreferences.getBoolean("enable_bluetooth_server", false);
+        if (key.equals("enable_bt_server")) {
+            Boolean isServer = sharedPreferences.getBoolean("enable_bt_server", false);
 
             if (isServer) {
                 startService(new Intent(this, BluetoothServerService.class));
@@ -239,8 +239,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("server_storage_task"));
-            bindPreferenceSummaryToValue(findPreference("bt_server_device"));
+            bindPreferenceSummaryToValue(findPreference("ms_bt_server_device"));
         }
     }
 

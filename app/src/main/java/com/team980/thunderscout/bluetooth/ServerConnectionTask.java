@@ -94,13 +94,20 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
         if (o != null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            //if (prefs.getString("pref_serverStorageTask", "SAVE").equals("SAVE")) { //TODO modularize the saving mechanism
+
+            if (prefs.getBoolean("bt_send_to_local_storage", true)) {
                 //Put the fetched ScoutData in the local database
                 DatabaseWriteTask writeTask = new DatabaseWriteTask(o, context);
                 writeTask.execute();
-            //} else if (prefs.getString("pref_serverStorageTask", "SAVE").equals("SEND_SHEETS")) {
+            }
+
+            if (prefs.getBoolean("bt_send_to_bt_server", true)) {
+                //TODO is this a really good idea??
+            }
+
+            if (prefs.getBoolean("bt_send_to_linked_sheet", true)) {
                 //TODO sync with Google Sheets
-            //}
+            }
         } else {
             Log.d("ServerConnectionTask", "Failed to start DatabaseWriteTask!");
         }

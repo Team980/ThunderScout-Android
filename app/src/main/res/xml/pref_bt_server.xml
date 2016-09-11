@@ -6,6 +6,25 @@
         android:summary="Enable the Bluetooth Server"
         android:title="Enable Bluetooth Server" />
 
+    <PreferenceCategory android:title="Data input"> <!-- TODO these names are garbage -->
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="bt_send_to_local_storage"
+            android:title="Save to local device" />
+
+        <!--<CheckBoxPreference TODO is this really a good idea
+            android:defaultValue="false"
+            android:key="bt_send_to_bt_server"
+            android:title="Send to Bluetooth server" />-->
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="bt_send_to_linked_sheet"
+            android:title="Send to linked spreadsheet" />
+
+    </PreferenceCategory>
+
     <!-- These are examples from the tutorial -->
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->

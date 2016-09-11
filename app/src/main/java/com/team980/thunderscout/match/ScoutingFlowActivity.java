@@ -14,7 +14,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -52,7 +51,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             scoutData = new ScoutData(); //TODO cache this if the user wishes to
         }
 
-        setContentView(R.layout.activity_scout);
+        setContentView(R.layout.activity_scouting_flow);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.addView(View.inflate(this, R.layout.team_number, null));
@@ -84,8 +83,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_scout, menu);
         return true;
     }
 
@@ -206,8 +203,9 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 return;
             }
 
-            //TODO: modular
-            if (v.getId() == R.id.buttonSave) { //Saving locally
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+            if (prefs.getBoolean("ms_send_to_local_storage", true)) { //Saving locally
 
                 scoutData.setDataSource(ScoutData.SOURCE_LOCAL_DEVICE);
 
@@ -221,27 +219,24 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             }
 
-            if (v.getId() == R.id.buttonSendBluetooth) { //Sending via BT
-
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            if (prefs.getBoolean("ms_send_to_bt_server", false)) { //Sending via BT
 
                 String address = prefs.getString("bt_server_device", null);
 
                 for (BluetoothDevice device : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
                     if (device.getAddress().equals(address)) {
-                        scoutData.setDataSource(device.getName());
+                        scoutData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
 
                         ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, this);
                         connectThread.start();
 
                         Toast info = Toast.makeText(this, "Sending data to " + device.getName() + "...", Toast.LENGTH_LONG);
                         info.show();
-
                     }
                 }
             }
 
-            if (v.getId() == R.id.buttonSendSheets) { //Saving to Sheets
+            if (prefs.getBoolean("ms_send_to_linked_sheet", false)) { //Saving to Sheets
                 //TODO send to Google Sheets
             }
 

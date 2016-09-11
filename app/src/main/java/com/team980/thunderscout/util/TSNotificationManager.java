@@ -57,21 +57,21 @@ public class TSNotificationManager {
                 .setContentTitle("Transferring data to device")
                 .setProgress(100, 0, true)
                 .setOngoing(true)
-                .setColor(context.getResources().getColor(R.color.primary)) //TODO use nonyellow accent?
+                .setColor(context.getResources().getColor(R.color.accent)) //TODO use nonyellow accent?
                 .setGroup("TS_TRANSFER_ONGOING");
 
         btTransferSuccessful = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp) //TODO find icon
                 .setContentTitle("Data transfer successful")
                 .setContentText("Data received from device")
-                .setColor(context.getResources().getColor(R.color.primary)) //TODO use nonyellow accent?
+                .setColor(context.getResources().getColor(R.color.success))
                 .setGroup("TS_TRANSFER_SUCCESS");
 
         btTransferError = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp) //TODO find icon
                 .setContentTitle("Data transfer failed")
                 .setContentText("Failed to receive data from device")
-                .setColor(context.getResources().getColor(R.color.primary)) //TODO use nonyellow accent?
+                .setColor(context.getResources().getColor(R.color.error))
                 .setGroup("TS_TRANSFER_ERROR");
     }
 

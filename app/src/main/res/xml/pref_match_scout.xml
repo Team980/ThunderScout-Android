@@ -3,49 +3,46 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="enable_match_scout"
-        android:title="Enable match scouting"
-        android:summary="Scout matches like a pro"/>
+        android:summary="Scout matches like a pro"
+        android:title="Enable match scouting" />
 
-    <PreferenceCategory
-        android:title="Data output"> <!-- TODO these names are garbage -->
+    <PreferenceCategory android:title="Data output"> <!-- TODO these names are garbage -->
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="send_to_local_storage"
-        android:title="Save to local device" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="ms_send_to_local_storage"
+            android:title="Save to local device" />
 
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="send_to_bt_server"
-        android:title="Send to Bluetooth server" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="ms_send_to_bt_server"
+            android:title="Send to Bluetooth server" />
 
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="send_to_linked_sheet"
-        android:title="Send to linked spreadsheet" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="Bluetooth">
-
-    <!--<ListPreference
-        android:defaultValue="saveLocally"
-        android:key="server_storage_task"
-        android:entries="@array/server_storage_task"
-        android:entryValues="@array/server_storage_task_values"
-        android:summary="Method of storage for data received via bluetooth server"
-        android:title="Server Storage Task" />-->
-
-    <com.team980.thunderscout.preferences.BluetoothDevicePreference
-        android:dialogTitle="Select your BT server"
-        android:key="bt_server_device"
-        android:title="Bluetooth Server Device" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="ms_send_to_linked_sheet"
+            android:title="Send to linked spreadsheet" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="Linked spreadsheets">
+    <PreferenceCategory android:title="Bluetooth">
+
+        <!--<ListPreference
+            android:defaultValue="saveLocally"
+            android:key="server_storage_task"
+            android:entries="@array/server_storage_task"
+            android:entryValues="@array/server_storage_task_values"
+            android:summary="Method of storage for data received via bluetooth server"
+            android:title="Server Storage Task" />-->
+
+        <com.team980.thunderscout.preferences.BluetoothDevicePreference
+            android:dialogTitle="Select your BT server"
+            android:key="ms_bt_server_device"
+            android:title="Bluetooth Server Device" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Linked spreadsheets">
 
         <!-- TODO -->
 
