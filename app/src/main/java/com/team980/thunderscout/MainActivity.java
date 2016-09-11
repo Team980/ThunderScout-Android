@@ -3,6 +3,7 @@ package com.team980.thunderscout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +20,12 @@ import com.team980.thunderscout.sheets.LinkedSheetsFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static String INTENT_FLAG_SHOWN_FRAGMENT = "SHOWN_FRAGMENT";
+    public static int INTENT_FLAGS_MATCH_SCOUT = 0;
+    public static int INTENT_FLAGS_BT_SERVER = 1;
+    public static int INTENT_FLAGS_LINKED_SHEETS = 2;
+    public static int INTENT_FLAGS_LOCAL_STORAGE = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +34,35 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        navigationView.setCheckedItem(R.id.nav_match_scout);
+        int shownFragment = getIntent().getIntExtra(INTENT_FLAG_SHOWN_FRAGMENT, INTENT_FLAGS_MATCH_SCOUT);
+
+        Fragment fragment;
+
+        switch (shownFragment) {
+            case 0: //INTENT_FLAGS_MATCH_SCOUT
+                navigationView.setCheckedItem(R.id.nav_match_scout);
+                fragment = new MatchScoutFragment();
+                break;
+            case 1: //INTENT_FLAGS_BT_SERVER
+                navigationView.setCheckedItem(R.id.nav_bt_server);
+                fragment = new BluetoothServerFragment();
+                break;
+            case 2: //INTENT_FLAGS_LINKED_SHEETS
+                navigationView.setCheckedItem(R.id.nav_linked_sheets);
+                fragment = new LinkedSheetsFragment();
+                break;
+            case 3: //INTENT_FLAGS_LOCAL_STORAGE
+                navigationView.setCheckedItem(R.id.nav_local_storage);
+                fragment = new LocalStorageFragment();
+                break;
+            default: //default to INTENT_FLAGS_MATCH_SCOUT
+                navigationView.setCheckedItem(R.id.nav_match_scout);
+                fragment = new MatchScoutFragment();
+                break;
+        }
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment, new MatchScoutFragment());
+        ft.replace(R.id.fragment, fragment);
         ft.addToBackStack(null);
         ft.commit();
     }

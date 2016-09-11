@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
+import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class TSNotificationManager {
 
@@ -39,14 +39,15 @@ public class TSNotificationManager {
 
 
         PendingIntent serverSettingsIntent = PendingIntent.getActivity(context, 1,
-                new Intent(context, SettingsActivity.class),
+                new Intent(context, MainActivity.class)
+                        .putExtra(MainActivity.INTENT_FLAG_SHOWN_FRAGMENT, MainActivity.INTENT_FLAGS_BT_SERVER),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         btServerRunning.setContentIntent(serverSettingsIntent);
 
         NotificationCompat.Action openServerSetting = new NotificationCompat.Action(
                 R.drawable.ic_settings_white_24dp,
-                "SERVER SETTINGS",
+                "MORE OPTIONS",
                 serverSettingsIntent
         );
 
