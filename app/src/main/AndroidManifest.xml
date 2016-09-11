@@ -38,6 +38,11 @@
             android:label="Settings"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
+        <activity
+            android:name=".AboutActivity"
+            android:label="About"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/ThunderScout.BaseTheme.ActionBar"/>
 
         <service android:name=".bluetooth.BluetoothServerService" />
     </application>
