@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -29,10 +30,11 @@ import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.task.DatabaseWriteTask;
 import com.team980.thunderscout.info.ViewPagerAdapter;
 import com.team980.thunderscout.util.CounterCompoundView;
+import com.team980.thunderscout.util.ImagePreviewDialog;
 
 import java.util.EnumMap;
 
-public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
     private ViewPagerAdapter viewPagerAdapter;
 
@@ -140,9 +142,41 @@ public class ScoutActivity extends AppCompatActivity implements ViewPager.OnPage
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
-                        ScoutActivity.super.onBackPressed();
+                        ScoutingFlowActivity.super.onBackPressed();
                     }
                 }).create().show();
+    }
+
+    public void showImagePreview(View button) {
+
+        Drawable image;
+
+        switch (button.getId()) {
+            case R.id.teleop_previewLowBar:
+                image = getResources().getDrawable(R.mipmap.low_bar);
+            case R.id.teleop_previewPortcullis:
+                image = getResources().getDrawable(R.mipmap.portcullis);
+            case R.id.teleop_previewChivalDeFrise:
+                image = getResources().getDrawable(R.mipmap.chival_de_frise);
+            case R.id.teleop_previewMoat:
+                image = getResources().getDrawable(R.mipmap.moat);
+            case R.id.teleop_previewRamparts:
+                image = getResources().getDrawable(R.mipmap.ramparts);
+            case R.id.teleop_previewDrawbridge:
+                image = getResources().getDrawable(R.mipmap.drawbridge);
+            case R.id.teleop_previewSallyport:
+                image = getResources().getDrawable(R.mipmap.sallyport);
+            case R.id.teleop_previewRockWall:
+                image = getResources().getDrawable(R.mipmap.rock_wall);
+            case R.id.teleop_previewRoughTerrain:
+                image = getResources().getDrawable(R.mipmap.rough_terrain);
+            default:
+                image = getResources().getDrawable(R.mipmap.ic_launcher); //should never happen
+        }
+
+        ImagePreviewDialog dialog = new ImagePreviewDialog();
+        dialog.setImagePreview(image);
+        dialog.show(getSupportFragmentManager(), "ImagePreview");
     }
 
     @Override

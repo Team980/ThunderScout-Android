@@ -27,23 +27,55 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:entries="@array/defenses_array" />
+            android:entries="@array/defenses_array"
+            android:textSize="18sp"/>
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Scoring"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Low Goals"/>
 
         <com.team980.thunderscout.util.CounterCompoundView
             android:id="@+id/auto_counterLowGoals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="High Goals"/>
+
         <com.team980.thunderscout.util.CounterCompoundView
             android:id="@+id/auto_counterHighGoals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Missed Goals"/>
 
         <com.team980.thunderscout.util.CounterCompoundView
             android:id="@+id/auto_counterMissedGoals"

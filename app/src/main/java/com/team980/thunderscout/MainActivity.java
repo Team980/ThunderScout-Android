@@ -27,7 +27,7 @@ import com.team980.thunderscout.data.TeamWrapper;
 import com.team980.thunderscout.data.task.DatabaseClearTask;
 import com.team980.thunderscout.data.task.DatabaseReadTask;
 import com.team980.thunderscout.info.DataViewAdapter;
-import com.team980.thunderscout.match.ScoutActivity;
+import com.team980.thunderscout.match.ScoutingFlowActivity;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
 import java.util.ArrayList;
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
      */
     public void onButtonPressed(View v) {
         if (v.getId() == R.id.button_scout) {
-            Intent scoutIntent = new Intent(this, ScoutActivity.class);
+            Intent scoutIntent = new Intent(this, ScoutingFlowActivity.class);
             startActivity(scoutIntent);
         }
     }

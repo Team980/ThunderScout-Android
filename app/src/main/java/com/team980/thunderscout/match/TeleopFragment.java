@@ -29,8 +29,8 @@ public class TeleopFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        ScoutActivity scoutActivity = (ScoutActivity) getActivity();
-        scoutData = scoutActivity.getData();
+        ScoutingFlowActivity scoutingFlowActivity = (ScoutingFlowActivity) getActivity();
+        scoutData = scoutingFlowActivity.getData();
     }
 
     @Override

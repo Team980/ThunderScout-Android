@@ -16,7 +16,7 @@ import com.team980.thunderscout.data.enumeration.ScalingStats;
 
 public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedListener, CheckBox.OnClickListener {
 
-    private ScoutActivity scoutActivity;
+    private ScoutingFlowActivity scoutingFlowActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedL
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        scoutActivity = (ScoutActivity) getActivity();
+        scoutingFlowActivity = (ScoutingFlowActivity) getActivity();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedL
         if (view.getId() == R.id.summary_checkboxHasChallenged) {
             CheckBox checkBox = (CheckBox) view;
 
-            scoutActivity.getData().setChallengedTower(checkBox.isChecked());
+            scoutingFlowActivity.getData().setChallengedTower(checkBox.isChecked());
         }
     }
 
@@ -53,7 +53,7 @@ public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedL
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String itemSelected = (String) parent.getItemAtPosition(position);
         ScalingStats scalingStats = ScalingStats.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
-        scoutActivity.getData().setScalingStats(scalingStats);
+        scoutingFlowActivity.getData().setScalingStats(scalingStats);
     }
 
     @Override

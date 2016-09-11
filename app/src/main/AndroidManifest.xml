@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".match.ScoutActivity"
+            android:name=".match.ScoutingFlowActivity"
             android:label="Scout"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />

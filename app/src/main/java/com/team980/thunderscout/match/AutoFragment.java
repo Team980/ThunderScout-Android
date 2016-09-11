@@ -14,7 +14,7 @@ import com.team980.thunderscout.data.enumeration.Defense;
 
 public class AutoFragment extends Fragment implements Spinner.OnItemSelectedListener {
 
-    ScoutActivity scoutActivity;
+    ScoutingFlowActivity scoutingFlowActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class AutoFragment extends Fragment implements Spinner.OnItemSelectedList
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        scoutActivity = (ScoutActivity) getActivity();
+        scoutingFlowActivity = (ScoutingFlowActivity) getActivity();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class AutoFragment extends Fragment implements Spinner.OnItemSelectedList
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { //Spinner
         String itemSelected = (String) parent.getItemAtPosition(position);
         Defense defense = Defense.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
-        scoutActivity.getData().setAutoDefenseCrossed(defense);
+        scoutingFlowActivity.getData().setAutoDefenseCrossed(defense);
     }
 
     @Override
