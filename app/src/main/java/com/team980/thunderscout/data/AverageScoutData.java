@@ -1,10 +1,6 @@
 package com.team980.thunderscout.data;
 
-import com.team980.thunderscout.data.enumeration.Defense;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
 
 /**
