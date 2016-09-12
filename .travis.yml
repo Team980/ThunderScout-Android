@@ -1,0 +1,18 @@
+language: android
+android:
+  components:
+    # Build tools
+    - tools
+    - platform-tools
+    - build-tools-24.0.1
+    - android-24
+
+    # Additional components
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+    - sys-img-armeabi-v7a-android-24
+    - sys-img-x86-android-24
