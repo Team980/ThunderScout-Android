@@ -1,18 +1,15 @@
 language: android
 android:
   components:
-    # Build tools
-    - tools
-    - platform-tools
-    - build-tools-24.0.1
-    - android-24
-
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-24
-    - sys-img-x86-android-24
+  - tools
+  - platform-tools
+  - build-tools-24.0.1
+  - android-24
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - sys-img-armeabi-v7a-android-24
+  - sys-img-x86-android-24
+notifications:
+  slack:
+    secure: MPTBatemuuDNRDneRkDSKLXVQDw9+oqHC6ikKQY1Oi5zcagQlSfFqTVtGimIPLQdw5SjmV5jqnMLl1g3uDsSp2EeZQypT4jTxPF4rAT8iUAfVVm7rQRjO0LnYbQX3HwlDdKTEQWnG/50cNEmhWMQrLkhKPtefeFzcyWor6AoSEVvjHSyeBaRyzVklewf1EBuf52ZQ6tikiF8S8J84R5CY8NVRaqaHM3uGOQCznB6kD3UruISSNKmvM93qfGAXHqbZjvCr6Vd+eeBEVemDffBhjbwNM6gwVYrmoU35bALbcUxm6QlXMQ95tUasIwxyfaOEICKDCWp8fZArqBgbScQSBSTAokUSMZjC/BlZulYqjGVDAUSOQGkbCyDcPSKkYqhKwX6jsmSle4MNPCnOkiwh4FfdNWOQW6aJ/kxQrdzw1lqCxZXmF+9Nu4tebQZ4opC826Ay0bRx/08YWtiAyEdDSV8GckUjTvx3W6ofae8QaUb87aEULT+j1xTW6hLKbz8fYnI+jSp3BNw7gAvwHcwm3FIt4I0J/EndYBwQjsLSqtK6RHrwIMZ/gy5SxoFd0xhGKiSXe7fYrZ0zxFEDvY4EuiZwuFPB8OOgh2ImjSGpjiSuB5KVLqAwVDoJfBhgEZEj27KvJ4qtM6KRbXstA1T/R6d01/iAPBh1aGal224Vbo=
