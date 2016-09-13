@@ -156,7 +156,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout
                 android:id="@+id/info_teleopLowGoalContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -180,7 +180,7 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout
                 android:id="@+id/info_teleopHighGoalContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
