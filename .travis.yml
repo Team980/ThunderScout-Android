@@ -14,7 +14,7 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository
   # Emulators
-  - sys-img-armeabi-v7a-android-23
+  # - sys-img-armeabi-v7a-android-23
   # - sys-img-x86-android-23
 
 notifications:
@@ -23,3 +23,6 @@ notifications:
 
 before_install:
  - chmod +x gradlew
+
+script:
+ - gradlew build
