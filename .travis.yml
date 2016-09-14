@@ -11,7 +11,7 @@ android:
   - android-24
   # Support Libraries + Play Services
   - extra-google-google_play_services
-  # - extra-google-m2repository
+  - extra-google-m2repository
   - extra-android-m2repository
   # Emulators
   # - sys-img-armeabi-v7a-android-24
