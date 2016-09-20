@@ -2,29 +2,14 @@
 
     <SwitchPreference
         android:defaultValue="false"
-        android:key="enable_bt_server"
-        android:summary="Enable the Bluetooth Server"
-        android:title="Enable Bluetooth Server" />
+        android:key="enable_linked_sheets"
+        android:summary="Link with a spreadhseet for cloud storage"
+        android:title="Enable Google Sheets integration" />
 
-    <PreferenceCategory android:title="Data input"> <!-- TODO these names are garbage -->
-
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="bt_send_to_local_storage"
-            android:title="Save to local device" />
-
-        <!--<CheckBoxPreference TODO is this really a good idea
-            android:defaultValue="false"
-            android:key="bt_send_to_bt_server"
-            android:title="Send to Bluetooth server" />-->
-
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="bt_send_to_linked_sheet"
-            android:dependency="enable_linked_sheets"
-            android:title="Send to linked spreadsheet" />
-
-    </PreferenceCategory>
+    <EditTextPreference
+        android:title="Linked spreadsheet URL"
+        android:key="linked_sheet_url"
+        android:editable="false" />
 
     <!-- These are examples from the tutorial -->
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->

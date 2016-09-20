@@ -45,7 +45,6 @@ public class LocalStorageFragment extends Fragment implements SwipeRefreshLayout
 
     public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.REFRESH_VIEW_PAGER";
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_local_storage, container, false);

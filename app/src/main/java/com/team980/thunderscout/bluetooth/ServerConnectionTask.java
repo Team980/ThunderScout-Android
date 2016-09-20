@@ -106,7 +106,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             }
 
             if (prefs.getBoolean("bt_send_to_linked_sheet", true)) {
-                //TODO sync with Google Sheets
+
             }
         } else {
             Log.d("ServerConnectionTask", "Failed to start DatabaseWriteTask!");

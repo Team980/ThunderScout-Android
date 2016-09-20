@@ -21,6 +21,7 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="ms_send_to_linked_sheet"
+            android:dependency="enable_linked_sheets"
             android:title="Send to linked spreadsheet" />
 
     </PreferenceCategory>

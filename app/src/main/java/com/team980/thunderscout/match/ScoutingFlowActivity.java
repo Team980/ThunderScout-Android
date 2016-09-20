@@ -237,7 +237,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             }
 
             if (prefs.getBoolean("ms_send_to_linked_sheet", false)) { //Saving to Sheets
-                //TODO send to Google Sheets
+
             }
 
             finish();

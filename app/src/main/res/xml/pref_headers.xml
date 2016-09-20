@@ -15,12 +15,12 @@
         android:icon="@drawable/ic_settings_bluetooth_white_24dp"
         android:title="Bluetooth server" />
 
-    <!--<header
+    <header
     android:fragment="com.team980.thunderscout.preferences.SettingsActivity$LinkedSheetsPreferenceFragment"
-    android:icon="@drawable/ic_settings_bluetooth_white_24dp"
+        android:icon="@drawable/ic_cloud_white_24dp"
     android:title="Linked spreadsheets" />
 
-    <header
+    <!--<header
     android:fragment="com.team980.thunderscout.preferences.SettingsActivity$LocalStoragePreferenceFragment"
     android:icon="@drawable/ic_settings_bluetooth_white_24dp"
     android:title="Local storage" />-->
