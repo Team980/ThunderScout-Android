@@ -3,7 +3,7 @@
     <header
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_settings_white_24dp"
-        android:title="General"/>
+        android:title="General" />
 
     <header
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$MatchScoutPreferenceFragment"
@@ -16,9 +16,9 @@
         android:title="Bluetooth server" />
 
     <header
-    android:fragment="com.team980.thunderscout.preferences.SettingsActivity$LinkedSheetsPreferenceFragment"
+        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$LinkedSheetsPreferenceFragment"
         android:icon="@drawable/ic_cloud_white_24dp"
-    android:title="Linked spreadsheets" />
+        android:title="Linked spreadsheets" />
 
     <!--<header
     android:fragment="com.team980.thunderscout.preferences.SettingsActivity$LocalStoragePreferenceFragment"
