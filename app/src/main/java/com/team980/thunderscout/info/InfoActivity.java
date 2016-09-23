@@ -3,14 +3,18 @@ package com.team980.thunderscout.info;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.ScalingStats;
 
 import java.text.SimpleDateFormat;
 
-@Deprecated
+@Deprecated //TODO better view
 public class InfoActivity extends AppCompatActivity {
 
     @Override
@@ -25,6 +29,7 @@ public class InfoActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_info_scout);
 
+        // --- Init ---
         TextView teamNumber = (TextView) findViewById(R.id.info_teamNumber);
         teamNumber.setText("Team " + data.getTeamNumber());
 
@@ -34,55 +39,66 @@ public class InfoActivity extends AppCompatActivity {
         TextView dataSource = (TextView) findViewById(R.id.info_dataSource);
         dataSource.setText("Source: " + data.getDataSource());
 
-        /*TextView autoDefenseStats = (TextView) findViewById(R.id.info_autoDefenseStats);
-        if (data.getAutoCrossingStats() == CrossingStats.NONE) {
+        // --- Auto ---
+        TextView autoDefenseStats = (TextView) findViewById(R.id.info_autoDefenseCrossed);
+        if (data.getAutoDefenseCrossed() == Defense.NONE) {
             autoDefenseStats.setText("Did not cross a defense");
         } else {
-            autoDefenseStats.setText(data.getAutoCrossingStats().toString() + " the " + data.getAutoDefenseCrossed().toString());
+            autoDefenseStats.setText("Crossed the " + data.getAutoDefenseCrossed().name());
         }
 
-        TextView autoScoringStats = (TextView) findViewById(R.id.info_autoScoringStats);
-        if (data.getAutoScoringStats() == ScoringStats.NONE) {
-            autoScoringStats.setText("Did not score a goal");
-        } else {
-            autoScoringStats.setText("Scored a " + data.getAutoScoringStats());
-        }
+        TextView autoLowGoals = (TextView) findViewById(R.id.info_autoScoringLow);
+        autoLowGoals.setText("Scored " + data.getAutoLowGoals() + " low goals");
 
-        TextView defensesBreached = (TextView) findViewById(R.id.info_teleopDefensesBreached);
-        defensesBreached.setText("Breached " + data.getTeleopDefensesBreached() + " defenses");
+        TextView autoHighGoals = (TextView) findViewById(R.id.info_autoScoringHigh);
+        autoHighGoals.setText("Scored " + data.getAutoHighGoals() + " high goals");
 
-        RecyclerView listDefensesBreached = (RecyclerView) findViewById(R.id.info_teleopListDefensesBreached);
+        TextView autoMissedGoals = (TextView) findViewById(R.id.info_autoScoringMissed);
+        autoMissedGoals.setText("Missed " + data.getAutoMissedGoals() + " goals");
+
+        // --- Teleop ---
+        TextView defensesBreached = (TextView) findViewById(R.id.info_teleopDefensesCrossed);
+        defensesBreached.setText("Crossed " + data.getTeleopDefenseCrossings().size() + " defenses");
+
+        RecyclerView listDefensesCrossed = (RecyclerView) findViewById(R.id.info_teleopListDefenseCrossings);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        listDefensesBreached.setLayoutManager(mLayoutManager);
+        listDefensesCrossed.setLayoutManager(mLayoutManager);
 
-        RankedDefenseAdapter listDefensesAdapter = new RankedDefenseAdapter(data.getTeleopMapDefensesBreached());
-        listDefensesBreached.setAdapter(listDefensesAdapter);
+        DefenseAdapter listDefensesAdapter = new DefenseAdapter(data.getTeleopDefenseCrossings());
+        listDefensesCrossed.setAdapter(listDefensesAdapter);
 
-        TextView goalsScored = (TextView) findViewById(R.id.info_teleopGoalsScored);
-        goalsScored.setText("Scored " + data.getTeleopGoalsScored() + " boulders");
+        TextView teleopLowGoals = (TextView) findViewById(R.id.info_teleopScoringLow);
+        teleopLowGoals.setText("Scored " + data.getTeleopLowGoals() + " low goals");
 
-        if (data.getTeleopLowGoals()) {
-            LinearLayout lowGoalContainer = (LinearLayout) findViewById(R.id.info_teleopLowGoalContainer);
-            lowGoalContainer.setVisibility(View.VISIBLE);
+        TextView teleopHighGoals = (TextView) findViewById(R.id.info_teleopScoringHigh);
+        teleopHighGoals.setText("Scored " + data.getTeleopHighGoals() + " high goals");
 
-            TextView lowGoalRank = (TextView) findViewById(R.id.info_teleopLowGoalRank);
-            lowGoalRank.setText(data.getTeleopLowGoalRank().getDescription());
+        TextView teleopMissedGoals = (TextView) findViewById(R.id.info_teleopScoringMissed);
+        teleopMissedGoals.setText("Missed " + data.getTeleopMissedGoals() + " goals");
+
+        // --- Summary ---
+        TextView scalingStats = (TextView) findViewById(R.id.info_scalingStats);
+        if (data.getScalingStats() == ScalingStats.NONE) {
+            scalingStats.setText("Did not scale the tower");
+        } else if (data.getScalingStats() == ScalingStats.PARTIAL) {
+            scalingStats.setText("Partially scaled the tower");
+        } else if (data.getScalingStats() == ScalingStats.FULL) {
+            scalingStats.setText("Fully scaled the tower");
         }
 
-        if (data.getTeleopHighGoals()) {
-            LinearLayout highGoalContainer = (LinearLayout) findViewById(R.id.info_teleopHighGoalContainer);
-            highGoalContainer.setVisibility(View.VISIBLE);
-
-            TextView highGoalRank = (TextView) findViewById(R.id.info_teleopHighGoalRank);
-            highGoalRank.setText(data.getTeleopHighGoalRank().getDescription());
+        TextView challengedTower = (TextView) findViewById(R.id.info_challengedTower);
+        if (data.hasChallengedTower()) {
+            challengedTower.setText("Challenged the tower");
+        } else {
+            challengedTower.setText("Did not challenge the tower");
         }
 
-        TextView driverSkill = (TextView) findViewById(R.id.info_driverSkill);
-        driverSkill.setText(data.getTeleopDriverSkill().getDescription());
+        TextView troubleWith = (TextView) findViewById(R.id.info_troubleWith);
+        troubleWith.setText(data.getTroubleWith());
 
         TextView comments = (TextView) findViewById(R.id.info_comments);
-        comments.setText(data.getTeleopComments());*/
+        comments.setText(data.getComments());
     }
 }
 

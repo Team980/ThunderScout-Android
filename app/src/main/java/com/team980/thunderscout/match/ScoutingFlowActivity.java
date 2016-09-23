@@ -282,7 +282,13 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             }
 
             CounterCompoundView defenseCounter = (CounterCompoundView) teleopView.findViewById(defense.getCounterId());
-            mapDefenseCrossings.put(defense, (int) defenseCounter.getValue());
+
+            int count = (int) defenseCounter.getValue();
+            if (count == 0) {
+                continue;
+            }
+
+            mapDefenseCrossings.put(defense, count);
         }
 
         scoutData.getTeleopDefenseCrossings().putAll(mapDefenseCrossings);

@@ -10,8 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|left"
         android:text="Defense Crossed"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginRight="16dp" />
 
     <TextView
         android:id="@+id/data_value"
@@ -19,5 +20,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|right"
         android:text="Rank"
-        android:textSize="14sp" />
+        android:textSize="20sp"
+        android:layout_marginLeft="16dp" />
 </LinearLayout>

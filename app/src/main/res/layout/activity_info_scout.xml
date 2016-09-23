@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:text="Team Number"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -34,14 +34,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date Added"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/info_dataSource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Data Source"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="Autonomous"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -65,28 +65,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Crossed the $DEFENSE_CROSSED$"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/info_autoScoringLow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Scored $GOAL_NUM$ low goals"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/info_autoScoringHigh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Scored $GOAL_NUM$ high goals"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/info_autoScoringMissed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Missed $GOAL_NUM$ goals"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -102,132 +102,97 @@
                 android:layout_height="wrap_content"
                 android:text="Teleop"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/info_teleopDefensesBreached"
+                android:id="@+id/info_teleopDefensesCrossed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Breached $NUMBER$ defenses"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/info_teleopGoalsScored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Scored $NUMBER$ boulders"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="The robot showed the ability to cross: "
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:text="Crossed $NUMBER$ defenses:"
+                android:textSize="20sp" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/info_teleopListDefensesBreached"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical">
-
-            <TextView
+                android:id="@+id/info_teleopListDefenseCrossings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="The robot showed the ability to shoot: "
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
-
-            <LinearLayout
-                android:id="@+id/info_teleopLowGoalContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|left"
-                    android:text="Low Goals"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/info_teleopLowGoalRank"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|right"
-                    android:text="Rank"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/info_teleopHighGoalContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|left"
-                    android:text="High Goals"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/info_teleopHighGoalRank"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|right"
-                    android:text="Rank"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical">
+                android:layout_marginLeft="32dp"
+                android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/info_teleopScoringLow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Driver Skill"
-                android:textColor="@android:color/white"
+                android:text="Scored $GOAL_NUM$ low goals"
                 android:textSize="20sp"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/info_teleopScoringHigh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scored $GOAL_NUM$ high goals"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/info_teleopScoringMissed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Missed $GOAL_NUM$ goals"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Summary"
+                android:textColor="@android:color/white"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/info_driverSkill"
+                android:id="@+id/info_scalingStats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$DRIVER_SKILL$"
-                android:textSize="14sp" />
+                android:text="$SCALING_STATS$"
+                android:textSize="20sp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$CHALLENGED_TOWER$"
+                android:id="@+id/info_challengedTower"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trouble With"
+                android:textColor="@android:color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/info_troubleWith"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$TROUBLE_WITH$"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -242,7 +207,7 @@
                 android:layout_height="wrap_content"
                 android:text="Comments"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -250,7 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$COMMENTS$"
-                android:textSize="14sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
     </LinearLayout>
