@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">ThunderScout</string>
 
+    <string name="app_version">2016v2-FallClassic</string> <!--TODO This is where we track the version -->
+
+    <string name="build_variant">Release</string>
+
     <string-array name="defenses_array">
         <item>None</item>
         <item>Low Bar</item>

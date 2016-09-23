@@ -22,13 +22,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="ThunderScout"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Revision 2016v2-InstantRun" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:text="@string/app_version"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="@string/build_variant" />
+
+    </LinearLayout>
 
 </LinearLayout>
