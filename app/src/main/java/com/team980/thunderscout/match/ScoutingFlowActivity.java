@@ -221,7 +221,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             if (prefs.getBoolean("ms_send_to_bt_server", false)) { //Sending via BT
 
-                String address = prefs.getString("bt_server_device", null);
+                String address = prefs.getString("ms_bt_server_device", null);
 
                 for (BluetoothDevice device : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
                     if (device.getAddress().equals(address)) {
