@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -14,13 +13,15 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
+import com.google.api.services.sheets.v4.model.Sheet;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
+import com.team980.thunderscout.data.ScoutData;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.List;
 
-public class SheetsCreateTask extends AsyncTask<Void, Void, String> {
+public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, Void> {
 
     private Context context;
 
@@ -28,7 +29,9 @@ public class SheetsCreateTask extends AsyncTask<Void, Void, String> {
 
     private static final String[] ACCOUNT_SCOPES = {SheetsScopes.SPREADSHEETS, SheetsScopes.DRIVE};
 
-    public SheetsCreateTask(Context context) {
+    String spreadsheetId;
+
+    public SheetsUpdateTask(Context context) {
         this.context = context;
 
         GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
@@ -49,25 +52,30 @@ public class SheetsCreateTask extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Void... voids) {
-        Spreadsheet spreadsheet = new Spreadsheet();
-        spreadsheet.setProperties(spreadsheet.getProperties().setTitle("ThunderScout Data: " + SimpleDateFormat.getDateTimeInstance().format(System.currentTimeMillis())));
+    protected void onPreExecute() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        spreadsheetId = preferences.getString("linked_spreadsheet_id", null);
+    }
+
+    @Override
+    protected Void doInBackground(ScoutData... dataList) {
+        Spreadsheet spreadsheet;
 
         try {
-            spreadsheet = sheetsService.spreadsheets().create(spreadsheet).execute();
+            spreadsheet = sheetsService.spreadsheets().get(spreadsheetId).execute();
+
+            List<Sheet> sheets = spreadsheet.getSheets();
+            //sheets.get(0).getProperties().getTitle()
+            //sheets.get(0).getData().get(0).getRowData().get(0).getValues().get(0).getUserEnteredValue().getStringValue()
+            //TODO look at StudentSignup to see how we did it
+
+            //todo insert ScoutData into proper workbook
+            //if workbook is not created, make it and add default headers (left column)
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return spreadsheet.getSpreadsheetId();
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-
-        preferences.edit().putString("linked_spreadsheet_id", result).apply();
-
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        return null;
     }
 }
