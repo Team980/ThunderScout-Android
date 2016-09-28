@@ -85,14 +85,10 @@ public class TSNotificationManager {
     }
 
     public Notification buildBtServerRunning() {
-        btServerRunning.setWhen(System.currentTimeMillis());
-
         return btServerRunning.build();
     }
 
     public Notification buildBtServerRunning(String[] data) { //TODO add data
-        btServerRunning.setWhen(System.currentTimeMillis());
-
         return btServerRunning.build();
     }
 
