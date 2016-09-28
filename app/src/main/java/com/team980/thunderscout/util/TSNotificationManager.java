@@ -85,10 +85,13 @@ public class TSNotificationManager {
     }
 
     public Notification buildBtServerRunning() {
+        btServerRunning.setWhen(System.currentTimeMillis());
+
         return btServerRunning.build();
     }
 
     public Notification buildBtServerRunning(String[] data) { //TODO add data
+        btServerRunning.setWhen(System.currentTimeMillis());
 
         return btServerRunning.build();
     }
@@ -99,6 +102,7 @@ public class TSNotificationManager {
         lastUsedId++;
 
         btTransferInProgress.setContentTitle("Transferring data [to|from] " + deviceName);
+        btTransferInProgress.setWhen(System.currentTimeMillis());
 
         mNotifyMgr.notify(lastUsedId, btTransferInProgress.build());
         return lastUsedId;
@@ -108,6 +112,7 @@ public class TSNotificationManager {
     public void showBtTransferSuccessful(String deviceName, int id) {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         btTransferSuccessful.setContentText("Data [received from|sent to] " + deviceName);
+        btTransferSuccessful.setWhen(System.currentTimeMillis());
 
         mNotifyMgr.notify(id, btTransferSuccessful.build());
     }
@@ -116,6 +121,7 @@ public class TSNotificationManager {
     public void showBtTransferError(String deviceName, int id) {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         btTransferError.setContentText("Failed to [receive|send] data [from|to] " + deviceName);
+        btTransferError.setWhen(System.currentTimeMillis());
 
         mNotifyMgr.notify(id, btTransferError.build());
     }
