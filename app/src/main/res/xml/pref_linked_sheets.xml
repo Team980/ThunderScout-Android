@@ -5,10 +5,19 @@
         android:key="enable_linked_sheets"
         android:summary="Link with a spreadhseet for cloud storage"
         android:title="Enable Google Sheets integration" />
+    <Preference
+        android:key="googleAccountAuth"
+        android:dependency="enable_linked_sheets"
+        android:title="Sign in to your Google account">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.team980.thunderscout"
+            android:targetClass="com.team980.thunderscout.sheets.GoogleAuthActivity" />
+    </Preference>
 
     <EditTextPreference
-        android:title="Linked spreadsheet URL"
-        android:key="linked_sheet_url"
+        android:title="Linked spreadsheet ID"
+        android:key="linked_spreadsheet_id"
         android:editable="false" />
 
     <!-- These are examples from the tutorial -->

@@ -1,64 +1,47 @@
 package com.team980.thunderscout.sheets;
 
-
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import com.team980.thunderscout.data.ScoutData;
 
 import java.util.Arrays;
 
-public class LinkedSheetsManager {
-
-    private static LinkedSheetsManager ourInstance;
-
-    private Context context;
+public class GoogleAuthActivity extends AppCompatActivity {
 
     private GoogleAccountCredential credential;
-    private static final String[] SCOPES = {SheetsScopes.SPREADSHEETS, SheetsScopes.DRIVE};
+    private static final String[] ACCOUNT_SCOPES = {SheetsScopes.SPREADSHEETS, SheetsScopes.DRIVE};
 
 
-    public static LinkedSheetsManager getInstance(Context context) {
-        if (ourInstance == null) {
-            ourInstance = new LinkedSheetsManager(context);
-        }
-
-        return ourInstance;
-    }
-
-    private LinkedSheetsManager(Context context) {
-        this.context = context;
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         credential = GoogleAccountCredential.usingOAuth2(
-                context, Arrays.asList(SCOPES))
+                this, Arrays.asList(ACCOUNT_SCOPES))
                 .setBackOff(new ExponentialBackOff());
+
+        selectAccount();
     }
 
-    public boolean chooseAccount() {
-        String accountName = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString("google_account_name", null);
-        if (accountName != null) {
-            credential.setSelectedAccountName(accountName);
-            return true;
-        } else {
-            //Activity should startActivityForResult
-            return false;
-        }
+    protected void selectAccount() {
+        // Start a dialog from which the user can choose an account
+        startActivityForResult(
+                credential.newChooseAccountIntent(),
+                1000);
+
     }
 
-    public GoogleAccountCredential getCredential() {
-        return credential;
-    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-    public void chooseAccountResponse(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 1000: //REQUEST_ACCOUNT_PICKER
                 if (resultCode == Activity.RESULT_OK && data != null &&
@@ -67,31 +50,19 @@ public class LinkedSheetsManager {
                             data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
                         SharedPreferences settings =
-                                PreferenceManager.getDefaultSharedPreferences(context);
+                                PreferenceManager.getDefaultSharedPreferences(this);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString("google_account_name", accountName);
                         editor.apply();
                         credential.setSelectedAccountName(accountName);
                     }
                 }
-                break;
+                finish();
             case 1001: //REQUEST_AUTH
                 if (resultCode == Activity.RESULT_OK) {
-                    Toast.makeText(context, "1001: Auth complete", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "1001: Auth complete", Toast.LENGTH_LONG).show();
                 }
                 break;
         }
-    }
-
-    public void initSheet() {
-
-    }
-
-    public void addToSheet(ScoutData data) {
-
-    }
-
-    public void unlinkSheet() {
-
     }
 }
