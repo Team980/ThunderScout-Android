@@ -52,7 +52,7 @@ public class ThunderScout extends Application {
 
     }
 
-    public static boolean isInteger(String str) {
+    public static boolean isInteger(String str) { //TODO use this for all the int checks
         if (str == null) {
             return false;
         }

@@ -14,7 +14,6 @@ import com.team980.thunderscout.data.enumeration.ScalingStats;
 
 import java.text.SimpleDateFormat;
 
-@Deprecated //TODO better view
 public class InfoActivity extends AppCompatActivity {
 
     @Override

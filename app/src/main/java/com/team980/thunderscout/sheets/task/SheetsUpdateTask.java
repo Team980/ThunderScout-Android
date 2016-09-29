@@ -13,11 +13,19 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
+import com.google.api.services.sheets.v4.model.BatchUpdateValuesRequest;
+import com.google.api.services.sheets.v4.model.CellData;
+import com.google.api.services.sheets.v4.model.ExtendedValue;
+import com.google.api.services.sheets.v4.model.GridData;
+import com.google.api.services.sheets.v4.model.RowData;
 import com.google.api.services.sheets.v4.model.Sheet;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
+import com.google.api.services.sheets.v4.model.ValueRange;
+import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,19 +71,96 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, Void> {
         Spreadsheet spreadsheet;
 
         try {
-            spreadsheet = sheetsService.spreadsheets().get(spreadsheetId).execute();
+            spreadsheet = sheetsService.spreadsheets().get(spreadsheetId).execute(); //spreadsheet which contains workbooks
 
-            List<Sheet> sheets = spreadsheet.getSheets();
-            //sheets.get(0).getProperties().getTitle()
-            //sheets.get(0).getData().get(0).getRowData().get(0).getValues().get(0).getUserEnteredValue().getStringValue()
-            //TODO look at StudentSignup to see how we did it
+            for (ScoutData data : dataList) { //loop for each data object... there should only be 1 but who cares
 
-            //todo insert ScoutData into proper workbook
-            //if workbook is not created, make it and add default headers (left column)
+                List<Sheet> sheets = spreadsheet.getSheets();
+                Sheet teamSheet = null; //workbook for team
+
+                for (Sheet s : sheets) {
+                    if (s.getProperties().getTitle() == data.getTeamNumber()) {
+                        teamSheet = s;
+                        break;
+                    } else if (!ThunderScout.isInteger(s.getProperties().getTitle())) {
+                        sheets.remove(s); //removes that pesky default sheet
+                    }
+                }
+
+                if (teamSheet == null) {
+                    teamSheet = new Sheet();
+                    teamSheet.getProperties().setTitle(data.getTeamNumber());
+                    spreadsheet.getSheets().add(teamSheet);
+                    insertInitData(teamSheet);
+                }
+
+                insertIntoSheet(teamSheet, data);
+
+            }
+
+            //TODO push changes / build proper request format
+            //sheetsService.spreadsheets().values().batchUpdate(spreadsheetId, )
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    @Deprecated
+    private void insertInitData(Sheet sheet) {
+
+    }
+
+    @Deprecated
+    private BatchUpdateValuesRequest initUpdateRequest(ScoutData data) {
+        BatchUpdateValuesRequest updateRequest = new BatchUpdateValuesRequest();
+
+        ArrayList<ValueRange> valueRanges = new ArrayList<>();
+        ValueRange range = new ValueRange();
+        range.setMajorDimension("COLUMNS");
+        valueRanges.add(range);
+
+        updateRequest.setData(valueRanges);
+        return updateRequest;
+    }
+
+    @Deprecated
+    private void insertIntoSheet(Sheet sheet, ScoutData scoutData) {
+        ArrayList<RowData> rows = new ArrayList<>();
+        ArrayList<CellData> cells = new ArrayList<>();
+
+        // Init a CellData object for each data cell
+        CellData name = new CellData();
+        name.setUserEnteredValue(
+                new ExtendedValue().setStringValue(scoutData.getComments()));
+        cells.add(name);
+
+        CellData email = new CellData();
+        email.setUserEnteredValue(
+                new ExtendedValue().setStringValue(scoutData.getComments()));
+        cells.add(email);
+
+        CellData phoneNumber = new CellData();
+        phoneNumber.setUserEnteredValue(
+                new ExtendedValue().setStringValue(scoutData.getComments()));
+        cells.add(phoneNumber);
+
+        CellData grade = new CellData();
+        grade.setUserEnteredValue(
+                new ExtendedValue().setNumberValue((double) scoutData.getDateAdded()));
+        cells.add(grade);
+
+
+        // Add data column to sheet (looks hacky, ik)
+        rows.add(new RowData().setValues(cells));
+
+        GridData gridData = new GridData();
+        gridData.setRowData(rows);
+
+        ArrayList<GridData> gridList = new ArrayList<>();
+        gridList.add(gridData);
+
+        sheet.setData(gridList);
     }
 }
