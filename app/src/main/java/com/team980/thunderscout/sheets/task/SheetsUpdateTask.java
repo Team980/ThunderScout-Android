@@ -101,6 +101,10 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, Void> {
             //TODO push changes / build proper request format
             //sheetsService.spreadsheets().values().batchUpdate(spreadsheetId, )
             //OR sheetsService.spreadsheets().values().update()
+
+            //TODO is it this?
+            //DimensionRange range1 = new DimensionRange();
+            //range1.setSheetId()
         } catch (IOException e) {
             e.printStackTrace();
         }
