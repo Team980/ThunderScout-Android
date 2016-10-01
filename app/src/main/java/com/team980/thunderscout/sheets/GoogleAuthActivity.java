@@ -48,21 +48,26 @@ public class GoogleAuthActivity extends AppCompatActivity {
                         data.getExtras() != null) {
                     String accountName =
                             data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-                    if (accountName != null) {
-                        SharedPreferences settings =
-                                PreferenceManager.getDefaultSharedPreferences(this);
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putString("google_account_name", accountName);
-                        editor.apply();
-                        credential.setSelectedAccountName(accountName);
-                    }
+                    SharedPreferences settings =
+                            PreferenceManager.getDefaultSharedPreferences(this);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("google_account_name", accountName);
+                    editor.apply();
+                    credential.setSelectedAccountName(accountName);
                 }
                 finish();
             case 1001: //REQUEST_AUTH
                 if (resultCode == Activity.RESULT_OK) {
-                    Toast.makeText(this, "1001: Auth complete", Toast.LENGTH_LONG).show();
+                    SharedPreferences settings =
+                            PreferenceManager.getDefaultSharedPreferences(this);
+
+                    Toast.makeText(this, "1001: Auth complete for " + settings.getString("google_account_name", null), Toast.LENGTH_LONG).show();
+                } else {
+                    startActivityForResult(credential.newChooseAccountIntent(), 1000);
                 }
                 break;
         }
+
+
     }
 }

@@ -28,6 +28,7 @@ import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.task.DatabaseWriteTask;
 import com.team980.thunderscout.info.ViewPagerAdapter;
+import com.team980.thunderscout.sheets.task.SheetsUpdateTask;
 import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.ImagePreviewDialog;
 
@@ -237,7 +238,11 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             }
 
             if (prefs.getBoolean("ms_send_to_linked_sheet", false)) { //Saving to Sheets
+                SheetsUpdateTask task = new SheetsUpdateTask(this);
+                task.execute(scoutData);
 
+                Toast info = Toast.makeText(this, "Sending to Google Sheets...", Toast.LENGTH_LONG);
+                info.show();
             }
 
             finish();

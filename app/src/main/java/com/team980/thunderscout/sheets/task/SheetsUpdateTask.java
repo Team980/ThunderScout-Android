@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -13,6 +14,13 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
+import com.google.api.services.sheets.v4.model.AddSheetRequest;
+import com.google.api.services.sheets.v4.model.AppendValuesResponse;
+import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest;
+import com.google.api.services.sheets.v4.model.Request;
+import com.google.api.services.sheets.v4.model.Sheet;
+import com.google.api.services.sheets.v4.model.SheetProperties;
+import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
@@ -22,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, Void> {
+public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, AppendValuesResponse> {
 
     private Context context;
 
@@ -60,37 +68,62 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(ScoutData... dataList) {
-
+    protected AppendValuesResponse doInBackground(ScoutData... dataList) {
         try {
+            ScoutData data = dataList[0];
 
-            for (ScoutData data : dataList) { //loop for each data object... there should only be 1 but who cares
+            Spreadsheet spreadsheet = sheetsService.spreadsheets().get(spreadsheetId).execute();
 
-                String range = data.getTeamNumber() + "!A1"; //SheetName!A1 - A1 notation...
-
-                ValueRange content = new ValueRange();
-                content.setMajorDimension("COLUMNS");
-                content.setRange(range); //this feels redundant
-
-                ArrayList<Object> columnData = new ArrayList<>(); //stores data of a column
-
-                initColumnData(columnData, data);
-
-                ArrayList<List<Object>> wrappedData = new ArrayList<>(); //stores columns
-
-                wrappedData.add(columnData);
-
-                content.setValues(wrappedData);
-
-                sheetsService.spreadsheets().values().append(spreadsheetId, range, content)
-                        //.setValueInputOption("RAW").setInsertDataOption("INSERT_ROWS") //you can never be too careful with flags
-                        .execute();
+            boolean needsInit = true;
+            for (Sheet sheet : spreadsheet.getSheets()) {
+                if (sheet.getProperties().getTitle().equalsIgnoreCase(data.getTeamNumber())) {
+                    needsInit = false;
+                }
             }
+
+            if (needsInit) {
+                AddSheetRequest addSheetRequest = new AddSheetRequest();
+                addSheetRequest.setProperties(new SheetProperties().setTitle(data.getTeamNumber()));
+
+                Request request =  new Request();
+                request.setAddSheet(addSheetRequest);
+
+                ArrayList<Request> requests = new ArrayList<>();
+                requests.add(request);
+
+                sheetsService.spreadsheets().batchUpdate(spreadsheetId, new BatchUpdateSpreadsheetRequest().setRequests(requests)).execute();
+            }
+
+            String range = data.getTeamNumber() + "!A1"; //SheetName!A1:B2 - A1 notation... TODO this has to span the height of the column
+
+            ValueRange content = new ValueRange();
+            content.setMajorDimension("COLUMNS");
+            content.setRange(range);
+
+            ArrayList<Object> columnData = new ArrayList<>(); //stores data of a column
+
+            initColumnData(columnData, data);
+
+            ArrayList<List<Object>> wrappedData = new ArrayList<>(); //stores columns
+
+            wrappedData.add(columnData);
+
+            content.setValues(wrappedData);
+
+            return sheetsService.spreadsheets().values().append(spreadsheetId, range, content)
+                    .setValueInputOption("RAW") //TODO determine proper value
+                    .setInsertDataOption("INSERT_ROWS") //no column option
+                    .execute();
+
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
+    }
 
-        return null;
+    @Override
+    protected void onPostExecute(AppendValuesResponse response) {
+        Toast.makeText(context, "Updated spreadsheet: " + response.getSpreadsheetId(), Toast.LENGTH_LONG).show();
     }
 
     private void initColumnData(ArrayList<Object> columnDataList, ScoutData data) {
@@ -112,7 +145,13 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, Void> {
                 continue;
             }
 
-            int count = data.getTeleopDefenseCrossings().get(defense);
+            int count;
+
+            if (!data.getTeleopDefenseCrossings().containsKey(defense)) {
+                count = 0;
+            } else {
+                count = data.getTeleopDefenseCrossings().get(defense);
+            }
 
             columnDataList.add(defense.name() + ": " + count);
         }
