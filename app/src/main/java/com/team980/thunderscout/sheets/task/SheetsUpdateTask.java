@@ -81,6 +81,8 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, AppendValuesRes
                 }
             }
 
+            String range = data.getTeamNumber(); //SheetName!A1:B2 - A1 notation...
+
             if (needsInit) {
                 AddSheetRequest addSheetRequest = new AddSheetRequest();
                 addSheetRequest.setProperties(new SheetProperties().setTitle(data.getTeamNumber()));
@@ -92,17 +94,29 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, AppendValuesRes
                 requests.add(request);
 
                 sheetsService.spreadsheets().batchUpdate(spreadsheetId, new BatchUpdateSpreadsheetRequest().setRequests(requests)).execute();
+
+                ValueRange init = new ValueRange();
+                init.setMajorDimension("ROWS");
+                init.setRange(range);
+
+                List<List<Object>> initWrapper = new ArrayList<>();
+                initWrapper.add(initHeaderData());
+
+                init.setValues(initWrapper);
+
+                sheetsService.spreadsheets().values().append(spreadsheetId, range, init)
+                        .setValueInputOption("RAW") //TODO determine proper value
+                        .setInsertDataOption("INSERT_ROWS")
+                        .execute();
             }
 
-            String range = data.getTeamNumber() + "!A1"; //SheetName!A1:B2 - A1 notation... TODO this has to span the height of the column
-
             ValueRange content = new ValueRange();
-            content.setMajorDimension("COLUMNS");
+            content.setMajorDimension("ROWS");
             content.setRange(range);
 
             ArrayList<Object> columnData = new ArrayList<>(); //stores data of a column
 
-            initColumnData(columnData, data);
+            initRowData(columnData, data);
 
             ArrayList<List<Object>> wrappedData = new ArrayList<>(); //stores columns
 
@@ -112,7 +126,7 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, AppendValuesRes
 
             return sheetsService.spreadsheets().values().append(spreadsheetId, range, content)
                     .setValueInputOption("RAW") //TODO determine proper value
-                    .setInsertDataOption("INSERT_ROWS") //no column option
+                    .setInsertDataOption("INSERT_ROWS")
                     .execute();
 
         } catch (IOException e) {
@@ -126,19 +140,57 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, AppendValuesRes
         Toast.makeText(context, "Updated spreadsheet: " + response.getSpreadsheetId(), Toast.LENGTH_LONG).show();
     }
 
-    private void initColumnData(ArrayList<Object> columnDataList, ScoutData data) {
+    private ArrayList<Object> initHeaderData() {
+        ArrayList<Object> rowDataList = new ArrayList<>();
 
-        //columnDataList.add(data.getDateAdded()); //TODO format date correctly
+        //rowDataList.add(data.getDateAdded()); //TODO format date correctly
 
-        columnDataList.add("Autonomous");
+        rowDataList.add("Autonomous");
 
-        columnDataList.add("Defense Crossed: " + data.getAutoDefenseCrossed());
+        rowDataList.add("Defense Crossed");
 
-        columnDataList.add("High Goals: " + data.getAutoHighGoals());
-        columnDataList.add("Low Goals: " + data.getAutoLowGoals());
-        columnDataList.add("Missed: " + data.getAutoMissedGoals());
+        rowDataList.add("High Goals");
+        rowDataList.add("Low Goals");
+        rowDataList.add("Missed");
 
-        columnDataList.add("Teleop");
+        rowDataList.add("Teleop");
+
+        for (Defense defense : Defense.values()) {
+            if (defense == Defense.NONE) {
+                continue;
+            }
+
+            rowDataList.add(defense.name());
+        }
+
+        rowDataList.add("High Goals");
+        rowDataList.add("Low Goals");
+        rowDataList.add("Missed");
+
+        rowDataList.add("Summary");
+
+        rowDataList.add("Scaling Stats");
+        rowDataList.add("Challenged Tower");
+
+        rowDataList.add("Trouble With");
+        rowDataList.add("Comments");
+
+        return rowDataList;
+    }
+
+    private void initRowData(ArrayList<Object> rowDataList, ScoutData data) {
+
+        //rowDataList.add(data.getDateAdded()); //TODO format date correctly
+
+        rowDataList.add(""); //Autonomous
+
+        rowDataList.add(data.getAutoDefenseCrossed().name());
+
+        rowDataList.add(data.getAutoHighGoals());
+        rowDataList.add(data.getAutoLowGoals());
+        rowDataList.add(data.getAutoMissedGoals());
+
+        rowDataList.add(""); //Teleop
 
         for (Defense defense : Defense.values()) {
             if (defense == Defense.NONE) {
@@ -153,22 +205,20 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, AppendValuesRes
                 count = data.getTeleopDefenseCrossings().get(defense);
             }
 
-            columnDataList.add(defense.name() + ": " + count);
+            rowDataList.add(count);
         }
 
-        columnDataList.add("High Goals: " + data.getTeleopHighGoals());
-        columnDataList.add("Low Goals: " + data.getTeleopLowGoals());
-        columnDataList.add("Missed: " + data.getTeleopMissedGoals());
+        rowDataList.add(data.getTeleopHighGoals());
+        rowDataList.add(data.getTeleopLowGoals());
+        rowDataList.add(data.getTeleopMissedGoals());
 
-        columnDataList.add("Summary");
+        rowDataList.add(""); //Summary
 
-        columnDataList.add("Scaling Stats: " + data.getScalingStats().name());
-        columnDataList.add("Challenged Tower: " + data.hasChallengedTower());
+        rowDataList.add(data.getScalingStats().name());
+        rowDataList.add(data.hasChallengedTower());
 
-        columnDataList.add("Trouble With");
-        columnDataList.add(data.getTroubleWith());
-        columnDataList.add("Comments");
-        columnDataList.add(data.getComments());
+        rowDataList.add(data.getTroubleWith());
+        rowDataList.add(data.getComments());
 
     }
 }
