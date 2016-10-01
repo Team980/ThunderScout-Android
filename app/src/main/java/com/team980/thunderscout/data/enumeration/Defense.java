@@ -2,7 +2,7 @@ package com.team980.thunderscout.data.enumeration;
 
 import com.team980.thunderscout.R;
 
-//TODO name() vs toString() for use in enums
+//TODO name() vs toString() for use in enums and EVERYWHERE ELSE WE NEED THE NAME. THERE BETTER BE A LOCALIZATION METHOD FOR THIS.
 public enum Defense {
     NONE(-1),
     LOW_BAR(R.id.teleop_counterLowBar),

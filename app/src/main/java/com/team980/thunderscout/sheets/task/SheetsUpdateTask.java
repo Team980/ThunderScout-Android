@@ -13,16 +13,9 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.BatchUpdateValuesRequest;
-import com.google.api.services.sheets.v4.model.CellData;
-import com.google.api.services.sheets.v4.model.ExtendedValue;
-import com.google.api.services.sheets.v4.model.GridData;
-import com.google.api.services.sheets.v4.model.RowData;
-import com.google.api.services.sheets.v4.model.Sheet;
-import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.ValueRange;
-import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.data.enumeration.Defense;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +30,7 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, Void> {
 
     private static final String[] ACCOUNT_SCOPES = {SheetsScopes.SPREADSHEETS, SheetsScopes.DRIVE};
 
-    String spreadsheetId;
+    private String spreadsheetId;
 
     public SheetsUpdateTask(Context context) {
         this.context = context;
@@ -68,43 +61,31 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, Void> {
 
     @Override
     protected Void doInBackground(ScoutData... dataList) {
-        Spreadsheet spreadsheet;
 
         try {
-            spreadsheet = sheetsService.spreadsheets().get(spreadsheetId).execute(); //spreadsheet which contains workbooks
 
             for (ScoutData data : dataList) { //loop for each data object... there should only be 1 but who cares
 
-                List<Sheet> sheets = spreadsheet.getSheets();
-                Sheet teamSheet = null; //workbook for team
+                String range = data.getTeamNumber() + "!A1"; //SheetName!A1 - A1 notation...
 
-                for (Sheet s : sheets) {
-                    if (s.getProperties().getTitle() == data.getTeamNumber()) {
-                        teamSheet = s;
-                        break;
-                    } else if (!ThunderScout.isInteger(s.getProperties().getTitle())) {
-                        sheets.remove(s); //removes that pesky default sheet
-                    }
-                }
+                ValueRange content = new ValueRange();
+                content.setMajorDimension("COLUMNS");
+                content.setRange(range); //this feels redundant
 
-                if (teamSheet == null) {
-                    teamSheet = new Sheet();
-                    teamSheet.getProperties().setTitle(data.getTeamNumber());
-                    spreadsheet.getSheets().add(teamSheet);
-                    insertInitData(teamSheet);
-                }
+                ArrayList<Object> columnData = new ArrayList<>(); //stores data of a column
 
-                insertIntoSheet(teamSheet, data);
+                initColumnData(columnData, data);
 
+                ArrayList<List<Object>> wrappedData = new ArrayList<>(); //stores columns
+
+                wrappedData.add(columnData);
+
+                content.setValues(wrappedData);
+
+                sheetsService.spreadsheets().values().append(spreadsheetId, range, content)
+                        //.setValueInputOption("RAW").setInsertDataOption("INSERT_ROWS") //you can never be too careful with flags
+                        .execute();
             }
-
-            //TODO push changes / build proper request format
-            //sheetsService.spreadsheets().values().batchUpdate(spreadsheetId, )
-            //OR sheetsService.spreadsheets().values().update()
-
-            //TODO is it this?
-            //DimensionRange range1 = new DimensionRange();
-            //range1.setSheetId()
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,60 +93,43 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, Void> {
         return null;
     }
 
-    @Deprecated
-    private void insertInitData(Sheet sheet) {
+    private void initColumnData(ArrayList<Object> columnDataList, ScoutData data) {
 
-    }
+        //columnDataList.add(data.getDateAdded()); //TODO format date correctly
 
-    @Deprecated
-    private BatchUpdateValuesRequest initUpdateRequest(ScoutData data) {
-        BatchUpdateValuesRequest updateRequest = new BatchUpdateValuesRequest();
+        columnDataList.add("Autonomous");
 
-        ArrayList<ValueRange> valueRanges = new ArrayList<>();
-        ValueRange range = new ValueRange();
-        range.setMajorDimension("COLUMNS");
-        valueRanges.add(range);
+        columnDataList.add("Defense Crossed: " + data.getAutoDefenseCrossed());
 
-        updateRequest.setData(valueRanges);
-        return updateRequest;
-    }
+        columnDataList.add("High Goals: " + data.getAutoHighGoals());
+        columnDataList.add("Low Goals: " + data.getAutoLowGoals());
+        columnDataList.add("Missed: " + data.getAutoMissedGoals());
 
-    @Deprecated
-    private void insertIntoSheet(Sheet sheet, ScoutData scoutData) {
-        ArrayList<RowData> rows = new ArrayList<>();
-        ArrayList<CellData> cells = new ArrayList<>();
+        columnDataList.add("Teleop");
 
-        // Init a CellData object for each data cell
-        CellData name = new CellData();
-        name.setUserEnteredValue(
-                new ExtendedValue().setStringValue(scoutData.getComments()));
-        cells.add(name);
+        for (Defense defense : Defense.values()) {
+            if (defense == Defense.NONE) {
+                continue;
+            }
 
-        CellData email = new CellData();
-        email.setUserEnteredValue(
-                new ExtendedValue().setStringValue(scoutData.getComments()));
-        cells.add(email);
+            int count = data.getTeleopDefenseCrossings().get(defense);
 
-        CellData phoneNumber = new CellData();
-        phoneNumber.setUserEnteredValue(
-                new ExtendedValue().setStringValue(scoutData.getComments()));
-        cells.add(phoneNumber);
+            columnDataList.add(defense.name() + ": " + count);
+        }
 
-        CellData grade = new CellData();
-        grade.setUserEnteredValue(
-                new ExtendedValue().setNumberValue((double) scoutData.getDateAdded()));
-        cells.add(grade);
+        columnDataList.add("High Goals: " + data.getTeleopHighGoals());
+        columnDataList.add("Low Goals: " + data.getTeleopLowGoals());
+        columnDataList.add("Missed: " + data.getTeleopMissedGoals());
 
+        columnDataList.add("Summary");
 
-        // Add data column to sheet (looks hacky, ik)
-        rows.add(new RowData().setValues(cells));
+        columnDataList.add("Scaling Stats: " + data.getScalingStats().name());
+        columnDataList.add("Challenged Tower: " + data.hasChallengedTower());
 
-        GridData gridData = new GridData();
-        gridData.setRowData(rows);
+        columnDataList.add("Trouble With");
+        columnDataList.add(data.getTroubleWith());
+        columnDataList.add("Comments");
+        columnDataList.add(data.getComments());
 
-        ArrayList<GridData> gridList = new ArrayList<>();
-        gridList.add(gridData);
-
-        sheet.setData(gridList);
     }
 }

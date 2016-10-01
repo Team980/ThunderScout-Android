@@ -15,11 +15,6 @@
             android:targetClass="com.team980.thunderscout.sheets.GoogleAuthActivity" />
     </Preference>
 
-    <EditTextPreference
-        android:title="Linked spreadsheet ID"
-        android:key="linked_spreadsheet_id"
-        android:editable="false" />
-
     <!-- These are examples from the tutorial -->
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->

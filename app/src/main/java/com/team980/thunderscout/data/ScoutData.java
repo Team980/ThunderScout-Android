@@ -18,7 +18,6 @@ public class ScoutData implements Serializable {
 
     public static final String SOURCE_LOCAL_DEVICE = "This device";
 
-
     // INIT
     private String teamNumber;
     private long dateAdded;

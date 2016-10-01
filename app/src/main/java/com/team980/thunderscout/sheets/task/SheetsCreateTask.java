@@ -51,7 +51,7 @@ public class SheetsCreateTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         Spreadsheet spreadsheet = new Spreadsheet();
-        spreadsheet.setProperties(spreadsheet.getProperties().setTitle("ThunderScout Data: " + SimpleDateFormat.getDateTimeInstance().format(System.currentTimeMillis())));
+        spreadsheet.setProperties(spreadsheet.getProperties().setTitle("ThunderScout Data: " + SimpleDateFormat.getDateInstance().format(System.currentTimeMillis())));
         spreadsheet.setSheets(null);
         try {
             spreadsheet = sheetsService.spreadsheets().create(spreadsheet).execute();
