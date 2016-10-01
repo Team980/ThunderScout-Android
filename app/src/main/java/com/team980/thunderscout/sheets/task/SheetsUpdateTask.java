@@ -143,7 +143,7 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, AppendValuesRes
     private ArrayList<Object> initHeaderData() {
         ArrayList<Object> rowDataList = new ArrayList<>();
 
-        //rowDataList.add(data.getDateAdded()); //TODO format date correctly
+        //rowDataList.add("Date Added"); //TODO format date correctly
 
         rowDataList.add("Autonomous");
 
@@ -180,7 +180,7 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, AppendValuesRes
 
     private void initRowData(ArrayList<Object> rowDataList, ScoutData data) {
 
-        //rowDataList.add(data.getDateAdded()); //TODO format date correctly
+        //rowDataList.add(SimpleDateFormat.getInstance().format(data.getDateAdded()));
 
         rowDataList.add(""); //Autonomous
 
