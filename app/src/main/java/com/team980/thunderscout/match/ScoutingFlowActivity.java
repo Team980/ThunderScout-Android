@@ -210,7 +210,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
                 scoutData.setDataSource(ScoutData.SOURCE_LOCAL_DEVICE);
 
-                DatabaseWriteTask task = new DatabaseWriteTask(new ScoutData(scoutData), this);
+                DatabaseWriteTask task = new DatabaseWriteTask(new ScoutData(scoutData), getApplicationContext()); //MEMORY LEAK PREVENTION
                 task.execute();
 
                 Toast info = Toast.makeText(this, "Storing data...", Toast.LENGTH_LONG);
@@ -228,7 +228,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     if (device.getAddress().equals(address)) {
                         scoutData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
 
-                        ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, this);
+                        ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, getApplicationContext()); //MEMORY LEAK PREVENTION
                         connectThread.start();
 
                         Toast info = Toast.makeText(this, "Sending data to " + device.getName() + "...", Toast.LENGTH_LONG);
@@ -238,7 +238,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             }
 
             if (prefs.getBoolean("ms_send_to_linked_sheet", false)) { //Saving to Sheets
-                SheetsUpdateTask task = new SheetsUpdateTask(this);
+                SheetsUpdateTask task = new SheetsUpdateTask(getApplicationContext()); //MEMORY LEAK PREVENTION
                 task.execute(scoutData);
 
                 Toast info = Toast.makeText(this, "Sending to Google Sheets...", Toast.LENGTH_LONG);
