@@ -55,7 +55,7 @@ public class LinkedSheetsFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.action_create) {
-            SheetsCreateTask createTask = new SheetsCreateTask(getActivity().getApplicationContext());
+            SheetsCreateTask createTask = new SheetsCreateTask(getActivity());
             createTask.execute();
         }
 
