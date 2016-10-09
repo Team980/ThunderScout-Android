@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "228200318883",
+    "firebase_url": "https://thunderscout-142321.firebaseio.com",
+    "project_id": "thunderscout-142321",
+    "storage_bucket": "thunderscout-142321.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228200318883:android:0e0cb94114371525",
+        "android_client_info": {
+          "package_name": "com.team980.thunderscout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228200318883-7apvelbkc9r1c9c8qnrmbksihp6b6iro.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team980.thunderscout",
+            "certificate_hash": "440C4CB55C9335F0D28F7BDE83B913BD2561ACBE"
+          }
+        },
+        {
+          "client_id": "228200318883-vqqfrs0u1k59b6lfsne8d3p77hln7se0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team980.thunderscout",
+            "certificate_hash": "D79487A9083556E8C799258220DF94BF2054E58D"
+          }
+        },
+        {
+          "client_id": "228200318883-bh7kc8ntt9kvk08un8p090aurp9iugnf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team980.thunderscout",
+            "certificate_hash": "FF567CA053949986C3B50BADFD601F64407970E7"
+          }
+        },
+        {
+          "client_id": "228200318883-1g8gu6t2imfro6ica0nlu0uf3nj7vprt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM08kCviFe98sdr2CAfm5yOM4nHBUrGLA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228200318883-1g8gu6t2imfro6ica0nlu0uf3nj7vprt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
