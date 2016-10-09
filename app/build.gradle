@@ -42,3 +42,5 @@ dependencies {
     compile 'com.bignerdranch.android:expandablerecyclerview:2.1.1'
     compile 'com.google.android.gms:play-services-auth:9.6.1'
 }
+
+apply plugin: 'com.google.gms.google-services'
