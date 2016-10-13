@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#fbc02d</color>
-    <color name="primary_dark">#F9A825</color>
-    <color name="accent">#fdd835</color>
+    <color name="primary">#78909C</color>
+    <color name="primary_dark">#546E7A</color>
+    <color name="accent">#F9A825</color>
 
-    <color name="text_contrast">#000000</color>
+    <!--<color name="primary">#fbc02d</color>
+    <color name="primary_dark">#F9A825</color>
+    <color name="accent">#fdd835</color>-->
 
     <color name="background_floating">#424242</color>
 
