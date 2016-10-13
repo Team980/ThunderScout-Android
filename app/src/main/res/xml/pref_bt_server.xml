@@ -6,7 +6,7 @@
         android:summary="Enable recieving data via Bluetooth"
         android:title="Enable Bluetooth Server" />
 
-    <PreferenceCategory android:title="Storage options">
+    <PreferenceCategory android:title="Storage options" android:dependency="enable_bt_server">
 
         <CheckBoxPreference
             android:defaultValue="true"
