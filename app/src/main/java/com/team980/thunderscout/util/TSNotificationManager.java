@@ -40,7 +40,7 @@ public class TSNotificationManager {
 
         PendingIntent serverSettingsIntent = PendingIntent.getActivity(context, 1,
                 new Intent(context, MainActivity.class)
-                        .putExtra(MainActivity.INTENT_FLAG_SHOWN_FRAGMENT, MainActivity.INTENT_FLAGS_BT_SERVER),
+                        .putExtra(MainActivity.INTENT_FLAG_SHOWN_FRAGMENT, MainActivity.INTENT_FLAGS_HOME),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         btServerRunning.setContentIntent(serverSettingsIntent);

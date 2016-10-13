@@ -13,7 +13,7 @@ import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ServerDataContract;
 import com.team980.thunderscout.data.ServerDataDbHelper;
 import com.team980.thunderscout.data.enumeration.ScalingStats;
-import com.team980.thunderscout.info.LocalStorageFragment;
+import com.team980.thunderscout.info.ThisDeviceFragment;
 
 public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
@@ -101,7 +101,7 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
         //Runs on UI thread after execution
         super.onPostExecute(o);
 
-        Intent intent = new Intent(LocalStorageFragment.ACTION_REFRESH_VIEW_PAGER);
+        Intent intent = new Intent(ThisDeviceFragment.ACTION_REFRESH_VIEW_PAGER);
         localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
     }
 }

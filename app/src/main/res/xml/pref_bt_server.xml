@@ -3,25 +3,25 @@
     <SwitchPreference
         android:defaultValue="false"
         android:key="enable_bt_server"
-        android:summary="Enable the Bluetooth Server"
+        android:summary="Enable recieving data via Bluetooth"
         android:title="Enable Bluetooth Server" />
 
-    <PreferenceCategory android:title="Data input"> <!-- TODO these names are garbage -->
+    <PreferenceCategory android:title="Storage options">
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="bt_send_to_local_storage"
-            android:title="Save to local device" />
+            android:title="Save to this device" />
 
-        <!--<CheckBoxPreference TODO is this really a good idea
+        <!--<CheckBoxPreference
             android:defaultValue="false"
             android:key="bt_send_to_bt_server"
             android:title="Send to Bluetooth server" />-->
 
-        <CheckBoxPreference
+        <!--<CheckBoxPreference
             android:defaultValue="false"
             android:key="bt_send_to_linked_sheet"
-            android:title="Send to linked spreadsheet" />
+            android:title="Send to linked spreadsheet" />-->
 
     </PreferenceCategory>
 

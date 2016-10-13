@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
 
-public class LocalStorageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
+public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
         PopupMenu.OnMenuItemClickListener {
 
     private RecyclerView dataView;
@@ -47,7 +47,7 @@ public class LocalStorageFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_local_storage, container, false);
+        return inflater.inflate(R.layout.fragment_this_device, container, false);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class LocalStorageFragment extends Fragment implements SwipeRefreshLayout
         MainActivity activity = (MainActivity) getActivity();
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle("Local storage");
+        toolbar.setTitle("This device");
         activity.setSupportActionBar(toolbar);
 
         setHasOptionsMenu(true);
