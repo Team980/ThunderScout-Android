@@ -14,7 +14,7 @@
             android:layout_height="56dp"
             android:background="?attr/selectableItemBackground"
             android:text="-"
-            android:textColor="@color/primary"
+            android:textColor="@color/accent"
             android:textSize="20sp" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_height="56dp"
             android:background="?attr/selectableItemBackground"
             android:text="+"
-            android:textColor="@color/primary"
+            android:textColor="@color/accent"
             android:textSize="20sp" />
     </LinearLayout>
 
