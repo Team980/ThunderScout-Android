@@ -11,20 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.team980.thunderscout.bluetooth.BluetoothServerFragment;
-import com.team980.thunderscout.info.LocalStorageFragment;
-import com.team980.thunderscout.match.MatchScoutFragment;
+import com.team980.thunderscout.info.ThisDeviceFragment;
 import com.team980.thunderscout.preferences.SettingsActivity;
-import com.team980.thunderscout.sheets.LinkedSheetsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static String INTENT_FLAG_SHOWN_FRAGMENT = "SHOWN_FRAGMENT";
-    public static int INTENT_FLAGS_MATCH_SCOUT = 0;
-    public static int INTENT_FLAGS_BT_SERVER = 1;
-    public static int INTENT_FLAGS_LINKED_SHEETS = 2;
-    public static int INTENT_FLAGS_LOCAL_STORAGE = 3;
+    public static int INTENT_FLAGS_HOME = 0;
+    public static int INTENT_FLAGS_THIS_DEVICE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,30 +29,22 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        int shownFragment = getIntent().getIntExtra(INTENT_FLAG_SHOWN_FRAGMENT, INTENT_FLAGS_MATCH_SCOUT);
+        int shownFragment = getIntent().getIntExtra(INTENT_FLAG_SHOWN_FRAGMENT, INTENT_FLAGS_HOME);
 
         Fragment fragment;
 
         switch (shownFragment) {
-            case 0: //INTENT_FLAGS_MATCH_SCOUT
+            case 0: //INTENT_FLAGS_HOME
                 navigationView.setCheckedItem(R.id.nav_match_scout);
-                fragment = new MatchScoutFragment();
+                fragment = new HomeFragment();
                 break;
-            case 1: //INTENT_FLAGS_BT_SERVER
-                navigationView.setCheckedItem(R.id.nav_bt_server);
-                fragment = new BluetoothServerFragment();
-                break;
-            case 2: //INTENT_FLAGS_LINKED_SHEETS
-                navigationView.setCheckedItem(R.id.nav_linked_sheets);
-                fragment = new LinkedSheetsFragment();
-                break;
-            case 3: //INTENT_FLAGS_LOCAL_STORAGE
+            case 1: //INTENT_FLAGS_THIS_DEVICE
                 navigationView.setCheckedItem(R.id.nav_local_storage);
-                fragment = new LocalStorageFragment();
+                fragment = new ThisDeviceFragment();
                 break;
-            default: //default to INTENT_FLAGS_MATCH_SCOUT
+            default: //default to INTENT_FLAGS_HOME
                 navigationView.setCheckedItem(R.id.nav_match_scout);
-                fragment = new MatchScoutFragment();
+                fragment = new HomeFragment();
                 break;
         }
 
@@ -99,22 +86,12 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_match_scout) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment, new MatchScoutFragment());
-            ft.addToBackStack(null);
-            ft.commit();
-        } else if (id == R.id.nav_bt_server) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment, new BluetoothServerFragment());
-            ft.addToBackStack(null);
-            ft.commit();
-        } else if (id == R.id.nav_linked_sheets) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment, new LinkedSheetsFragment());
+            ft.replace(R.id.fragment, new HomeFragment());
             ft.addToBackStack(null);
             ft.commit();
         } else if (id == R.id.nav_local_storage) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment, new LocalStorageFragment());
+            ft.replace(R.id.fragment, new ThisDeviceFragment());
             ft.addToBackStack(null);
             ft.commit();
         } else if (id == R.id.nav_settings) {

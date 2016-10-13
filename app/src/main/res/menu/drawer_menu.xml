@@ -5,32 +5,22 @@
         <item
             android:id="@+id/nav_match_scout"
             android:icon="@drawable/ic_send_white_24dp"
-            android:title="Match scouting" />
-        <item
-            android:id="@+id/nav_bt_server"
-            android:icon="@drawable/ic_settings_bluetooth_white_24dp"
-            android:title="Bluetooth server" />
-        <item
-            android:id="@+id/nav_linked_sheets"
-            android:icon="@drawable/ic_cloud_white_24dp"
-            android:title="Linked spreadsheets" />
+            android:title="Home" />
         <item
             android:id="@+id/nav_local_storage"
             android:icon="@drawable/ic_filter_list_white_24dp"
-            android:title="Local storage" />
+            android:title="This device" />
     </group>
 
-    <item android:title="More options">
-        <menu>
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_settings_white_24dp"
-                android:title="Settings" />
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_info_white_24dp"
-                android:title="About" />
-        </menu>
-    </item>
 
+    <group>
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_white_24dp"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info_white_24dp"
+            android:title="About" />
+    </group>
 </menu>

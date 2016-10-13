@@ -3,25 +3,25 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="enable_match_scout"
-        android:summary="Scout matches like a pro"
-        android:title="Enable match scouting" />
+        android:summary=""
+        android:title="Enable match scouting from this device" />
 
-    <PreferenceCategory android:title="Data output"> <!-- TODO these names are garbage -->
+    <PreferenceCategory android:title="Storage options">
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="ms_send_to_local_storage"
-            android:title="Save to local device" />
+            android:title="Save to this device" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="ms_send_to_bt_server"
             android:title="Send to Bluetooth server" />
 
-        <CheckBoxPreference
+        <!--<CheckBoxPreference
             android:defaultValue="false"
             android:key="ms_send_to_linked_sheet"
-            android:title="Send to linked spreadsheet" />
+            android:title="Send to linked spreadsheet" />-->
 
     </PreferenceCategory>
 
@@ -38,13 +38,7 @@
         <com.team980.thunderscout.preferences.BluetoothDevicePreference
             android:dialogTitle="Select your BT server"
             android:key="ms_bt_server_device"
-            android:title="Bluetooth Server Device" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Linked spreadsheets">
-
-        <!-- TODO -->
+            android:title="Bluetooth server to send data to" />
 
     </PreferenceCategory>
 

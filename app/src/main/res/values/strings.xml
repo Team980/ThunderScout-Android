@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ThunderScout</string>
 
-    <string name="app_version">2016v2-BeachBlitz</string> <!--TODO This is where we track the version -->
+    <string name="app_version">2016v2-Alpha</string> <!--TODO This is where we track the version -->
 
     <string name="build_variant">Release</string>
 
