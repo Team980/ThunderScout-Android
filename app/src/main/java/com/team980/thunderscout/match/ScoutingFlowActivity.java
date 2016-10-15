@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.team980.thunderscout.R;
@@ -74,12 +73,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
-
-        ImageButton saveButton = (ImageButton) findViewById(R.id.buttonSave);
-        saveButton.setOnClickListener(this);
-
-        ImageButton sendButton = (ImageButton) findViewById(R.id.buttonSendBluetooth);
-        sendButton.setOnClickListener(this);
     }
 
     @Override

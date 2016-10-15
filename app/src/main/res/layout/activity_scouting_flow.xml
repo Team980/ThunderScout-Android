@@ -46,50 +46,9 @@
         android:scaleType="center"
         android:src="@drawable/ic_send_white_24dp"
         android:visibility="invisible"
+        app:fabSize="normal"
         app:backgroundTint="@color/accent"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp" />
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/sendToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_gravity="bottom"
-        android:background="?attr/colorPrimary"
-        android:visibility="gone"
-        app:elevation="2dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/buttonSave"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:src="@drawable/ic_save_white_24dp" />
-
-            <ImageButton
-                android:id="@+id/buttonSendBluetooth"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:src="@drawable/ic_bluetooth_searching_white_24dp" />
-
-            <ImageButton
-                android:id="@+id/buttonSendSheets"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:src="@drawable/ic_cloud_upload_white_24dp" />
-        </LinearLayout>
-    </android.support.v7.widget.Toolbar>
 
 </android.support.design.widget.CoordinatorLayout>
