@@ -6,7 +6,9 @@
         android:summary="Enable scouting matches from this device"
         android:title="Enable match scouting" />
 
-    <PreferenceCategory android:title="Output options" android:dependency="enable_match_scout">
+    <PreferenceCategory
+        android:title="Output options"
+        android:dependency="enable_match_scout">
 
         <CheckBoxPreference
             android:defaultValue="true"
