@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import com.team980.thunderscout.data.ServerDataContract;
 import com.team980.thunderscout.data.ServerDataDbHelper;
 import com.team980.thunderscout.data.enumeration.ScalingStats;
 import com.team980.thunderscout.info.ThisDeviceFragment;
+import com.team980.thunderscout.match.ScoutingFlowActivity;
 
 public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
@@ -22,13 +25,20 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
     private LocalBroadcastManager localBroadcastManager;
 
+    private ScoutingFlowActivity activity;
+
     public DatabaseWriteTask(ScoutData data, Context context) {
         this.data = data;
 
         this.context = context;
 
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
+    }
 
+    public DatabaseWriteTask(ScoutData data, Context context, ScoutingFlowActivity activity) {
+        this(data, context);
+
+        this.activity = activity;
     }
 
     @Override
@@ -83,7 +93,33 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
                 null,
                 values);
 
-        publishProgress((int) newRowId);
+        if (newRowId == -1) {
+            if (activity != null) {
+                Handler handler = new Handler(Looper.getMainLooper());
+
+                handler.post(new Runnable() {
+
+                    @Override
+                    public void run() {  //TODO broadcast reciever
+                        activity.dataOutputCallback(ScoutingFlowActivity.OPERATION_SAVE_THIS_DEVICE, false);
+                    }
+                });
+            }
+        } else {
+            if (activity != null) {
+                Handler handler = new Handler(Looper.getMainLooper());
+
+                handler.post(new Runnable() {
+
+                    @Override
+                    public void run() {  //TODO broadcast reciever
+                        activity.dataOutputCallback(ScoutingFlowActivity.OPERATION_SAVE_THIS_DEVICE, true);
+                    }
+                });
+            }
+
+            publishProgress((int) newRowId);
+        }
 
         return null;
     }

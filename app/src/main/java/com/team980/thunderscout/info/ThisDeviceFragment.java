@@ -82,7 +82,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
 
         swipeContainer.setOnRefreshListener(this);
 
-        swipeContainer.setColorSchemeResources(R.color.primary);
+        swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
         DatabaseReadTask query = new DatabaseReadTask(adapter, getContext(), swipeContainer);

@@ -45,7 +45,7 @@ public class ServerListenerThread extends Thread {
             final BluetoothSocket socket;
             try {
                 postToastMessage("Listening for incoming connections");
-                socket = mmServerSocket.accept();
+                socket = mmServerSocket.accept(); //this is failing why? - needs more testing
             } catch (IOException e) {
                 e.printStackTrace();
                 break;
