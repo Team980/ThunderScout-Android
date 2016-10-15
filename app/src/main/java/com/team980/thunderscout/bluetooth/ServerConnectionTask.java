@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.task.DatabaseWriteTask;
-import com.team980.thunderscout.sheets.task.SheetsUpdateTask;
 import com.team980.thunderscout.util.TSNotificationManager;
 
 import java.io.IOException;
@@ -106,10 +105,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
                 //TODO is this a really good idea??
             }
 
-            if (prefs.getBoolean("bt_send_to_linked_sheet", false)) {
+            /*if (prefs.getBoolean("bt_send_to_linked_sheet", false)) {
                 SheetsUpdateTask task = new SheetsUpdateTask(context);
                 task.execute(o);
-            }
+            }*/
         } else {
             Log.d("ServerConnectionTask", "Failed to start DatabaseWriteTask!");
         }
