@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.bluetooth.BluetoothServerService;
+import com.team980.thunderscout.util.AppCompatPreferenceActivity;
 
 import java.util.List;
 
