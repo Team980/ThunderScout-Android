@@ -1,5 +1,6 @@
 package com.team980.thunderscout.match;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
@@ -13,13 +14,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.ThunderScout;
@@ -28,7 +29,6 @@ import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.task.DatabaseWriteTask;
 import com.team980.thunderscout.info.ViewPagerAdapter;
-import com.team980.thunderscout.sheets.task.SheetsUpdateTask;
 import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.ImagePreviewDialog;
 
@@ -41,6 +41,14 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     private ScoutData scoutData;
 
     private FloatingActionButton fab;
+
+    // IDs for callback
+    public static final String OPERATION_SAVE_THIS_DEVICE = "SAVE_THIS_DEVICE";
+    public static final String OPERATION_SEND_BLUETOOTH = "SEND_BLUETOOTH";
+
+    private Bundle operationStates; //used for task loop
+
+    private ProgressDialog operationStateDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,53 +212,108 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 return;
             }
 
+            Log.d("SCOUTLOOP", "here we go again");
+
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-            if (prefs.getBoolean("ms_send_to_local_storage", true)) { //Saving locally
+            boolean saveToThisDevice = prefs.getBoolean("ms_send_to_local_storage", true);
+            boolean sendToBluetoothServer = prefs.getBoolean("ms_send_to_bt_server", false);
 
-                scoutData.setDataSource(ScoutData.SOURCE_LOCAL_DEVICE);
+            operationStates = new Bundle();
+            operationStates.putBoolean(OPERATION_SAVE_THIS_DEVICE, saveToThisDevice);
+            operationStates.putBoolean(OPERATION_SEND_BLUETOOTH, sendToBluetoothServer);
 
-                DatabaseWriteTask task = new DatabaseWriteTask(new ScoutData(scoutData), getApplicationContext()); //MEMORY LEAK PREVENTION
-                task.execute();
+            operationStateDialog = new ProgressDialog(this);
+            operationStateDialog.setIndeterminate(true); //TODO can we use values too?
+            operationStateDialog.setCancelable(false);
+            operationStateDialog.setTitle("Storing data...");
 
-                Toast info = Toast.makeText(this, "Storing data...", Toast.LENGTH_LONG);
-                info.show();
+            dataOutputLoop();
 
-                //TODO notification
-
-            }
-
-            if (prefs.getBoolean("ms_send_to_bt_server", false)) { //Sending via BT
-
-                String address = prefs.getString("ms_bt_server_device", null);
-
-                for (BluetoothDevice device : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
-                    if (device.getAddress().equals(address)) {
-                        scoutData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
-
-                        ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, getApplicationContext()); //MEMORY LEAK PREVENTION
-                        connectThread.start();
-
-                        Toast info = Toast.makeText(this, "Sending data to " + device.getName() + "...", Toast.LENGTH_LONG);
-                        info.show();
-                    }
-                }
-            }
-
-            if (prefs.getBoolean("ms_send_to_linked_sheet", false)) { //Saving to Sheets
+            /*if (prefs.getBoolean("ms_send_to_linked_sheet", false)) { //Saving to Sheets
                 SheetsUpdateTask task = new SheetsUpdateTask(getApplicationContext()); //MEMORY LEAK PREVENTION
                 task.execute(scoutData);
 
                 Toast info = Toast.makeText(this, "Sending to Google Sheets...", Toast.LENGTH_LONG);
                 info.show();
-            }
+            }*/
+        }
+
+    }
+
+    public ScoutData getData() {
+        return scoutData;
+    }
+
+    private void dataOutputLoop() {
+        Log.d("SCOUTLOOP", "ever get that feeling of deja vu?");
+        if (!operationStateDialog.isShowing()) {
+            operationStateDialog.show(); //Show it if it isn't already visible
+        }
+
+        if (operationStates.getBoolean(OPERATION_SAVE_THIS_DEVICE)) {
+            scoutData.setDataSource(ScoutData.SOURCE_LOCAL_DEVICE);
+
+            operationStateDialog.setMessage("Saving scout data to this device");
+
+            DatabaseWriteTask task = new DatabaseWriteTask(new ScoutData(scoutData), getApplicationContext(), this); //MEMORY LEAK PREVENTION
+            task.execute();
+
+        } else if (operationStates.getBoolean(OPERATION_SEND_BLUETOOTH)) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+            String address = prefs.getString("ms_bt_server_device", null);
+
+            BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address); //TODO THIS IS A NEW, BETTER SEND METHOD. NEEDS TESTING ;)
+            scoutData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
+
+            operationStateDialog.setMessage("Sending scout data to " + device.getName());
+
+            ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, getApplicationContext(), this);
+            connectThread.start();
+
+        } else {
+            operationStateDialog.dismiss();
+            operationStateDialog = null;
 
             finish();
         }
     }
 
-    public ScoutData getData() {
-        return scoutData;
+    //TODO broadcast reciever
+    public void dataOutputCallback(final String operationId, boolean successful) {
+        Log.d("SCOUTLOOP", "back into the fray");
+        if (successful) {
+            operationStates.putBoolean(operationId, false); //we're done with that!
+
+            operationStateDialog.setMessage("");
+
+            dataOutputLoop();
+        } else {
+            operationStateDialog.hide();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("An error has occurred!")
+                    .setIcon(R.drawable.ic_warning_white_24dp)
+                    .setMessage("Would you like to reattempt the operation?")
+                    .setCancelable(false)
+                    .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            operationStates.putBoolean(operationId, true); //retry
+
+                            dataOutputLoop();
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            operationStates.putBoolean(operationId, false); //do not retry
+
+                            dataOutputLoop();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     private void initScoutData() {
