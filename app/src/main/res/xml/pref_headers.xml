@@ -1,9 +1,9 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <header
+    <!--<header
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_settings_white_24dp"
-        android:title="General" />
+        android:title="General" />-->
 
     <header
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$MatchScoutPreferenceFragment"

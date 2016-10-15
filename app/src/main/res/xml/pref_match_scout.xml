@@ -3,10 +3,10 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="enable_match_scout"
-        android:summary=""
-        android:title="Enable match scouting from this device" />
+        android:summary="Enable scouting matches from this device"
+        android:title="Enable match scouting" />
 
-    <PreferenceCategory android:title="Storage options" android:dependency="enable_match_scout">
+    <PreferenceCategory android:title="Output options" android:dependency="enable_match_scout">
 
         <CheckBoxPreference
             android:defaultValue="true"
@@ -36,10 +36,10 @@
             android:title="Server Storage Task" />-->
 
         <com.team980.thunderscout.preferences.BluetoothDevicePreference
-            android:dialogTitle="Select your BT server"
+            android:dialogTitle="Bluetooth Server Device"
             android:key="ms_bt_server_device"
             android:dependency="ms_send_to_bt_server"
-            android:title="Bluetooth server to send data to" />
+            android:title="Bluetooth server device" />
 
     </PreferenceCategory>
 
