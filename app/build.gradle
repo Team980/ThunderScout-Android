@@ -42,6 +42,10 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     compile 'com.bignerdranch.android:expandablerecyclerview:2.1.1'
     compile 'com.google.android.gms:play-services-auth:9.6.1'
+    compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.google.firebase:firebase-crash:9.6.1'
+    //compile 'com.google.firebase:firebase-messaging:9.6.1'
+    //compile 'com.google.firebase:firebase-config:9.6.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
