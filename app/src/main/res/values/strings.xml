@@ -3,7 +3,7 @@
 
     <string name="app_version">2016v2-Alpha</string> <!--TODO This is where we track the version -->
 
-    <string name="build_variant">Release</string>
+    <string name="build_variant"></string> <!--Nothing will show-->
 
     <string-array name="defenses_array">
         <item>None</item>
