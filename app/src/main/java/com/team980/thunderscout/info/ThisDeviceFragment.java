@@ -123,7 +123,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_local_storage, menu);
+        inflater.inflate(R.menu.menu_this_device, menu);
     }
 
     @Override

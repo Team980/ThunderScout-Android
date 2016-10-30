@@ -223,7 +223,7 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, InfoActivity.class);
+                    Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
                     launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
                     context.startActivity(launchInfoActivity);
                 }
@@ -231,7 +231,7 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
 
             infoButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, InfoActivity.class);
+                    Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
                     launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
                     context.startActivity(launchInfoActivity);
                 }
