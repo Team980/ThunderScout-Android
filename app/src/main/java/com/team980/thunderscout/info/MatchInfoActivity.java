@@ -25,6 +25,7 @@ public class MatchInfoActivity extends AppCompatActivity {
         ScoutData data = (ScoutData) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_SCOUT");
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+        collapsingToolbarLayout.setTitleEnabled(true);
         collapsingToolbarLayout.setTitle("Match Info: Team " + data.getTeamNumber());
 
         // --- Init ---
