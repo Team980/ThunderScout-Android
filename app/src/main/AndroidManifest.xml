@@ -35,7 +35,7 @@
             android:name=".info.MatchInfoActivity"
             android:label="Info"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/ThunderScout.BaseTheme" />
+            android:theme="@style/ThunderScout.BaseTheme.Translucent" />
         <activity
             android:name=".preferences.SettingsActivity"
             android:label="Settings"
