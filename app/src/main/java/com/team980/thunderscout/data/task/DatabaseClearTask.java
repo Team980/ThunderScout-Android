@@ -8,14 +8,14 @@ import android.widget.Toast;
 
 import com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ServerDataDbHelper;
-import com.team980.thunderscout.info.DataViewAdapter;
+import com.team980.thunderscout.info.LocalDataAdapter;
 
 public class DatabaseClearTask extends AsyncTask<Void, Integer, Void> {
 
-    private DataViewAdapter viewAdapter;
+    private LocalDataAdapter viewAdapter;
     private Context context;
 
-    public DatabaseClearTask(DataViewAdapter adapter, Context context) {
+    public DatabaseClearTask(LocalDataAdapter adapter, Context context) {
         viewAdapter = adapter;
         this.context = context;
     }
