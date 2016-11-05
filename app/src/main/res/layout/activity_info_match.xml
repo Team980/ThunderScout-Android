@@ -44,6 +44,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/info_match_dateAdded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textSize="20sp"
+                    android:text="Date Added"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/info_match_dataSource"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textSize="20sp"
+                    android:text="Source: This device" />
+
+            </LinearLayout>
+
             <include layout="@layout/layout_info_scout_auto" />
 
             <include layout="@layout/layout_info_scout_teleop" />
