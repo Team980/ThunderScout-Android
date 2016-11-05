@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("FRAGSTATE", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -33,25 +35,47 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment;
 
-        switch (shownFragment) {
-            case 0: //INTENT_FLAGS_HOME
-                navigationView.setCheckedItem(R.id.nav_match_scout);
-                fragment = new HomeFragment();
-                break;
-            case 1: //INTENT_FLAGS_THIS_DEVICE
-                navigationView.setCheckedItem(R.id.nav_local_storage);
-                fragment = new ThisDeviceFragment();
-                break;
-            default: //default to INTENT_FLAGS_HOME
-                navigationView.setCheckedItem(R.id.nav_match_scout);
-                fragment = new HomeFragment();
-                break;
+        if (savedInstanceState != null) {
+            //Restore the fragment's instance
+            fragment = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
+            Log.d("FRAGSTATE", "restoring");
+        } else {
+            Log.d("FRAGSTATE", "new frag");
+            switch (shownFragment) {
+                case 0: //INTENT_FLAGS_HOME
+                    navigationView.setCheckedItem(R.id.nav_match_scout);
+                    fragment = new HomeFragment();
+                    break;
+                case 1: //INTENT_FLAGS_THIS_DEVICE
+                    navigationView.setCheckedItem(R.id.nav_local_storage);
+                    fragment = new ThisDeviceFragment();
+                    break;
+                default: //default to INTENT_FLAGS_HOME
+                    navigationView.setCheckedItem(R.id.nav_match_scout);
+                    fragment = new HomeFragment();
+                    break;
+            }
         }
+
+        Log.d("FRAGSTATE", "frag class: " + fragment.getClass().getName());
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment, fragment);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
+
+        Log.d("FRAGSTATE", "saving");
+        Log.d("FRAGSTATE", "class: " + fragment.getClass());
+
+        //Save the fragment's instance
+        getSupportFragmentManager().putFragment(outState, "mContent", fragment);
     }
 
     @Override
