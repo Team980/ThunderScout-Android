@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
+
+import java.text.SimpleDateFormat;
 
 public class MatchInfoActivity extends AppCompatActivity {
 
@@ -29,14 +32,14 @@ public class MatchInfoActivity extends AppCompatActivity {
         collapsingToolbarLayout.setTitle("Match Info: Team " + data.getTeamNumber());
 
         // --- Init ---
-        /*TextView dateAdded = (TextView) findViewById(R.id.info_dateAdded);
+        TextView dateAdded = (TextView) findViewById(R.id.info_match_dateAdded);
         dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(data.getDateAdded()));
 
-        TextView dataSource = (TextView) findViewById(R.id.info_dataSource);
+        TextView dataSource = (TextView) findViewById(R.id.info_match_dataSource);
         dataSource.setText("Source: " + data.getDataSource());
 
         // --- Auto ---
-        TextView autoDefenseStats = (TextView) findViewById(R.id.info_autoDefenseCrossed);
+        /*TextView autoDefenseStats = (TextView) findViewById(R.id.info_autoDefenseCrossed);
         if (data.getAutoDefenseCrossed() == Defense.NONE) {
             autoDefenseStats.setText("Did not cross a defense");
         } else {
