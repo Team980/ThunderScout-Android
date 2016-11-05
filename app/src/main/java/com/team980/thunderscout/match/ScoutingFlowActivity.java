@@ -280,40 +280,42 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         }
     }
 
-    //TODO broadcast reciever
-    public void dataOutputCallback(final String operationId, boolean successful) {
+    public void dataOutputCallbackSuccess(final String operationId) {
         Log.d("SCOUTLOOP", "back into the fray");
-        if (successful) {
-            operationStates.putBoolean(operationId, false); //we're done with that!
+        operationStates.putBoolean(operationId, false); //we're done with that!
 
-            operationStateDialog.setMessage("");
+        operationStateDialog.setMessage("");
 
-            dataOutputLoop();
-        } else {
-            operationStateDialog.hide();
+        dataOutputLoop();
+    }
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("An error has occurred!")
-                    .setIcon(R.drawable.ic_warning_white_24dp)
-                    .setMessage("Would you like to reattempt the operation?")
-                    .setCancelable(false)
-                    .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            operationStates.putBoolean(operationId, true); //retry
+    //TODO broadcast reciever?
+    public void dataOutputCallbackFail(final String operationId, Exception ex) {
+        Log.d("SCOUTLOOP", "back into the fray");
 
-                            dataOutputLoop();
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            operationStates.putBoolean(operationId, false); //do not retry
+        operationStateDialog.hide();
 
-                            dataOutputLoop();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error: " + ex.getClass().getName())
+                .setIcon(R.drawable.ic_warning_white_24dp)
+                .setMessage(ex.getLocalizedMessage() + "\n" + "\n" + "Would you like to reattempt the operation?")
+                .setCancelable(false)
+                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        operationStates.putBoolean(operationId, true); //retry
+
+                        dataOutputLoop();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        operationStates.putBoolean(operationId, false); //do not retry
+
+                        dataOutputLoop();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void initScoutData() {

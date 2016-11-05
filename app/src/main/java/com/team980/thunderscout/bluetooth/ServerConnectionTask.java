@@ -40,7 +40,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
     @Override
     protected ScoutData doInBackground(Void[] params) {
-        int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName());
+        int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName(), true);
 
         ObjectInputStream fromScoutStream;
         ObjectOutputStream toScoutStream;
@@ -75,8 +75,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             e.printStackTrace();
         }
 
-        notificationManager.showBtTransferSuccessful(mmSocket.getRemoteDevice().getName(),
-                notificationId); //TODO find a better way
+        notificationManager.showBtTransferFinished(notificationId);
         return data;
     }
 
