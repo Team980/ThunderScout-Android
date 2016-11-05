@@ -70,11 +70,26 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
 
+        if (fragment instanceof ThisDeviceFragment) {
+            ((ThisDeviceFragment) fragment).saveAdapterState(outState);
+        }
+
         Log.d("FRAGSTATE", "saving");
         Log.d("FRAGSTATE", "class: " + fragment.getClass());
 
         //Save the fragment's instance
         getSupportFragmentManager().putFragment(outState, "mContent", fragment);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
+
+        if (fragment instanceof ThisDeviceFragment) {
+            ((ThisDeviceFragment) fragment).restoreAdapterState(savedInstanceState);
+        }
     }
 
     @Override

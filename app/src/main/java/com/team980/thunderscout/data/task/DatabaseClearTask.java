@@ -41,6 +41,7 @@ public class DatabaseClearTask extends AsyncTask<Void, Integer, Void> {
 
         publishProgress(rowsDeleted);
 
+        db.close();
         return null;
     }
 

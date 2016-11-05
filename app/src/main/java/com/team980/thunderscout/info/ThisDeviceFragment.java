@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -95,6 +96,16 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
                 query.execute();
             }
         };
+    }
+
+    public void saveAdapterState(Bundle outState) { //TODO this isn't working right
+        Log.d("FRAGSTATE", "saving adapter state");
+        adapter.onSaveInstanceState(outState);
+    }
+
+    public void restoreAdapterState(Bundle savedInstanceState) { //TODO this isn't working
+        Log.d("FRAGSTATE", "restoring adapter state");
+        adapter.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
