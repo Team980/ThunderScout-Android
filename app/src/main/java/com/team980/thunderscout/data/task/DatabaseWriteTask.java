@@ -50,11 +50,8 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected Void doInBackground(Void[] params) {
 
-        //Put data into Database! :)
-        ServerDataDbHelper mDbHelper = new ServerDataDbHelper(context);
-
         // Gets the data repository in write mode
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        SQLiteDatabase db = new ServerDataDbHelper(context).getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
@@ -121,6 +118,7 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
             publishProgress((int) newRowId);
         }
 
+        db.close();
         return null;
     }
 

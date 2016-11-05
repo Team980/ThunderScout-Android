@@ -115,6 +115,7 @@ public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
         }
 
         cursor.close();
+        db.close();
         return null;
     }
 
