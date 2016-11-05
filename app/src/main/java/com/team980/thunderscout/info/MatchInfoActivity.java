@@ -2,37 +2,34 @@ package com.team980.thunderscout.info;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.ScalingStats;
 
-import java.text.SimpleDateFormat;
-
-public class InfoActivity extends AppCompatActivity {
+public class MatchInfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_info_match);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent launchIntent = getIntent();
-
         ScoutData data = (ScoutData) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_SCOUT");
 
-        setTitle("Match Info: " + SimpleDateFormat.getDateTimeInstance().format(data.getDateAdded()));
-
-        setContentView(R.layout.activity_info_scout);
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+        collapsingToolbarLayout.setTitleEnabled(true);
+        collapsingToolbarLayout.setTitle("Match Info: Team " + data.getTeamNumber());
 
         // --- Init ---
-        TextView teamNumber = (TextView) findViewById(R.id.info_teamNumber);
-        teamNumber.setText("Team " + data.getTeamNumber());
-
-        TextView dateAdded = (TextView) findViewById(R.id.info_dateAdded);
+        /*TextView dateAdded = (TextView) findViewById(R.id.info_dateAdded);
         dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(data.getDateAdded()));
 
         TextView dataSource = (TextView) findViewById(R.id.info_dataSource);
@@ -97,7 +94,7 @@ public class InfoActivity extends AppCompatActivity {
         troubleWith.setText(data.getTroubleWith());
 
         TextView comments = (TextView) findViewById(R.id.info_comments);
-        comments.setText(data.getComments());
+        comments.setText(data.getComments());*/
     }
 }
 

@@ -23,7 +23,6 @@
             android:theme="@style/ThunderScout.BaseTheme.NavigationPane">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -33,10 +32,10 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
-            android:name=".info.InfoActivity"
+            android:name=".info.MatchInfoActivity"
             android:label="Info"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
+            android:theme="@style/ThunderScout.BaseTheme.Translucent" />
         <activity
             android:name=".preferences.SettingsActivity"
             android:label="Settings"
@@ -50,7 +49,7 @@
 
         <service android:name=".bluetooth.BluetoothServerService" />
 
-        <activity android:name=".sheets.GoogleAuthActivity"></activity>
+        <!--<activity android:name=".sheets.GoogleAuthActivity"></activity>-->
     </application>
 
 </manifest>
