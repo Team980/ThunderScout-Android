@@ -12,14 +12,13 @@ import com.team980.thunderscout.R;
 
 public class TSNotificationManager {
 
-    private static TSNotificationManager ourInstance;
+    private static TSNotificationManager ourInstance; //TODO the existence of this class is a memory leak
 
     private Context context;
 
     private NotificationCompat.Builder btServerRunning;
 
     private NotificationCompat.Builder btTransferInProgress;
-    private NotificationCompat.Builder btTransferSuccessful;
     private NotificationCompat.Builder btTransferError;
     private int lastUsedId = 1;
 
@@ -61,13 +60,6 @@ public class TSNotificationManager {
                 .setColor(context.getResources().getColor(R.color.accent)) //TODO use nonyellow accent?
                 .setGroup("TS_TRANSFER_ONGOING");
 
-        btTransferSuccessful = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp) //TODO find icon
-                .setContentTitle("Data transfer successful")
-                .setContentText("Data received from device")
-                .setColor(context.getResources().getColor(R.color.success))
-                .setGroup("TS_TRANSFER_SUCCESS");
-
         btTransferError = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp) //TODO find icon
                 .setContentTitle("Data transfer failed")
@@ -93,11 +85,18 @@ public class TSNotificationManager {
     }
 
     @Deprecated
-    public int showBtTransferInProgress(String deviceName) {
+    public int showBtTransferInProgress(String deviceName, boolean isServer) {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         lastUsedId++;
 
-        btTransferInProgress.setContentTitle("Transferring data [to|from] " + deviceName);
+        String message;
+        if (isServer) {
+            message = "Receiving data from ";
+        } else {
+            message = "Sending data to ";
+        }
+
+        btTransferInProgress.setContentTitle(message + deviceName);
         btTransferInProgress.setWhen(System.currentTimeMillis());
 
         mNotifyMgr.notify(lastUsedId, btTransferInProgress.build());
@@ -105,20 +104,17 @@ public class TSNotificationManager {
     }
 
     @Deprecated
-    public void showBtTransferSuccessful(String deviceName, int id) {
-        NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        btTransferSuccessful.setContentText("Data [received from|sent to] " + deviceName);
-        btTransferSuccessful.setWhen(System.currentTimeMillis());
-
-        mNotifyMgr.notify(id, btTransferSuccessful.build());
-    }
-
-    @Deprecated
     public void showBtTransferError(String deviceName, int id) {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        btTransferError.setContentText("Failed to [receive|send] data [from|to] " + deviceName);
+        btTransferError.setContentText("Failed to receive data from " + deviceName);
         btTransferError.setWhen(System.currentTimeMillis());
 
         mNotifyMgr.notify(id, btTransferError.build());
+    }
+
+    public void showBtTransferFinished(int id) {
+        NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        mNotifyMgr.cancel(id);
     }
 }

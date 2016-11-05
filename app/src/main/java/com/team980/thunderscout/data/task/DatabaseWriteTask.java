@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
-import android.widget.Toast;
 
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
@@ -83,14 +82,14 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
         values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
 
-        // Insert the new row, returning the primary key value of the new row
-        long newRowId;
-        newRowId = db.insert(
-                ServerDataContract.ScoutDataTable.TABLE_NAME,
-                null,
-                values);
-
-        if (newRowId == -1) {
+        try {
+            // Insert the new row
+            db.insertOrThrow(
+                    ServerDataContract.ScoutDataTable.TABLE_NAME,
+                    null,
+                    values);
+        } catch (final Exception e) {
+            e.printStackTrace();
             if (activity != null) {
                 Handler handler = new Handler(Looper.getMainLooper());
 
@@ -98,36 +97,26 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
                     @Override
                     public void run() {  //TODO broadcast reciever
-                        activity.dataOutputCallback(ScoutingFlowActivity.OPERATION_SAVE_THIS_DEVICE, false);
+                        activity.dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SAVE_THIS_DEVICE, e);
                     }
                 });
             }
-        } else {
-            if (activity != null) {
-                Handler handler = new Handler(Looper.getMainLooper());
+        }
 
-                handler.post(new Runnable() {
+        if (activity != null) {
+            Handler handler = new Handler(Looper.getMainLooper());
 
-                    @Override
-                    public void run() {  //TODO broadcast reciever
-                        activity.dataOutputCallback(ScoutingFlowActivity.OPERATION_SAVE_THIS_DEVICE, true);
-                    }
-                });
-            }
+            handler.post(new Runnable() {
 
-            publishProgress((int) newRowId);
+                @Override
+                public void run() {  //TODO broadcast reciever
+                    activity.dataOutputCallbackSuccess(ScoutingFlowActivity.OPERATION_SAVE_THIS_DEVICE);
+                }
+            });
         }
 
         db.close();
         return null;
-    }
-
-    @Override
-    protected void onProgressUpdate(Integer[] values) {
-        //Runs on UI thread when publishProgress() is called
-        super.onProgressUpdate(values);
-
-        Toast.makeText(context, "Inserted into DB: Row " + values[0], Toast.LENGTH_LONG).show();
     }
 
     @Override

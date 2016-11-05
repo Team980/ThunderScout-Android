@@ -65,7 +65,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
         // Cancel discovery because it will slow down the connection
         mBluetoothAdapter.cancelDiscovery();
 
-        int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName());
+        int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName(), false);
 
         try {
             // Connect the device through the socket. This will block
@@ -73,14 +73,12 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             mmSocket.connect();
         } catch (IOException connectException) {
             // Unable to connect; close the socket and get out
-            notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
-                    notificationId);
             try {
                 mmSocket.close();
             } catch (IOException closeException) {
                 closeException.printStackTrace();
             }
-            manageError();
+            manageError(notificationId, connectException);
             return;
         }
 
@@ -96,9 +94,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             ooStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
-                    notificationId);
-            manageError();
+            manageError(notificationId, e);
             return;
         }
 
@@ -111,11 +107,11 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             ooStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
-                    notificationId);
-            manageError();
+            manageError(notificationId, e);
             return;
         }
+
+        notificationManager.showBtTransferFinished(notificationId);
 
         if (activity != null) { //TODO broadcast reciever
 
@@ -125,13 +121,10 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
                 @Override
                 public void run() {
-                    activity.dataOutputCallback(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, true);
+                    activity.dataOutputCallbackSuccess(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH);
                 }
             });
         }
-
-        notificationManager.showBtTransferSuccessful(mmSocket.getRemoteDevice().getName(),
-                notificationId); //TODO find a better way
 
         try {
             ooStream.close();
@@ -152,7 +145,9 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
     }
 
     //TODO implement
-    private void manageError() {
+    private void manageError(int notificationId, final Exception ex) {
+        notificationManager.showBtTransferFinished(notificationId);
+
         if (activity != null) { //TODO broadcast reciever
 
             Handler handler = new Handler(Looper.getMainLooper());
@@ -161,7 +156,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
                 @Override
                 public void run() {
-                    activity.dataOutputCallback(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, false);
+                    activity.dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, ex);
                 }
             });
         }
