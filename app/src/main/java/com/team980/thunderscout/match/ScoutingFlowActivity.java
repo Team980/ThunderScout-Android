@@ -32,6 +32,7 @@ import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.ImagePreviewDialog;
 
 import java.util.EnumMap;
+import java.util.Random;
 
 public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
@@ -68,6 +69,12 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         getSupportActionBar().setTitle("Scout: Team");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+
+        EditText teamNumber = (EditText) findViewById(R.id.scout_teamNumber);
+        if (new Random().nextInt(10) == 0) {
+            Log.d("Gremlin", "Scout Gremlin ACTIVE");
+            teamNumber.setHint("086"); //code gremlin
+        }
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 

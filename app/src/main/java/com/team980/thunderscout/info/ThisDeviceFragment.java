@@ -37,7 +37,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         PopupMenu.OnMenuItemClickListener {
 
     private RecyclerView dataView;
-    private DataViewAdapter adapter;
+    private LocalDataAdapter adapter;
 
     private SwipeRefreshLayout swipeContainer;
 
@@ -75,7 +75,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         dataView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        adapter = new DataViewAdapter(getContext(), new ArrayList<TeamWrapper>());
+        adapter = new LocalDataAdapter(getContext(), new ArrayList<TeamWrapper>());
         dataView.setAdapter(adapter);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -123,7 +123,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_local_storage, menu);
+        inflater.inflate(R.menu.menu_this_device, menu);
     }
 
     @Override

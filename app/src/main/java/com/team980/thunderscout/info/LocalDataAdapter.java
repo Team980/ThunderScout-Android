@@ -26,7 +26,7 @@ import java.util.List;
 import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
 import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.getComparator;
 
-public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.TeamViewHolder, DataViewAdapter.ScoutViewHolder> {
+public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter.TeamViewHolder, LocalDataAdapter.ScoutViewHolder> {
 
     private LayoutInflater mInflator;
 
@@ -36,7 +36,7 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
 
     private TeamWrapper.TeamComparator sortMode = SORT_TEAM_NUMBER;
 
-    public DataViewAdapter(Context context, @NonNull List<? extends ParentListItem> parentItemList) {
+    public LocalDataAdapter(Context context, @NonNull List<? extends ParentListItem> parentItemList) {
         super(parentItemList);
 
         mInflator = LayoutInflater.from(context); //TODO move to ViewGroup.getContext()
@@ -223,7 +223,7 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, InfoActivity.class);
+                    Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
                     launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
                     context.startActivity(launchInfoActivity);
                 }
@@ -231,7 +231,7 @@ public class DataViewAdapter extends ExpandableRecyclerAdapter<DataViewAdapter.T
 
             infoButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, InfoActivity.class);
+                    Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
                     launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
                     context.startActivity(launchInfoActivity);
                 }

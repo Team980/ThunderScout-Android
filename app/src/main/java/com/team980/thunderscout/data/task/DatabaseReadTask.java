@@ -13,7 +13,7 @@ import com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ServerDataDbHelper;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.ScalingStats;
-import com.team980.thunderscout.info.DataViewAdapter;
+import com.team980.thunderscout.info.LocalDataAdapter;
 
 import java.util.EnumMap;
 
@@ -22,17 +22,17 @@ import java.util.EnumMap;
  */
 public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
 
-    private DataViewAdapter viewAdapter;
+    private LocalDataAdapter viewAdapter;
     private Context context;
 
     private SwipeRefreshLayout swipeLayout;
 
-    public DatabaseReadTask(DataViewAdapter adapter, Context context) {
+    public DatabaseReadTask(LocalDataAdapter adapter, Context context) {
         viewAdapter = adapter;
         this.context = context;
     }
 
-    public DatabaseReadTask(DataViewAdapter adapter, Context context, SwipeRefreshLayout refresh) {
+    public DatabaseReadTask(LocalDataAdapter adapter, Context context, SwipeRefreshLayout refresh) {
         viewAdapter = adapter;
         this.context = context;
 

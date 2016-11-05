@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment, fragment);
-        ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -111,12 +110,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_match_scout) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment, new HomeFragment());
-            ft.addToBackStack(null);
             ft.commit();
         } else if (id == R.id.nav_local_storage) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment, new ThisDeviceFragment());
-            ft.addToBackStack(null);
             ft.commit();
         } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
