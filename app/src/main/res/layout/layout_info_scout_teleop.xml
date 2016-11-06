@@ -7,7 +7,7 @@
     android:layout_marginTop="10dp"
     app:cardCornerRadius="0dp">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
@@ -18,6 +18,6 @@
             android:text="Teleop"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="25sp" />
-    </LinearLayout>
+    </FrameLayout>
 
 </android.support.v7.widget.CardView>
