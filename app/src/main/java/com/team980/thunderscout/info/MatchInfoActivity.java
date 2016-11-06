@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.data.enumeration.Defense;
 
 import java.text.SimpleDateFormat;
 
@@ -39,24 +43,39 @@ public class MatchInfoActivity extends AppCompatActivity {
         dataSource.setText("Source: " + data.getDataSource());
 
         // --- Auto ---
-        /*TextView autoDefenseStats = (TextView) findViewById(R.id.info_autoDefenseCrossed);
+        TextView autoDefenseCrossingAction = (TextView) findViewById(R.id.info_match_autoDefenseCrossingAction);
+        TextView autoDefenseCrossed = (TextView) findViewById(R.id.info_match_autoDefenseCrossed);
+
+        ImageView autoDefenseImage = (ImageView) findViewById(R.id.info_match_autoDefenseImage);
+        FrameLayout autoDefenseImageContainer = (FrameLayout) findViewById(R.id.info_match_autoDefenseImageContainer);
+
         if (data.getAutoDefenseCrossed() == Defense.NONE) {
-            autoDefenseStats.setText("Did not cross a defense");
+            autoDefenseCrossingAction.setText("Did not cross a defense");
+            autoDefenseCrossed.setVisibility(View.GONE);
+            autoDefenseImageContainer.setVisibility(View.GONE);
         } else {
-            autoDefenseStats.setText("Crossed the " + data.getAutoDefenseCrossed().name());
+            autoDefenseCrossingAction.setText("Crossed the");
+            autoDefenseCrossed.setText(data.getAutoDefenseCrossed().toString().toUpperCase());
+            autoDefenseImage.setImageResource(Defense.PORTCULLIS.getCounterId()); //TODO yes, I know it's hardcoded
         }
 
-        TextView autoLowGoals = (TextView) findViewById(R.id.info_autoScoringLow);
-        autoLowGoals.setText("Scored " + data.getAutoLowGoals() + " low goals");
+        //TODO use @strings with inputs as Spannables for in-view styling
 
-        TextView autoHighGoals = (TextView) findViewById(R.id.info_autoScoringHigh);
-        autoHighGoals.setText("Scored " + data.getAutoHighGoals() + " high goals");
+        TextView autoTotalGoals = (TextView) findViewById(R.id.info_match_autoTotalGoals);
+        int totalGoals = data.getAutoLowGoals() + data.getAutoHighGoals();
+        autoTotalGoals.setText(totalGoals + "");
 
-        TextView autoMissedGoals = (TextView) findViewById(R.id.info_autoScoringMissed);
-        autoMissedGoals.setText("Missed " + data.getAutoMissedGoals() + " goals");
+        TextView autoLowGoals = (TextView) findViewById(R.id.info_match_autoLowGoals);
+        autoLowGoals.setText(data.getAutoLowGoals() + "");
+
+        TextView autoHighGoals = (TextView) findViewById(R.id.info_match_autoHighGoals);
+        autoHighGoals.setText(data.getAutoHighGoals() + "");
+
+        TextView autoMissedGoals = (TextView) findViewById(R.id.info_match_autoMissedGoals);
+        autoMissedGoals.setText(data.getAutoMissedGoals() + "");
 
         // --- Teleop ---
-        TextView defensesBreached = (TextView) findViewById(R.id.info_teleopDefensesCrossed);
+        /*TextView defensesBreached = (TextView) findViewById(R.id.info_teleopDefensesCrossed);
         defensesBreached.setText("Crossed " + data.getTeleopDefenseCrossings().size() + " defenses");
 
         RecyclerView listDefensesCrossed = (RecyclerView) findViewById(R.id.info_teleopListDefenseCrossings);

@@ -8,7 +8,8 @@
     <color name="primary_dark">#F9A825</color>
     <color name="accent">#fdd835</color>-->
 
-    <color name="background_floating">@color/cardview_dark_background</color>
+    <color name="background_floating">#FF424242</color>
+    <color name="background_floating_light">#FF616161</color>
     <!--TODO add millions of shades of material blue grey and black -->
 
     <color name="success">#4CAF50</color>
