@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.ScalingStats;
 
 import java.text.SimpleDateFormat;
 
@@ -56,7 +57,7 @@ public class MatchInfoActivity extends AppCompatActivity {
         } else {
             autoDefenseCrossingAction.setText("Crossed the");
             autoDefenseCrossed.setText(data.getAutoDefenseCrossed().toString().toUpperCase());
-            autoDefenseImage.setImageResource(Defense.PORTCULLIS.getCounterId()); //TODO yes, I know it's hardcoded
+            autoDefenseImage.setImageResource(R.mipmap.portcullis); //TODO yes, I know it's hardcoded
         }
 
         //TODO use @strings with inputs as Spannables for in-view styling
@@ -75,48 +76,67 @@ public class MatchInfoActivity extends AppCompatActivity {
         autoMissedGoals.setText(data.getAutoMissedGoals() + "");
 
         // --- Teleop ---
-        /*TextView defensesBreached = (TextView) findViewById(R.id.info_teleopDefensesCrossed);
-        defensesBreached.setText("Crossed " + data.getTeleopDefenseCrossings().size() + " defenses");
+        TextView teleopTotalDefenses = (TextView) findViewById(R.id.info_match_teleopTotalDefenses);
+        teleopTotalDefenses.setText(data.getTeleopDefenseCrossings().size() + "");
 
+        /* TODO RecyclerView & Adapter for bar graph
         RecyclerView listDefensesCrossed = (RecyclerView) findViewById(R.id.info_teleopListDefenseCrossings);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         listDefensesCrossed.setLayoutManager(mLayoutManager);
 
         DefenseAdapter listDefensesAdapter = new DefenseAdapter(data.getTeleopDefenseCrossings());
-        listDefensesCrossed.setAdapter(listDefensesAdapter);
+        listDefensesCrossed.setAdapter(listDefensesAdapter);*/
 
-        TextView teleopLowGoals = (TextView) findViewById(R.id.info_teleopScoringLow);
-        teleopLowGoals.setText("Scored " + data.getTeleopLowGoals() + " low goals");
+        TextView teleopTotalGoals = (TextView) findViewById(R.id.info_match_teleopTotalGoals);
+        totalGoals = data.getTeleopLowGoals() + data.getTeleopHighGoals();
+        teleopTotalGoals.setText(totalGoals + "");
 
-        TextView teleopHighGoals = (TextView) findViewById(R.id.info_teleopScoringHigh);
-        teleopHighGoals.setText("Scored " + data.getTeleopHighGoals() + " high goals");
+        TextView teleopLowGoals = (TextView) findViewById(R.id.info_match_teleopLowGoals);
+        teleopLowGoals.setText(data.getTeleopLowGoals() + "");
 
-        TextView teleopMissedGoals = (TextView) findViewById(R.id.info_teleopScoringMissed);
-        teleopMissedGoals.setText("Missed " + data.getTeleopMissedGoals() + " goals");
+        TextView teleopHighGoals = (TextView) findViewById(R.id.info_match_teleopHighGoals);
+        teleopHighGoals.setText(data.getTeleopHighGoals() + "");
+
+        TextView teleopMissedGoals = (TextView) findViewById(R.id.info_match_teleopMissedGoals);
+        teleopMissedGoals.setText(data.getTeleopMissedGoals() + "");
 
         // --- Summary ---
-        TextView scalingStats = (TextView) findViewById(R.id.info_scalingStats);
+        TextView scalingStats = (TextView) findViewById(R.id.info_match_summaryScalingStats);
+        TextView scalingStatsAction = (TextView) findViewById(R.id.info_match_summaryScalingAction);
+
         if (data.getScalingStats() == ScalingStats.NONE) {
-            scalingStats.setText("Did not scale the tower");
+            scalingStats.setVisibility(View.GONE);
+            scalingStatsAction.setText("Did not scale the tower");
         } else if (data.getScalingStats() == ScalingStats.PARTIAL) {
-            scalingStats.setText("Partially scaled the tower");
+            scalingStats.setText("PARTIALLY SCALED");
         } else if (data.getScalingStats() == ScalingStats.FULL) {
-            scalingStats.setText("Fully scaled the tower");
+            scalingStats.setText("FULLY SCALED");
         }
 
-        TextView challengedTower = (TextView) findViewById(R.id.info_challengedTower);
+        TextView challengedTower = (TextView) findViewById(R.id.info_match_summaryChallengedTower);
+        TextView challengeAction = (TextView) findViewById(R.id.info_match_summaryChallengeAction);
+
         if (data.hasChallengedTower()) {
-            challengedTower.setText("Challenged the tower");
+            challengedTower.setText("CHALLENGED");
         } else {
-            challengedTower.setText("Did not challenge the tower");
+            challengedTower.setVisibility(View.GONE);
+            challengeAction.setText("Did not challenge the tower");
         }
 
-        TextView troubleWith = (TextView) findViewById(R.id.info_troubleWith);
-        troubleWith.setText(data.getTroubleWith());
+        TextView troubleWith = (TextView) findViewById(R.id.info_match_summaryTroubleWith);
+        if (data.getTroubleWith() != null) {
+            troubleWith.setText(data.getTroubleWith());
+        } else {
+            troubleWith.setText("None");
+        }
 
-        TextView comments = (TextView) findViewById(R.id.info_comments);
-        comments.setText(data.getComments());*/
+        TextView comments = (TextView) findViewById(R.id.info_match_summaryComments);
+        if (data.getComments() != null) {
+            comments.setText(data.getComments());
+        } else {
+            comments.setText("None");
+        }
     }
 }
 
