@@ -151,8 +151,6 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
         private TextView teamNumber;
         private TextView descriptor;
 
-        private TextView numberOfMatches;
-
         private ImageButton expandButton;
 
         public TeamViewHolder(View itemView) {
@@ -161,19 +159,17 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
             teamNumber = (TextView) itemView.findViewById(R.id.team_teamNumber);
             descriptor = (TextView) itemView.findViewById(R.id.team_descriptor);
 
-            numberOfMatches = (TextView) itemView.findViewById(R.id.team_numberOfMatches);
-
             expandButton = (ImageButton) itemView.findViewById(R.id.team_expandButton);
         }
 
         public void bind(final TeamWrapper tw) {
-            teamNumber.setText(String.valueOf(tw.getTeamNumber()));
+            teamNumber.setText("Team " + String.valueOf(tw.getTeamNumber()));
             descriptor.setText(tw.getDescriptor(sortMode));
 
             if (sortMode == TeamWrapper.TeamComparator.SORT_TEAM_NUMBER) {
-                numberOfMatches.setVisibility(View.GONE);
+                descriptor.setText(tw.getNumberOfMatches() + " matches");
             } else {
-                numberOfMatches.setText(tw.getNumberOfMatches() + " matches");
+                descriptor.setText(tw.getDescriptor(sortMode));
             }
 
             expandButton.setOnClickListener(new View.OnClickListener() {
