@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
-    app:cardBackgroundColor="@color/background_floating_light"
-    android:elevation="1dp"
-    app:cardCornerRadius="0dp"
-    app:contentPaddingLeft="16dp"> <!--TODO child divider UI refresh-->
+    android:layout_height="wrap_content"
+    android:background="@color/background_floating">
 
     <TextView
         android:id="@+id/scout_dateAdded"
@@ -25,4 +21,4 @@
         android:background="#00000000"
         android:src="@drawable/ic_info_white_24dp" />
 
-</android.support.v7.widget.CardView>
+</FrameLayout>

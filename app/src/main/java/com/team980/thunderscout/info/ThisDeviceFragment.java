@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
@@ -74,6 +76,10 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         // use a linear layout manager
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         dataView.setLayoutManager(mLayoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dataView.getContext(),
+                LinearLayout.VERTICAL);
+        dataView.addItemDecoration(dividerItemDecoration);
 
         // specify an adapter (see also next example)
         adapter = new LocalDataAdapter(getContext(), new ArrayList<TeamWrapper>());
