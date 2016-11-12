@@ -10,6 +10,7 @@
         android:layout_gravity="left|center_vertical"
         android:paddingLeft="16dp"
         android:src="@android:mipmap/sym_def_app_icon"/>
+    <!-- TODO icon and text are out of line... Base view on TBA for Android's team list-->
 
     <RelativeLayout
         android:layout_width="match_parent"
