@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp">
+    android:layout_height="72dp"
+    android:background="?attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/team_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="left|center_vertical"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
         android:paddingLeft="16dp"
-        android:src="@android:mipmap/sym_def_app_icon"/>
-    <!-- TODO icon and text are out of line... Base view on TBA for Android's team list-->
+        android:src="@drawable/ic_people_white_24dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:id="@+id/team_teamNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
+            android:paddingTop="15dp"
             android:text="Team 980"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/team_teamNumber"
             android:text="Description"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -41,8 +41,8 @@
         android:id="@+id/team_expandButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_alignParentRight="true"
         android:layout_gravity="right|center_vertical"
+        android:paddingRight="16dp"
         android:background="#00000000"
         android:src="@drawable/ic_arrow_drop_down_white_24dp" />
 
