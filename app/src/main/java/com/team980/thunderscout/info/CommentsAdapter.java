@@ -57,7 +57,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         public CommentViewHolder(View itemView) {
             super(itemView);
 
-            key = (TextView) itemView.findViewById(R.id.data_key);
+            key = (TextView) itemView.findViewById(R.id.defense_crossed);
         }
 
         public void bind(String defText) {

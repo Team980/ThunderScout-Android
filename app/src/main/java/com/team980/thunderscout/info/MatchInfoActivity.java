@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -79,14 +81,13 @@ public class MatchInfoActivity extends AppCompatActivity {
         TextView teleopTotalDefenses = (TextView) findViewById(R.id.info_match_teleopTotalDefenses);
         teleopTotalDefenses.setText(data.getTeleopDefenseCrossings().size() + "");
 
-        /* TODO RecyclerView & Adapter for bar graph
-        RecyclerView listDefensesCrossed = (RecyclerView) findViewById(R.id.info_teleopListDefenseCrossings);
+        RecyclerView listDefensesCrossed = (RecyclerView) findViewById(R.id.info_match_teleopListDefenseCrossings);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         listDefensesCrossed.setLayoutManager(mLayoutManager);
 
         DefenseAdapter listDefensesAdapter = new DefenseAdapter(data.getTeleopDefenseCrossings());
-        listDefensesCrossed.setAdapter(listDefensesAdapter);*/
+        listDefensesCrossed.setAdapter(listDefensesAdapter);
 
         TextView teleopTotalGoals = (TextView) findViewById(R.id.info_match_teleopTotalGoals);
         totalGoals = data.getTeleopLowGoals() + data.getTeleopHighGoals();

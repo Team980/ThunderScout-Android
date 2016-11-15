@@ -30,5 +30,4 @@ public enum Defense {
     public int getCounterId() {
         return counterId;
     }
-
 }
