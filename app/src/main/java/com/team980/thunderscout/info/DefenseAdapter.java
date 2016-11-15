@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
@@ -35,7 +36,7 @@ public class DefenseAdapter extends RecyclerView.Adapter<DefenseAdapter.DefenseV
     public DefenseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View dataView = inflater.inflate(R.layout.two_item_view, parent, false);
+        View dataView = inflater.inflate(R.layout.defense_view, parent, false);
 
         return new DefenseViewHolder(dataView);
     }
@@ -64,16 +65,31 @@ public class DefenseAdapter extends RecyclerView.Adapter<DefenseAdapter.DefenseV
         private TextView defense;
         private TextView count;
 
+        private ProgressBar crossingBar;
+
         public DefenseViewHolder(View itemView) {
             super(itemView);
 
-            defense = (TextView) itemView.findViewById(R.id.data_key);
-            count = (TextView) itemView.findViewById(R.id.data_value);
+            defense = (TextView) itemView.findViewById(R.id.defense_crossed);
+            count = (TextView) itemView.findViewById(R.id.times_crossed);
+
+            crossingBar = (ProgressBar) itemView.findViewById(R.id.crossing_bar);
         }
 
         public void bind(String defText, int countNum) {
             defense.setText(defText);
-            count.setText(String.valueOf(countNum));
+            count.setText(String.valueOf(countNum) + " crossings");
+
+            int maxCount = 0;
+            for (Defense defense : Defense.values()) {
+                if (defenseMap.get(defense) != null && defenseMap.get(defense) > maxCount) {
+                    maxCount = defenseMap.get(defense);
+                    //this iterates and gets the largest count
+                }
+            }
+
+            crossingBar.setMax(maxCount);
+            crossingBar.setProgress(countNum);
         }
     }
 }
