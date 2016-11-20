@@ -17,6 +17,8 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.TeamWrapper;
+import com.team980.thunderscout.info.statistics.MatchInfoActivity;
+import com.team980.thunderscout.info.statistics.TeamInfoActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -177,10 +179,10 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
                 public void onClick(View v) {
                     if (isExpanded()) {
                         collapseView();
-                        expandButton.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp);
+                        expandButton.setImageResource(R.drawable.ic_expand_more_white_24dp);
                     } else {
                         expandView();
-                        expandButton.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp);
+                        expandButton.setImageResource(R.drawable.ic_expand_less_white_24dp);
                     }
                 }
             });
@@ -188,13 +190,9 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isExpanded()) {
-                        collapseView();
-                        expandButton.setImageResource(R.drawable.ic_arrow_drop_down_white_24dp);
-                    } else {
-                        expandView();
-                        expandButton.setImageResource(R.drawable.ic_arrow_drop_up_white_24dp);
-                    }
+                    Intent launchInfoActivity = new Intent(context, TeamInfoActivity.class);
+                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT", tw.getAverageScoutData());
+                    context.startActivity(launchInfoActivity);
                 }
             });
         }

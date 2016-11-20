@@ -1,8 +1,7 @@
-package com.team980.thunderscout.info;
+package com.team980.thunderscout.info.statistics;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,17 +25,15 @@ public class MatchInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_match);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         Intent launchIntent = getIntent();
         ScoutData data = (ScoutData) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_SCOUT");
 
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
-        collapsingToolbarLayout.setTitleEnabled(true);
-        collapsingToolbarLayout.setTitle("Match Info: Team " + data.getTeamNumber());
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Match Info: Team " + data.getTeamNumber());
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // --- Init ---
         TextView dateAdded = (TextView) findViewById(R.id.info_match_dateAdded);
@@ -59,7 +56,7 @@ public class MatchInfoActivity extends AppCompatActivity {
         } else {
             autoDefenseCrossingAction.setText("Crossed the");
             autoDefenseCrossed.setText(data.getAutoDefenseCrossed().toString().toUpperCase());
-            autoDefenseImage.setImageResource(R.mipmap.portcullis); //TODO yes, I know it's hardcoded
+            autoDefenseImage.setImageResource(R.drawable.portcullis); //TODO yes, I know it's hardcoded
         }
 
         //TODO use @strings with inputs as Spannables for in-view styling

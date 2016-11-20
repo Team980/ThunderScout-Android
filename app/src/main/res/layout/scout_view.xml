@@ -3,25 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:background="@color/background_floating">
-    <!-- TODO rework this view -->
-
-    <TextView
-        android:id="@+id/scout_dateAdded"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:layout_gravity="center_vertical"
-        android:text="Date Added"
-        android:textSize="16sp" />
 
     <ImageButton
         android:id="@+id/scout_infoButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:paddingRight="16dp"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="right|center_vertical"
+        android:layout_gravity="center_vertical"
         android:background="#00000000"
+        android:paddingLeft="16dp"
         android:src="@drawable/ic_info_white_24dp" />
+
+    <TextView
+        android:id="@+id/scout_dateAdded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="72dp"
+        android:paddingRight="16dp"
+        android:text="Date Added"
+        android:textSize="16sp" />
 
 </FrameLayout>

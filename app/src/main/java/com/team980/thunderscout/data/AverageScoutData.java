@@ -24,5 +24,16 @@ public class AverageScoutData implements Serializable {
 
     public AverageScoutData(List<ScoutData> d) {
         data = d;
+
+        teamNumber = data.get(0).getTeamNumber();
+        lastUpdated = data.get(0).getDateAdded(); //This works?
+    }
+
+    public String getTeamNumber() {
+        return teamNumber;
+    }
+
+    public long getLastUpdated() {
+        return lastUpdated;
     }
 }
