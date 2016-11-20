@@ -32,10 +32,15 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
-            android:name=".info.MatchInfoActivity"
-            android:label="Info"
+            android:name=".info.statistics.MatchInfoActivity"
+            android:label="Match Info"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/ThunderScout.BaseTheme.Translucent" />
+            android:theme="@style/ThunderScout.BaseTheme" />
+        <activity
+            android:name=".info.statistics.TeamInfoActivity"
+            android:label="Team Info"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/ThunderScout.BaseTheme" />
         <activity
             android:name=".preferences.SettingsActivity"
             android:label="Settings"

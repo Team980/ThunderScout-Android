@@ -1,20 +1,16 @@
-package com.team980.thunderscout.info;
+package com.team980.thunderscout.match;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.team980.thunderscout.match.AutoFragment;
-import com.team980.thunderscout.match.SummaryFragment;
-import com.team980.thunderscout.match.TeleopFragment;
-
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ScoutingFlowViewPagerAdapter extends FragmentPagerAdapter {
 
 
     private String tabTitles[] = new String[]{"Auto", "Teleop", "Summary"};
     private Fragment tabs[];
 
-    public ViewPagerAdapter(final FragmentManager fm) {
+    public ScoutingFlowViewPagerAdapter(final FragmentManager fm) {
         super(fm);
 
         tabs = new Fragment[]{new AutoFragment(), new TeleopFragment(), new SummaryFragment()};

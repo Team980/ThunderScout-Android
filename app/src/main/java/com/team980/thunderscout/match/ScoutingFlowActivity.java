@@ -27,7 +27,6 @@ import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.task.DatabaseWriteTask;
-import com.team980.thunderscout.info.ViewPagerAdapter;
 import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.ImagePreviewDialog;
 
@@ -36,7 +35,7 @@ import java.util.Random;
 
 public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
-    private ViewPagerAdapter viewPagerAdapter;
+    private ScoutingFlowViewPagerAdapter viewPagerAdapter;
 
     private ScoutData scoutData;
 
@@ -78,7 +77,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter = new ScoutingFlowViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(this);
@@ -159,31 +158,31 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         switch (button.getId()) {
             case R.id.teleop_previewLowBar:
-                image = getResources().getDrawable(R.mipmap.low_bar);
+                image = getResources().getDrawable(R.drawable.low_bar);
                 break;
             case R.id.teleop_previewPortcullis:
-                image = getResources().getDrawable(R.mipmap.portcullis);
+                image = getResources().getDrawable(R.drawable.portcullis);
                 break;
             case R.id.teleop_previewChivalDeFrise:
-                image = getResources().getDrawable(R.mipmap.chival_de_frise);
+                image = getResources().getDrawable(R.drawable.chival_de_frise);
                 break;
             case R.id.teleop_previewMoat:
-                image = getResources().getDrawable(R.mipmap.moat);
+                image = getResources().getDrawable(R.drawable.moat);
                 break;
             case R.id.teleop_previewRamparts:
-                image = getResources().getDrawable(R.mipmap.ramparts);
+                image = getResources().getDrawable(R.drawable.ramparts);
                 break;
             case R.id.teleop_previewDrawbridge:
-                image = getResources().getDrawable(R.mipmap.drawbridge);
+                image = getResources().getDrawable(R.drawable.drawbridge);
                 break;
             case R.id.teleop_previewSallyport:
-                image = getResources().getDrawable(R.mipmap.sallyport);
+                image = getResources().getDrawable(R.drawable.sallyport);
                 break;
             case R.id.teleop_previewRockWall:
-                image = getResources().getDrawable(R.mipmap.rock_wall);
+                image = getResources().getDrawable(R.drawable.rock_wall);
                 break;
             case R.id.teleop_previewRoughTerrain:
-                image = getResources().getDrawable(R.mipmap.rough_terrain);
+                image = getResources().getDrawable(R.drawable.rough_terrain);
                 break;
             default:
                 image = getResources().getDrawable(R.mipmap.ic_launcher);
