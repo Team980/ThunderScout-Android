@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
@@ -31,13 +32,14 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.TeamWrapper;
 import com.team980.thunderscout.data.task.DatabaseClearTask;
 import com.team980.thunderscout.data.task.DatabaseReadTask;
+import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.ArrayList;
 
 import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
 
 public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
-        PopupMenu.OnMenuItemClickListener {
+        PopupMenu.OnMenuItemClickListener, View.OnClickListener {
 
     private RecyclerView dataView;
     private LocalDataAdapter adapter;
@@ -45,6 +47,11 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
     private SwipeRefreshLayout swipeContainer;
 
     private BroadcastReceiver refreshReceiver;
+
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
+    private Toolbar toolbar;
+    private boolean selectionMode = false;
 
     public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.REFRESH_VIEW_PAGER";
 
@@ -59,14 +66,14 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
 
         MainActivity activity = (MainActivity) getActivity();
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle("This device");
         activity.setSupportActionBar(toolbar);
 
         setHasOptionsMenu(true);
 
-        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -82,7 +89,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         dataView.addItemDecoration(dividerItemDecoration);
 
         // specify an adapter (see also next example)
-        adapter = new LocalDataAdapter(getContext(), new ArrayList<TeamWrapper>());
+        adapter = new LocalDataAdapter(getContext(), new ArrayList<TeamWrapper>(), this);
         dataView.setAdapter(adapter);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -147,7 +154,8 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_delete && adapter.getItemCount() > 0) {
+        //Default mode
+        if (id == R.id.action_delete_all && adapter.getItemCount() > 0) {
             new AlertDialog.Builder(getContext())
                     .setTitle("Are you sure?")
                     .setMessage("This will delete all scout data in your local database and the data cannot be recovered!")
@@ -163,6 +171,11 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.sort_modes, popup.getMenu());
             popup.show();
+        }
+
+        //Selection mode
+        if (id == R.id.action_delete_selection) {
+            Log.d("DELETE", "IT");
         }
 
         return super.onOptionsItemSelected(item);
@@ -196,4 +209,65 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
                 return false;
         }
     }
+
+    /**
+     *  Listener for HOME button when in selection mode
+     */
+    @Override
+    public void onClick(View view) {
+        if(selectionMode) {
+            adapter.clearSelections();
+            setSelectionMode(false);
+        }
+    }
+
+    public boolean isInSelectionMode() {
+        return selectionMode;
+    }
+
+    public void setSelectionMode(boolean value) {
+        selectionMode = value;
+
+        if (selectionMode) {
+            toolbar.setTitle("1 team selected");
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_data_select);
+            TransitionUtils.toolbarAndStatusBarTransition(R.color.primary, R.color.primary_dark,
+                    R.color.secondary, R.color.secondary_dark, (AppCompatActivity) getActivity());
+
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            toggle.onDrawerStateChanged(DrawerLayout.STATE_IDLE);
+            toggle.setDrawerIndicatorEnabled(false);
+            toggle.syncState();
+
+            MainActivity activity = (MainActivity) getActivity();
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+
+            toolbar.setNavigationOnClickListener(this);
+        } else {
+            toolbar.setTitle("This device");
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_this_device);
+            TransitionUtils.toolbarAndStatusBarTransition(R.color.secondary, R.color.secondary_dark,
+                    R.color.primary, R.color.primary_dark, (AppCompatActivity) getActivity());
+
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            toggle = new ActionBarDrawerToggle(
+                    getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+        }
+    }
+
+    public void updateSelectionModeTitle(int numItems) {
+        if(selectionMode) {
+            if (numItems == 1) {
+                toolbar.setTitle("1 team selected");
+            } else {
+                toolbar.setTitle(numItems + " teams selected");
+            }
+        }
+    }
+
 }
