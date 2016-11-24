@@ -12,8 +12,9 @@ import com.team980.thunderscout.data.AverageScoutData;
 
 public class TeamInfoActivity extends AppCompatActivity {
 
-    private TeamInfoViewPagerAdapter viewPagerAdapter;
+    private AverageScoutData scoutData;
 
+    private TeamInfoViewPagerAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +22,10 @@ public class TeamInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info_team);
 
         Intent launchIntent = getIntent();
-        AverageScoutData data = (AverageScoutData) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT");
+        scoutData = (AverageScoutData) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Team Info: Team " + data.getTeamNumber());
+        toolbar.setTitle("Team Info: Team " + scoutData.getTeamNumber());
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -36,6 +37,10 @@ public class TeamInfoActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public AverageScoutData getAverageScoutData() {
+        return scoutData;
     }
 }
 

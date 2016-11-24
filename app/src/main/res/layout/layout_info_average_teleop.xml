@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -13,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
@@ -21,59 +20,52 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Auto"
+                android:text="Teleop"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textSize="25sp" />
-        </FrameLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_floating_light"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:paddingTop="8dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/info_match_autoDefenseCrossingAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Crossed the"
+                    android:text="Crossed "
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="17sp" />
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/info_match_autoDefenseCrossed"
+                    android:id="@+id/info_average_teleopTotalDefenses"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="DEFENSE"
+                    android:text="#"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="22sp" />
+                    android:textSize="25sp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" different defenses"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="20sp" />
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/info_match_autoDefenseImageContainer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_weight="0.5">
-
-                <ImageView
-                    android:id="@+id/info_match_autoDefenseImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:src="@drawable/portcullis" />
-
-            </FrameLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/info_average_teleopListDefenseCrossings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
@@ -97,12 +89,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Scored "
+                    android:text="Scored an average of "
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/info_match_autoTotalGoals"
+                    android:id="@+id/info_average_teleopTotalGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="#"
@@ -132,7 +124,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/info_match_autoLowGoals"
+                        android:id="@+id/info_average_teleopLowGoals"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -157,7 +149,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/info_match_autoHighGoals"
+                        android:id="@+id/info_average_teleopHighGoals"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -182,7 +174,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/info_match_autoMissedGoals"
+                        android:id="@+id/info_average_teleopMissedGoals"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

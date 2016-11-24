@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.enumeration.Defense;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -19,16 +20,33 @@ public class DefenseAdapter extends RecyclerView.Adapter<DefenseAdapter.DefenseV
     private List<Defense> defenseList;
     private EnumMap<Defense, Integer> defenseMap;
 
-    public DefenseAdapter() {
-        defenseList = new ArrayList<>();
-        defenseMap = new EnumMap<>(Defense.class);
-    }
+    private float numberOfMatches;
+
+    private NumberFormat formatter;
 
     public DefenseAdapter(EnumMap<Defense, Integer> l) {
         defenseMap = l;
 
         defenseList = new ArrayList<>();
         defenseList.addAll(defenseMap.keySet());
+
+        numberOfMatches = 1;
+
+        formatter = NumberFormat.getNumberInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(1);
+    }
+
+    public DefenseAdapter(EnumMap<Defense, Integer> l, int i) {
+        defenseMap = l;
+        numberOfMatches = i;
+
+        defenseList = new ArrayList<>();
+        defenseList.addAll(defenseMap.keySet());
+
+        formatter = NumberFormat.getNumberInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(1);
     }
 
 
@@ -78,7 +96,9 @@ public class DefenseAdapter extends RecyclerView.Adapter<DefenseAdapter.DefenseV
 
         public void bind(String defText, int countNum) {
             defense.setText(defText);
-            count.setText(String.valueOf(countNum) + " crossings");
+
+            float displayNum = (countNum / numberOfMatches);
+            count.setText(formatter.format(displayNum) + " crossings");
 
             int maxCount = 0;
             for (Defense defense : Defense.values()) {
