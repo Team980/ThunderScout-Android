@@ -8,8 +8,8 @@ android {
         applicationId "com.team980.thunderscout"
         minSdkVersion 16
         targetSdkVersion 21 //TODO runtime permissions
-        versionCode 3
-        versionName "0.2"
+        versionCode 4
+        versionName "0.3"
     }
 
     buildTypes {
