@@ -137,7 +137,7 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
 
     /**
      * Removes all the data from the list.
-     * Called by the database emptier.
+     * Called when we delete things.
      */
     public void clearData() {
         if (teams.size() == 0) {

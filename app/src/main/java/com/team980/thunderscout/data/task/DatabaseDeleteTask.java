@@ -79,7 +79,6 @@ public class DatabaseDeleteTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onPostExecute(Void o) {
         //Runs on UI thread after execution
-        viewAdapter.notifyDataSetChanged();
         viewAdapter.clearData();
 
         Intent intent = new Intent(ThisDeviceFragment.ACTION_REFRESH_VIEW_PAGER);
