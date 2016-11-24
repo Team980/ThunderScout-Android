@@ -98,7 +98,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 android:text="Trouble With"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="20sp" />
@@ -107,7 +107,7 @@
                 android:id="@+id/info_match_summaryTroubleWith"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 android:text="Lorem ipsum..."
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="15sp" />
@@ -115,7 +115,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 android:layout_marginTop="16dp"
                 android:text="Comments"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -125,7 +125,7 @@
                 android:id="@+id/info_match_summaryComments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 android:text="Lorem ipsum..."
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="15sp" />

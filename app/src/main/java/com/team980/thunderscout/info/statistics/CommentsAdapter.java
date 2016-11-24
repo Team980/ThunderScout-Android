@@ -8,21 +8,15 @@ import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
 
     private List<String> commentsList;
 
-    public CommentsAdapter() {
-        commentsList = new ArrayList<>();
-    }
-
     public CommentsAdapter(List<String> l) {
         commentsList = l;
     }
-
 
     @Override
     public CommentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

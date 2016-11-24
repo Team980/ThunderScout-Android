@@ -1,8 +1,10 @@
 package com.team980.thunderscout.data;
 
 import com.team980.thunderscout.data.enumeration.Defense;
+import com.team980.thunderscout.data.enumeration.ScalingStats;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -155,4 +157,49 @@ public class AverageScoutData implements Serializable {
     }
 
     //SUMMARY
+
+    public double getScalingStatsPercentage(ScalingStats stat) {
+        double i = 0;
+        for (ScoutData data : dataList) {
+            if (data.getScalingStats() == stat) {
+                i++;
+            }
+        }
+
+        return (i / getNumberOfMatches()) * 100;
+    }
+
+    public double getChallengedTowerPercentage() {
+        double i = 0;
+        for (ScoutData data : dataList) {
+            if (data.hasChallengedTower()) {
+                i++;
+            }
+        }
+
+        return (i / getNumberOfMatches()) * 100;
+    }
+
+    public List<String> getTroublesList() {
+        List<String> troublesList = new ArrayList<>();
+
+        for (ScoutData data : dataList) {
+            if (data.getTroubleWith() != null && !data.getTroubleWith().isEmpty()) {
+                troublesList.add(data.getTroubleWith());
+            }
+        }
+
+        return troublesList;
+    }
+
+    public List<String> getCommentsList() {
+        List<String> commentsList = new ArrayList<>();
+
+        for (ScoutData data : dataList) {
+            if (data.getComments() != null && !data.getComments().isEmpty()) {
+                commentsList.add(data.getComments());
+            }
+        }
+        return commentsList;
+    }
 }

@@ -26,6 +26,9 @@ public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedL
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Spinner scalingStats = (Spinner) view.findViewById(R.id.summary_spinnerScalingStats);
+        scalingStats.setOnItemSelectedListener(this);
     }
 
     @Override
