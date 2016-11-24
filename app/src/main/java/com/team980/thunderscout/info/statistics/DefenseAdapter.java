@@ -88,7 +88,7 @@ public class DefenseAdapter extends RecyclerView.Adapter<DefenseAdapter.DefenseV
         public DefenseViewHolder(View itemView) {
             super(itemView);
 
-            defense = (TextView) itemView.findViewById(R.id.defense_crossed);
+            defense = (TextView) itemView.findViewById(R.id.comment);
             count = (TextView) itemView.findViewById(R.id.times_crossed);
 
             crossingBar = (ProgressBar) itemView.findViewById(R.id.crossing_bar);

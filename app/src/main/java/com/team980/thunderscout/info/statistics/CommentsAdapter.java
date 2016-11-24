@@ -22,7 +22,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public CommentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View dataView = inflater.inflate(R.layout.one_item_view, parent, false);
+        View dataView = inflater.inflate(R.layout.comment_view, parent, false);
 
         return new CommentViewHolder(dataView);
     }
@@ -51,7 +51,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         public CommentViewHolder(View itemView) {
             super(itemView);
 
-            key = (TextView) itemView.findViewById(R.id.defense_crossed);
+            key = (TextView) itemView.findViewById(R.id.comment);
         }
 
         public void bind(String defText) {
