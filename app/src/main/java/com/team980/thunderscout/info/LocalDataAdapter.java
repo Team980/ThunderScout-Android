@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,11 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
 
     private TeamWrapper.TeamComparator sortMode = SORT_TEAM_NUMBER;
 
-    public LocalDataAdapter(Context context, @NonNull List<? extends ParentListItem> parentItemList) {
+    private SparseBooleanArray selectedItems;
+
+    private ThisDeviceFragment fragment;
+
+    public LocalDataAdapter(Context context, @NonNull List<? extends ParentListItem> parentItemList, ThisDeviceFragment f) {
         super(parentItemList);
 
         mInflator = LayoutInflater.from(context); //TODO move to ViewGroup.getContext()
@@ -46,6 +51,10 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
         teams = (ArrayList<TeamWrapper>) getParentItemList();
 
         this.context = context;
+
+        selectedItems = new SparseBooleanArray();
+
+        fragment = f;
     }
 
     // onCreate ...
@@ -146,7 +155,47 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
         notifyParentItemRangeChanged(0, teams.size());
     }
 
+    public void toggleSelection(int pos) {
+        if (selectedItems.get(pos, false)) {
+            selectedItems.delete(pos);
+        } else {
+            selectedItems.put(pos, true);
+        }
 
+        if (getSelectedItemCount() > 0 && !fragment.isInSelectionMode()) {
+            //enter selection mode
+            fragment.setSelectionMode(true);
+        } else if (getSelectedItemCount() == 0 && fragment.isInSelectionMode()) {
+            //exit selection mode
+            fragment.setSelectionMode(false);
+        }
+
+        fragment.updateSelectionModeTitle(getSelectedItemCount());
+
+        notifyItemChanged(pos);
+    }
+
+    public void clearSelections() {
+        selectedItems.clear();
+        notifyDataSetChanged();
+
+        if (fragment.isInSelectionMode()) {
+            //exit selection mode
+            fragment.setSelectionMode(false);
+        }
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> items = new ArrayList<Integer>(selectedItems.size());
+        for (int i = 0; i < selectedItems.size(); i++) {
+            items.add(selectedItems.keyAt(i));
+        }
+        return items;
+    }
 
     public class TeamViewHolder extends ParentViewHolder {
 
@@ -193,6 +242,20 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
                     Intent launchInfoActivity = new Intent(context, TeamInfoActivity.class);
                     launchInfoActivity.putExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT", tw.getAverageScoutData());
                     context.startActivity(launchInfoActivity);
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    toggleSelection(TeamViewHolder.super.getAdapterPosition());
+                    Log.d("ADAPT", TeamViewHolder.super.getAdapterPosition() + "");
+                    if (view.isSelected()) {
+                        view.setSelected(false);
+                    } else {
+                        view.setSelected(true);
+                    }
+                    return true;
                 }
             });
         }
