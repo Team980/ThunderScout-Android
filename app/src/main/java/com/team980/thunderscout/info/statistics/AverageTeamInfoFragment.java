@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.AverageScoutData;
+import com.team980.thunderscout.data.enumeration.ScalingStats;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -80,5 +82,34 @@ public class AverageTeamInfoFragment extends Fragment {
 
         TextView teleopMissedGoals = (TextView) view.findViewById(R.id.info_average_teleopMissedGoals);
         teleopMissedGoals.setText(formatter.format(data.getAverageTeleopMissedGoals()));
+
+        // --- Summary ---
+        TextView partialScalePercentage = (TextView) view.findViewById(R.id.info_average_summaryPartialScalePercentage);
+        partialScalePercentage.setText(formatter.format(data.getScalingStatsPercentage(ScalingStats.PARTIAL)) + "%");
+
+        ProgressBar partialScaleProgressBar = (ProgressBar) view.findViewById(R.id.info_average_summaryPartialScaleProgressBar);
+        partialScaleProgressBar.setProgress((int) data.getScalingStatsPercentage(ScalingStats.PARTIAL));
+
+        TextView fullScalePercentage = (TextView) view.findViewById(R.id.info_average_summaryFullScalePercentage);
+        fullScalePercentage.setText(formatter.format(data.getScalingStatsPercentage(ScalingStats.FULL)) + "%");
+
+        ProgressBar fullScaleProgressBar = (ProgressBar) view.findViewById(R.id.info_average_summaryFullScaleProgressBar);
+        fullScaleProgressBar.setProgress((int) data.getScalingStatsPercentage(ScalingStats.FULL));
+
+        TextView challengedTowerPercentage = (TextView) view.findViewById(R.id.info_average_summaryChallengedTowerPercentage);
+        challengedTowerPercentage.setText(formatter.format(data.getChallengedTowerPercentage()) + "%");
+
+        ProgressBar challengedTowerProgressBar = (ProgressBar) view.findViewById(R.id.info_average_summaryChallengedTowerProgressBar);
+        challengedTowerProgressBar.setProgress((int) data.getChallengedTowerPercentage());
+
+        RecyclerView troubleWith = (RecyclerView) view.findViewById(R.id.info_average_summaryTroubleWith);
+
+        troubleWith.setLayoutManager(new LinearLayoutManager(getContext()));
+        troubleWith.setAdapter(new CommentsAdapter(data.getTroublesList()));
+
+        RecyclerView comments = (RecyclerView) view.findViewById(R.id.info_average_summaryComments);
+
+        comments.setLayoutManager(new LinearLayoutManager(getContext()));
+        comments.setAdapter(new CommentsAdapter(data.getCommentsList()));
     }
 }

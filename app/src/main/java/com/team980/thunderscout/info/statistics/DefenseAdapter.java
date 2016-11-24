@@ -98,7 +98,12 @@ public class DefenseAdapter extends RecyclerView.Adapter<DefenseAdapter.DefenseV
             defense.setText(defText);
 
             float displayNum = (countNum / numberOfMatches);
-            count.setText(formatter.format(displayNum) + " crossings");
+
+            if (numberOfMatches == 1) {
+                count.setText(formatter.format(displayNum) + " crossings");
+            } else {
+                count.setText(formatter.format(displayNum) + " crossings per match");
+            }
 
             int maxCount = 0;
             for (Defense defense : Defense.values()) {
