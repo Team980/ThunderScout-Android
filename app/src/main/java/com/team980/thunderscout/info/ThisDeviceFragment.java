@@ -31,6 +31,7 @@ import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.TeamWrapper;
 import com.team980.thunderscout.data.task.DatabaseClearTask;
+import com.team980.thunderscout.data.task.DatabaseDeleteTask;
 import com.team980.thunderscout.data.task.DatabaseReadTask;
 import com.team980.thunderscout.util.TransitionUtils;
 
@@ -175,12 +176,20 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
 
         //Selection mode
         if (id == R.id.action_delete_selection) {
-            Log.d("DELETE", "IT");
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Are you sure?")
+                    .setMessage("This will delete the selected data and cannot be undone!") //TODO better phrasing
+                    .setIcon(R.drawable.ic_warning_white_24dp)
+                    .setPositiveButton(android.R.string.yes, this)
+                    .setNegativeButton(android.R.string.no, null).show();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Refresh for SwipeRefreshLayout
+     */
     @Override
     public void onRefresh() {
         DatabaseReadTask query = new DatabaseReadTask(adapter, getContext(), swipeContainer);
@@ -188,12 +197,17 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
     }
 
     /**
-     * Alert dialog shown for deletion prompt
+     * Alert dialog shown for deletion prompts
      */
     @Override
     public void onClick(DialogInterface dialog, int whichButton) {
-        DatabaseClearTask clearTask = new DatabaseClearTask(adapter, getContext());
-        clearTask.execute();
+        if (selectionMode) {
+            DatabaseDeleteTask deleteTask = new DatabaseDeleteTask(adapter, getContext(), adapter.getSelectedItems());
+            deleteTask.execute();
+        } else {
+            DatabaseClearTask clearTask = new DatabaseClearTask(adapter, getContext());
+            clearTask.execute();
+        }
     }
 
     /**
@@ -229,7 +243,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         selectionMode = value;
 
         if (selectionMode) {
-            toolbar.setTitle("1 team selected");
+            toolbar.setTitle("1 match selected");
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_data_select);
             TransitionUtils.toolbarAndStatusBarTransition(R.color.primary, R.color.primary_dark,
@@ -263,9 +277,9 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
     public void updateSelectionModeTitle(int numItems) {
         if(selectionMode) {
             if (numItems == 1) {
-                toolbar.setTitle("1 team selected");
+                toolbar.setTitle("1 match selected");
             } else {
-                toolbar.setTitle(numItems + " teams selected");
+                toolbar.setTitle(numItems + " matches selected");
             }
         }
     }

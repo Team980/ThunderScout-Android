@@ -8,6 +8,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -155,44 +156,55 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
         notifyParentItemRangeChanged(0, teams.size());
     }
 
-    public void toggleSelection(int pos) {
-        if (selectedItems.get(pos, false)) {
-            selectedItems.delete(pos);
-        } else {
-            selectedItems.put(pos, true);
-        }
+    public void select(int pos) {
+        selectedItems.put(pos, true);
 
-        if (getSelectedItemCount() > 0 && !fragment.isInSelectionMode()) {
+        if (!fragment.isInSelectionMode()) {
             //enter selection mode
             fragment.setSelectionMode(true);
-        } else if (getSelectedItemCount() == 0 && fragment.isInSelectionMode()) {
+            notifyDataSetChanged();
+        } else {
+
+            fragment.updateSelectionModeTitle(getSelectedItemCount());
+            notifyItemChanged(pos);
+        }
+    }
+
+    public void deselect(int pos) {
+        selectedItems.delete(pos);
+
+        if (getSelectedItemCount() == 0 && fragment.isInSelectionMode()) {
             //exit selection mode
             fragment.setSelectionMode(false);
+            notifyDataSetChanged();
+        } else {
+            fragment.updateSelectionModeTitle(getSelectedItemCount());
+
+            notifyItemChanged(pos);
         }
-
-        fragment.updateSelectionModeTitle(getSelectedItemCount());
-
-        notifyItemChanged(pos);
     }
 
     public void clearSelections() {
         selectedItems.clear();
-        notifyDataSetChanged();
 
         if (fragment.isInSelectionMode()) {
             //exit selection mode
             fragment.setSelectionMode(false);
         }
+
+        notifyDataSetChanged();
     }
 
     public int getSelectedItemCount() {
         return selectedItems.size();
     }
 
-    public List<Integer> getSelectedItems() {
-        List<Integer> items = new ArrayList<Integer>(selectedItems.size());
+    public List<ScoutData> getSelectedItems() {
+        List<ScoutData> items = new ArrayList<>(selectedItems.size());
         for (int i = 0; i < selectedItems.size(); i++) {
-            items.add(selectedItems.keyAt(i));
+            items.add((ScoutData) mItemList.get(selectedItems.keyAt(i)));
+            Log.d("GetSelected", selectedItems.keyAt(i) + "");
+            Log.d("GetSelected2", ((ScoutData) mItemList.get(selectedItems.keyAt(i))).getDateAdded() + "");
         }
         return items;
     }
@@ -239,23 +251,20 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, TeamInfoActivity.class);
-                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT", tw.getAverageScoutData());
-                    context.startActivity(launchInfoActivity);
-                }
-            });
-
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    toggleSelection(TeamViewHolder.super.getAdapterPosition());
-                    Log.d("ADAPT", TeamViewHolder.super.getAdapterPosition() + "");
-                    if (view.isSelected()) {
-                        view.setSelected(false);
+                    if (fragment.isInSelectionMode()) {
+                        //TODO selectable teams
+                        if (isExpanded()) {
+                            collapseView();
+                            expandButton.setImageResource(R.drawable.ic_expand_more_white_24dp);
+                        } else {
+                            expandView();
+                            expandButton.setImageResource(R.drawable.ic_expand_less_white_24dp);
+                        }
                     } else {
-                        view.setSelected(true);
+                        Intent launchInfoActivity = new Intent(context, TeamInfoActivity.class);
+                        launchInfoActivity.putExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT", tw.getAverageScoutData());
+                        context.startActivity(launchInfoActivity);
                     }
-                    return true;
                 }
             });
         }
@@ -267,22 +276,54 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
 
         private ImageButton infoButton;
 
+        private CheckBox checkBox;
+
         public ScoutViewHolder(View itemView) {
             super(itemView);
 
             dateAdded = (TextView) itemView.findViewById(R.id.scout_dateAdded);
 
             infoButton = (ImageButton) itemView.findViewById(R.id.scout_infoButton);
+
+            checkBox = (CheckBox) itemView.findViewById(R.id.scout_checkBox);
         }
 
         public void bind(final ScoutData scoutData) {
             dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(scoutData.getDateAdded()));
 
+            if (fragment.isInSelectionMode()) {
+                infoButton.setVisibility(View.GONE);
+                checkBox.setVisibility(View.VISIBLE);
+
+                if (selectedItems.get(ScoutViewHolder.super.getAdapterPosition())) {
+                    checkBox.setChecked(true);
+                } else {
+                    checkBox.setChecked(false);
+                }
+            } else {
+                infoButton.setVisibility(View.VISIBLE);
+                checkBox.setVisibility(View.GONE);
+            }
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
-                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
-                    context.startActivity(launchInfoActivity);
+                    if (fragment.isInSelectionMode()) {
+                        Log.d("ADAPT", ScoutViewHolder.super.getAdapterPosition() + "");
+                        Log.d("ADAPT2", checkBox.isChecked() + "");
+                        Log.d("ADAPT3", selectedItems.get(ScoutViewHolder.super.getAdapterPosition()) + "");
+                        if (selectedItems.get(ScoutViewHolder.super.getAdapterPosition())) {
+                            deselect(ScoutViewHolder.super.getAdapterPosition());
+                            checkBox.setChecked(false);
+                        } else {
+                            select(ScoutViewHolder.super.getAdapterPosition());
+                            checkBox.setChecked(true);
+                        }
+                        Log.d("ADAPT4", selectedItems.toString());
+                    } else {
+                        Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
+                        launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
+                        context.startActivity(launchInfoActivity);
+                    }
                 }
             });
 
@@ -291,6 +332,41 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
                     Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
                     launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
                     context.startActivity(launchInfoActivity);
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Log.d("ADAPT", ScoutViewHolder.super.getAdapterPosition() + "");
+                    Log.d("ADAPT2", checkBox.isChecked() + "");
+                    Log.d("ADAPT3", selectedItems.get(ScoutViewHolder.super.getAdapterPosition()) + "");
+                    if (selectedItems.get(ScoutViewHolder.super.getAdapterPosition())) {
+                        deselect(ScoutViewHolder.super.getAdapterPosition());
+                        checkBox.setChecked(false);
+                    } else {
+                        select(ScoutViewHolder.super.getAdapterPosition());
+                        checkBox.setChecked(true);
+                    }
+                    Log.d("ADAPT4", selectedItems.toString());
+                    return true;
+                }
+            });
+
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("ADAPT", ScoutViewHolder.super.getAdapterPosition() + "");
+                    Log.d("ADAPT2", checkBox.isChecked() + "");
+                    Log.d("ADAPT3", selectedItems.get(ScoutViewHolder.super.getAdapterPosition()) + "");
+                    if (selectedItems.get(ScoutViewHolder.super.getAdapterPosition())) {
+                        deselect(ScoutViewHolder.super.getAdapterPosition());
+                        checkBox.setChecked(false);
+                    } else {
+                        select(ScoutViewHolder.super.getAdapterPosition());
+                        checkBox.setChecked(true);
+                    }
+                    Log.d("ADAPT4", selectedItems.toString());
                 }
             });
         }
