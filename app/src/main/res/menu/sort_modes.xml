@@ -3,4 +3,23 @@
     <item
         android:id="@+id/sort_team_number"
         android:title="By team number" />
+    <item
+        android:id="@+id/sort_auto_unique_defense_count"
+        android:title="By defenses crossed in auto" />
+    <item
+        android:id="@+id/sort_auto_total_goals_scored"
+        android:title="By average goals scored in auto" />
+    <item
+        android:id="@+id/sort_teleop_unique_defense_count"
+        android:title="By defenses crossed in teleop" />
+    <item
+        android:id="@+id/sort_teleop_total_goals_scored"
+        android:title="By average goals scored in teleop" />
+    <item
+        android:id="@+id/sort_summary_full_scale_percentage"
+        android:title="By full scale percentage" />
+    <item
+        android:id="@+id/sort_summary_challenged_tower_percentage"
+        android:title="By challenged tower percentage" />
+    <!-- TODO these strings are horrible -->
 </menu>
