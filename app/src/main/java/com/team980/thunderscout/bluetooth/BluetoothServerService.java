@@ -23,7 +23,7 @@ public class BluetoothServerService extends Service {
 
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!mBluetoothAdapter.isEnabled()) {
-            mBluetoothAdapter.enable(); //TODO prompt user
+            mBluetoothAdapter.enable(); //TODO prompt user as this force closes app
         }
 
         acceptThread = new ServerListenerThread(getApplicationContext(), this);
