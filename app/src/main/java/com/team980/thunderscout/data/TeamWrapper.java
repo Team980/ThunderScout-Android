@@ -92,42 +92,42 @@ public class TeamWrapper implements ParentListItem, Serializable {
 
         SORT_AUTO_UNIQUE_DEFENSE_COUNT {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return Integer.valueOf(o1.getAverageScoutData().getAutoDefenseCrossings().size())
+                return -Integer.valueOf(o1.getAverageScoutData().getAutoDefenseCrossings().size())
                         .compareTo(o2.getAverageScoutData().getAutoDefenseCrossings().size());
             }
         },
 
         SORT_AUTO_TOTAL_GOALS_SCORED {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return Float.valueOf(o1.getAverageScoutData().getAverageAutoTotalGoals())
+                return -Float.valueOf(o1.getAverageScoutData().getAverageAutoTotalGoals())
                         .compareTo(o2.getAverageScoutData().getAverageAutoTotalGoals());
             }
         },
 
         SORT_TELEOP_UNIQUE_DEFENSE_COUNT {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return Integer.valueOf(o1.getAverageScoutData().getTeleopDefenseCrossings().size())
+                return -Integer.valueOf(o1.getAverageScoutData().getTeleopDefenseCrossings().size())
                         .compareTo(o2.getAverageScoutData().getTeleopDefenseCrossings().size());
             }
         },
 
         SORT_TELEOP_TOTAL_GOALS_SCORED {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return Float.valueOf(o1.getAverageScoutData().getAverageTeleopTotalGoals())
+                return -Float.valueOf(o1.getAverageScoutData().getAverageTeleopTotalGoals())
                         .compareTo(o2.getAverageScoutData().getAverageTeleopTotalGoals());
             }
         },
 
         SORT_SUMMARY_FULL_SCALE_PERCENTAGE {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return Double.valueOf(o1.getAverageScoutData().getScalingStatsPercentage(ScalingStats.FULL))
+                return -Double.valueOf(o1.getAverageScoutData().getScalingStatsPercentage(ScalingStats.FULL))
                         .compareTo(o2.getAverageScoutData().getScalingStatsPercentage(ScalingStats.FULL));
             }
         },
 
         SORT_SUMMARY_CHALLENGED_TOWER_PERCENTAGE {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return Double.valueOf(o1.getAverageScoutData().getChallengedTowerPercentage())
+                return -Double.valueOf(o1.getAverageScoutData().getChallengedTowerPercentage())
                         .compareTo(o2.getAverageScoutData().getChallengedTowerPercentage());
             }
         };

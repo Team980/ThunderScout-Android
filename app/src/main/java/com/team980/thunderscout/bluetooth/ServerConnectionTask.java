@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.task.DatabaseWriteTask;
-import com.team980.thunderscout.util.TSNotificationManager;
+import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,14 +22,14 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
     private Context context;
 
-    private TSNotificationManager notificationManager;
+    private TSNotificationBuilder notificationManager;
 
     public ServerConnectionTask(BluetoothSocket socket, Context context) {
         mmSocket = socket;
 
         this.context = context;
 
-        notificationManager = TSNotificationManager.getInstance(context);
+        notificationManager = TSNotificationBuilder.getInstance(context);
     }
 
     @Override

@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.match.ScoutingFlowActivity;
-import com.team980.thunderscout.util.TSNotificationManager;
+import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,7 +22,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
     private BluetoothAdapter mBluetoothAdapter;
 
-    private TSNotificationManager notificationManager;
+    private TSNotificationBuilder notificationManager;
 
     private ScoutData scoutData;
 
@@ -37,7 +37,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        notificationManager = TSNotificationManager.getInstance(context);
+        notificationManager = TSNotificationBuilder.getInstance(context);
 
         // Get a BluetoothSocket to connect with the given BluetoothDevice
         try {

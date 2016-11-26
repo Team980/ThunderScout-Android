@@ -1,9 +1,6 @@
 package com.team980.thunderscout.preferences;
 
 import android.annotation.TargetApi;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -11,14 +8,11 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.service.quicksettings.TileService;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.bluetooth.BluetoothQuickTileService;
-import com.team980.thunderscout.bluetooth.BluetoothServerService;
 import com.team980.thunderscout.util.AppCompatPreferenceActivity;
 
 import java.util.List;
@@ -34,24 +28,9 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends AppCompatPreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) { //Implement behavior changes triggered by setting changes here
-        if (key.equals("enable_bt_server")) {
-            Boolean isServer = sharedPreferences.getBoolean("enable_bt_server", false);
-
-            if (isServer) {
-                startService(new Intent(this, BluetoothServerService.class));
-            } else {
-                stopService(new Intent(this, BluetoothServerService.class));
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                TileService.requestListeningState(this, new ComponentName(this, BluetoothQuickTileService.class));
-            }
-        }
-    }
+    //PreferenceChange listener now in ThunderScout.java
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -108,7 +87,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
-        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 
         if (hasHeaders()) {
             //Button button = new Button(this);
