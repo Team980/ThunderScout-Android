@@ -1,12 +1,16 @@
 package com.team980.thunderscout;
 
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.service.quicksettings.TileService;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
+import com.team980.thunderscout.bluetooth.BluetoothQuickTileService;
 import com.team980.thunderscout.bluetooth.BluetoothServerService;
 
 import java.io.ByteArrayInputStream;
@@ -16,7 +20,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-public class ThunderScout extends Application {
+public class ThunderScout extends Application implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @WorkerThread
     public static byte[] serializeObject(Object o) {
@@ -89,7 +93,33 @@ public class ThunderScout extends Application {
             Log.d("THUNDERSCOUT", "Starting service...");
             startService(new Intent(this, BluetoothServerService.class));
         }
+
+        Log.d("THUNDERSCOUT", "Registering onPreferenceChangeListener");
+        sharedPref.registerOnSharedPreferenceChangeListener(this);
+
         Log.d("THUNDERSCOUT", "Finished onCreate");
 
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("enable_bt_server")) {
+            Boolean isServer = sharedPreferences.getBoolean("enable_bt_server", false);
+
+            Log.d("PREFLISTEN", "Server preference changed");
+
+            if (isServer) {
+                Log.d("PREFLISTEN", "enabling BT server");
+                startService(new Intent(this, BluetoothServerService.class));
+            } else {
+                Log.d("PREFLISTEN", "enabling BT server");
+                stopService(new Intent(this, BluetoothServerService.class));
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Log.d("TILETRACE", "requesting tile listening state");
+                TileService.requestListeningState(this, new ComponentName(this, BluetoothQuickTileService.class));
+            }
+        }
     }
 }

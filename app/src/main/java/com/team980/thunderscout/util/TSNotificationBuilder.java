@@ -7,22 +7,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
-import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.preferences.SettingsActivity;
 
-public class TSNotificationManager {
+public class TSNotificationBuilder {
 
-    private static TSNotificationManager ourInstance; //TODO the existence of this class is a memory leak
+    private static TSNotificationBuilder ourInstance; //TODO the existence of this class is a memory leak :(
 
     private Context context;
 
+    private NotificationCompat.Builder btServerError; //server paused when Bluetooth is off or not working
     private NotificationCompat.Builder btServerRunning;
 
     private NotificationCompat.Builder btTransferInProgress;
     private NotificationCompat.Builder btTransferError;
     private int lastUsedId = 1;
 
-    private TSNotificationManager(Context context) { //TODO add click intents
+    private TSNotificationBuilder(Context context) { //TODO add click intents
         this.context = context;
 
         //init notifications
@@ -34,15 +35,24 @@ public class TSNotificationManager {
                 .setPriority(Notification.PRIORITY_LOW)
                 .setColor(context.getResources().getColor(R.color.primary))
                 .setShowWhen(false)
-                .setGroup("TS_SERVER_RUNNING");
+                .setGroup("BT_SERVER");
+
+        btServerError = new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.ic_warning_white_24dp)
+                .setContentTitle("Bluetooth server could not be started")
+                .setContentText("Is the Bluetooth adapter enabled?")
+                .setOngoing(true)
+                .setColor(context.getResources().getColor(R.color.error))
+                .setShowWhen(false)
+                .setGroup("BT_SERVER");
 
 
         PendingIntent serverSettingsIntent = PendingIntent.getActivity(context, 1,
-                new Intent(context, MainActivity.class)
-                        .putExtra(MainActivity.INTENT_FLAG_SHOWN_FRAGMENT, MainActivity.INTENT_FLAGS_HOME),
+                new Intent(context, SettingsActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         btServerRunning.setContentIntent(serverSettingsIntent);
+        btServerError.setContentIntent(serverSettingsIntent);
 
         NotificationCompat.Action openServerSetting = new NotificationCompat.Action(
                 R.drawable.ic_settings_white_24dp,
@@ -51,6 +61,7 @@ public class TSNotificationManager {
         );
 
         btServerRunning.addAction(openServerSetting);
+        btServerError.addAction(openServerSetting);
 
         btTransferInProgress = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp) //TODO find icon
@@ -58,19 +69,19 @@ public class TSNotificationManager {
                 .setProgress(100, 0, true)
                 .setOngoing(true)
                 .setColor(context.getResources().getColor(R.color.accent)) //TODO use nonyellow accent?
-                .setGroup("TS_TRANSFER_ONGOING");
+                .setGroup("BT_TRANSFER_ONGOING");
 
         btTransferError = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp) //TODO find icon
                 .setContentTitle("Data transfer failed")
                 .setContentText("Failed to receive data from device")
                 .setColor(context.getResources().getColor(R.color.error))
-                .setGroup("TS_TRANSFER_ERROR");
+                .setGroup("BT_TRANSFER_ERROR");
     }
 
-    public static TSNotificationManager getInstance(Context context) {
+    public static TSNotificationBuilder getInstance(Context context) {
         if (ourInstance == null) {
-            ourInstance = new TSNotificationManager(context);
+            ourInstance = new TSNotificationBuilder(context);
         }
 
         return ourInstance;
@@ -78,6 +89,10 @@ public class TSNotificationManager {
 
     public Notification buildBtServerRunning() {
         return btServerRunning.build();
+    }
+
+    public Notification buildBtServerError() {
+        return btServerError.build();
     }
 
     public Notification buildBtServerRunning(String[] data) { //TODO add data
