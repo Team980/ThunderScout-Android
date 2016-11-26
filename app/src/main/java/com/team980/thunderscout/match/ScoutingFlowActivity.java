@@ -328,7 +328,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();
 
-        CounterCompoundView autoLowGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterLowGoals);
+        CounterCompoundView autoLowGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterLowGoals); //TODO sometimes this fails... is it another activity state bug?
 
         scoutData.setAutoLowGoals((int) autoLowGoals.getValue());
 

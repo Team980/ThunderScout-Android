@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="match_scout"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_send"
+        android:shortcutShortLabel="@string/shortcut_match_scout_short"
+        android:shortcutLongLabel="@string/shortcut_match_scout_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.team980.thunderscout"
+            android:targetClass="com.team980.thunderscout.match.ScoutingFlowActivity" />
+    </shortcut>
+    <!-- Specify more shortcuts here. -->
+</shortcuts>

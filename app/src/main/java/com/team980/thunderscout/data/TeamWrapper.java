@@ -57,7 +57,7 @@ public class TeamWrapper implements ParentListItem, Serializable {
             case SORT_TELEOP_TOTAL_GOALS_SCORED:
                 return getAverageScoutData().getAverageTeleopTotalGoals() + " goals scored";
             case SORT_SUMMARY_FULL_SCALE_PERCENTAGE:
-                return "Scaled the tower in" + getAverageScoutData().getScalingStatsPercentage(ScalingStats.FULL) + "% of matches";
+                return "Scaled the tower in " + getAverageScoutData().getScalingStatsPercentage(ScalingStats.FULL) + "% of matches";
             case SORT_SUMMARY_CHALLENGED_TOWER_PERCENTAGE:
                 return "Challenged the tower in " + getAverageScoutData().getChallengedTowerPercentage() + "% of matches";
             default:
