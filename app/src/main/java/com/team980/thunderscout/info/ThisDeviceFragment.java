@@ -30,9 +30,9 @@ import android.widget.LinearLayout;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.TeamWrapper;
-import com.team980.thunderscout.data.task.DatabaseClearTask;
-import com.team980.thunderscout.data.task.DatabaseDeleteTask;
-import com.team980.thunderscout.data.task.DatabaseReadTask;
+import com.team980.thunderscout.data.task.ScoutDataClearTask;
+import com.team980.thunderscout.data.task.ScoutDataDeleteTask;
+import com.team980.thunderscout.data.task.ScoutDataReadTask;
 import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.ArrayList;
@@ -106,13 +106,13 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
-        DatabaseReadTask query = new DatabaseReadTask(adapter, getContext(), swipeContainer);
+        ScoutDataReadTask query = new ScoutDataReadTask(adapter, getContext(), swipeContainer);
         query.execute();
 
         refreshReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                DatabaseReadTask query = new DatabaseReadTask(adapter, getContext(), swipeContainer);
+                ScoutDataReadTask query = new ScoutDataReadTask(adapter, getContext(), swipeContainer);
                 query.execute();
             }
         };
@@ -198,7 +198,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
      */
     @Override
     public void onRefresh() {
-        DatabaseReadTask query = new DatabaseReadTask(adapter, getContext(), swipeContainer);
+        ScoutDataReadTask query = new ScoutDataReadTask(adapter, getContext(), swipeContainer);
         query.execute();
     }
 
@@ -208,10 +208,10 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void onClick(DialogInterface dialog, int whichButton) {
         if (selectionMode) {
-            DatabaseDeleteTask deleteTask = new DatabaseDeleteTask(adapter, getContext(), adapter.getSelectedItems());
+            ScoutDataDeleteTask deleteTask = new ScoutDataDeleteTask(adapter, getContext(), adapter.getSelectedItems());
             deleteTask.execute();
         } else {
-            DatabaseClearTask clearTask = new DatabaseClearTask(adapter, getContext());
+            ScoutDataClearTask clearTask = new ScoutDataClearTask(adapter, getContext());
             clearTask.execute();
         }
     }

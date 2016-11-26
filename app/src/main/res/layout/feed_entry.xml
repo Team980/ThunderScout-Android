@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/entry_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:src="@drawable/ic_send_white_24dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="72dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/entry_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:text="Entry Type"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/entry_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/entry_type"
+            android:text="Timestamp"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/entry_expandButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="right|center_vertical"
+        android:paddingRight="16dp"
+        android:background="#00000000"
+        android:src="@drawable/ic_expand_more_white_24dp" />
+
+</FrameLayout>

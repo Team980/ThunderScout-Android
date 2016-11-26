@@ -17,7 +17,7 @@ import com.team980.thunderscout.data.enumeration.ScalingStats;
 import com.team980.thunderscout.info.ThisDeviceFragment;
 import com.team980.thunderscout.match.ScoutingFlowActivity;
 
-public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
+public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
 
     private final ScoutData data;
     private Context context;
@@ -26,7 +26,7 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
 
     private ScoutingFlowActivity activity;
 
-    public DatabaseWriteTask(ScoutData data, Context context) {
+    public ScoutDataWriteTask(ScoutData data, Context context) {
         this.data = data;
 
         this.context = context;
@@ -34,7 +34,7 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
     }
 
-    public DatabaseWriteTask(ScoutData data, Context context, ScoutingFlowActivity activity) {
+    public ScoutDataWriteTask(ScoutData data, Context context, ScoutingFlowActivity activity) {
         this(data, context);
 
         this.activity = activity;
