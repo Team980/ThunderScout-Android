@@ -10,7 +10,7 @@ public class ServerDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
 
-    public static final String DATABASE_NAME = "ThunderScout_2016_V2.db"; //TODO settle on a DB name!?
+    public static final String DATABASE_NAME = "ThunderScout.db";
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String FLOAT_TYPE = " REAL";

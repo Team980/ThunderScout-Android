@@ -20,19 +20,19 @@ import java.util.EnumMap;
 /**
  * TODO Rewrite this class to add sorting/filtering parameters
  */
-public class DatabaseReadTask extends AsyncTask<Void, ScoutData, Void> {
+public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
 
     private LocalDataAdapter viewAdapter;
     private Context context;
 
     private SwipeRefreshLayout swipeLayout;
 
-    public DatabaseReadTask(LocalDataAdapter adapter, Context context) {
+    public ScoutDataReadTask(LocalDataAdapter adapter, Context context) {
         viewAdapter = adapter;
         this.context = context;
     }
 
-    public DatabaseReadTask(LocalDataAdapter adapter, Context context, SwipeRefreshLayout refresh) {
+    public ScoutDataReadTask(LocalDataAdapter adapter, Context context, SwipeRefreshLayout refresh) {
         viewAdapter = adapter;
         this.context = context;
 

@@ -26,7 +26,7 @@ import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.task.DatabaseWriteTask;
+import com.team980.thunderscout.data.task.ScoutDataWriteTask;
 import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.ImagePreviewDialog;
 
@@ -255,7 +255,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             operationStateDialog.setMessage("Saving scout data to this device");
 
-            DatabaseWriteTask task = new DatabaseWriteTask(new ScoutData(scoutData), getApplicationContext(), this); //MEMORY LEAK PREVENTION
+            ScoutDataWriteTask task = new ScoutDataWriteTask(new ScoutData(scoutData), getApplicationContext(), this); //MEMORY LEAK PREVENTION
             task.execute();
 
         } else if (operationStates.getBoolean(OPERATION_SEND_BLUETOOTH)) {

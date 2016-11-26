@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.team980.thunderscout.feed.HomeFragment;
 import com.team980.thunderscout.info.ThisDeviceFragment;
 import com.team980.thunderscout.preferences.SettingsActivity;
 

@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.task.DatabaseWriteTask;
+import com.team980.thunderscout.data.task.ScoutDataWriteTask;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;
@@ -96,7 +96,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
             if (prefs.getBoolean("bt_send_to_local_storage", true)) {
                 //Put the fetched ScoutData in the local database
-                DatabaseWriteTask writeTask = new DatabaseWriteTask(o, context);
+                ScoutDataWriteTask writeTask = new ScoutDataWriteTask(o, context);
                 writeTask.execute();
             }
 
@@ -109,7 +109,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
                 task.execute(o);
             }*/
         } else {
-            Log.d("ServerConnectionTask", "Failed to start DatabaseWriteTask!");
+            Log.d("ServerConnectionTask", "Failed to start ScoutDataWriteTask!");
         }
     }
 
