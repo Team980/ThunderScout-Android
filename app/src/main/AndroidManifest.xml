@@ -16,8 +16,8 @@
         android:name=".ThunderScout"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/ThunderScout.BaseTheme"
         tools:ignore="ManifestResource">
         <activity
@@ -28,7 +28,8 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="android.app.shortcuts"
+            <meta-data
+                android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
@@ -50,7 +51,12 @@
             android:name=".preferences.SettingsActivity"
             android:label="Settings"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
+            android:theme="@style/ThunderScout.BaseTheme.ActionBar">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".AboutActivity"
             android:label="About"
@@ -58,6 +64,17 @@
             android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
 
         <service android:name=".bluetooth.BluetoothServerService" />
+        <service
+            android:name=".bluetooth.BluetoothQuickTileService"
+            android:icon="@drawable/ic_bluetooth_searching_white_24dp"
+            android:label="Bluetooth Server"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
+                android:value="true" />
+        </service>
 
         <!--<activity android:name=".sheets.GoogleAuthActivity"></activity>-->
     </application>
