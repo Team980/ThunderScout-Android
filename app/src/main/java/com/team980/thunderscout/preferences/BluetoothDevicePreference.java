@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 
 import java.util.Set;
 
+@Deprecated
 public class BluetoothDevicePreference extends ListPreference {
 
     public BluetoothDevicePreference(Context context, AttributeSet attrs) {

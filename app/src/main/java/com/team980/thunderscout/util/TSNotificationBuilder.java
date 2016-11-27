@@ -6,6 +6,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.team980.thunderscout.R;
 
+@Deprecated
 public class TSNotificationBuilder {
 
     private static TSNotificationBuilder ourInstance; //TODO the existence of this class is a memory leak
