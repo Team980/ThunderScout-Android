@@ -87,7 +87,7 @@ public class ActivityFeedAdapter extends ExpandableRecyclerAdapter<ActivityFeedA
 
         public void bind(FeedEntry entry) {
             icon.setImageResource(entry.getType().getIcon());
-            type.setText(entry.getType().name()); //TODO localized strings
+            type.setText(entry.getType().toString());
             timestamp.setText(SimpleDateFormat.getDateTimeInstance().format(entry.getTimestamp()));
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -134,8 +134,8 @@ public class ActivityFeedAdapter extends ExpandableRecyclerAdapter<ActivityFeedA
 
         public void bind(EntryOperationWrapper wrapper) {
             icon.setImageResource(wrapper.getType().getIcon());
-            operationType.setText(wrapper.getType().name()); //TODO localized strings
-            operationStatus.setText(wrapper.getStatus().name()); //TODO localized strings
+            operationType.setText(wrapper.getType().toString());
+            operationStatus.setText(wrapper.getStatus().toString());
         }
     }
 }
