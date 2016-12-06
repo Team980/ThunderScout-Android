@@ -9,8 +9,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
-import com.team980.thunderscout.data.ServerDataDbHelper;
+import com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
+import com.team980.thunderscout.data.ScoutDataDbHelper;
 import com.team980.thunderscout.info.LocalDataAdapter;
 import com.team980.thunderscout.info.ThisDeviceFragment;
 
@@ -43,10 +43,9 @@ public class ScoutDataDeleteTask extends AsyncTask<Void, Integer, Void> {
     @Override
     public Void doInBackground(Void... params) {
 
-        SQLiteDatabase db = new ServerDataDbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = new ScoutDataDbHelper(context).getWritableDatabase();
 
         StringBuilder where = new StringBuilder("date_added IN (");
-        //TODO build WHERE clause
         for (ScoutData data : dataToDelete) {
             where.append(data.getDateAdded()).append(",");
         }

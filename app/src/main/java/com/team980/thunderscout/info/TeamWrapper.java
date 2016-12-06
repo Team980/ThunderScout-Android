@@ -1,7 +1,9 @@
-package com.team980.thunderscout.data;
+package com.team980.thunderscout.info;
 
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
+import com.team980.thunderscout.data.AverageScoutData;
+import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.ScalingStats;
 
 import java.io.Serializable;

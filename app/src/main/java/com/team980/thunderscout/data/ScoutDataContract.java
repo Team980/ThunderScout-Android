@@ -2,15 +2,15 @@ package com.team980.thunderscout.data;
 
 import android.provider.BaseColumns;
 
-public final class ServerDataContract {
+public final class ScoutDataContract {
     // To prevent someone from accidentally instantiating the contract class,
     // give it an empty constructor.
-    private ServerDataContract() {
+    private ScoutDataContract() {
     }
 
     /* Inner class that defines the table contents */
     public static abstract class ScoutDataTable implements BaseColumns {
-        public static final String TABLE_NAME = "server_data";
+        public static final String TABLE_NAME = "scout_data";
 
         public static final String COLUMN_NAME_TEAM_NUMBER = "team";
         public static final String COLUMN_NAME_DATE_ADDED = "date_added";

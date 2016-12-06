@@ -11,8 +11,8 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.ServerDataContract;
-import com.team980.thunderscout.data.ServerDataDbHelper;
+import com.team980.thunderscout.data.ScoutDataContract;
+import com.team980.thunderscout.data.ScoutDataDbHelper;
 import com.team980.thunderscout.data.enumeration.ScalingStats;
 import com.team980.thunderscout.info.ThisDeviceFragment;
 import com.team980.thunderscout.match.ScoutingFlowActivity;
@@ -50,42 +50,42 @@ public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
     protected Void doInBackground(Void[] params) {
 
         // Gets the data repository in write mode
-        SQLiteDatabase db = new ServerDataDbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = new ScoutDataDbHelper(context).getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
 
         // Init
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER, data.getTeamNumber());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, data.getDateAdded());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getDataSource());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER, data.getTeamNumber());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, data.getDateAdded());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getDataSource());
 
         // Auto
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED, data.getAutoDefenseCrossed().toString());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED, data.getAutoDefenseCrossed().toString());
 
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOALS, data.getAutoLowGoals());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS, data.getAutoHighGoals());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_GOALS, data.getAutoMissedGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOALS, data.getAutoLowGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS, data.getAutoHighGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_GOALS, data.getAutoMissedGoals());
 
         // Teleop
         byte[] listDefenseCrossings = ThunderScout.serializeObject(data.getTeleopDefenseCrossings());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSE_CROSSINGS, listDefenseCrossings);
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSE_CROSSINGS, listDefenseCrossings);
 
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS, data.getTeleopLowGoals());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleopHighGoals());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_GOALS, data.getTeleopMissedGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS, data.getTeleopLowGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleopHighGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_GOALS, data.getTeleopMissedGoals());
 
         // Summary
         ScalingStats scalingStats = data.getScalingStats();
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_SCALING_STATS, scalingStats.toString());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_CHALLENGED_TOWER, data.hasChallengedTower());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
-        values.put(ServerDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_SCALING_STATS, scalingStats.toString());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CHALLENGED_TOWER, data.hasChallengedTower());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
 
         try {
             // Insert the new row
             db.insertOrThrow(
-                    ServerDataContract.ScoutDataTable.TABLE_NAME,
+                    ScoutDataContract.ScoutDataTable.TABLE_NAME,
                     null,
                     values);
         } catch (final Exception e) {

@@ -10,6 +10,11 @@ import android.widget.Toast;
 
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.task.ScoutDataWriteTask;
+import com.team980.thunderscout.feed.EntryOperationWrapper;
+import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationStatus;
+import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationType;
+import com.team980.thunderscout.feed.FeedEntry;
+import com.team980.thunderscout.feed.task.FeedDataWriteTask;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;
@@ -94,10 +99,15 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         if (o != null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
+            FeedEntry feedEntry = new FeedEntry(FeedEntry.EntryType.SERVER_RECEIVED_MATCH, System.currentTimeMillis());
+
             if (prefs.getBoolean("bt_send_to_local_storage", true)) {
                 //Put the fetched ScoutData in the local database
                 ScoutDataWriteTask writeTask = new ScoutDataWriteTask(o, context);
                 writeTask.execute();
+
+                feedEntry.addOperation(new EntryOperationWrapper(EntryOperationType.SAVED_TO_LOCAL_STORAGE,
+                        EntryOperationStatus.OPERATION_SUCCESSFUL)); //TODO determine this based on callback?
             }
 
             if (prefs.getBoolean("bt_send_to_bt_server", false)) {
@@ -108,8 +118,11 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
                 SheetsUpdateTask task = new SheetsUpdateTask(context);
                 task.execute(o);
             }*/
+
+            FeedDataWriteTask feedDataWriteTask = new FeedDataWriteTask(feedEntry, context);
+            feedDataWriteTask.execute();
         } else {
-            Log.d("ServerConnectionTask", "Failed to start ScoutDataWriteTask!");
+            Log.d("ServerConnectionTask", "Failed to start FeedDataWriteTask!");
         }
     }
 

@@ -9,8 +9,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
-import com.team980.thunderscout.data.ServerDataDbHelper;
+import com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
+import com.team980.thunderscout.data.ScoutDataDbHelper;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.ScalingStats;
 import com.team980.thunderscout.info.LocalDataAdapter;
@@ -59,7 +59,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
     @Override
     public Void doInBackground(Void... params) {
 
-        SQLiteDatabase db = new ServerDataDbHelper(context).getReadableDatabase();
+        SQLiteDatabase db = new ScoutDataDbHelper(context).getReadableDatabase();
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.

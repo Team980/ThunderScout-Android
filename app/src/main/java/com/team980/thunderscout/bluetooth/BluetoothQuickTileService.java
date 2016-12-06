@@ -37,12 +37,10 @@ public class BluetoothQuickTileService extends TileService {
             //TODO this should reflect error states better...
             tile.setIcon(Icon.createWithResource(this,
                     R.drawable.ic_bluetooth_searching_white_24dp));
-            tile.setLabel("Bluetooth server is enabled"); //TODO be more concise
             tile.setState(Tile.STATE_ACTIVE);
         } else {
             tile.setIcon(Icon.createWithResource(this,
                     R.drawable.ic_bluetooth_disabled_white_24dp));
-            tile.setLabel("Bluetooth server is disabled");
             tile.setState(Tile.STATE_INACTIVE);
         }
 

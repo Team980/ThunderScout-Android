@@ -62,9 +62,21 @@ public class ActivityFeedAdapter extends ExpandableRecyclerAdapter<ActivityFeedA
         feedEntries.add(entryToAdd);
         notifyParentItemInserted(feedEntries.lastIndexOf(entryToAdd)); //This makes sense
 
-        //TODO insert child list items?
-
         Collections.sort(feedEntries); //sort by date
+    }
+
+    /**
+     * Removes all the entries from the list.
+     * Called when we delete things.
+     */
+    public void clearEntries() {
+        if (feedEntries.size() == 0) {
+            //list is empty
+            return;
+        }
+
+        notifyParentItemRangeRemoved(0, feedEntries.size());
+        getParentItemList().removeAll(feedEntries);
     }
 
     public class FeedEntryViewHolder extends ParentViewHolder {
