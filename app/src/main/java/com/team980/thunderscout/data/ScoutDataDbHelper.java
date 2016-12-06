@@ -4,13 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static com.team980.thunderscout.data.ServerDataContract.ScoutDataTable;
+import static com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
 
-public class ServerDataDbHelper extends SQLiteOpenHelper {
+public class ScoutDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2016; //Set this to the year of the game
 
-    public static final String DATABASE_NAME = "ThunderScout.db";
+    public static final String DATABASE_NAME = "ThunderScout_SCOUTDATA.db";
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String FLOAT_TYPE = " REAL";
@@ -42,7 +42,7 @@ public class ServerDataDbHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + ScoutDataTable.TABLE_NAME;
 
-    public ServerDataDbHelper(Context context) {
+    public ScoutDataDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

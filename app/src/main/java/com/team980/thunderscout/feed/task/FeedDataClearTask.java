@@ -1,4 +1,4 @@
-package com.team980.thunderscout.data.task;
+package com.team980.thunderscout.feed.task;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,34 +6,34 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
-import com.team980.thunderscout.data.ScoutDataDbHelper;
-import com.team980.thunderscout.info.LocalDataAdapter;
+import com.team980.thunderscout.feed.ActivityFeedAdapter;
+import com.team980.thunderscout.feed.FeedDataContract.FeedDataTable;
+import com.team980.thunderscout.feed.FeedDataDbHelper;
 
-public class ScoutDataClearTask extends AsyncTask<Void, Integer, Void> {
+public class FeedDataClearTask extends AsyncTask<Void, Integer, Void> {
 
-    private LocalDataAdapter viewAdapter;
+    private ActivityFeedAdapter viewAdapter;
     private Context context;
 
-    public ScoutDataClearTask(LocalDataAdapter adapter, Context context) {
+    public FeedDataClearTask(ActivityFeedAdapter adapter, Context context) {
         viewAdapter = adapter;
         this.context = context;
     }
 
     @Override
     protected void onPreExecute() {
-        viewAdapter.clearData();
+        viewAdapter.clearEntries();
     }
 
     @Override
     public Void doInBackground(Void... params) {
 
-        SQLiteDatabase db = new ScoutDataDbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = new FeedDataDbHelper(context).getWritableDatabase();
 
         int rowsDeleted;
 
         try {
-            rowsDeleted = db.delete(ScoutDataTable.TABLE_NAME, null, null);
+            rowsDeleted = db.delete(FeedDataTable.TABLE_NAME, null, null);
         } catch (SQLiteException e) {
             e.printStackTrace();
             return null;

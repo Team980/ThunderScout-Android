@@ -29,7 +29,6 @@ import android.widget.LinearLayout;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.TeamWrapper;
 import com.team980.thunderscout.data.task.ScoutDataClearTask;
 import com.team980.thunderscout.data.task.ScoutDataDeleteTask;
 import com.team980.thunderscout.data.task.ScoutDataReadTask;
@@ -37,13 +36,13 @@ import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.ArrayList;
 
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_AUTO_TOTAL_GOALS_SCORED;
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_AUTO_UNIQUE_DEFENSE_COUNT;
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_SUMMARY_CHALLENGED_TOWER_PERCENTAGE;
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_SUMMARY_FULL_SCALE_PERCENTAGE;
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TELEOP_TOTAL_GOALS_SCORED;
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TELEOP_UNIQUE_DEFENSE_COUNT;
+import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_AUTO_TOTAL_GOALS_SCORED;
+import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_AUTO_UNIQUE_DEFENSE_COUNT;
+import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_SUMMARY_CHALLENGED_TOWER_PERCENTAGE;
+import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_SUMMARY_FULL_SCALE_PERCENTAGE;
+import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
+import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_TELEOP_TOTAL_GOALS_SCORED;
+import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_TELEOP_UNIQUE_DEFENSE_COUNT;
 
 public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
         PopupMenu.OnMenuItemClickListener, View.OnClickListener {
@@ -60,7 +59,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
     private Toolbar toolbar;
     private boolean selectionMode = false;
 
-    public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.REFRESH_VIEW_PAGER";
+    public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.info.REFRESH_VIEW_PAGER";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

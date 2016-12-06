@@ -14,7 +14,7 @@ public class ScoutData implements Serializable {
     /**
      * ScoutData Version 2
      */
-    private static final long serialVersionUID = 2;
+    private static final long serialVersionUID = 2; //TODO increment in 2017, or when data changes
 
     public static final String SOURCE_LOCAL_DEVICE = "This device";
 

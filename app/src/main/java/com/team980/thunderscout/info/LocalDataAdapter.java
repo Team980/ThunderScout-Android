@@ -18,7 +18,6 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.TeamWrapper;
 import com.team980.thunderscout.info.statistics.MatchInfoActivity;
 import com.team980.thunderscout.info.statistics.TeamInfoActivity;
 
@@ -27,8 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
-import static com.team980.thunderscout.data.TeamWrapper.TeamComparator.getComparator;
+import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
+import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.getComparator;
 
 public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter.TeamViewHolder, LocalDataAdapter.ScoutViewHolder> {
 

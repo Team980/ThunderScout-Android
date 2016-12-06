@@ -27,6 +27,11 @@ import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.task.ScoutDataWriteTask;
+import com.team980.thunderscout.feed.EntryOperationWrapper;
+import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationStatus;
+import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationType;
+import com.team980.thunderscout.feed.FeedEntry;
+import com.team980.thunderscout.feed.task.FeedDataWriteTask;
 import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.ImagePreviewDialog;
 
@@ -38,6 +43,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     private ScoutingFlowViewPagerAdapter viewPagerAdapter;
 
     private ScoutData scoutData;
+    private FeedEntry feedEntry;
 
     private FloatingActionButton fab;
 
@@ -227,6 +233,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             operationStateDialog.setCancelable(false);
             operationStateDialog.setTitle("Storing data...");
 
+            feedEntry = new FeedEntry(FeedEntry.EntryType.MATCH_SCOUTED, System.currentTimeMillis());
+
             dataOutputLoop();
 
             /*if (prefs.getBoolean("ms_send_to_linked_sheet", false)) { //Saving to Sheets
@@ -276,6 +284,9 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             operationStateDialog = null;
 
             finish();
+
+            FeedDataWriteTask feedDataWriteTask = new FeedDataWriteTask(feedEntry, this);
+            feedDataWriteTask.execute();
         }
     }
 
@@ -285,10 +296,14 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         operationStateDialog.setMessage("");
 
+        EntryOperationWrapper operation = new EntryOperationWrapper(EntryOperationType.fromOperationId(operationId),
+                EntryOperationStatus.OPERATION_SUCCESSFUL);
+        feedEntry.addOperation(operation);
+
         dataOutputLoop();
     }
 
-    //TODO broadcast reciever?
+    //TODO broadcast receiver?
     public void dataOutputCallbackFail(final String operationId, Exception ex) {
         Log.d("SCOUTLOOP", "back into the fray");
 
@@ -303,12 +318,20 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     public void onClick(DialogInterface dialog, int id) {
                         operationStates.putBoolean(operationId, true); //retry
 
+                        EntryOperationWrapper operation = new EntryOperationWrapper(EntryOperationType.fromOperationId(operationId),
+                                EntryOperationStatus.OPERATION_FAILED);
+                        feedEntry.addOperation(operation);
+
                         dataOutputLoop();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         operationStates.putBoolean(operationId, false); //do not retry
+
+                        EntryOperationWrapper operation = new EntryOperationWrapper(EntryOperationType.fromOperationId(operationId),
+                                EntryOperationStatus.OPERATION_ABORTED);
+                        feedEntry.addOperation(operation);
 
                         dataOutputLoop();
                     }

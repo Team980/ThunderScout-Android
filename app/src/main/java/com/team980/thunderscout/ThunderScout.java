@@ -85,7 +85,7 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
         super.onCreate();
         Log.d("THUNDERSCOUT", "Application.onCreate");
 
-        Log.d("THUNDERSCOUT", "Fetching shared prefences");
+        Log.d("THUNDERSCOUT", "Fetching shared preferences");
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean runServer = sharedPref.getBoolean("enable_bt_server", false);
 
@@ -112,7 +112,7 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
                 Log.d("PREFLISTEN", "enabling BT server");
                 startService(new Intent(this, BluetoothServerService.class));
             } else {
-                Log.d("PREFLISTEN", "enabling BT server");
+                Log.d("PREFLISTEN", "disabling BT server");
                 stopService(new Intent(this, BluetoothServerService.class));
             }
 
