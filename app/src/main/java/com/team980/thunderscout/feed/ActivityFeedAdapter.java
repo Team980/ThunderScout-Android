@@ -1,5 +1,7 @@
 package com.team980.thunderscout.feed;
 
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -154,7 +156,7 @@ public class ActivityFeedAdapter extends ExpandableRecyclerAdapter<ActivityFeedA
             operationStatus.setText(wrapper.getStatus().toString());
 
             if (wrapper.getStatus() != EntryOperationWrapper.EntryOperationStatus.OPERATION_SUCCESSFUL) {
-                itemView.setBackgroundColor(itemView.getResources().getColor(R.color.error));
+                icon.setColorFilter(new PorterDuffColorFilter(itemView.getResources().getColor(R.color.error), PorterDuff.Mode.MULTIPLY));
             }
         }
     }
