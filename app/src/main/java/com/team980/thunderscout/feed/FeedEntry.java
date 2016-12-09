@@ -62,6 +62,16 @@ public class FeedEntry implements ParentListItem, Comparable<FeedEntry> {
         return false;
     }
 
+    public boolean containsFailure() {
+        for (EntryOperationWrapper operation : operations) {
+            if (operation.getStatus() != EntryOperationWrapper.EntryOperationStatus.OPERATION_SUCCESSFUL) {
+                return true;
+            }
+        }
+
+        return false; //no failures found
+    }
+
     /**
      * Type of entry
      */
