@@ -152,6 +152,10 @@ public class ActivityFeedAdapter extends ExpandableRecyclerAdapter<ActivityFeedA
             icon.setImageResource(wrapper.getType().getIcon());
             operationType.setText(wrapper.getType().toString());
             operationStatus.setText(wrapper.getStatus().toString());
+
+            if (wrapper.getStatus() != EntryOperationWrapper.EntryOperationStatus.OPERATION_SUCCESSFUL) {
+                itemView.setBackgroundColor(itemView.getResources().getColor(R.color.error));
+            }
         }
     }
 }
