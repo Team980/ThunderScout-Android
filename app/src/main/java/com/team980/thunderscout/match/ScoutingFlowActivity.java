@@ -38,7 +38,7 @@ import com.team980.thunderscout.util.ImagePreviewDialog;
 import java.util.EnumMap;
 import java.util.Random;
 
-public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener {
 
     private ScoutingFlowViewPagerAdapter viewPagerAdapter;
 
@@ -64,6 +64,9 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         } else {
             scoutData = new ScoutData(); //TODO cache this if the user wishes to
         }
+
+        ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
 
         setContentView(R.layout.activity_scouting_flow);
 
@@ -246,6 +249,22 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             }*/
         }
 
+    }
+
+    @Override
+    public void onDialogPositiveClick(ScoutingFlowDialogFragment dialog) {
+        if (true) { //TODO verify integrity of dialog fields
+            //Do not dismiss
+            Log.d("Dialog", "Hello!");
+        } else {
+            dialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onDialogNegativeClick(ScoutingFlowDialogFragment dialog) {
+        dialog.dismiss();
+        finish();
     }
 
     public ScoutData getData() {
