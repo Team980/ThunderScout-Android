@@ -127,6 +127,10 @@ public class ActivityFeedAdapter extends ExpandableRecyclerAdapter<ActivityFeedA
                     }
                 }
             });
+
+            if (entry.containsFailure()) {
+                itemView.setBackgroundColor(itemView.getResources().getColor(R.color.error));
+            }
         }
     }
 
