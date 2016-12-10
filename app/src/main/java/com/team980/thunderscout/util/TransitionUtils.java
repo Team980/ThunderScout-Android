@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.match.ScoutingFlowActivity;
@@ -51,8 +52,30 @@ public class TransitionUtils {
         anim.setDuration(350).start();
 
         //if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) { //tint in Overview
-            //ActivityManager.TaskDescription tDesc = new ActivityManager.TaskDescription(null, null, toolbarToColor);
-            //activity.setTaskDescription(tDesc);
+        //ActivityManager.TaskDescription tDesc = new ActivityManager.TaskDescription(null, null, toolbarToColor);
+        //activity.setTaskDescription(tDesc);
+        //}
+    }
+
+    public static void toolbarTransition(final int toolbarColor, final int toolbarToColor, final Toolbar toolbar) {
+        ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                // Use animation position to blend colors.
+                float position = animation.getAnimatedFraction();
+
+                // Apply blended color to the ActionBar.
+                int blended = blendColors(toolbarColor, toolbarToColor, position);
+                ColorDrawable background = new ColorDrawable(blended);
+                toolbar.setBackgroundDrawable(background);
+            }
+        });
+        anim.setDuration(350).start();
+
+        //if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) { //tint in Overview
+        //ActivityManager.TaskDescription tDesc = new ActivityManager.TaskDescription(null, null, toolbarToColor);
+        //activity.setTaskDescription(tDesc);
         //}
     }
 

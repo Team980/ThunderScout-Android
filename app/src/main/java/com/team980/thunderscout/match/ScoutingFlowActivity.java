@@ -244,6 +244,11 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             feedEntry = new FeedEntry(FeedEntry.EntryType.MATCH_SCOUTED, System.currentTimeMillis());
 
+            prefs.edit()
+                    .putInt("last_used_match_number", scoutData.getMatchNumber())
+                    .putString("last_used_alliance_color", scoutData.getAllianceColor().name())
+                    .apply();
+
             dataOutputLoop();
 
             /*if (prefs.getBoolean("ms_send_to_linked_sheet", false)) { //Saving to Sheets
