@@ -37,7 +37,6 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         builder.setCancelable(false);
-
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.dialog_scouting_flow, null))
@@ -55,6 +54,7 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
                 });
 
         final Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setOnShowListener(new DialogInterface.OnShowListener() { //Complex code to override auto dismiss
 
             @Override
