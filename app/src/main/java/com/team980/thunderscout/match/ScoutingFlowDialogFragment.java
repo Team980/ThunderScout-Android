@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -37,6 +38,7 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
 
     private EditText teamNumber;
     private EditText matchNumber;
+    private AppCompatButton allianceToggle;
     private AllianceColor allianceColor;
 
     @NonNull
@@ -53,12 +55,13 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
         toolbar.setTitle("Match Settings");
 
         teamNumber = (EditText) dialogView.findViewById(R.id.dialog_editTextTeamNumber);
+        teamNumber.requestFocus();
 
         matchNumber = (EditText) dialogView.findViewById(R.id.dialog_editTextMatchNumber);
         matchNumber.setText(String.valueOf(prefs.getInt("last_used_match_number", 0) + 1));
 
         allianceColor = AllianceColor.valueOf(prefs.getString("last_used_alliance_color", AllianceColor.ALLIANCE_COLOR_RED.name()));
-        final AppCompatButton allianceToggle = (AppCompatButton) dialogView.findViewById(R.id.dialog_allianceToggleButton);
+        allianceToggle = (AppCompatButton) dialogView.findViewById(R.id.dialog_allianceToggleButton);
 
         if (allianceColor == AllianceColor.ALLIANCE_COLOR_BLUE) { //Red is default
             allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
@@ -111,6 +114,8 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
                 });
             }
         });
+
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return dialog;
     }
 
@@ -126,6 +131,21 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
                     + " must implement ScoutingFlowDialogFragmentListener");
+        }
+    }
+
+    public void autoFill(ScoutData dataToFill) {
+        teamNumber.setText(dataToFill.getTeamNumber());
+        matchNumber.setText(dataToFill.getMatchNumber() + "");
+
+        if (allianceColor == AllianceColor.ALLIANCE_COLOR_RED) { //If red, switch to blue, and vice versa
+            allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
+            allianceToggle.setText("Blue Alliance");
+            allianceColor = AllianceColor.ALLIANCE_COLOR_BLUE;
+        } else {
+            allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
+            allianceToggle.setText("Red Alliance");
+            allianceColor = AllianceColor.ALLIANCE_COLOR_RED;
         }
     }
 
