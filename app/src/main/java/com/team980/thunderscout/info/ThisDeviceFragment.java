@@ -269,7 +269,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
             toolbar.setTitle("1 match selected");
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_data_select);
-            TransitionUtils.toolbarAndStatusBarTransition(R.color.primary, R.color.primary_dark,
+            TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.primary, R.color.primary_dark,
                     R.color.secondary, R.color.secondary_dark, (AppCompatActivity) getActivity());
 
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -286,7 +286,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
             toolbar.setTitle("This device");
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_this_device);
-            TransitionUtils.toolbarAndStatusBarTransition(R.color.secondary, R.color.secondary_dark,
+            TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.secondary, R.color.secondary_dark,
                     R.color.primary, R.color.primary_dark, (AppCompatActivity) getActivity());
 
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);

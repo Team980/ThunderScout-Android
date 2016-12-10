@@ -5,7 +5,9 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -22,7 +24,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
@@ -34,11 +35,11 @@ import com.team980.thunderscout.feed.FeedEntry;
 import com.team980.thunderscout.feed.task.FeedDataWriteTask;
 import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.ImagePreviewDialog;
+import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.EnumMap;
-import java.util.Random;
 
-public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener {
 
     private ScoutingFlowViewPagerAdapter viewPagerAdapter;
 
@@ -62,24 +63,19 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         if (savedInstanceState != null) {
             scoutData = (ScoutData) savedInstanceState.getSerializable("ScoutData");
         } else {
-            scoutData = new ScoutData(); //TODO cache this if the user wishes to
+            scoutData = new ScoutData();
+
+            ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
+            dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
         }
 
         setContentView(R.layout.activity_scouting_flow);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.addView(View.inflate(this, R.layout.team_number, null));
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Scout: Team"); //TODO match number, Qualification
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
-
-        EditText teamNumber = (EditText) findViewById(R.id.scout_teamNumber);
-        if (new Random().nextInt(10) == 0) {
-            Log.d("Gremlin", "Scout Gremlin ACTIVE");
-            teamNumber.setHint("086"); //code gremlin
-        }
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 
@@ -93,18 +89,44 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
+
+        if (scoutData.getTeamNumber() != null) { //Generate header based on presence of team number
+            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeamNumber());
+            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
+
+            toolbar.setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
+            tabLayout.setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
+            findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(scoutData.getAllianceColor().getColorPrimaryDark());
+            }
+
+            Log.d("AllianceColor", scoutData.getAllianceColor().toString());
+        } else {
+            getSupportActionBar().setTitle("Scout a match...");
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_scouting_flow, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
             onBackPressed();
             return true;
+        }
+
+        if (id == R.id.action_edit_details) {
+            ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
+            dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
+            dialogFragment.autoFill(scoutData);
         }
 
         return super.onOptionsItemSelected(item);
@@ -205,18 +227,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         if (v.getId() == R.id.fab) {
             initScoutData();
 
-            EditText teamNumber = (EditText) findViewById(R.id.scout_teamNumber);
-
-            if (teamNumber.getText().toString().isEmpty()) {
-                teamNumber.setError("This field is required"); //Not AppCompat or definitively Material, but still ok
-                return;
-            }
-
-            if (!ThunderScout.isInteger(teamNumber.getText().toString())) {
-                teamNumber.setError("This must be an integer!");
-                return;
-            }
-
             Log.d("SCOUTLOOP", "here we go again");
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -248,6 +258,44 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
     }
 
+    @Override
+    public void onDialogPositiveClick(ScoutingFlowDialogFragment dialog) {
+        if (dialog.allFieldsComplete()) {
+            dialog.initScoutData(scoutData);
+
+            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeamNumber()); //TODO match number, Qualification
+            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
+
+            int toolbarColor = ((ColorDrawable) findViewById(R.id.toolbar).getBackground()).getColor();
+
+            int statusBarColor;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                statusBarColor = getWindow().getStatusBarColor();
+            } else {
+                statusBarColor = getResources().getColor(R.color.primary_dark);
+            }
+
+            TransitionUtils.toolbarAndStatusBarTransition(toolbarColor, statusBarColor,
+                    getResources().getColor(scoutData.getAllianceColor().getColorPrimary()),
+                    getResources().getColor(scoutData.getAllianceColor().getColorPrimaryDark()), this);
+
+            Log.d("AllianceColor", scoutData.getAllianceColor().toString());
+
+            dialog.dismiss();
+        } else {
+            //do not dismiss - TODO show error
+        }
+    }
+
+    @Override
+    public void onDialogNegativeClick(ScoutingFlowDialogFragment dialog) {
+        dialog.dismiss();
+
+        if (scoutData.getTeamNumber() == null) {
+            finish();
+        }
+    }
+
     public ScoutData getData() {
         return scoutData;
     }
@@ -271,10 +319,15 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             String address = prefs.getString("ms_bt_server_device", null);
 
-            BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address); //TODO THIS IS A NEW, BETTER SEND METHOD. NEEDS TESTING ;)
+            BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
             scoutData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
 
             operationStateDialog.setMessage("Sending scout data to " + device.getName());
+
+            if (device.getName() == null) { //This should catch both the no device selected error and the bluetooth off error
+                dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, new NullPointerException("Error initializing Bluetooth!"));
+                return;
+            }
 
             ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, getApplicationContext(), this);
             connectThread.start();
@@ -284,6 +337,11 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             operationStateDialog = null;
 
             finish();
+
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .putInt("last_used_match_number", scoutData.getMatchNumber())
+                    .putString("last_used_alliance_color", scoutData.getAllianceColor().name())
+                    .apply();
 
             FeedDataWriteTask feedDataWriteTask = new FeedDataWriteTask(feedEntry, this);
             feedDataWriteTask.execute();
@@ -342,10 +400,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
     private void initScoutData() {
         // Init
-        EditText teamNumber = (EditText) findViewById(R.id.scout_teamNumber);
-
-        scoutData.setTeamNumber(teamNumber.getText().toString());
-
         scoutData.setDateAdded(System.currentTimeMillis());
 
         // Auto

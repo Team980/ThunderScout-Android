@@ -1,5 +1,6 @@
 package com.team980.thunderscout.data;
 
+import com.team980.thunderscout.data.enumeration.AllianceColor;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.ScalingStats;
 
@@ -12,14 +13,17 @@ import java.util.EnumMap;
 public class ScoutData implements Serializable {
 
     /**
-     * ScoutData Version 2
+     * ScoutData Version 3
      */
-    private static final long serialVersionUID = 2; //TODO increment in 2017, or when data changes
+    private static final long serialVersionUID = 3; //TODO increment in 2017, or when data changes
 
     public static final String SOURCE_LOCAL_DEVICE = "This device";
 
     // INIT
     private String teamNumber;
+    private int matchNumber;
+    private AllianceColor allianceColor;
+
     private long dateAdded;
     private String dataSource;
     //TODO sharing/sync status
@@ -59,6 +63,8 @@ public class ScoutData implements Serializable {
     public ScoutData(ScoutData other) {
         //Init
         setTeamNumber(other.getTeamNumber());
+        setMatchNumber(other.getMatchNumber());
+        setAllianceColor(other.getAllianceColor());
         setDateAdded(other.getDateAdded());
         setDataSource(other.getDataSource());
 
@@ -90,6 +96,22 @@ public class ScoutData implements Serializable {
 
     public void setTeamNumber(String teamNumber) {
         this.teamNumber = teamNumber;
+    }
+
+    public int getMatchNumber() {
+        return matchNumber;
+    }
+
+    public void setMatchNumber(int matchNumber) {
+        this.matchNumber = matchNumber;
+    }
+
+    public AllianceColor getAllianceColor() {
+        return allianceColor;
+    }
+
+    public void setAllianceColor(AllianceColor allianceColor) {
+        this.allianceColor = allianceColor;
     }
 
     public long getDateAdded() {

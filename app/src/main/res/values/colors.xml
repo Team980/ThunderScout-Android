@@ -9,6 +9,11 @@
     <color name="accent">#fbc02d</color>
     <color name="accent_dark">#F57F17</color>
 
+    <color name="alliance_red_primary">#C0161D</color>
+    <color name="alliance_red_primary_dark">#9C1117</color>
+    <color name="alliance_blue_primary">#005291</color>
+    <color name="alliance_blue_primary_dark">#004275</color>
+
     <!--<color name="primary">#fbc02d</color>
     <color name="primary_dark">#F9A825</color>
     <color name="accent">#fdd835</color>-->
@@ -19,4 +24,5 @@
 
     <color name="success">#4CAF50</color>
     <color name="error">#F44336</color>
+    <!-- TODO deprecate these values-->
 </resources>
