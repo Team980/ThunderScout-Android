@@ -96,10 +96,13 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             toolbar.setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
             tabLayout.setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
+            findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setStatusBarColor(scoutData.getAllianceColor().getColorPrimaryDark());
             }
+
+            Log.d("AllianceColor", scoutData.getAllianceColor().toString());
         } else {
             getSupportActionBar().setTitle("Scout a match...");
         }
@@ -262,8 +265,20 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeamNumber()); //TODO match number, Qualification
             getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
 
-            TransitionUtils.toolbarAndStatusBarTransition(R.color.primary, R.color.primary_dark,
-                    scoutData.getAllianceColor().getColorPrimary(), scoutData.getAllianceColor().getColorPrimaryDark(), this);
+            int toolbarColor = ((ColorDrawable) findViewById(R.id.toolbar).getBackground()).getColor();
+
+            int statusBarColor;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                statusBarColor = getWindow().getStatusBarColor();
+            } else {
+                statusBarColor = getResources().getColor(R.color.primary_dark);
+            }
+
+            TransitionUtils.toolbarAndStatusBarTransition(toolbarColor, statusBarColor,
+                    getResources().getColor(scoutData.getAllianceColor().getColorPrimary()),
+                    getResources().getColor(scoutData.getAllianceColor().getColorPrimaryDark()), this);
+
+            Log.d("AllianceColor", scoutData.getAllianceColor().toString());
 
             dialog.dismiss();
         } else {
