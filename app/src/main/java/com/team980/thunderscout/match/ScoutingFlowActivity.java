@@ -126,6 +126,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         if (id == R.id.action_edit_details) {
             ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
             dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
+            dialogFragment.autoFill(scoutData);
         }
 
         return super.onOptionsItemSelected(item);
@@ -244,11 +245,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             feedEntry = new FeedEntry(FeedEntry.EntryType.MATCH_SCOUTED, System.currentTimeMillis());
 
-            prefs.edit()
-                    .putInt("last_used_match_number", scoutData.getMatchNumber())
-                    .putString("last_used_alliance_color", scoutData.getAllianceColor().name())
-                    .apply();
-
             dataOutputLoop();
 
             /*if (prefs.getBoolean("ms_send_to_linked_sheet", false)) { //Saving to Sheets
@@ -323,10 +319,15 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             String address = prefs.getString("ms_bt_server_device", null);
 
-            BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address); //TODO THIS IS A NEW, BETTER SEND METHOD. NEEDS TESTING ;)
+            BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
             scoutData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
 
             operationStateDialog.setMessage("Sending scout data to " + device.getName());
+
+            if (device.getName() == null) { //This should catch both the no device selected error and the bluetooth off error
+                dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, new NullPointerException("Error initializing Bluetooth!"));
+                return;
+            }
 
             ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, getApplicationContext(), this);
             connectThread.start();
@@ -336,6 +337,11 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             operationStateDialog = null;
 
             finish();
+
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .putInt("last_used_match_number", scoutData.getMatchNumber())
+                    .putString("last_used_alliance_color", scoutData.getAllianceColor().name())
+                    .apply();
 
             FeedDataWriteTask feedDataWriteTask = new FeedDataWriteTask(feedEntry, this);
             feedDataWriteTask.execute();
