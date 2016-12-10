@@ -24,15 +24,6 @@ import com.team980.thunderscout.data.enumeration.AllianceColor;
 
 public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
 
-    /* The activity that creates an instance of this dialog fragment must
-     * implement this interface in order to receive event callbacks.
-     * Each method passes the DialogFragment in case the host needs to query it. */
-    public interface ScoutingFlowDialogFragmentListener {
-        void onDialogPositiveClick(ScoutingFlowDialogFragment dialog);
-
-        void onDialogNegativeClick(ScoutingFlowDialogFragment dialog);
-    }
-
     // Use this instance of the interface to deliver action events
     private ScoutingFlowDialogFragmentListener mListener;
 
@@ -40,6 +31,8 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
     private EditText matchNumber;
     private AppCompatButton allianceToggle;
     private AllianceColor allianceColor;
+
+    public static final String EXTRA_DEFAULT_DATA = "com.team980.thunderscout.EXTRA_DEFAULT_DATA";
 
     @NonNull
     @Override
@@ -58,10 +51,27 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
         teamNumber.requestFocus();
 
         matchNumber = (EditText) dialogView.findViewById(R.id.dialog_editTextMatchNumber);
-        matchNumber.setText(String.valueOf(prefs.getInt("last_used_match_number", 0) + 1));
+        matchNumber.setText(String.valueOf(prefs.getInt("last_used_match_number", 0) + 1)); //increment the last match number
 
         allianceColor = AllianceColor.valueOf(prefs.getString("last_used_alliance_color", AllianceColor.ALLIANCE_COLOR_RED.name()));
         allianceToggle = (AppCompatButton) dialogView.findViewById(R.id.dialog_allianceToggleButton);
+
+        if (getArguments() != null && getArguments().containsKey(EXTRA_DEFAULT_DATA)) { //Fill the data with previously set values
+            ScoutData fillData = (ScoutData) getArguments().getSerializable(EXTRA_DEFAULT_DATA);
+
+            teamNumber.setText(fillData.getTeamNumber());
+            matchNumber.setText(fillData.getMatchNumber() + "");
+
+            if (fillData.getAllianceColor() == AllianceColor.ALLIANCE_COLOR_RED) {
+                allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
+                allianceToggle.setText("Red Alliance");
+                allianceColor = AllianceColor.ALLIANCE_COLOR_RED;
+            } else { //If red, switch to blue, and vice versa
+                allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
+                allianceToggle.setText("Blue Alliance");
+                allianceColor = AllianceColor.ALLIANCE_COLOR_BLUE;
+            }
+        }
 
         if (allianceColor == AllianceColor.ALLIANCE_COLOR_BLUE) { //Red is default
             allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
@@ -134,21 +144,6 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
         }
     }
 
-    public void autoFill(ScoutData dataToFill) {
-        teamNumber.setText(dataToFill.getTeamNumber());
-        matchNumber.setText(dataToFill.getMatchNumber() + "");
-
-        if (allianceColor == AllianceColor.ALLIANCE_COLOR_RED) { //If red, switch to blue, and vice versa
-            allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
-            allianceToggle.setText("Blue Alliance");
-            allianceColor = AllianceColor.ALLIANCE_COLOR_BLUE;
-        } else {
-            allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
-            allianceToggle.setText("Red Alliance");
-            allianceColor = AllianceColor.ALLIANCE_COLOR_RED;
-        }
-    }
-
     public boolean allFieldsComplete() {
         if (teamNumber.getText().toString().isEmpty()) {
             return false;
@@ -167,6 +162,15 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
         data.setMatchNumber(Integer.valueOf(matchNumber.getText().toString()));
 
         data.setAllianceColor(allianceColor);
+    }
+
+    /* The activity that creates an instance of this dialog fragment must
+     * implement this interface in order to receive event callbacks.
+     * Each method passes the DialogFragment in case the host needs to query it. */
+    public interface ScoutingFlowDialogFragmentListener {
+        void onDialogPositiveClick(ScoutingFlowDialogFragment dialog);
+
+        void onDialogNegativeClick(ScoutingFlowDialogFragment dialog);
     }
 
 }
