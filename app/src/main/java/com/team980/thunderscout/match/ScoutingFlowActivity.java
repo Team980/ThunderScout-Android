@@ -125,8 +125,12 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         if (id == R.id.action_edit_details) {
             ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
+
+            Bundle args = new Bundle();
+            args.putSerializable(ScoutingFlowDialogFragment.EXTRA_DEFAULT_DATA, scoutData);
+            dialogFragment.setArguments(args);
+
             dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
-            dialogFragment.autoFill(scoutData);
         }
 
         return super.onOptionsItemSelected(item);
