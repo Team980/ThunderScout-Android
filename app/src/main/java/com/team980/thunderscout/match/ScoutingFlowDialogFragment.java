@@ -3,15 +3,21 @@ package com.team980.thunderscout.match;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.view.LayoutInflater;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.AllianceColor;
 
@@ -29,17 +35,52 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
     // Use this instance of the interface to deliver action events
     private ScoutingFlowDialogFragmentListener mListener;
 
+    private EditText teamNumber;
+    private EditText matchNumber;
+    private AllianceColor allianceColor;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
         builder.setCancelable(false);
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.dialog_scouting_flow, null))
+
+        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_scouting_flow, null);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        final Toolbar toolbar = (Toolbar) dialogView.findViewById(R.id.toolbar);
+        toolbar.setTitle("Match Settings");
+
+        teamNumber = (EditText) dialogView.findViewById(R.id.dialog_editTextTeamNumber);
+
+        matchNumber = (EditText) dialogView.findViewById(R.id.dialog_editTextMatchNumber);
+        matchNumber.setText(String.valueOf(prefs.getInt("last_used_match_number", 0) + 1));
+
+        allianceColor = AllianceColor.valueOf(prefs.getString("last_used_alliance_color", AllianceColor.ALLIANCE_COLOR_RED.name()));
+        final AppCompatButton allianceToggle = (AppCompatButton) dialogView.findViewById(R.id.dialog_allianceToggleButton);
+
+        if (allianceColor == AllianceColor.ALLIANCE_COLOR_BLUE) { //Red is default
+            allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
+            allianceToggle.setText("Blue Alliance");
+        }
+
+        allianceToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (allianceColor == AllianceColor.ALLIANCE_COLOR_RED) { //If red, switch to blue, and vice versa
+                    allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
+                    allianceToggle.setText("Blue Alliance");
+                    allianceColor = AllianceColor.ALLIANCE_COLOR_BLUE;
+                } else {
+                    allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
+                    allianceToggle.setText("Red Alliance");
+                    allianceColor = AllianceColor.ALLIANCE_COLOR_RED;
+                }
+            }
+        });
+
+        builder.setView(dialogView)
                 // Add action buttons
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
@@ -89,16 +130,23 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
     }
 
     public boolean allFieldsComplete() {
+        if (teamNumber.getText().toString().isEmpty()) {
+            return false;
+        }
+
+        if (matchNumber.getText().toString().isEmpty() || !ThunderScout.isInteger(matchNumber.getText().toString())) {
+            return false;
+        }
 
         return true;
     }
 
     public void initScoutData(ScoutData data) {
-        data.setTeamNumber("980");
+        data.setTeamNumber(teamNumber.getText().toString());
 
-        data.setMatchNumber(1);
+        data.setMatchNumber(Integer.valueOf(matchNumber.getText().toString()));
 
-        data.setAllianceColor(AllianceColor.ALLIANCE_COLOR_RED);
+        data.setAllianceColor(allianceColor);
     }
 
 }
