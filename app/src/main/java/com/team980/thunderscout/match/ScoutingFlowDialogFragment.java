@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.data.enumeration.AllianceColor;
 
 public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
 
@@ -18,19 +21,22 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
      * implement this interface in order to receive event callbacks.
      * Each method passes the DialogFragment in case the host needs to query it. */
     public interface ScoutingFlowDialogFragmentListener {
-        public void onDialogPositiveClick(ScoutingFlowDialogFragment dialog);
+        void onDialogPositiveClick(ScoutingFlowDialogFragment dialog);
 
-        public void onDialogNegativeClick(ScoutingFlowDialogFragment dialog);
+        void onDialogNegativeClick(ScoutingFlowDialogFragment dialog);
     }
 
     // Use this instance of the interface to deliver action events
-    ScoutingFlowDialogFragmentListener mListener;
+    private ScoutingFlowDialogFragmentListener mListener;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        builder.setCancelable(false);
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -80,6 +86,19 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement ScoutingFlowDialogFragmentListener");
         }
+    }
+
+    public boolean allFieldsComplete() {
+
+        return true;
+    }
+
+    public void initScoutData(ScoutData data) {
+        data.setTeamNumber("980");
+
+        data.setMatchNumber(1);
+
+        data.setAllianceColor(AllianceColor.ALLIANCE_COLOR_RED);
     }
 
 }

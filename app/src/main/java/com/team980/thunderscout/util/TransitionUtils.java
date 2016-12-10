@@ -6,6 +6,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 
+import com.team980.thunderscout.R;
+import com.team980.thunderscout.match.ScoutingFlowActivity;
+
 public class TransitionUtils {
 
     public static void toolbarAndStatusBarTransition(int colorFrom, int colorFromDark, int colorTo, int colorToDark, final AppCompatActivity activity) {
@@ -34,10 +37,14 @@ public class TransitionUtils {
                 blended = blendColors(toolbarColor, toolbarToColor, position);
                 ColorDrawable background = new ColorDrawable(blended);
                 activity.getSupportActionBar().setBackgroundDrawable(background);
+
+                if (activity instanceof ScoutingFlowActivity) { //we don't want a random null
+                    activity.findViewById(R.id.tab_layout).setBackground(background);
+                }
             }
         });
 
-        anim.setDuration(500).start();
+        anim.setDuration(350).start();
     }
 
     private static int blendColors(int from, int to, float ratio) {
