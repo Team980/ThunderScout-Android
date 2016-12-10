@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.AppCompatEditText xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/scout_teamNumber"
-    android:hint="980"
-    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-    android:inputType="number"
-    android:ems="5"/>

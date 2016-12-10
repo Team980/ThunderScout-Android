@@ -22,7 +22,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
@@ -34,9 +33,9 @@ import com.team980.thunderscout.feed.FeedEntry;
 import com.team980.thunderscout.feed.task.FeedDataWriteTask;
 import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.ImagePreviewDialog;
+import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.EnumMap;
-import java.util.Random;
 
 public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener {
 
@@ -59,30 +58,26 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            scoutData = (ScoutData) savedInstanceState.getSerializable("ScoutData");
-        } else {
-            scoutData = new ScoutData(); //TODO cache this if the user wishes to
-        }
-
-        ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
-        dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
-
         setContentView(R.layout.activity_scouting_flow);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.addView(View.inflate(this, R.layout.team_number, null));
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Scout: Team"); //TODO match number, Qualification
+        if (savedInstanceState != null) {
+            scoutData = (ScoutData) savedInstanceState.getSerializable("ScoutData");
+
+            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeamNumber());
+            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
+        } else {
+            scoutData = new ScoutData();
+            getSupportActionBar().setTitle("Scout a match");
+
+            ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
+            dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
+        }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
-
-        EditText teamNumber = (EditText) findViewById(R.id.scout_teamNumber);
-        if (new Random().nextInt(10) == 0) {
-            Log.d("Gremlin", "Scout Gremlin ACTIVE");
-            teamNumber.setHint("086"); //code gremlin
-        }
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 
@@ -208,18 +203,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         if (v.getId() == R.id.fab) {
             initScoutData();
 
-            EditText teamNumber = (EditText) findViewById(R.id.scout_teamNumber);
-
-            if (teamNumber.getText().toString().isEmpty()) {
-                teamNumber.setError("This field is required"); //Not AppCompat or definitively Material, but still ok
-                return;
-            }
-
-            if (!ThunderScout.isInteger(teamNumber.getText().toString())) {
-                teamNumber.setError("This must be an integer!");
-                return;
-            }
-
             Log.d("SCOUTLOOP", "here we go again");
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -253,11 +236,18 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
     @Override
     public void onDialogPositiveClick(ScoutingFlowDialogFragment dialog) {
-        if (true) { //TODO verify integrity of dialog fields
-            //Do not dismiss
-            Log.d("Dialog", "Hello!");
-        } else {
+        if (dialog.allFieldsComplete()) {
+            dialog.initScoutData(scoutData);
+
+            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeamNumber()); //TODO match number, Qualification
+            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
+
+            TransitionUtils.toolbarAndStatusBarTransition(R.color.primary, R.color.primary_dark,
+                    scoutData.getAllianceColor().getColorPrimary(), scoutData.getAllianceColor().getColorPrimaryDark(), this);
+
             dialog.dismiss();
+        } else {
+            //do not dismiss - TODO show error
         }
     }
 
@@ -361,10 +351,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
     private void initScoutData() {
         // Init
-        EditText teamNumber = (EditText) findViewById(R.id.scout_teamNumber);
-
-        scoutData.setTeamNumber(teamNumber.getText().toString());
-
         scoutData.setDateAdded(System.currentTimeMillis());
 
         // Auto
