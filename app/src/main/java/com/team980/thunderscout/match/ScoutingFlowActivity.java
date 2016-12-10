@@ -5,7 +5,9 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -58,23 +60,19 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_scouting_flow);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         if (savedInstanceState != null) {
             scoutData = (ScoutData) savedInstanceState.getSerializable("ScoutData");
-
-            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeamNumber());
-            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
         } else {
             scoutData = new ScoutData();
-            getSupportActionBar().setTitle("Scout a match");
 
             ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
             dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
         }
+
+        setContentView(R.layout.activity_scouting_flow);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
@@ -91,18 +89,40 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
+
+        if (scoutData.getTeamNumber() != null) { //Generate header based on presence of team number
+            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeamNumber());
+            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
+
+            toolbar.setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
+            tabLayout.setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(scoutData.getAllianceColor().getColorPrimaryDark());
+            }
+        } else {
+            getSupportActionBar().setTitle("Scout a match...");
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_scouting_flow, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
             onBackPressed();
             return true;
+        }
+
+        if (id == R.id.action_edit_details) {
+            ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
+            dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
         }
 
         return super.onOptionsItemSelected(item);
@@ -254,7 +274,10 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     @Override
     public void onDialogNegativeClick(ScoutingFlowDialogFragment dialog) {
         dialog.dismiss();
-        finish();
+
+        if (scoutData.getTeamNumber() == null) {
+            finish();
+        }
     }
 
     public ScoutData getData() {
