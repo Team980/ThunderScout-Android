@@ -10,6 +10,9 @@ public class FeedDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1; //Increment this whenever the feed database schema changes
 
+    /**
+     * Never, ever change this!
+     */
     public static final String DATABASE_NAME = "ThunderScout_FEED.db";
 
     private static final String TEXT_TYPE = " TEXT";

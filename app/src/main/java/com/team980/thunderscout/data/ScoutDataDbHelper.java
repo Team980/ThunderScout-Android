@@ -8,8 +8,11 @@ import static com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
 
 public class ScoutDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 2016; //Set this to the year of the game
+    public static final int DATABASE_VERSION = 2016; //TODO new versioning system in 2017
 
+    /**
+     * Never, ever change this!
+     */
     public static final String DATABASE_NAME = "ThunderScout_SCOUTDATA.db";
 
     private static final String TEXT_TYPE = " TEXT";
@@ -21,6 +24,9 @@ public class ScoutDataDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + ScoutDataTable.TABLE_NAME + " (" +
                     ScoutDataTable._ID + " INTEGER PRIMARY KEY," +
                     ScoutDataTable.COLUMN_NAME_TEAM_NUMBER + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_MATCH_NUMBER + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR + TEXT_TYPE + COMMA_SEP +
+
                     ScoutDataTable.COLUMN_NAME_DATE_ADDED + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_DATA_SOURCE + TEXT_TYPE + COMMA_SEP +
 
