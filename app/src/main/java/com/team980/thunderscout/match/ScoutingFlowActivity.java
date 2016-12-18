@@ -94,15 +94,13 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeamNumber());
             getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
 
-            toolbar.setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
-            tabLayout.setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
-            findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary()));
+            toolbar.setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary())); //TODO This sets it to BLACK, NOT the wanted color
+            tabLayout.setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary())); //TODO This sets it to BLACK, NOT the wanted color
+            findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(scoutData.getAllianceColor().getColorPrimary())); //TODO This sets it to BLACK, NOT the wanted color
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getWindow().setStatusBarColor(scoutData.getAllianceColor().getColorPrimaryDark());
+                getWindow().setStatusBarColor(scoutData.getAllianceColor().getColorPrimaryDark()); //TODO This sets it to BLACK, NOT the wanted color
             }
-
-            Log.d("AllianceColor", scoutData.getAllianceColor().toString());
         } else {
             getSupportActionBar().setTitle("Scout a match...");
         }
