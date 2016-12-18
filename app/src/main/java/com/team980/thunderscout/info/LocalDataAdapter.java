@@ -2,6 +2,8 @@ package com.team980.thunderscout.info;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
@@ -21,7 +24,6 @@ import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.info.statistics.MatchInfoActivity;
 import com.team980.thunderscout.info.statistics.TeamInfoActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +31,7 @@ import java.util.List;
 import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
 import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.getComparator;
 
-public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter.TeamViewHolder, LocalDataAdapter.ScoutViewHolder> {
+public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter.TeamViewHolder, LocalDataAdapter.MatchViewHolder> {
 
     private LayoutInflater mInflator;
 
@@ -65,9 +67,9 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
     }
 
     @Override
-    public ScoutViewHolder onCreateChildViewHolder(ViewGroup childViewGroup) {
-        View scoutView = mInflator.inflate(R.layout.scout_view, childViewGroup, false);
-        return new ScoutViewHolder(scoutView);
+    public MatchViewHolder onCreateChildViewHolder(ViewGroup childViewGroup) {
+        View scoutView = mInflator.inflate(R.layout.match_view, childViewGroup, false);
+        return new MatchViewHolder(scoutView);
     }
 
     // onBind ...
@@ -78,9 +80,9 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
     }
 
     @Override
-    public void onBindChildViewHolder(ScoutViewHolder scoutViewHolder, int position, Object childListItem) {
+    public void onBindChildViewHolder(MatchViewHolder matchViewHolder, int position, Object childListItem) {
         ScoutData scoutData = (ScoutData) childListItem;
-        scoutViewHolder.bind(scoutData);
+        matchViewHolder.bind(scoutData);
     }
 
     @Override
@@ -269,52 +271,57 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
         }
     }
 
-    public class ScoutViewHolder extends ChildViewHolder {
+    public class MatchViewHolder extends ChildViewHolder {
 
-        private TextView dateAdded;
+        private TextView matchNumber;
+        private TextView allianceColor;
 
-        private ImageButton infoButton;
+        private ImageView matchIcon;
 
         private CheckBox checkBox;
 
-        public ScoutViewHolder(View itemView) {
+        public MatchViewHolder(View itemView) {
             super(itemView);
 
-            dateAdded = (TextView) itemView.findViewById(R.id.scout_dateAdded);
+            matchNumber = (TextView) itemView.findViewById(R.id.match_matchNumber);
+            allianceColor = (TextView) itemView.findViewById(R.id.match_allianceColor);
 
-            infoButton = (ImageButton) itemView.findViewById(R.id.scout_infoButton);
+            matchIcon = (ImageView) itemView.findViewById(R.id.match_icon);
 
-            checkBox = (CheckBox) itemView.findViewById(R.id.scout_checkBox);
+            checkBox = (CheckBox) itemView.findViewById(R.id.match_checkBox);
         }
 
         public void bind(final ScoutData scoutData) {
-            dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(scoutData.getDateAdded()));
+            matchNumber.setText("Match " + scoutData.getMatchNumber());
+            allianceColor.setText(scoutData.getAllianceColor().toString());
+
+            matchIcon.setColorFilter(new PorterDuffColorFilter(itemView.getResources().getColor(scoutData.getAllianceColor().getColorPrimary()), PorterDuff.Mode.MULTIPLY));
 
             if (fragment.isInSelectionMode()) {
-                infoButton.setVisibility(View.GONE);
+                matchIcon.setVisibility(View.GONE);
                 checkBox.setVisibility(View.VISIBLE);
 
-                if (selectedItems.get(ScoutViewHolder.super.getAdapterPosition())) {
+                if (selectedItems.get(MatchViewHolder.super.getAdapterPosition())) {
                     checkBox.setChecked(true);
                 } else {
                     checkBox.setChecked(false);
                 }
             } else {
-                infoButton.setVisibility(View.VISIBLE);
+                matchIcon.setVisibility(View.VISIBLE);
                 checkBox.setVisibility(View.GONE);
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (fragment.isInSelectionMode()) {
-                        Log.d("ADAPT", ScoutViewHolder.super.getAdapterPosition() + "");
+                        Log.d("ADAPT", MatchViewHolder.super.getAdapterPosition() + "");
                         Log.d("ADAPT2", checkBox.isChecked() + "");
-                        Log.d("ADAPT3", selectedItems.get(ScoutViewHolder.super.getAdapterPosition()) + "");
-                        if (selectedItems.get(ScoutViewHolder.super.getAdapterPosition())) {
-                            deselect(ScoutViewHolder.super.getAdapterPosition());
+                        Log.d("ADAPT3", selectedItems.get(MatchViewHolder.super.getAdapterPosition()) + "");
+                        if (selectedItems.get(MatchViewHolder.super.getAdapterPosition())) {
+                            deselect(MatchViewHolder.super.getAdapterPosition());
                             checkBox.setChecked(false);
                         } else {
-                            select(ScoutViewHolder.super.getAdapterPosition());
+                            select(MatchViewHolder.super.getAdapterPosition());
                             checkBox.setChecked(true);
                         }
                         Log.d("ADAPT4", selectedItems.toString());
@@ -326,25 +333,17 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
                 }
             });
 
-            infoButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
-                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
-                    context.startActivity(launchInfoActivity);
-                }
-            });
-
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    Log.d("ADAPT", ScoutViewHolder.super.getAdapterPosition() + "");
+                    Log.d("ADAPT", MatchViewHolder.super.getAdapterPosition() + "");
                     Log.d("ADAPT2", checkBox.isChecked() + "");
-                    Log.d("ADAPT3", selectedItems.get(ScoutViewHolder.super.getAdapterPosition()) + "");
-                    if (selectedItems.get(ScoutViewHolder.super.getAdapterPosition())) {
-                        deselect(ScoutViewHolder.super.getAdapterPosition());
+                    Log.d("ADAPT3", selectedItems.get(MatchViewHolder.super.getAdapterPosition()) + "");
+                    if (selectedItems.get(MatchViewHolder.super.getAdapterPosition())) {
+                        deselect(MatchViewHolder.super.getAdapterPosition());
                         checkBox.setChecked(false);
                     } else {
-                        select(ScoutViewHolder.super.getAdapterPosition());
+                        select(MatchViewHolder.super.getAdapterPosition());
                         checkBox.setChecked(true);
                     }
                     Log.d("ADAPT4", selectedItems.toString());
@@ -355,14 +354,14 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("ADAPT", ScoutViewHolder.super.getAdapterPosition() + "");
+                    Log.d("ADAPT", MatchViewHolder.super.getAdapterPosition() + "");
                     Log.d("ADAPT2", checkBox.isChecked() + "");
-                    Log.d("ADAPT3", selectedItems.get(ScoutViewHolder.super.getAdapterPosition()) + "");
-                    if (selectedItems.get(ScoutViewHolder.super.getAdapterPosition())) {
-                        deselect(ScoutViewHolder.super.getAdapterPosition());
+                    Log.d("ADAPT3", selectedItems.get(MatchViewHolder.super.getAdapterPosition()) + "");
+                    if (selectedItems.get(MatchViewHolder.super.getAdapterPosition())) {
+                        deselect(MatchViewHolder.super.getAdapterPosition());
                         checkBox.setChecked(false);
                     } else {
-                        select(ScoutViewHolder.super.getAdapterPosition());
+                        select(MatchViewHolder.super.getAdapterPosition());
                         checkBox.setChecked(true);
                     }
                     Log.d("ADAPT4", selectedItems.toString());

@@ -1,6 +1,8 @@
 package com.team980.thunderscout.info.statistics;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,11 +31,18 @@ public class MatchInfoActivity extends AppCompatActivity {
         ScoutData data = (ScoutData) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_SCOUT");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Match Info: Team " + data.getTeamNumber());
-
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Match Info: Team " + data.getTeamNumber());
+        getSupportActionBar().setSubtitle("Qualification Match " + data.getMatchNumber());
+
+        toolbar.setBackground(new ColorDrawable(getResources().getColor(data.getAllianceColor().getColorPrimary())));
+        findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(data.getAllianceColor().getColorPrimary())));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(data.getAllianceColor().getColorPrimaryDark()));
+        }
 
         // --- Init ---
         TextView dateAdded = (TextView) findViewById(R.id.info_match_dateAdded);
