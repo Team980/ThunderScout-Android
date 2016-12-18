@@ -11,6 +11,7 @@ import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ScoutDataDbHelper;
+import com.team980.thunderscout.data.enumeration.AllianceColor;
 import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.ScalingStats;
 import com.team980.thunderscout.info.LocalDataAdapter;
@@ -66,6 +67,9 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
         String[] projection = {
                 ScoutDataTable._ID,
                 ScoutDataTable.COLUMN_NAME_TEAM_NUMBER,
+                ScoutDataTable.COLUMN_NAME_MATCH_NUMBER,
+                ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR,
+
                 ScoutDataTable.COLUMN_NAME_DATE_ADDED,
                 ScoutDataTable.COLUMN_NAME_DATA_SOURCE,
 
@@ -127,6 +131,16 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TEAM_NUMBER));
 
         data.setTeamNumber(teamNumber);
+
+        int matchNumber = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_MATCH_NUMBER));
+
+        data.setMatchNumber(matchNumber);
+
+        String allianceColor = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR));
+
+        data.setAllianceColor(AllianceColor.valueOf(allianceColor));
 
         String dateAdded = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_DATE_ADDED));

@@ -57,11 +57,14 @@ public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
 
         // Init
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER, data.getTeamNumber());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER, data.getMatchNumber());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR, data.getAllianceColor().name());
+
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, data.getDateAdded());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getDataSource());
 
         // Auto
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED, data.getAutoDefenseCrossed().toString());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED, data.getAutoDefenseCrossed().name());
 
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOALS, data.getAutoLowGoals());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS, data.getAutoHighGoals());
@@ -77,7 +80,7 @@ public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
 
         // Summary
         ScalingStats scalingStats = data.getScalingStats();
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_SCALING_STATS, scalingStats.toString());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_SCALING_STATS, scalingStats.name());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CHALLENGED_TOWER, data.hasChallengedTower());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
