@@ -15,6 +15,14 @@
         android:icon="@drawable/ic_settings_bluetooth_white_24dp"
         android:title="Bluetooth server" />
 
+    <header
+        android:icon="@drawable/ic_link_white_24dp"
+        android:title="Integrations">
+        <intent
+            android:targetClass="com.team980.thunderscout.integrations.IntegrationsActivity"
+            android:targetPackage="com.team980.thunderscout" />
+    </header>
+
     <!--<header
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$LinkedSheetsPreferenceFragment"
         android:icon="@drawable/ic_cloud_white_24dp"
