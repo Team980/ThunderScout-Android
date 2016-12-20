@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".match.ScoutingFlowActivity"
-            android:label="Scout"
+            android:label="Scout a match..."
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
@@ -56,11 +56,16 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".integrations.IntegrationsActivity"
+            android:label="Integrations"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
+        <!--<activity android:name=".sheets.GoogleAuthActivity"></activity>-->
         <activity
             android:name=".AboutActivity"
             android:label="About"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".preferences.SettingsActivity"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
 
         <service android:name=".bluetooth.BluetoothServerService" />
@@ -75,8 +80,6 @@
             <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
         </service>
-
-        <!--<activity android:name=".sheets.GoogleAuthActivity"></activity>-->
     </application>
 
 </manifest>
