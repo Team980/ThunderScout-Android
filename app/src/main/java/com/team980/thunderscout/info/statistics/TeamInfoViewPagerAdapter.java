@@ -7,13 +7,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class TeamInfoViewPagerAdapter extends FragmentPagerAdapter {
 
 
-    private String tabTitles[] = new String[]{"Average", "Trend"};
+    private String tabTitles[] = new String[]{"Average", "Variability", "Trend"};
     private Fragment tabs[];
 
     public TeamInfoViewPagerAdapter(final FragmentManager fm) {
         super(fm);
 
-        tabs = new Fragment[]{new AverageTeamInfoFragment(), new TrendTeamInfoFragment()};
+        tabs = new Fragment[]{new AverageTeamInfoFragment(), new VariabilityTeamInfoFragment(), new TrendTeamInfoFragment()};
     }
 
     @Override
@@ -24,7 +24,7 @@ public class TeamInfoViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
