@@ -64,24 +64,21 @@ public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getDataSource());
 
         // Auto
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_DEFENSE_CROSSED, data.getAutoDefenseCrossed().name());
-
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOALS, data.getAutoLowGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED, data.getAutoGearsDelivered());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT, data.getAutoLowGoalDumpAmount().name());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS, data.getAutoHighGoals());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_GOALS, data.getAutoMissedGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS, data.getAutoMissedHighGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE, data.hasCrossedBaseline());
 
         // Teleop
-        byte[] listDefenseCrossings = ThunderScout.serializeObject(data.getTeleopDefenseCrossings());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_DEFENSE_CROSSINGS, listDefenseCrossings);
-
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOALS, data.getTeleopLowGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED, data.getTeleopGearsDelivered());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_AVERAGE_LOW_GOAL_DUMP_AMOUNT, data.getAverageTeleopLowGoalDumpAmount().name());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMP_FREQUENCY, data.getTeleopDumpFrequency());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleopHighGoals());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_GOALS, data.getTeleopMissedGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS, data.getTeleopMissedHighGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS, data.getClimbingStats().name());
 
         // Summary
-        ClimbingStats climbingStats = data.getScalingStats();
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_SCALING_STATS, climbingStats.name());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CHALLENGED_TOWER, data.hasChallengedTower());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
 
