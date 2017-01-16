@@ -382,9 +382,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         scoutData.setTeleopGearsDelivered((int) teleopGearsDelivered.getValue());
 
-        CounterCompoundView teleopDumpFrequency = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterDumpFrequency);
-
-        scoutData.setTeleopDumpFrequency((int) teleopDumpFrequency.getValue());
+        //TODO teleopDumpFrequency
 
         CounterCompoundView teleopHighGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterHighGoals);
 

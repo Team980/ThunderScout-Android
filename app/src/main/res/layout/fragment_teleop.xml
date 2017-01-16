@@ -83,12 +83,14 @@
                 android:text="Number of Fuel Dumps"
                 android:textSize="18sp" />
 
-            <com.team980.thunderscout.util.CounterCompoundView
-                android:id="@+id/teleop_counterDumpFrequency"
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="18sp" />
+                android:text="+"/>
 
 
         </LinearLayout>
