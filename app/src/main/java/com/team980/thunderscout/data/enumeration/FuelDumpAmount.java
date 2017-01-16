@@ -21,4 +21,6 @@ public enum FuelDumpAmount {
     public FuelDumpAmount getByAverageAmount() {
         throw new UnsupportedOperationException("NYI"); //TODO
     }
+
+    //TODO override toString()
 }
