@@ -45,7 +45,6 @@ public class ScoutData implements Serializable {
     private String troubleWith;
     private String comments;
 
-
     public ScoutData() {
         //default values
         autoLowGoalDumpAmount = FuelDumpAmount.NONE;
