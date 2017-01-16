@@ -5,6 +5,7 @@ import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Implements data for one team from one match.
@@ -35,8 +36,7 @@ public class ScoutData implements Serializable {
 
     // TELEOP
     private int teleopGearsDelivered;
-    private FuelDumpAmount averageTeleopLowGoalDumpAmount; //average # of fuel
-    private int teleopDumpFrequency; //number of dumps made
+    private ArrayList<FuelDumpAmount> teleopLowGoalDumps; //average # of fuel
     private int teleopHighGoals;
     private int teleopMissedHighGoals;
     private ClimbingStats climbingStats;
@@ -48,7 +48,7 @@ public class ScoutData implements Serializable {
     public ScoutData() {
         //default values
         autoLowGoalDumpAmount = FuelDumpAmount.NONE;
-        averageTeleopLowGoalDumpAmount = FuelDumpAmount.NONE;
+        teleopLowGoalDumps = new ArrayList<>();
         climbingStats = ClimbingStats.DID_NOT_CLIMB;
     }
 
@@ -72,8 +72,7 @@ public class ScoutData implements Serializable {
 
         //Teleop
         setTeleopGearsDelivered(other.getTeleopGearsDelivered());
-        setAverageTeleopLowGoalDumpAmount(other.getAverageTeleopLowGoalDumpAmount());
-        setTeleopDumpFrequency(other.getTeleopDumpFrequency());
+        teleopLowGoalDumps = other.getTeleopLowGoalDumps();
         setTeleopHighGoals(other.getTeleopHighGoals());
         setTeleopMissedHighGoals(other.getTeleopMissedHighGoals());
         setClimbingStats(other.getClimbingStats());
@@ -177,20 +176,8 @@ public class ScoutData implements Serializable {
         this.teleopGearsDelivered = teleopGearsDelivered;
     }
 
-    public FuelDumpAmount getAverageTeleopLowGoalDumpAmount() {
-        return averageTeleopLowGoalDumpAmount;
-    }
-
-    public void setAverageTeleopLowGoalDumpAmount(FuelDumpAmount averageTeleopLowGoalDumpAmount) {
-        this.averageTeleopLowGoalDumpAmount = averageTeleopLowGoalDumpAmount;
-    }
-
-    public int getTeleopDumpFrequency() {
-        return teleopDumpFrequency;
-    }
-
-    public void setTeleopDumpFrequency(int teleopDumpFrequency) {
-        this.teleopDumpFrequency = teleopDumpFrequency;
+    public ArrayList<FuelDumpAmount> getTeleopLowGoalDumps() {
+        return teleopLowGoalDumps;
     }
 
     public int getTeleopHighGoals() {
