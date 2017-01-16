@@ -36,43 +36,16 @@ public class AverageScoutData implements Serializable {
 
     //AUTO
 
-    public EnumMap<Defense, Integer> getAutoDefenseCrossings() {
-        EnumMap<Defense, Integer> map = new EnumMap<>(Defense.class);
-
-        for (ScoutData data : dataList) {
-            Defense defense = data.getAutoDefenseCrossed();
-            if (defense == Defense.NONE) {
-                continue; //We don't want NONE in our map
-            }
-
-            if (map.containsKey(defense)) {
-                map.put(defense, map.get(defense) + 1);
-            } else {
-                map.put(defense, 1);
-            }
-        }
-
-        return map;
-    }
-
-    public float getAverageAutoTotalGoals() {
+    public float getAverageAutoGearsDelivered() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getAutoLowGoals();
-            i += data.getAutoHighGoals();
+            i += data.getAutoGearsDelivered();
         }
 
         return i / dataList.size();
     }
 
-    public float getAverageAutoLowGoals() {
-        float i = 0;
-        for (ScoutData data : dataList) {
-            i += data.getAutoLowGoals();
-        }
-
-        return i / dataList.size();
-    }
+    //TODO use unimplemented method to average FuelDumpAmount
 
     public float getAverageAutoHighGoals() {
         float i = 0;
@@ -83,55 +56,43 @@ public class AverageScoutData implements Serializable {
         return i / dataList.size();
     }
 
-    public float getAverageAutoMissedGoals() {
+    public float getAverageAutoMissedHighGoals() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getAutoMissedGoals();
+            i += data.getAutoMissedHighGoals();
         }
 
         return i / dataList.size();
+    }
+
+    public double getCrossedBaselinePercentage() {
+        double i = 0;
+        for (ScoutData data : dataList) {
+            if (data.hasCrossedBaseline()) {
+                i++;
+            }
+        }
+
+        return (i / dataList.size()) * 100;
     }
 
     //TELEOP
 
-    public EnumMap<Defense, Integer> getTeleopDefenseCrossings() {
-        EnumMap<Defense, Integer> map = new EnumMap<>(Defense.class);
-
-        for (ScoutData data : dataList) {
-            for (Defense defense : Defense.values()) {
-                if (defense == Defense.NONE) {
-                    continue; //We don't want NONE in our map
-                }
-
-                if (data.getTeleopDefenseCrossings().get(defense) == null) {
-                    continue; //We don't want NULLs in our map
-                }
-
-                if (map.containsKey(defense)) {
-                    map.put(defense, map.get(defense) + data.getTeleopDefenseCrossings().get(defense));
-                } else {
-                    map.put(defense, data.getTeleopDefenseCrossings().get(defense));
-                }
-            }
-        }
-
-        return map;
-    }
-
-    public float getAverageTeleopTotalGoals() {
+    public float getAverageTeleopGearsDelivered() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getTeleopLowGoals();
-            i += data.getTeleopLowGoals();
+            i += data.getTeleopGearsDelivered();
         }
 
         return i / dataList.size();
     }
 
-    public float getAverageTeleopLowGoals() {
+    //TODO get average of FuelDumpAmount
+
+    public float getAverageTeleopDumpFrequency() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getTeleopLowGoals();
+            i += data.getTeleopDumpFrequency();
         }
 
         return i / dataList.size();
@@ -146,38 +107,27 @@ public class AverageScoutData implements Serializable {
         return i / dataList.size();
     }
 
-    public float getAverageTeleopMissedGoals() {
+    public float getAverageTeleopMissedHighGoals() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getTeleopMissedGoals();
+            i += data.getTeleopMissedHighGoals();
         }
 
         return i / dataList.size();
     }
 
+    public double getClimbingStatsPercentage(ClimbingStats stat) {
+        double i = 0;
+        for (ScoutData data : dataList) {
+            if (data.getClimbingStats() == stat) {
+                i++;
+            }
+        }
+
+        return (i / dataList.size()) * 100;
+    }
+
     //SUMMARY
-
-    public double getScalingStatsPercentage(ClimbingStats stat) {
-        double i = 0;
-        for (ScoutData data : dataList) {
-            if (data.getScalingStats() == stat) {
-                i++;
-            }
-        }
-
-        return (i / getNumberOfMatches()) * 100;
-    }
-
-    public double getChallengedTowerPercentage() {
-        double i = 0;
-        for (ScoutData data : dataList) {
-            if (data.hasChallengedTower()) {
-                i++;
-            }
-        }
-
-        return (i / getNumberOfMatches()) * 100;
-    }
 
     public List<String> getTroublesList() {
         List<String> troublesList = new ArrayList<>();
