@@ -1,11 +1,10 @@
 package com.team980.thunderscout.data;
 
 import com.team980.thunderscout.data.enumeration.AllianceColor;
-import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.ScalingStats;
+import com.team980.thunderscout.data.enumeration.ClimbingStats;
+import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
 import java.io.Serializable;
-import java.util.EnumMap;
 
 /**
  * Implements data for one team from one match.
@@ -13,9 +12,9 @@ import java.util.EnumMap;
 public class ScoutData implements Serializable {
 
     /**
-     * ScoutData Version 3
+     * ScoutData Version 4 - 2017
      */
-    private static final long serialVersionUID = 3; //TODO increment in 2017, or when data changes
+    private static final long serialVersionUID = 4;
 
     public static final String SOURCE_LOCAL_DEVICE = "This device";
 
@@ -29,32 +28,28 @@ public class ScoutData implements Serializable {
     //TODO sharing/sync status
 
     // AUTO
-    private Defense autoDefenseCrossed;
-
+    private int autoGearsDelivered;
+    private FuelDumpAmount autoLowGoalDumpAmount;
     private int autoHighGoals;
-    private int autoLowGoals;
-    private int autoMissedGoals;
+    private boolean crossedBaseline;
 
     // TELEOP
-    private EnumMap<Defense, Integer> teleopDefenseCrossings;
-
+    private int teleopGearsDelivered;
+    private FuelDumpAmount averageTeleopLowGoalDumpAmount; //average # of fuel
+    private int teleopDumpFrequency; //number of dumps made
     private int teleopHighGoals;
-    private int teleopLowGoals;
-    private int teleopMissedGoals;
+    private ClimbingStats climbingStats;
 
     // SUMMARY
-    private ScalingStats scalingStats;
-    private boolean challengedTower;
-
     private String troubleWith;
     private String comments;
 
-    public ScoutData() {
-        teleopDefenseCrossings = new EnumMap<>(Defense.class);
 
+    public ScoutData() {
         //default values
-        autoDefenseCrossed = Defense.NONE;
-        scalingStats = ScalingStats.NONE;
+        autoLowGoalDumpAmount = FuelDumpAmount.NONE;
+        averageTeleopLowGoalDumpAmount = FuelDumpAmount.NONE;
+        climbingStats = ClimbingStats.DID_NOT_CLIMB;
     }
 
     /**
@@ -69,21 +64,19 @@ public class ScoutData implements Serializable {
         setDataSource(other.getDataSource());
 
         //Auto
-        setAutoDefenseCrossed(other.getAutoDefenseCrossed());
-        setAutoLowGoals(other.getAutoLowGoals());
+        setAutoGearsDelivered(other.getAutoGearsDelivered());
+        setAutoLowGoalDumpAmount(other.getAutoLowGoalDumpAmount());
         setAutoHighGoals(other.getAutoHighGoals());
-        setAutoMissedGoals(other.getAutoMissedGoals());
+        setCrossedBaseline(other.hasCrossedBaseline());
 
         //Teleop
-        teleopDefenseCrossings = new EnumMap<>(Defense.class);
-        getTeleopDefenseCrossings().putAll(other.getTeleopDefenseCrossings());
-        setTeleopLowGoals(other.getTeleopLowGoals());
+        setTeleopGearsDelivered(other.getTeleopGearsDelivered());
+        setAverageTeleopLowGoalDumpAmount(other.getAverageTeleopLowGoalDumpAmount());
+        setTeleopDumpFrequency(other.getTeleopDumpFrequency());
         setTeleopHighGoals(other.getTeleopHighGoals());
-        setTeleopMissedGoals(other.getTeleopMissedGoals());
+        setClimbingStats(other.getClimbingStats());
 
         //Summary
-        setScalingStats(other.getScalingStats());
-        setChallengedTower(other.hasChallengedTower());
         setTroubleWith(other.getTroubleWith());
         setComments(other.getComments());
     }
@@ -132,20 +125,20 @@ public class ScoutData implements Serializable {
 
     // --- AUTO ---
 
-    public Defense getAutoDefenseCrossed() {
-        return autoDefenseCrossed;
+    public int getAutoGearsDelivered() {
+        return autoGearsDelivered;
     }
 
-    public void setAutoDefenseCrossed(Defense autoDefenseCrossed) {
-        this.autoDefenseCrossed = autoDefenseCrossed;
+    public void setAutoGearsDelivered(int autoGearsDelivered) {
+        this.autoGearsDelivered = autoGearsDelivered;
     }
 
-    public int getAutoLowGoals() {
-        return autoLowGoals;
+    public FuelDumpAmount getAutoLowGoalDumpAmount() {
+        return autoLowGoalDumpAmount;
     }
 
-    public void setAutoLowGoals(int autoLowGoals) {
-        this.autoLowGoals = autoLowGoals;
+    public void setAutoLowGoalDumpAmount(FuelDumpAmount autoLowGoalDumpAmount) {
+        this.autoLowGoalDumpAmount = autoLowGoalDumpAmount;
     }
 
     public int getAutoHighGoals() {
@@ -156,26 +149,38 @@ public class ScoutData implements Serializable {
         this.autoHighGoals = autoHighGoals;
     }
 
-    public int getAutoMissedGoals() {
-        return autoMissedGoals;
+    public boolean hasCrossedBaseline() {
+        return crossedBaseline;
     }
 
-    public void setAutoMissedGoals(int autoMissedGoals) {
-        this.autoMissedGoals = autoMissedGoals;
+    public void setCrossedBaseline(boolean crossedBaseline) {
+        this.crossedBaseline = crossedBaseline;
     }
 
     // --- TELEOP ---
 
-    public EnumMap<Defense, Integer> getTeleopDefenseCrossings() {
-        return teleopDefenseCrossings;
+    public int getTeleopGearsDelivered() {
+        return teleopGearsDelivered;
     }
 
-    public int getTeleopLowGoals() {
-        return teleopLowGoals;
+    public void setTeleopGearsDelivered(int teleopGearsDelivered) {
+        this.teleopGearsDelivered = teleopGearsDelivered;
     }
 
-    public void setTeleopLowGoals(int teleopLowGoals) {
-        this.teleopLowGoals = teleopLowGoals;
+    public FuelDumpAmount getAverageTeleopLowGoalDumpAmount() {
+        return averageTeleopLowGoalDumpAmount;
+    }
+
+    public void setAverageTeleopLowGoalDumpAmount(FuelDumpAmount averageTeleopLowGoalDumpAmount) {
+        this.averageTeleopLowGoalDumpAmount = averageTeleopLowGoalDumpAmount;
+    }
+
+    public int getTeleopDumpFrequency() {
+        return teleopDumpFrequency;
+    }
+
+    public void setTeleopDumpFrequency(int teleopDumpFrequency) {
+        this.teleopDumpFrequency = teleopDumpFrequency;
     }
 
     public int getTeleopHighGoals() {
@@ -186,31 +191,15 @@ public class ScoutData implements Serializable {
         this.teleopHighGoals = teleopHighGoals;
     }
 
-    public int getTeleopMissedGoals() {
-        return teleopMissedGoals;
+    public ClimbingStats getClimbingStats() {
+        return climbingStats;
     }
 
-    public void setTeleopMissedGoals(int teleopMissedGoals) {
-        this.teleopMissedGoals = teleopMissedGoals;
+    public void setClimbingStats(ClimbingStats climbingStats) {
+        this.climbingStats = climbingStats;
     }
 
     // --- SUMMARY ---
-
-    public ScalingStats getScalingStats() {
-        return scalingStats;
-    }
-
-    public void setScalingStats(ScalingStats scalingStats) {
-        this.scalingStats = scalingStats;
-    }
-
-    public boolean hasChallengedTower() {
-        return challengedTower;
-    }
-
-    public void setChallengedTower(boolean challengedTower) {
-        this.challengedTower = challengedTower;
-    }
 
     public String getTroubleWith() {
         return troubleWith;

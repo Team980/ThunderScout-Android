@@ -1,7 +1,7 @@
 package com.team980.thunderscout.data;
 
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.ScalingStats;
+import com.team980.thunderscout.data.enumeration.ClimbingStats;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -158,7 +158,7 @@ public class AverageScoutData implements Serializable {
 
     //SUMMARY
 
-    public double getScalingStatsPercentage(ScalingStats stat) {
+    public double getScalingStatsPercentage(ClimbingStats stat) {
         double i = 0;
         for (ScoutData data : dataList) {
             if (data.getScalingStats() == stat) {

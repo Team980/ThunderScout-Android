@@ -4,7 +4,7 @@ package com.team980.thunderscout.info;
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 import com.team980.thunderscout.data.AverageScoutData;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.ScalingStats;
+import com.team980.thunderscout.data.enumeration.ClimbingStats;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class TeamWrapper implements ParentListItem, Serializable {
             case SORT_TELEOP_TOTAL_GOALS_SCORED:
                 return getAverageScoutData().getAverageTeleopTotalGoals() + " goals scored";
             case SORT_SUMMARY_FULL_SCALE_PERCENTAGE:
-                return "Scaled the tower in " + getAverageScoutData().getScalingStatsPercentage(ScalingStats.FULL) + "% of matches";
+                return "Scaled the tower in " + getAverageScoutData().getScalingStatsPercentage(ClimbingStats.FULL) + "% of matches";
             case SORT_SUMMARY_CHALLENGED_TOWER_PERCENTAGE:
                 return "Challenged the tower in " + getAverageScoutData().getChallengedTowerPercentage() + "% of matches";
             default:
@@ -122,8 +122,8 @@ public class TeamWrapper implements ParentListItem, Serializable {
 
         SORT_SUMMARY_FULL_SCALE_PERCENTAGE {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Double.valueOf(o1.getAverageScoutData().getScalingStatsPercentage(ScalingStats.FULL))
-                        .compareTo(o2.getAverageScoutData().getScalingStatsPercentage(ScalingStats.FULL));
+                return -Double.valueOf(o1.getAverageScoutData().getScalingStatsPercentage(ClimbingStats.FULL))
+                        .compareTo(o2.getAverageScoutData().getScalingStatsPercentage(ClimbingStats.FULL));
             }
         },
 

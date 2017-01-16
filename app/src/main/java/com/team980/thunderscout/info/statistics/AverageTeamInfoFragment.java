@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.AverageScoutData;
-import com.team980.thunderscout.data.enumeration.ScalingStats;
+import com.team980.thunderscout.data.enumeration.ClimbingStats;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -85,16 +85,16 @@ public class AverageTeamInfoFragment extends Fragment {
 
         // --- Summary ---
         TextView partialScalePercentage = (TextView) view.findViewById(R.id.info_average_summaryPartialScalePercentage);
-        partialScalePercentage.setText(formatter.format(data.getScalingStatsPercentage(ScalingStats.PARTIAL)) + "%");
+        partialScalePercentage.setText(formatter.format(data.getScalingStatsPercentage(ClimbingStats.PARTIAL)) + "%");
 
         ProgressBar partialScaleProgressBar = (ProgressBar) view.findViewById(R.id.info_average_summaryPartialScaleProgressBar);
-        partialScaleProgressBar.setProgress((int) data.getScalingStatsPercentage(ScalingStats.PARTIAL));
+        partialScaleProgressBar.setProgress((int) data.getScalingStatsPercentage(ClimbingStats.PARTIAL));
 
         TextView fullScalePercentage = (TextView) view.findViewById(R.id.info_average_summaryFullScalePercentage);
-        fullScalePercentage.setText(formatter.format(data.getScalingStatsPercentage(ScalingStats.FULL)) + "%");
+        fullScalePercentage.setText(formatter.format(data.getScalingStatsPercentage(ClimbingStats.FULL)) + "%");
 
         ProgressBar fullScaleProgressBar = (ProgressBar) view.findViewById(R.id.info_average_summaryFullScaleProgressBar);
-        fullScaleProgressBar.setProgress((int) data.getScalingStatsPercentage(ScalingStats.FULL));
+        fullScaleProgressBar.setProgress((int) data.getScalingStatsPercentage(ClimbingStats.FULL));
 
         TextView challengedTowerPercentage = (TextView) view.findViewById(R.id.info_average_summaryChallengedTowerPercentage);
         challengedTowerPercentage.setText(formatter.format(data.getChallengedTowerPercentage()) + "%");

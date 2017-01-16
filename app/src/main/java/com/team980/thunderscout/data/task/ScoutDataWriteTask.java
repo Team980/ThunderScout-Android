@@ -13,7 +13,7 @@ import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ScoutDataContract;
 import com.team980.thunderscout.data.ScoutDataDbHelper;
-import com.team980.thunderscout.data.enumeration.ScalingStats;
+import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.info.ThisDeviceFragment;
 import com.team980.thunderscout.match.ScoutingFlowActivity;
 
@@ -79,8 +79,8 @@ public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_GOALS, data.getTeleopMissedGoals());
 
         // Summary
-        ScalingStats scalingStats = data.getScalingStats();
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_SCALING_STATS, scalingStats.name());
+        ClimbingStats climbingStats = data.getScalingStats();
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_SCALING_STATS, climbingStats.name());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CHALLENGED_TOWER, data.hasChallengedTower());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());

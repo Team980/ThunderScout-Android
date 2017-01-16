@@ -12,7 +12,7 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.enumeration.ScalingStats;
+import com.team980.thunderscout.data.enumeration.ClimbingStats;
 
 public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedListener, CheckBox.OnClickListener {
 
@@ -55,8 +55,8 @@ public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedL
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String itemSelected = (String) parent.getItemAtPosition(position);
-        ScalingStats scalingStats = ScalingStats.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
-        scoutingFlowActivity.getData().setScalingStats(scalingStats);
+        ClimbingStats climbingStats = ClimbingStats.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
+        scoutingFlowActivity.getData().setScalingStats(climbingStats);
     }
 
     @Override

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.ScalingStats;
+import com.team980.thunderscout.data.enumeration.ClimbingStats;
 
 import java.text.SimpleDateFormat;
 
@@ -112,12 +112,12 @@ public class MatchInfoActivity extends AppCompatActivity {
         TextView scalingStats = (TextView) findViewById(R.id.info_match_summaryScalingStats);
         TextView scalingStatsAction = (TextView) findViewById(R.id.info_match_summaryScalingAction);
 
-        if (data.getScalingStats() == ScalingStats.NONE) {
+        if (data.getScalingStats() == ClimbingStats.NONE) {
             scalingStats.setVisibility(View.GONE);
             scalingStatsAction.setText("Did not scale the tower");
-        } else if (data.getScalingStats() == ScalingStats.PARTIAL) {
+        } else if (data.getScalingStats() == ClimbingStats.PARTIAL) {
             scalingStats.setText("PARTIALLY SCALED");
-        } else if (data.getScalingStats() == ScalingStats.FULL) {
+        } else if (data.getScalingStats() == ClimbingStats.FULL) {
             scalingStats.setText("FULLY SCALED");
         }
 
