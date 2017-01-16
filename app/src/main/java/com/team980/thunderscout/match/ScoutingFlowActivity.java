@@ -359,55 +359,40 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     private void initScoutData() {
         // Init
         scoutData.setDateAdded(System.currentTimeMillis());
-        /*
+
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();
 
-        CounterCompoundView autoLowGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterLowGoals); //TODO sometimes this fails... is it another activity state bug?
+        CounterCompoundView autoGearsDelivered = (CounterCompoundView) autoView.findViewById(R.id.auto_counterGearsDelivered); //TODO sometimes this fails... is it another activity state bug?
 
-        scoutData.setAutoLowGoals((int) autoLowGoals.getValue());
+        scoutData.setAutoGearsDelivered((int) autoGearsDelivered.getValue());
 
         CounterCompoundView autoHighGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterHighGoals);
 
         scoutData.setAutoHighGoals((int) autoHighGoals.getValue());
 
-        CounterCompoundView autoMissedGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterMissedGoals);
+        CounterCompoundView autoMissedHighGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterMissedHighGoals);
 
-        scoutData.setAutoMissedGoals((int) autoMissedGoals.getValue());
+        scoutData.setAutoMissedHighGoals((int) autoMissedHighGoals.getValue());
 
         // Teleop
         View teleopView = viewPagerAdapter.getItem(1).getView();
 
-        EnumMap<Defense, Integer> mapDefenseCrossings = new EnumMap<>(Defense.class);
+        CounterCompoundView teleopGearsDelivered = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterGearsDelivered);
 
-        for (Defense defense : Defense.values()) {
-            if (defense == Defense.NONE) {
-                continue;
-            }
+        scoutData.setTeleopGearsDelivered((int) teleopGearsDelivered.getValue());
 
-            CounterCompoundView defenseCounter = (CounterCompoundView) teleopView.findViewById(defense.getCounterId());
+        CounterCompoundView teleopDumpFrequency = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterDumpFrequency);
 
-            int count = (int) defenseCounter.getValue();
-            if (count == 0) {
-                continue;
-            }
-
-            mapDefenseCrossings.put(defense, count);
-        }
-
-        scoutData.getTeleopDefenseCrossings().putAll(mapDefenseCrossings);
-
-        CounterCompoundView teleopLowGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterLowGoals);
-
-        scoutData.setTeleopLowGoals((int) teleopLowGoals.getValue());
+        scoutData.setTeleopDumpFrequency((int) teleopDumpFrequency.getValue());
 
         CounterCompoundView teleopHighGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterHighGoals);
 
         scoutData.setTeleopHighGoals((int) teleopHighGoals.getValue());
 
-        CounterCompoundView teleopMissedGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterMissedGoals);
+        CounterCompoundView teleopMissedHighGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterMissedHighGoals);
 
-        scoutData.setTeleopMissedGoals((int) teleopMissedGoals.getValue());*/
+        scoutData.setTeleopMissedHighGoals((int) teleopMissedHighGoals.getValue());
 
         // Summary
         View summaryView = viewPagerAdapter.getItem(2).getView();
