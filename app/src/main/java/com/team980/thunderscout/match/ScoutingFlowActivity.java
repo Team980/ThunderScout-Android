@@ -180,48 +180,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 }).create().show();
     }
 
-    public void showImagePreview(View button) {
-
-        Drawable image;
-
-        switch (button.getId()) {
-            case R.id.teleop_previewLowBar:
-                image = getResources().getDrawable(R.drawable.low_bar);
-                break;
-            case R.id.teleop_previewPortcullis:
-                image = getResources().getDrawable(R.drawable.portcullis);
-                break;
-            case R.id.teleop_previewChivalDeFrise:
-                image = getResources().getDrawable(R.drawable.chival_de_frise);
-                break;
-            case R.id.teleop_previewMoat:
-                image = getResources().getDrawable(R.drawable.moat);
-                break;
-            case R.id.teleop_previewRamparts:
-                image = getResources().getDrawable(R.drawable.ramparts);
-                break;
-            case R.id.teleop_previewDrawbridge:
-                image = getResources().getDrawable(R.drawable.drawbridge);
-                break;
-            case R.id.teleop_previewSallyport:
-                image = getResources().getDrawable(R.drawable.sallyport);
-                break;
-            case R.id.teleop_previewRockWall:
-                image = getResources().getDrawable(R.drawable.rock_wall);
-                break;
-            case R.id.teleop_previewRoughTerrain:
-                image = getResources().getDrawable(R.drawable.rough_terrain);
-                break;
-            default:
-                image = getResources().getDrawable(R.mipmap.ic_launcher);
-                break;
-        }
-
-        ImagePreviewDialog dialog = new ImagePreviewDialog();
-        dialog.setImagePreview(image);
-        dialog.show(getSupportFragmentManager(), "ImagePreview");
-    }
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fab) {
@@ -401,7 +359,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     private void initScoutData() {
         // Init
         scoutData.setDateAdded(System.currentTimeMillis());
-
+        /*
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();
 
@@ -449,14 +407,10 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         CounterCompoundView teleopMissedGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterMissedGoals);
 
-        scoutData.setTeleopMissedGoals((int) teleopMissedGoals.getValue());
+        scoutData.setTeleopMissedGoals((int) teleopMissedGoals.getValue());*/
 
         // Summary
         View summaryView = viewPagerAdapter.getItem(2).getView();
-
-        CheckBox challengedTower = (CheckBox) summaryView.findViewById(R.id.summary_checkboxHasChallenged);
-
-        scoutData.setChallengedTower(challengedTower.isChecked());
 
         EditText troubleWith = (EditText) summaryView.findViewById(R.id.summary_edittextTroubleWith);
 

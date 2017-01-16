@@ -49,7 +49,7 @@ public class MatchInfoActivity extends AppCompatActivity {
 
         TextView dataSource = (TextView) findViewById(R.id.info_match_dataSource);
         dataSource.setText("Source: " + data.getDataSource());
-
+        /*
         // --- Auto ---
         TextView autoDefenseCrossingAction = (TextView) findViewById(R.id.info_match_autoDefenseCrossingAction);
         TextView autoDefenseCrossed = (TextView) findViewById(R.id.info_match_autoDefenseCrossed);
@@ -128,7 +128,7 @@ public class MatchInfoActivity extends AppCompatActivity {
         } else {
             challengedTower.setVisibility(View.GONE);
             challengeAction.setText("Did not challenge the tower");
-        }
+        }*/
 
         TextView troubleWith = (TextView) findViewById(R.id.info_match_summaryTroubleWith);
         if (data.getTroubleWith() != null) {

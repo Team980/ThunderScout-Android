@@ -1,4 +1,4 @@
-package com.team980.thunderscout.integrations.sheets.task;
+/*package com.team980.thunderscout.integrations.sheets.task;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -220,4 +220,4 @@ public class SheetsUpdateTask extends AsyncTask<ScoutData, Void, AppendValuesRes
         rowDataList.add(data.getComments());
 
     }
-}
+}*/
