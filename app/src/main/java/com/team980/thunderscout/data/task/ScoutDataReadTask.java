@@ -13,7 +13,7 @@ import com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ScoutDataDbHelper;
 import com.team980.thunderscout.data.enumeration.AllianceColor;
 import com.team980.thunderscout.data.enumeration.Defense;
-import com.team980.thunderscout.data.enumeration.ScalingStats;
+import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.info.LocalDataAdapter;
 
 import java.util.EnumMap;
@@ -205,7 +205,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
         String scalingStats = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_SCALING_STATS));
 
-        data.setScalingStats(ScalingStats.valueOf(scalingStats));
+        data.setScalingStats(ClimbingStats.valueOf(scalingStats));
 
         int challengedTower = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_CHALLENGED_TOWER));
