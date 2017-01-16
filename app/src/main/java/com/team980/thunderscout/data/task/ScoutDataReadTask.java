@@ -12,7 +12,6 @@ import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ScoutDataDbHelper;
 import com.team980.thunderscout.data.enumeration.AllianceColor;
-import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.info.LocalDataAdapter;
 

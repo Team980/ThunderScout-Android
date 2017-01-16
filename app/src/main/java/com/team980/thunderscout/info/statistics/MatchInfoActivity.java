@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.Defense;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 
 import java.text.SimpleDateFormat;

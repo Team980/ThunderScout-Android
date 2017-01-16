@@ -23,7 +23,6 @@ import com.google.api.services.sheets.v4.model.SheetProperties;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.Defense;
 
 import java.io.IOException;
 import java.util.ArrayList;

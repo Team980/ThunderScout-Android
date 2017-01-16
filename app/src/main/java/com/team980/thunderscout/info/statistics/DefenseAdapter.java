@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.enumeration.Defense;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;

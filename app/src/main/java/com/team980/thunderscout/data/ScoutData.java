@@ -25,12 +25,12 @@ public class ScoutData implements Serializable {
 
     private long dateAdded;
     private String dataSource;
-    //TODO sharing/sync status
 
     // AUTO
     private int autoGearsDelivered;
     private FuelDumpAmount autoLowGoalDumpAmount;
     private int autoHighGoals;
+    private int autoMissedHighGoals;
     private boolean crossedBaseline;
 
     // TELEOP
@@ -38,6 +38,7 @@ public class ScoutData implements Serializable {
     private FuelDumpAmount averageTeleopLowGoalDumpAmount; //average # of fuel
     private int teleopDumpFrequency; //number of dumps made
     private int teleopHighGoals;
+    private int teleopMissedHighGoals;
     private ClimbingStats climbingStats;
 
     // SUMMARY
@@ -67,6 +68,7 @@ public class ScoutData implements Serializable {
         setAutoGearsDelivered(other.getAutoGearsDelivered());
         setAutoLowGoalDumpAmount(other.getAutoLowGoalDumpAmount());
         setAutoHighGoals(other.getAutoHighGoals());
+        setAutoMissedHighGoals(other.getAutoMissedHighGoals());
         setCrossedBaseline(other.hasCrossedBaseline());
 
         //Teleop
@@ -74,6 +76,7 @@ public class ScoutData implements Serializable {
         setAverageTeleopLowGoalDumpAmount(other.getAverageTeleopLowGoalDumpAmount());
         setTeleopDumpFrequency(other.getTeleopDumpFrequency());
         setTeleopHighGoals(other.getTeleopHighGoals());
+        setTeleopMissedHighGoals(other.getTeleopMissedHighGoals());
         setClimbingStats(other.getClimbingStats());
 
         //Summary
@@ -149,6 +152,14 @@ public class ScoutData implements Serializable {
         this.autoHighGoals = autoHighGoals;
     }
 
+    public int getAutoMissedHighGoals() {
+        return autoMissedHighGoals;
+    }
+
+    public void setAutoMissedHighGoals(int autoMissedHighGoals) {
+        this.autoMissedHighGoals = autoMissedHighGoals;
+    }
+
     public boolean hasCrossedBaseline() {
         return crossedBaseline;
     }
@@ -189,6 +200,14 @@ public class ScoutData implements Serializable {
 
     public void setTeleopHighGoals(int teleopHighGoals) {
         this.teleopHighGoals = teleopHighGoals;
+    }
+
+    public int getTeleopMissedHighGoals() {
+        return teleopMissedHighGoals;
+    }
+
+    public void setTeleopMissedHighGoals(int teleopMissedHighGoals) {
+        this.teleopMissedHighGoals = teleopMissedHighGoals;
     }
 
     public ClimbingStats getClimbingStats() {
