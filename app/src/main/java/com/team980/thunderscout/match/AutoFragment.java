@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.enumeration.Defense;
 
 public class AutoFragment extends Fragment implements Spinner.OnItemSelectedListener {
 
