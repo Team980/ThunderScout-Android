@@ -10,6 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|left"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:text="Defense Crossed"
+        android:text="Comment"
         android:textSize="15sp" />
 </LinearLayout>
