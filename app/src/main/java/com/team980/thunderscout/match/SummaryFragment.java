@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 
-public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedListener, CheckBox.OnClickListener {
+public class SummaryFragment extends Fragment {
 
     private ScoutingFlowActivity scoutingFlowActivity;
 
@@ -26,9 +26,6 @@ public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedL
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Spinner scalingStats = (Spinner) view.findViewById(R.id.summary_spinnerScalingStats);
-        scalingStats.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -41,26 +38,5 @@ public class SummaryFragment extends Fragment implements Spinner.OnItemSelectedL
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.summary_checkboxHasChallenged) {
-            CheckBox checkBox = (CheckBox) view;
-
-            scoutingFlowActivity.getData().setChallengedTower(checkBox.isChecked());
-        }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String itemSelected = (String) parent.getItemAtPosition(position);
-        ClimbingStats climbingStats = ClimbingStats.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
-        scoutingFlowActivity.getData().setScalingStats(climbingStats);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-        //do nothing
     }
 }

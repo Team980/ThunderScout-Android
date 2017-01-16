@@ -36,13 +36,7 @@ import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.ArrayList;
 
-import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_AUTO_TOTAL_GOALS_SCORED;
-import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_AUTO_UNIQUE_DEFENSE_COUNT;
-import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_SUMMARY_CHALLENGED_TOWER_PERCENTAGE;
-import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_SUMMARY_FULL_SCALE_PERCENTAGE;
 import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
-import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_TELEOP_TOTAL_GOALS_SCORED;
-import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_TELEOP_UNIQUE_DEFENSE_COUNT;
 
 public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
         PopupMenu.OnMenuItemClickListener, View.OnClickListener {
@@ -223,24 +217,6 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         switch (item.getItemId()) {
             case R.id.sort_team_number:
                 adapter.sort(SORT_TEAM_NUMBER);
-                return true;
-            case R.id.sort_auto_unique_defense_count:
-                adapter.sort(SORT_AUTO_UNIQUE_DEFENSE_COUNT);
-                return true;
-            case R.id.sort_auto_total_goals_scored:
-                adapter.sort(SORT_AUTO_TOTAL_GOALS_SCORED);
-                return true;
-            case R.id.sort_teleop_unique_defense_count:
-                adapter.sort(SORT_TELEOP_UNIQUE_DEFENSE_COUNT);
-                return true;
-            case R.id.sort_teleop_total_goals_scored:
-                adapter.sort(SORT_TELEOP_TOTAL_GOALS_SCORED);
-                return true;
-            case R.id.sort_summary_full_scale_percentage:
-                adapter.sort(SORT_SUMMARY_FULL_SCALE_PERCENTAGE);
-                return true;
-            case R.id.sort_summary_challenged_tower_percentage:
-                adapter.sort(SORT_SUMMARY_CHALLENGED_TOWER_PERCENTAGE);
                 return true;
             default:
                 return false;

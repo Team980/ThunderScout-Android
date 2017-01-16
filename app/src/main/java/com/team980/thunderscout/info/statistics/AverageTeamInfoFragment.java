@@ -42,7 +42,7 @@ public class AverageTeamInfoFragment extends Fragment {
         lastUpdated.setText("Last updated: " + SimpleDateFormat.getDateTimeInstance().format(data.getLastUpdated()));
 
         // --- Auto ---
-        TextView autoTotalDefenses = (TextView) view.findViewById(R.id.info_average_autoTotalDefenses);
+        /*TextView autoTotalDefenses = (TextView) view.findViewById(R.id.info_average_autoTotalDefenses);
         autoTotalDefenses.setText(data.getAutoDefenseCrossings().size() + "");
 
         RecyclerView listAutoDefensesCrossed = (RecyclerView) view.findViewById(R.id.info_average_autoListDefenseCrossings);
@@ -101,7 +101,7 @@ public class AverageTeamInfoFragment extends Fragment {
 
         ProgressBar challengedTowerProgressBar = (ProgressBar) view.findViewById(R.id.info_average_summaryChallengedTowerProgressBar);
         challengedTowerProgressBar.setProgress((int) data.getChallengedTowerPercentage());
-
+*/
         RecyclerView troubleWith = (RecyclerView) view.findViewById(R.id.info_average_summaryTroubleWith);
 
         troubleWith.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -50,18 +50,6 @@ public class TeamWrapper implements ParentListItem, Serializable {
 
     public String getDescriptor(TeamComparator sortMode) {
         switch (sortMode) {
-            case SORT_AUTO_UNIQUE_DEFENSE_COUNT:
-                return getAverageScoutData().getAutoDefenseCrossings().size() + " defenses crossed";
-            case SORT_AUTO_TOTAL_GOALS_SCORED:
-                return getAverageScoutData().getAverageAutoTotalGoals() + " goals scored";
-            case SORT_TELEOP_UNIQUE_DEFENSE_COUNT:
-                return getAverageScoutData().getTeleopDefenseCrossings().size() + " defenses crossed";
-            case SORT_TELEOP_TOTAL_GOALS_SCORED:
-                return getAverageScoutData().getAverageTeleopTotalGoals() + " goals scored";
-            case SORT_SUMMARY_FULL_SCALE_PERCENTAGE:
-                return "Scaled the tower in " + getAverageScoutData().getScalingStatsPercentage(ClimbingStats.FULL) + "% of matches";
-            case SORT_SUMMARY_CHALLENGED_TOWER_PERCENTAGE:
-                return "Challenged the tower in " + getAverageScoutData().getChallengedTowerPercentage() + "% of matches";
             default:
                 return getNumberOfMatches() + " matches"; //TODO make the layout change?
         }
@@ -89,48 +77,6 @@ public class TeamWrapper implements ParentListItem, Serializable {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Integer.valueOf(o1.getTeamNumber())
                         .compareTo(Integer.valueOf(o2.getTeamNumber()));
-            }
-        },
-
-        SORT_AUTO_UNIQUE_DEFENSE_COUNT {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Integer.valueOf(o1.getAverageScoutData().getAutoDefenseCrossings().size())
-                        .compareTo(o2.getAverageScoutData().getAutoDefenseCrossings().size());
-            }
-        },
-
-        SORT_AUTO_TOTAL_GOALS_SCORED {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Float.valueOf(o1.getAverageScoutData().getAverageAutoTotalGoals())
-                        .compareTo(o2.getAverageScoutData().getAverageAutoTotalGoals());
-            }
-        },
-
-        SORT_TELEOP_UNIQUE_DEFENSE_COUNT {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Integer.valueOf(o1.getAverageScoutData().getTeleopDefenseCrossings().size())
-                        .compareTo(o2.getAverageScoutData().getTeleopDefenseCrossings().size());
-            }
-        },
-
-        SORT_TELEOP_TOTAL_GOALS_SCORED {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Float.valueOf(o1.getAverageScoutData().getAverageTeleopTotalGoals())
-                        .compareTo(o2.getAverageScoutData().getAverageTeleopTotalGoals());
-            }
-        },
-
-        SORT_SUMMARY_FULL_SCALE_PERCENTAGE {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Double.valueOf(o1.getAverageScoutData().getScalingStatsPercentage(ClimbingStats.FULL))
-                        .compareTo(o2.getAverageScoutData().getScalingStatsPercentage(ClimbingStats.FULL));
-            }
-        },
-
-        SORT_SUMMARY_CHALLENGED_TOWER_PERCENTAGE {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return -Double.valueOf(o1.getAverageScoutData().getChallengedTowerPercentage())
-                        .compareTo(o2.getAverageScoutData().getChallengedTowerPercentage());
             }
         };
 
