@@ -2,23 +2,29 @@ package com.team980.thunderscout.data.enumeration;
 
 public enum FuelDumpAmount {
 
-    //TODO these numbers need to be refined
-    NONE(0),
-    SMALL(15),
-    MEDIUM(35),
-    LARGE(70); //maximum amount low goal can hold?
+    NONE(0, 0),
+    SMALL(1, 9),
+    MEDIUM(10, 29),
+    LARGE(30, 49),
+    EXTRA_LARGE(50, 70); //maximum amount low goal can hold
 
-    private int averageAmount;
+    private int minimumAmount;
+    private int maximumAmount;
 
-    FuelDumpAmount(int par1) {
-        averageAmount = par1;
+    FuelDumpAmount(int par1, int par2) {
+        minimumAmount = par1;
+        maximumAmount = par2;
     }
 
-    public int getAverageAmount() {
-        return averageAmount;
+    public int getMinimumAmount() {
+        return minimumAmount;
     }
 
-    public FuelDumpAmount getByAverageAmount() {
+    public int getMaximumAmount() {
+        return maximumAmount;
+    }
+
+    public FuelDumpAmount getByAmount(int amount) {
         throw new UnsupportedOperationException("NYI"); //TODO
     }
 

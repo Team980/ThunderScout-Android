@@ -189,15 +189,15 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
 
         data.setTeleopGearsDelivered(teleopGearsDelivered);
 
-        String averageTeleopLowGoalDumpAmount = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_AVERAGE_LOW_GOAL_DUMP_AMOUNT));
+        //String averageTeleopLowGoalDumpAmount = cursor.getString(
+                //cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_AVERAGE_LOW_GOAL_DUMP_AMOUNT));
 
-        data.setAverageTeleopLowGoalDumpAmount(FuelDumpAmount.valueOf(averageTeleopLowGoalDumpAmount));
+        //data.setAverageTeleopLowGoalDumpAmount(FuelDumpAmount.valueOf(averageTeleopLowGoalDumpAmount));
 
-        int teleopLowGoalDumpFrequency = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMP_FREQUENCY));
+        //int teleopLowGoalDumpFrequency = cursor.getInt(
+                //cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMP_FREQUENCY));
 
-        data.setTeleopDumpFrequency(teleopLowGoalDumpFrequency);
+        //data.setTeleopDumpFrequency(teleopLowGoalDumpFrequency);
 
         int teleopHighGoals = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS));

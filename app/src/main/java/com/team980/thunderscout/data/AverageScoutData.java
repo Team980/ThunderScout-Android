@@ -87,12 +87,12 @@ public class AverageScoutData implements Serializable {
         return i / dataList.size();
     }
 
-    //TODO get average of FuelDumpAmount
+    //TODO get average of FuelDumpAmounts
 
     public float getAverageTeleopDumpFrequency() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getTeleopDumpFrequency();
+            i += data.getTeleopLowGoalDumps().size();
         }
 
         return i / dataList.size();
