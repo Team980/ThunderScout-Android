@@ -42,56 +42,32 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
-                android:text="Average Fuel Dump Amount"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:id="@+id/teleop_spinnerLowGoalDumpAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:entries="@array/fuel_dump_amount_array"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="5dp"
-                android:text="Number of Fuel Dumps"
+                android:text="Fuel Dumped in Low Goal"
                 android:textSize="18sp" />
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/teleop_recyclerViewFuelDumps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
+                android:id="@+id/teleop_buttonAddFuelDump"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"/>
-
+                android:layout_gravity="right"
+                android:text="ADD"/>
 
         </LinearLayout>
 
