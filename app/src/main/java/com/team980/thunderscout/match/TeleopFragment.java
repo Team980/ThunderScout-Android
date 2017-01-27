@@ -3,9 +3,11 @@ package com.team980.thunderscout.match;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ public class TeleopFragment extends Fragment implements View.OnClickListener {
 
     private ScoutingFlowActivity scoutingFlowActivity;
 
+    private LinearLayoutManager layoutManager;
     private FuelDumpAdapter adapter;
 
     @Override
@@ -35,14 +38,26 @@ public class TeleopFragment extends Fragment implements View.OnClickListener {
 
         RecyclerView fuelDumps = (RecyclerView) view.findViewById(R.id.teleop_recyclerViewFuelDumps);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        fuelDumps.setLayoutManager(mLayoutManager);
+        layoutManager = new LinearLayoutManager(getContext());
+        fuelDumps.setLayoutManager(layoutManager);
 
         adapter = new FuelDumpAdapter();
         fuelDumps.setAdapter(adapter);
 
+        if (savedInstanceState != null) {
+            layoutManager.onRestoreInstanceState(savedInstanceState.getParcelable("LayoutManager"));
+            adapter.onRestoreInstanceState(savedInstanceState);
+        }
+
         Button addDumpButton = (Button) view.findViewById(R.id.teleop_buttonAddFuelDump);
         addDumpButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putParcelable("LayoutManager", layoutManager.onSaveInstanceState());
+        adapter.onSaveInstanceState(savedInstanceState);
+        Log.d("InstanceRedux", "Saved");
     }
 
     @Override

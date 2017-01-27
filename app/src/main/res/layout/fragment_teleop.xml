@@ -49,25 +49,34 @@
             android:layout_marginTop="10dp"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="5dp"
-                android:text="Fuel Dumped in Low Goal"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Fuel Dumped in Low Goal"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/teleop_buttonAddFuelDump"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/accent"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="ADD" />
+
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/teleop_recyclerViewFuelDumps"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <Button
-                android:id="@+id/teleop_buttonAddFuelDump"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="ADD"/>
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 

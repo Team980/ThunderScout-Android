@@ -111,12 +111,13 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         };
     }
 
-    public void saveAdapterState(Bundle outState) { //TODO this isn't working right
+    // TODO convert to method used by TeleopFragment
+    public void saveAdapterState(Bundle outState) { //
         Log.d("FRAGSTATE", "saving adapter state");
         adapter.onSaveInstanceState(outState);
     }
 
-    public void restoreAdapterState(Bundle savedInstanceState) { //TODO this isn't working
+    public void restoreAdapterState(Bundle savedInstanceState) { //
         Log.d("FRAGSTATE", "restoring adapter state");
         adapter.onRestoreInstanceState(savedInstanceState);
     }

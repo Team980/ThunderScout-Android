@@ -1,16 +1,19 @@
 package com.team980.thunderscout.match;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FuelDumpAdapter extends RecyclerView.Adapter<FuelDumpAdapter.FuelDumpViewHolder> {
 
@@ -44,10 +47,30 @@ public class FuelDumpAdapter extends RecyclerView.Adapter<FuelDumpAdapter.FuelDu
         notifyItemInserted(fuelDumps.size() - 1);
     }
 
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable("FuelDumps", fuelDumps);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState == null
+                || !savedInstanceState.containsKey("FuelDumps")) {
+            return;
+        }
+
+        ArrayList<FuelDumpAmount> itemList = (ArrayList<FuelDumpAmount>) savedInstanceState.getSerializable("FuelDumps");
+        if (itemList == null) {
+            return;
+        }
+
+        fuelDumps = itemList;
+        notifyDataSetChanged();
+    }
+
     public class FuelDumpViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private Button plus;
         private Button minus;
+        private ImageButton remove;
 
         private TextView text;
         private TextView numericValue;
@@ -57,6 +80,7 @@ public class FuelDumpAdapter extends RecyclerView.Adapter<FuelDumpAdapter.FuelDu
 
             plus = (Button) itemView.findViewById(R.id.plus);
             minus = (Button) itemView.findViewById(R.id.minus);
+            remove = (ImageButton) itemView.findViewById(R.id.remove);
 
             text = (TextView) itemView.findViewById(R.id.value);
             numericValue = (TextView) itemView.findViewById(R.id.numericalValue);
@@ -65,6 +89,7 @@ public class FuelDumpAdapter extends RecyclerView.Adapter<FuelDumpAdapter.FuelDu
         public void bind() {
             plus.setOnClickListener(this);
             minus.setOnClickListener(this);
+            remove.setOnClickListener(this);
 
             FuelDumpAmount value = fuelDumps.get(getLayoutPosition());
 
@@ -93,6 +118,10 @@ public class FuelDumpAdapter extends RecyclerView.Adapter<FuelDumpAdapter.FuelDu
                 } else {
                     value = FuelDumpAmount.values()[newOrdinal];
                 }
+            } else if (v.getId() == R.id.remove) {
+                fuelDumps.remove(getLayoutPosition());
+                notifyItemRemoved(getLayoutPosition());
+                return;
             }
 
             fuelDumps.set(getLayoutPosition(), value); // :D
