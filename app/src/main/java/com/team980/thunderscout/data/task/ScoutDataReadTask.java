@@ -16,6 +16,8 @@ import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 import com.team980.thunderscout.info.LocalDataAdapter;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumMap;
 
 /**
@@ -80,8 +82,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
                 ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE,
 
                 ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED,
-                ScoutDataTable.COLUMN_NAME_TELEOP_AVERAGE_LOW_GOAL_DUMP_AMOUNT,
-                ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMP_FREQUENCY,
+                ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS,
                 ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS,
                 ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS,
                 ScoutDataTable.COLUMN_NAME_CLIMBING_STATS,
@@ -189,15 +190,10 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
 
         data.setTeleopGearsDelivered(teleopGearsDelivered);
 
-        //String averageTeleopLowGoalDumpAmount = cursor.getString(
-                //cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_AVERAGE_LOW_GOAL_DUMP_AMOUNT));
+        byte[] teleopLowGoalDumps = cursor.getBlob(
+                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS));
 
-        //data.setAverageTeleopLowGoalDumpAmount(FuelDumpAmount.valueOf(averageTeleopLowGoalDumpAmount));
-
-        //int teleopLowGoalDumpFrequency = cursor.getInt(
-                //cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMP_FREQUENCY));
-
-        //data.setTeleopDumpFrequency(teleopLowGoalDumpFrequency);
+        data.getTeleopLowGoalDumps().addAll((ArrayList<FuelDumpAmount>) ThunderScout.deserializeObject(teleopLowGoalDumps));
 
         int teleopHighGoals = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS));

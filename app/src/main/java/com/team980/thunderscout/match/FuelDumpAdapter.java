@@ -47,6 +47,10 @@ public class FuelDumpAdapter extends RecyclerView.Adapter<FuelDumpAdapter.FuelDu
         notifyItemInserted(fuelDumps.size() - 1);
     }
 
+    public ArrayList<FuelDumpAmount> get() {
+        return fuelDumps;
+    }
+
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putSerializable("FuelDumps", fuelDumps);
     }

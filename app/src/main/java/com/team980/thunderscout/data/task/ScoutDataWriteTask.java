@@ -72,8 +72,7 @@ public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
 
         // Teleop
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED, data.getTeleopGearsDelivered());
-        //values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_AVERAGE_LOW_GOAL_DUMP_AMOUNT, data.getAverageTeleopLowGoalDumpAmount().name());
-        //values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMP_FREQUENCY, data.getTeleopDumpFrequency());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS, ThunderScout.serializeObject(data.getTeleopLowGoalDumps()));
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleopHighGoals());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS, data.getTeleopMissedHighGoals());
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS, data.getClimbingStats().name());
