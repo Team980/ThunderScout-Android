@@ -24,9 +24,23 @@ public enum FuelDumpAmount {
         return maximumAmount;
     }
 
-    public FuelDumpAmount getByAmount(int amount) {
-        throw new UnsupportedOperationException("NYI"); //TODO
+    public static FuelDumpAmount getByAmount(int amount) {
+        if (amount <= NONE.getMinimumAmount()) {
+            return FuelDumpAmount.NONE;
+        } else if (amount >= SMALL.getMinimumAmount() && amount <= SMALL.getMaximumAmount()) {
+            return FuelDumpAmount.SMALL;
+        } else if (amount >= MEDIUM.getMinimumAmount() && amount <= MEDIUM.getMaximumAmount()) {
+            return FuelDumpAmount.MEDIUM;
+        } else if (amount >= LARGE.getMinimumAmount() && amount <= LARGE.getMaximumAmount()) {
+            return FuelDumpAmount.LARGE;
+        } else if (amount >= EXTRA_LARGE.getMinimumAmount()) {
+            return FuelDumpAmount.EXTRA_LARGE;
+        }
+
+        return FuelDumpAmount.NONE;
     }
+
+    //TODO average multiple FuelDumpAmounts
 
     //TODO override toString()
 }

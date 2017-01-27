@@ -1,6 +1,7 @@
 package com.team980.thunderscout.data;
 
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
+import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class AverageScoutData implements Serializable {
         return i / dataList.size();
     }
 
-    //TODO use unimplemented method to average FuelDumpAmount
+    //TODO get average of FuelDumpAmounts
 
     public float getAverageAutoHighGoals() {
         float i = 0;
