@@ -45,7 +45,8 @@ public class TransitionUtils {
                 activity.getSupportActionBar().setBackgroundDrawable(background);
 
                 if (activity instanceof ScoutingFlowActivity) { //we don't want a random null
-                    activity.findViewById(R.id.tab_layout).setBackgroundDrawable(background);
+                    activity.findViewById(R.id.app_bar_layout).setBackground(background);
+                    activity.findViewById(R.id.tab_layout).setBackground(background);
                 }
             }
         });

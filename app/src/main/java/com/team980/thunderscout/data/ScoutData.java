@@ -13,7 +13,10 @@ import java.util.ArrayList;
 public class ScoutData implements Serializable {
 
     /**
-     * ScoutData Version 4 - 2017
+     * ScoutData Version 2017-2
+     *
+     * 2017-2: Serializable ArrayList for dumps in teleop
+     * 2017-1: First 2017 spec
      */
     private static final long serialVersionUID = 4;
 

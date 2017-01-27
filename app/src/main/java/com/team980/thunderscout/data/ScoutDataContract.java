@@ -29,8 +29,7 @@ public final class ScoutDataContract {
 
         // --- TELEOP ---
         public static final String COLUMN_NAME_TELEOP_GEARS_DELIVERED = "teleop_gears_delivered";
-        public static final String COLUMN_NAME_TELEOP_AVERAGE_LOW_GOAL_DUMP_AMOUNT = "teleop_average_low_goal_dump_amount";
-        public static final String COLUMN_NAME_TELEOP_LOW_GOAL_DUMP_FREQUENCY = "teleop_low_goal_dump_frequency";
+        public static final String COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS = "teleop_low_goal_dumps";
         public static final String COLUMN_NAME_TELEOP_HIGH_GOALS = "teleop_high_goals";
         public static final String COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS = "teleop_missed_high_goals";
         public static final String COLUMN_NAME_CLIMBING_STATS = "climbing_stats";
