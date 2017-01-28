@@ -28,6 +28,9 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        CheckBox crossedBaseline = (CheckBox) view.findViewById(R.id.auto_checkBoxCrossedBaseline);
+        crossedBaseline.setOnClickListener(this);
+
         Button minus = (Button) view.findViewById(R.id.auto_buttonFuelMinus);
         Button plus = (Button) view.findViewById(R.id.auto_buttonFuelPlus);
         minus.setOnClickListener(this);
