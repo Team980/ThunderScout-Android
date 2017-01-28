@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class TeamInfoViewPagerAdapter extends FragmentPagerAdapter {
 
 
-    private String tabTitles[] = new String[]{"Average", "Variability", "Trend"};
+    private String tabTitles[] = new String[]{"Average", "Variation", "Trend"};
     private Fragment tabs[];
 
     public TeamInfoViewPagerAdapter(final FragmentManager fm) {

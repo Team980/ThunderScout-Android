@@ -7,13 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
-public class AutoFragment extends Fragment implements Spinner.OnItemSelectedListener, CheckBox.OnClickListener {
+public class AutoFragment extends Fragment implements View.OnClickListener {
 
     ScoutingFlowActivity scoutingFlowActivity;
 
@@ -26,8 +28,15 @@ public class AutoFragment extends Fragment implements Spinner.OnItemSelectedList
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Spinner lowGoalDumpAmount = (Spinner) view.findViewById(R.id.auto_spinnerLowGoalDumpAmount);
-        lowGoalDumpAmount.setOnItemSelectedListener(this);
+        Button minus = (Button) view.findViewById(R.id.auto_buttonFuelMinus);
+        Button plus = (Button) view.findViewById(R.id.auto_buttonFuelPlus);
+        minus.setOnClickListener(this);
+        plus.setOnClickListener(this);
+
+        TextView textValue = (TextView) getView().findViewById(R.id.auto_textViewFuelValue);
+        TextView numericalValue = (TextView) getView().findViewById(R.id.auto_textViewFuelNumericalValue);
+        textValue.setText(FuelDumpAmount.NONE.toString());
+        numericalValue.setText(FuelDumpAmount.NONE.getMinimumAmount() + " - " + FuelDumpAmount.NONE.getMaximumAmount());
     }
 
     @Override
@@ -43,23 +52,39 @@ public class AutoFragment extends Fragment implements Spinner.OnItemSelectedList
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { //Spinner
-        String itemSelected = (String) parent.getItemAtPosition(position);
-        FuelDumpAmount fuelDumpAmount = FuelDumpAmount.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
-        scoutingFlowActivity.getData().setAutoLowGoalDumpAmount(fuelDumpAmount);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        //Do nothing
-    }
-
-    @Override
     public void onClick(View view) {
         if (view.getId() == R.id.auto_checkBoxCrossedBaseline) {
             CheckBox checkBox = (CheckBox) view;
 
             scoutingFlowActivity.getData().setCrossedBaseline(checkBox.isChecked());
+        } else {
+            FuelDumpAmount value = scoutingFlowActivity.getData().getAutoLowGoalDumpAmount();
+
+            if (view.getId() == R.id.plus) {
+                int newOrdinal = value.ordinal() + 1;
+
+                if ((FuelDumpAmount.values().length - 1) < newOrdinal) {
+                    value = FuelDumpAmount.values()[FuelDumpAmount.values().length - 1];
+                } else {
+                    value = FuelDumpAmount.values()[newOrdinal];
+                }
+
+            } else if (view.getId() == R.id.minus) {
+                int newOrdinal = value.ordinal() - 1;
+
+                if (newOrdinal < 0) {
+                    value = FuelDumpAmount.values()[0];
+                } else {
+                    value = FuelDumpAmount.values()[newOrdinal];
+                }
+            }
+
+            scoutingFlowActivity.getData().setAutoLowGoalDumpAmount(value);
+
+            TextView textValue = (TextView) getView().findViewById(R.id.auto_textViewFuelValue);
+            TextView numericalValue = (TextView) getView().findViewById(R.id.auto_textViewFuelNumericalValue);
+            textValue.setText(value.toString());
+            numericalValue.setText(value.getMinimumAmount() + " - " + value.getMaximumAmount());
         }
     }
 }
