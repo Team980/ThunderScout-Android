@@ -46,7 +46,17 @@ public class AverageScoutData implements Serializable {
         return i / dataList.size();
     }
 
-    //TODO get average of FuelDumpAmounts
+    //Averages the ordinal
+    public FuelDumpAmount getAverageAutoLowGoalDumpAmount() {
+        float i = 0;
+        for (ScoutData data : dataList) {
+            i += data.getAutoLowGoalDumpAmount().ordinal();
+        }
+
+        int average = (int) (i / dataList.size());
+
+        return FuelDumpAmount.values()[average];
+    }
 
     public float getAverageAutoHighGoals() {
         float i = 0;
@@ -88,8 +98,6 @@ public class AverageScoutData implements Serializable {
         return i / dataList.size();
     }
 
-    //TODO get average of FuelDumpAmounts
-
     public float getAverageTeleopDumpFrequency() {
         float i = 0;
         for (ScoutData data : dataList) {
@@ -97,6 +105,20 @@ public class AverageScoutData implements Serializable {
         }
 
         return i / dataList.size();
+    }
+
+    //Uses ordinal
+    public FuelDumpAmount getAverageTeleopLowGoalDumpAmount() {
+        float i = 0;
+        for (ScoutData data : dataList) {
+            for (FuelDumpAmount amount : data.getTeleopLowGoalDumps()) {
+                i += amount.ordinal();
+            }
+        }
+
+        int average = (int) (i / dataList.size());
+
+        return FuelDumpAmount.values()[average];
     }
 
     public float getAverageTeleopHighGoals() {
