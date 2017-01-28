@@ -5,17 +5,10 @@
 
     <string name="build_variant"></string> <!--Nothing will show-->
 
-    <string-array name="fuel_dump_amount_array">
-        <item>None</item>
-        <item>Small</item>
-        <item>Medium</item>
-        <item>Large</item>
-    </string-array>
-
     <string-array name="climbing_stats_array">
-        <item>None</item>
-        <item>Partial</item>
-        <item>Full</item>
+        <item>Did not climb</item>
+        <item>Attempted climb</item>
+        <item>Pressed touchpad</item>
     </string-array>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
