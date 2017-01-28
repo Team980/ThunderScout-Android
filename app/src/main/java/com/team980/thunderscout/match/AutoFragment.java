@@ -60,7 +60,7 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
         } else {
             FuelDumpAmount value = scoutingFlowActivity.getData().getAutoLowGoalDumpAmount();
 
-            if (view.getId() == R.id.plus) {
+            if (view.getId() == R.id.auto_buttonFuelPlus) {
                 int newOrdinal = value.ordinal() + 1;
 
                 if ((FuelDumpAmount.values().length - 1) < newOrdinal) {
@@ -69,7 +69,7 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
                     value = FuelDumpAmount.values()[newOrdinal];
                 }
 
-            } else if (view.getId() == R.id.minus) {
+            } else if (view.getId() == R.id.auto_buttonFuelMinus) {
                 int newOrdinal = value.ordinal() - 1;
 
                 if (newOrdinal < 0) {
