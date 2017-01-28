@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ThunderScout</string>
 
-    <string name="app_version">2017 FIRST Steamworks (BETA)</string> <!--This is where we track the version -->
+    <string name="app_version">2017 (BETA)</string> <!--This is where we track the version -->
 
     <string name="build_variant"></string> <!--Nothing will show-->
 
