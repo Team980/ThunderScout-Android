@@ -43,25 +43,67 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
                 android:text="Fuel Dumped in Low Goal"
                 android:textSize="18sp" />
 
-            <Spinner
-                android:id="@+id/auto_spinnerLowGoalDumpAmount"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:entries="@array/fuel_dump_amount_array"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/auto_buttonFuelMinus"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="-"
+                    android:textColor="@color/accent"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/auto_textViewFuelValue"
+                        android:layout_width="128dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:text="State"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/auto_textViewFuelNumericalValue"
+                        android:layout_width="128dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:text="0 - 0"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/auto_buttonFuelPlus"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="+"
+                    android:textColor="@color/accent"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -83,8 +125,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textSize="18sp"
-                    android:text="High Goals" />
+                    android:text="High Goals"
+                    android:textSize="18sp" />
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/auto_counterHighGoals"
@@ -103,8 +145,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textSize="18sp"
-                    android:text="Missed High Goals" />
+                    android:text="Missed High Goals"
+                    android:textSize="18sp" />
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/auto_counterMissedHighGoals"
@@ -128,14 +170,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="8dp"
-                android:textSize="18sp"
-                android:text="Crossed Baseline?"/>
+                android:text="Crossed Baseline?"
+                android:textSize="18sp" />
 
             <CheckBox
+                android:id="@+id/auto_checkBoxCrossedBaseline"
                 android:layout_width="wrap_content"
-                android:layout_marginRight="5dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/auto_checkBoxCrossedBaseline"/>
+                android:layout_marginRight="5dp" />
 
         </LinearLayout>
 
