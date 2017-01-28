@@ -42,66 +42,60 @@ public class AverageTeamInfoFragment extends Fragment {
         lastUpdated.setText("Last updated: " + SimpleDateFormat.getDateTimeInstance().format(data.getLastUpdated()));
 
         // --- Auto ---
-        /*TextView autoTotalDefenses = (TextView) view.findViewById(R.id.info_average_autoTotalDefenses);
-        autoTotalDefenses.setText(data.getAutoDefenseCrossings().size() + "");
+        TextView autoGearsDelivered = (TextView) view.findViewById(R.id.info_average_autoGearsDelivered);
+        autoGearsDelivered.setText(formatter.format(data.getAverageAutoGearsDelivered()) + "");
 
-        RecyclerView listAutoDefensesCrossed = (RecyclerView) view.findViewById(R.id.info_average_autoListDefenseCrossings);
-
-        listAutoDefensesCrossed.setLayoutManager(new LinearLayoutManager(getContext()));
-        listAutoDefensesCrossed.setAdapter(new DefenseAdapter(data.getAutoDefenseCrossings()));
-
-        TextView autoTotalGoals = (TextView) view.findViewById(R.id.info_average_autoTotalGoals);
-        autoTotalGoals.setText(formatter.format(data.getAverageAutoTotalGoals()));
-
-        TextView autoLowGoals = (TextView) view.findViewById(R.id.info_average_autoLowGoals);
-        autoLowGoals.setText(formatter.format(data.getAverageAutoLowGoals()));
+        TextView autoFuelDumpValue = (TextView) view.findViewById(R.id.info_average_autoLowGoalDumpAmount);
+        TextView autoFuelDumpNumericalValue = (TextView) view.findViewById(R.id.info_average_autoLowGoalNumericalDumpAmount);
+        autoFuelDumpValue.setText(data.getAverageAutoLowGoalDumpAmount().toString());
+        autoFuelDumpNumericalValue.setText("(" + data.getAverageAutoLowGoalDumpAmount().getMinimumAmount()
+                + " - " + data.getAverageAutoLowGoalDumpAmount().getMaximumAmount() + ")");
 
         TextView autoHighGoals = (TextView) view.findViewById(R.id.info_average_autoHighGoals);
         autoHighGoals.setText(formatter.format(data.getAverageAutoHighGoals()));
 
-        TextView autoMissedGoals = (TextView) view.findViewById(R.id.info_average_autoMissedGoals);
-        autoMissedGoals.setText(formatter.format(data.getAverageAutoMissedGoals()));
+        TextView autoMissedGoals = (TextView) view.findViewById(R.id.info_average_autoMissedHighGoals);
+        autoMissedGoals.setText(formatter.format(data.getAverageAutoMissedHighGoals()));
+
+        TextView crossedBaselinePercentage = (TextView) view.findViewById(R.id.info_average_autoCrossedBaselinePercentage);
+        crossedBaselinePercentage.setText(formatter.format(data.getCrossedBaselinePercentage()) + "%");
+
+        ProgressBar crossedBaselineProgressBar = (ProgressBar) view.findViewById(R.id.info_average_autoCrossedBaselineProgressBar);
+        crossedBaselineProgressBar.setProgress((int) data.getCrossedBaselinePercentage());
 
         // --- Teleop ---
-        TextView teleopTotalDefenses = (TextView) view.findViewById(R.id.info_average_teleopTotalDefenses);
-        teleopTotalDefenses.setText(data.getTeleopDefenseCrossings().size() + "");
+        TextView teleopGearsDelivered = (TextView) view.findViewById(R.id.info_average_teleopGearsDelivered);
+        teleopGearsDelivered.setText(formatter.format(data.getAverageTeleopGearsDelivered()) + "");
 
-        RecyclerView listTeleopDefensesCrossed = (RecyclerView) view.findViewById(R.id.info_average_teleopListDefenseCrossings);
+        TextView teleopDumpFrequency = (TextView) view.findViewById(R.id.info_average_teleopFuelDumps);
+        teleopDumpFrequency.setText(formatter.format(data.getAverageTeleopDumpFrequency()) + "");
 
-        listTeleopDefensesCrossed.setLayoutManager(new LinearLayoutManager(getContext()));
-        listTeleopDefensesCrossed.setAdapter(new DefenseAdapter(data.getTeleopDefenseCrossings(), data.getNumberOfMatches()));
-
-        TextView teleopTotalGoals = (TextView) view.findViewById(R.id.info_average_teleopTotalGoals);
-        teleopTotalGoals.setText(formatter.format(data.getAverageTeleopTotalGoals()));
-
-        TextView teleopLowGoals = (TextView) view.findViewById(R.id.info_average_teleopLowGoals);
-        teleopLowGoals.setText(formatter.format(data.getAverageTeleopLowGoals()));
+        TextView teleopFuelDumpValue = (TextView) view.findViewById(R.id.info_average_teleopLowGoalDumpAmount);
+        TextView teleopFuelDumpNumericalValue = (TextView) view.findViewById(R.id.info_average_teleopLowGoalNumericalDumpAmount);
+        teleopFuelDumpValue.setText(data.getAverageTeleopLowGoalDumpAmount().toString());
+        teleopFuelDumpNumericalValue.setText("(" + data.getAverageTeleopLowGoalDumpAmount().getMinimumAmount()
+                + " - " + data.getAverageTeleopLowGoalDumpAmount().getMaximumAmount() + ")");
 
         TextView teleopHighGoals = (TextView) view.findViewById(R.id.info_average_teleopHighGoals);
         teleopHighGoals.setText(formatter.format(data.getAverageTeleopHighGoals()));
 
-        TextView teleopMissedGoals = (TextView) view.findViewById(R.id.info_average_teleopMissedGoals);
-        teleopMissedGoals.setText(formatter.format(data.getAverageTeleopMissedGoals()));
+        TextView teleopMissedGoals = (TextView) view.findViewById(R.id.info_average_teleopMissedHighGoals);
+        teleopMissedGoals.setText(formatter.format(data.getAverageTeleopMissedHighGoals()));
+
+        TextView attemptedClimbPercentage = (TextView) view.findViewById(R.id.info_average_teleopAttemptedClimbPercentage);
+        attemptedClimbPercentage.setText(formatter.format(data.getClimbingStatsPercentage(ClimbingStats.ATTEMPTED_CLIMB)) + "%");
+
+        ProgressBar attemptedClimbProgressBar = (ProgressBar) view.findViewById(R.id.info_average_teleopAttemptedClimbProgressBar);
+        attemptedClimbProgressBar.setProgress((int) data.getClimbingStatsPercentage(ClimbingStats.ATTEMPTED_CLIMB));
+
+        TextView pressedTouchpadPercentage = (TextView) view.findViewById(R.id.info_average_teleopPressedTouchpadPercentage);
+        pressedTouchpadPercentage.setText(formatter.format(data.getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "%");
+
+        ProgressBar pressedTouchpadProgressBar = (ProgressBar) view.findViewById(R.id.info_average_teleopPressedTouchpadProgressBar);
+        pressedTouchpadProgressBar.setProgress((int) data.getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD));
 
         // --- Summary ---
-        TextView partialScalePercentage = (TextView) view.findViewById(R.id.info_average_summaryPartialScalePercentage);
-        partialScalePercentage.setText(formatter.format(data.getScalingStatsPercentage(ClimbingStats.PARTIAL)) + "%");
 
-        ProgressBar partialScaleProgressBar = (ProgressBar) view.findViewById(R.id.info_average_summaryPartialScaleProgressBar);
-        partialScaleProgressBar.setProgress((int) data.getScalingStatsPercentage(ClimbingStats.PARTIAL));
-
-        TextView fullScalePercentage = (TextView) view.findViewById(R.id.info_average_summaryFullScalePercentage);
-        fullScalePercentage.setText(formatter.format(data.getScalingStatsPercentage(ClimbingStats.FULL)) + "%");
-
-        ProgressBar fullScaleProgressBar = (ProgressBar) view.findViewById(R.id.info_average_summaryFullScaleProgressBar);
-        fullScaleProgressBar.setProgress((int) data.getScalingStatsPercentage(ClimbingStats.FULL));
-
-        TextView challengedTowerPercentage = (TextView) view.findViewById(R.id.info_average_summaryChallengedTowerPercentage);
-        challengedTowerPercentage.setText(formatter.format(data.getChallengedTowerPercentage()) + "%");
-
-        ProgressBar challengedTowerProgressBar = (ProgressBar) view.findViewById(R.id.info_average_summaryChallengedTowerProgressBar);
-        challengedTowerProgressBar.setProgress((int) data.getChallengedTowerPercentage());
-*/
         RecyclerView troubleWith = (RecyclerView) view.findViewById(R.id.info_average_summaryTroubleWith);
 
         troubleWith.setLayoutManager(new LinearLayoutManager(getContext()));
