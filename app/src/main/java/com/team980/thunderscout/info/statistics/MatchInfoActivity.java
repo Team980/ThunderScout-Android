@@ -49,87 +49,74 @@ public class MatchInfoActivity extends AppCompatActivity {
 
         TextView dataSource = (TextView) findViewById(R.id.info_match_dataSource);
         dataSource.setText("Source: " + data.getDataSource());
-        /*
+
         // --- Auto ---
-        TextView autoDefenseCrossingAction = (TextView) findViewById(R.id.info_match_autoDefenseCrossingAction);
-        TextView autoDefenseCrossed = (TextView) findViewById(R.id.info_match_autoDefenseCrossed);
-
-        ImageView autoDefenseImage = (ImageView) findViewById(R.id.info_match_autoDefenseImage);
-        FrameLayout autoDefenseImageContainer = (FrameLayout) findViewById(R.id.info_match_autoDefenseImageContainer);
-
-        if (data.getAutoDefenseCrossed() == Defense.NONE) {
-            autoDefenseCrossingAction.setText("Did not cross a defense");
-            autoDefenseCrossed.setVisibility(View.GONE);
-            autoDefenseImageContainer.setVisibility(View.GONE);
-        } else {
-            autoDefenseCrossingAction.setText("Crossed the");
-            autoDefenseCrossed.setText(data.getAutoDefenseCrossed().toString().toUpperCase());
-            autoDefenseImage.setImageResource(R.drawable.portcullis); //TODO yes, I know it's hardcoded
-        }
 
         //TODO use @strings with inputs as Spannables for in-view styling
 
-        TextView autoTotalGoals = (TextView) findViewById(R.id.info_match_autoTotalGoals);
-        int totalGoals = data.getAutoLowGoals() + data.getAutoHighGoals();
-        autoTotalGoals.setText(totalGoals + "");
+        TextView autoGearsDelivered = (TextView) findViewById(R.id.info_match_autoGearsDelivered);
+        autoGearsDelivered.setText(data.getAutoGearsDelivered() + "");
 
-        TextView autoLowGoals = (TextView) findViewById(R.id.info_match_autoLowGoals);
-        autoLowGoals.setText(data.getAutoLowGoals() + "");
+        TextView autoFuelDumpAmount = (TextView) findViewById(R.id.info_match_autoLowGoalDumpAmount);
+        autoFuelDumpAmount.setText(data.getAutoLowGoalDumpAmount().toString());
+
+        TextView autoFuelNumericalDumpAmount = (TextView) findViewById(R.id.info_match_autoLowGoalNumericalDumpAmount);
+        autoFuelNumericalDumpAmount.setText("(" + data.getAutoLowGoalDumpAmount().getMinimumAmount() + " - " +
+                data.getAutoLowGoalDumpAmount().getMaximumAmount() + ")");
 
         TextView autoHighGoals = (TextView) findViewById(R.id.info_match_autoHighGoals);
         autoHighGoals.setText(data.getAutoHighGoals() + "");
 
-        TextView autoMissedGoals = (TextView) findViewById(R.id.info_match_autoMissedGoals);
-        autoMissedGoals.setText(data.getAutoMissedGoals() + "");
+        TextView autoMissedGoals = (TextView) findViewById(R.id.info_match_autoMissedHighGoals);
+        autoMissedGoals.setText(data.getAutoMissedHighGoals() + "");
 
-        // --- Teleop ---
-        TextView teleopTotalDefenses = (TextView) findViewById(R.id.info_match_teleopTotalDefenses);
-        teleopTotalDefenses.setText(data.getTeleopDefenseCrossings().size() + "");
+        TextView crossedBaseline = (TextView) findViewById(R.id.info_match_autoCrossedBaseline);
+        TextView crossedBaselineAction = (TextView) findViewById(R.id.info_match_autoCrossedBaselineAction);
 
-        RecyclerView listDefensesCrossed = (RecyclerView) findViewById(R.id.info_match_teleopListDefenseCrossings);
-
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        listDefensesCrossed.setLayoutManager(mLayoutManager);
-
-        DefenseAdapter listDefensesAdapter = new DefenseAdapter(data.getTeleopDefenseCrossings());
-        listDefensesCrossed.setAdapter(listDefensesAdapter);
-
-        TextView teleopTotalGoals = (TextView) findViewById(R.id.info_match_teleopTotalGoals);
-        totalGoals = data.getTeleopLowGoals() + data.getTeleopHighGoals();
-        teleopTotalGoals.setText(totalGoals + "");
-
-        TextView teleopLowGoals = (TextView) findViewById(R.id.info_match_teleopLowGoals);
-        teleopLowGoals.setText(data.getTeleopLowGoals() + "");
-
-        TextView teleopHighGoals = (TextView) findViewById(R.id.info_match_teleopHighGoals);
-        teleopHighGoals.setText(data.getTeleopHighGoals() + "");
-
-        TextView teleopMissedGoals = (TextView) findViewById(R.id.info_match_teleopMissedGoals);
-        teleopMissedGoals.setText(data.getTeleopMissedGoals() + "");
-
-        // --- Summary ---
-        TextView scalingStats = (TextView) findViewById(R.id.info_match_summaryScalingStats);
-        TextView scalingStatsAction = (TextView) findViewById(R.id.info_match_summaryScalingAction);
-
-        if (data.getScalingStats() == ClimbingStats.NONE) {
-            scalingStats.setVisibility(View.GONE);
-            scalingStatsAction.setText("Did not scale the tower");
-        } else if (data.getScalingStats() == ClimbingStats.PARTIAL) {
-            scalingStats.setText("PARTIALLY SCALED");
-        } else if (data.getScalingStats() == ClimbingStats.FULL) {
-            scalingStats.setText("FULLY SCALED");
+        if (data.hasCrossedBaseline()) {
+            crossedBaseline.setText("CROSSED ");
+            crossedBaselineAction.setText("the baseline");
+        } else {
+            crossedBaseline.setVisibility(View.GONE);
+            crossedBaselineAction.setText("Did not cross the baseline");
         }
 
-        TextView challengedTower = (TextView) findViewById(R.id.info_match_summaryChallengedTower);
-        TextView challengeAction = (TextView) findViewById(R.id.info_match_summaryChallengeAction);
+        // --- Teleop ---
+        TextView teleopGearsDelivered = (TextView) findViewById(R.id.info_match_teleopGearsDelivered);
+        teleopGearsDelivered.setText(data.getTeleopGearsDelivered() + "");
 
-        if (data.hasChallengedTower()) {
-            challengedTower.setText("CHALLENGED");
+        TextView teleopFuelDumpAmount = (TextView) findViewById(R.id.info_match_teleopNumberOfLowGoalFuelDumps);
+        teleopFuelDumpAmount.setText(data.getTeleopLowGoalDumps().size() + "");
+
+        RecyclerView listFuelDumps = (RecyclerView) findViewById(R.id.info_match_teleopListFuelDumps);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        listFuelDumps.setLayoutManager(mLayoutManager);
+
+        FuelDumpAdapter listDumpsAdapter = new FuelDumpAdapter(data.getTeleopLowGoalDumps());
+        listFuelDumps.setAdapter(listDumpsAdapter);
+
+        TextView teleopHighGoals = (TextView) findViewById(R.id.info_match_teleopHighGoals);
+        teleopHighGoals.setText(data.getAutoHighGoals() + "");
+
+        TextView teleopMissedGoals = (TextView) findViewById(R.id.info_match_teleopMissedHighGoals);
+        teleopMissedGoals.setText(data.getAutoMissedHighGoals() + "");
+
+        TextView climbingStats = (TextView) findViewById(R.id.info_match_teleopClimbingStats);
+        TextView climbingStatsAction = (TextView) findViewById(R.id.info_match_teleopClimbingStatsAction);
+
+        if (data.getClimbingStats() == ClimbingStats.PRESSED_TOUCHPAD) {
+            climbingStats.setText("PRESSED ");
+            climbingStatsAction.setText("the touchpad");
+        } if (data.getClimbingStats() == ClimbingStats.ATTEMPTED_CLIMB) {
+            climbingStats.setText("ATTEMPTED TO CLIMB ");
+            climbingStatsAction.setText("the airship");
         } else {
-            challengedTower.setVisibility(View.GONE);
-            challengeAction.setText("Did not challenge the tower");
-        }*/
+            climbingStats.setVisibility(View.GONE);
+            climbingStatsAction.setText("Did not climb the airship");
+        }
 
+        // --- Summary ---
         TextView troubleWith = (TextView) findViewById(R.id.info_match_summaryTroubleWith);
         if (data.getTroubleWith() != null) {
             troubleWith.setText(data.getTroubleWith());

@@ -13,13 +13,12 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class FuelDumpAdapter extends RecyclerView.Adapter<FuelDumpAdapter.FuelDumpViewHolder> {
+public class DumpCounterAdapter extends RecyclerView.Adapter<DumpCounterAdapter.FuelDumpViewHolder> {
 
     private ArrayList<FuelDumpAmount> fuelDumps;
 
-    public FuelDumpAdapter() {
+    public DumpCounterAdapter() {
         fuelDumps = new ArrayList<>();
     }
 
@@ -27,7 +26,7 @@ public class FuelDumpAdapter extends RecyclerView.Adapter<FuelDumpAdapter.FuelDu
     public FuelDumpViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View dataView = inflater.inflate(R.layout.fuel_dump_view, parent, false);
+        View dataView = inflater.inflate(R.layout.dump_counter_view, parent, false);
 
         return new FuelDumpViewHolder(dataView);
     }
