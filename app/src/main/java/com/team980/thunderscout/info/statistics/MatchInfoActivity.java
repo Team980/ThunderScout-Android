@@ -108,7 +108,7 @@ public class MatchInfoActivity extends AppCompatActivity {
         if (data.getClimbingStats() == ClimbingStats.PRESSED_TOUCHPAD) {
             climbingStats.setText("PRESSED ");
             climbingStatsAction.setText("the touchpad");
-        } if (data.getClimbingStats() == ClimbingStats.ATTEMPTED_CLIMB) {
+        } else if (data.getClimbingStats() == ClimbingStats.ATTEMPTED_CLIMB) {
             climbingStats.setText("ATTEMPTED TO CLIMB ");
             climbingStatsAction.setText("the airship");
         } else {
