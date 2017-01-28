@@ -10,12 +10,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
-public class TeleopFragment extends Fragment implements View.OnClickListener {
+public class TeleopFragment extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 
     private ScoutingFlowActivity scoutingFlowActivity;
 
@@ -46,6 +49,9 @@ public class TeleopFragment extends Fragment implements View.OnClickListener {
 
         Button addDumpButton = (Button) view.findViewById(R.id.teleop_buttonAddFuelDump);
         addDumpButton.setOnClickListener(this);
+
+        Spinner climbingStats = (Spinner) view.findViewById(R.id.teleop_spinnerClimbingStats);
+        climbingStats.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -75,7 +81,24 @@ public class TeleopFragment extends Fragment implements View.OnClickListener {
         adapter.add(FuelDumpAmount.NONE);
     }
 
+    /**
+     * Listener for ClimbingStats spinner
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String itemSelected = (String) parent.getItemAtPosition(position);
+
+        ClimbingStats climbingStats = ClimbingStats.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
+        scoutingFlowActivity.getData().setClimbingStats(climbingStats);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        //do nothing
+    }
+
     public DumpCounterAdapter getFuelDumpAdapter() {
         return adapter;
     }
+
 }
