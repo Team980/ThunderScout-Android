@@ -118,6 +118,10 @@ public class AverageScoutData implements Serializable {
 
         int average = (int) (i / dataList.size());
 
+        if (average >= FuelDumpAmount.values().length) {
+            average = FuelDumpAmount.values().length - 1;
+        }
+
         return FuelDumpAmount.values()[average];
     }
 
