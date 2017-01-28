@@ -28,70 +28,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/background_floating_light"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/info_match_summaryScalingStats"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:text="PARTIALLY SCALED"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:id="@+id/info_match_summaryScalingAction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:text=" the tower"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="17sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/info_match_summaryChallengedTower"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:text="CHALLENGED"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:id="@+id/info_match_summaryChallengeAction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:text=" the tower"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="17sp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/background_floating"
+            android:background="@color/background_floating_light"
             android:orientation="vertical"
             android:padding="16dp">
 
