@@ -158,11 +158,11 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         //Default mode
         if (id == R.id.action_delete_all && adapter.getItemCount() > 0) {
             new AlertDialog.Builder(getContext())
-                    .setTitle("Are you sure?")
-                    .setMessage("This will delete all scout data in your local database and the data cannot be recovered!")
+                    .setTitle("Delete all scout data from local device?")
+                    .setMessage("This cannot be undone!")
                     .setIcon(R.drawable.ic_warning_white_24dp)
-                    .setPositiveButton(android.R.string.yes, this)
-                    .setNegativeButton(android.R.string.no, null).show();
+                    .setPositiveButton("Delete", this)
+                    .setNegativeButton("Cancel", null).show();
         }
 
         if (id == R.id.action_sort) {
@@ -177,11 +177,11 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         //Selection mode
         if (id == R.id.action_delete_selection) {
             new AlertDialog.Builder(getContext())
-                    .setTitle("Are you sure?")
-                    .setMessage("This will delete the selected data and cannot be undone!") //TODO better phrasing
+                    .setTitle("Delete selected scout data from local device?")
+                    .setMessage("This cannot be undone!")
                     .setIcon(R.drawable.ic_warning_white_24dp)
-                    .setPositiveButton(android.R.string.yes, this)
-                    .setNegativeButton(android.R.string.no, null).show();
+                    .setPositiveButton("Delete", this)
+                    .setNegativeButton("Cancel", null).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -225,11 +225,11 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
     }
 
     /**
-     *  Listener for HOME button when in selection mode
+     * Listener for HOME button when in selection mode
      */
     @Override
     public void onClick(View view) {
-        if(selectionMode) {
+        if (selectionMode) {
             adapter.clearSelections();
             setSelectionMode(false);
         }
@@ -275,7 +275,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
     }
 
     public void updateSelectionModeTitle(int numItems) {
-        if(selectionMode) {
+        if (selectionMode) {
             if (numItems == 1) {
                 toolbar.setTitle("1 match selected");
             } else {

@@ -17,24 +17,45 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="?attr/colorPrimary"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabPaddingEnd="30dp"
-            app:tabPaddingStart="30dp"  />
-
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior" />
+    <android.support.v4.widget.NestedScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/info_average_lastUpdated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Last Updated"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_info_average_auto" />
+
+            <include layout="@layout/layout_info_average_teleop" />
+
+            <include layout="@layout/layout_info_average_summary" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
 
