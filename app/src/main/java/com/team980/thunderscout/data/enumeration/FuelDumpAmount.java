@@ -47,5 +47,4 @@ public enum FuelDumpAmount {
         return displayString;
     }
 
-    //TODO average multiple FuelDumpAmounts
 }
