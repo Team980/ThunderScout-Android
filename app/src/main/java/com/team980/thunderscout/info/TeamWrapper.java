@@ -78,6 +78,97 @@ public class TeamWrapper implements ParentListItem, Serializable {
                 return Integer.valueOf(o1.getTeamNumber())
                         .compareTo(Integer.valueOf(o2.getTeamNumber()));
             }
+        },
+
+        SORT_LAST_UPDATED {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return Long.valueOf(o1.getAverageScoutData().getLastUpdated())
+                        .compareTo(o2.getAverageScoutData().getLastUpdated());
+            }
+        },
+
+        SORT_AVERAGE_AUTO_GEARS_DELIVERED {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return Float.valueOf(o1.getAverageScoutData().getAverageAutoGearsDelivered())
+                        .compareTo(o2.getAverageScoutData().getAverageAutoGearsDelivered());
+            }
+        },
+
+        SORT_AVERAGE_AUTO_LOW_GOAL_DUMP_AMOUNT {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return o1.getAverageScoutData().getAverageAutoLowGoalDumpAmount()
+                        .compareTo(o2.getAverageScoutData().getAverageAutoLowGoalDumpAmount());
+            }
+        },
+
+        SORT_AVERAGE_AUTO_HIGH_GOALS {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return Float.valueOf(o1.getAverageScoutData().getAverageAutoHighGoals())
+                        .compareTo(o2.getAverageScoutData().getAverageAutoHighGoals());
+            }
+        },
+
+        SORT_AVERAGE_AUTO_MISSED_HIGH_GOALS {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return Float.valueOf(o1.getAverageScoutData().getAverageAutoMissedHighGoals())
+                        .compareTo(o2.getAverageScoutData().getAverageAutoMissedHighGoals());
+            }
+        },
+
+        SORT_CROSSED_BASELINE_PERCENTAGE {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return Double.valueOf(o1.getAverageScoutData().getCrossedBaselinePercentage())
+                        .compareTo(o2.getAverageScoutData().getCrossedBaselinePercentage());
+            }
+        },
+
+        SORT_AVERAGE_TELEOP_GEARS_DELIVERED {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return Float.valueOf(o1.getAverageScoutData().getAverageTeleopGearsDelivered())
+                        .compareTo(o2.getAverageScoutData().getAverageTeleopGearsDelivered());
+            }
+        },
+
+        SORT_AVERAGE_TELEOP_DUMP_FREQUENCY {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return Float.valueOf(o1.getAverageScoutData().getAverageTeleopDumpFrequency())
+                        .compareTo(o2.getAverageScoutData().getAverageTeleopDumpFrequency());
+            }
+        },
+
+        SORT_AVERAGE_TELEOP_DUMP_AMOUNT {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return o1.getAverageScoutData().getAverageTeleopLowGoalDumpAmount()
+                        .compareTo(o2.getAverageScoutData().getAverageTeleopLowGoalDumpAmount());
+            }
+        },
+
+        SORT_AVERAGE_TELEOP_HIGH_GOALS {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return Float.valueOf(o1.getAverageScoutData().getAverageTeleopHighGoals())
+                        .compareTo(o2.getAverageScoutData().getAverageTeleopHighGoals());
+            }
+        },
+
+        SORT_AVERAGE_TELEOP_MISSED_HIGH_GOALS {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                return Float.valueOf(o1.getAverageScoutData().getAverageTeleopMissedHighGoals())
+                        .compareTo(o2.getAverageScoutData().getAverageTeleopMissedHighGoals());
+            }
+        },
+
+        SORT_CLOMBING_STATS_PERCENTAGE {
+            public int compare(TeamWrapper o1, TeamWrapper o2) {
+                int pressedTouchpad = Double.valueOf(o1.getAverageScoutData().getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD))
+                        .compareTo(o2.getAverageScoutData().getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD));
+
+                if (pressedTouchpad == 0) { //If it's the same...
+                    return Double.valueOf(o1.getAverageScoutData().getClimbingStatsPercentage(ClimbingStats.ATTEMPTED_CLIMB))
+                            .compareTo(o2.getAverageScoutData().getClimbingStatsPercentage(ClimbingStats.ATTEMPTED_CLIMB));
+                } else {
+                    return pressedTouchpad;
+                }
+            }
         };
 
         public static Comparator<TeamWrapper> getComparator(final TeamComparator... multipleOptions) {
