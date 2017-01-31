@@ -7,6 +7,8 @@ import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,11 +23,17 @@ public class TeamWrapper implements ParentListItem, Serializable {
     private AverageScoutData averageData;
     private List<ScoutData> childItems;
 
+    private NumberFormat formatter;
+
     public TeamWrapper(String num) {
         teamNumber = num;
 
         childItems = new ArrayList<>();
         averageData = new AverageScoutData(childItems);
+
+        formatter = NumberFormat.getNumberInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(1);
     }
 
     public TeamWrapper(String num, ScoutData... dataToInsert) {
@@ -38,6 +46,10 @@ public class TeamWrapper implements ParentListItem, Serializable {
         }
 
         averageData = new AverageScoutData(childItems);
+
+        formatter = NumberFormat.getNumberInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(1);
     }
 
     public String getTeamNumber() {
@@ -50,7 +62,30 @@ public class TeamWrapper implements ParentListItem, Serializable {
 
     public String getDescriptor(TeamComparator sortMode) {
         switch (sortMode) {
-            default:
+            case SORT_LAST_UPDATED:
+                return "Last updated " + SimpleDateFormat.getDateTimeInstance().format(getAverageScoutData().getLastUpdated());
+            case SORT_AVERAGE_AUTO_GEARS_DELIVERED:
+                return formatter.format(getAverageScoutData().getAverageAutoGearsDelivered()) + " gears delivered";
+            case SORT_AVERAGE_AUTO_LOW_GOAL_DUMP_AMOUNT:
+                return getAverageScoutData().getAverageAutoLowGoalDumpAmount() + " amount of fuel dumped";
+            case SORT_AVERAGE_AUTO_HIGH_GOALS:
+                return formatter.format(getAverageScoutData().getAverageAutoHighGoals()) + " high goals";
+            case SORT_AVERAGE_AUTO_MISSED_HIGH_GOALS:
+                return formatter.format(getAverageScoutData().getAverageAutoHighGoals()) + " missed high goals";
+            case SORT_CROSSED_BASELINE_PERCENTAGE:
+                return "Crossed the baseline in " + formatter.format(getAverageScoutData().getCrossedBaselinePercentage()) + "% of matches";
+            case SORT_AVERAGE_TELEOP_GEARS_DELIVERED:
+                return formatter.format(getAverageScoutData().getAverageTeleopGearsDelivered()) + " gears delivered";
+            case SORT_AVERAGE_TELEOP_DUMP_FREQUENCY:
+                return formatter.format(getAverageScoutData().getAverageTeleopDumpFrequency()) + " dumps per match";
+            case SORT_AVERAGE_TELEOP_DUMP_AMOUNT:
+                return getAverageScoutData().getAverageTeleopLowGoalDumpAmount() + " amount of fuel dumped";
+            case SORT_AVERAGE_TELEOP_HIGH_GOALS:
+                return formatter.format(getAverageScoutData().getAverageTeleopHighGoals()) + " high goals";
+            case SORT_AVERAGE_TELEOP_MISSED_HIGH_GOALS:
+                return formatter.format(getAverageScoutData().getAverageTeleopHighGoals()) + " missed high goals";
+            //case SORT_CLIMBING_STATS_PERCENTAGE: TODO
+            default: //Team number, fallback
                 return getNumberOfMatches() + " matches"; //TODO make the layout change?
         }
     }
