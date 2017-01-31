@@ -159,11 +159,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
 
         if (id == R.id.action_clear && adapter.getItemCount() > 0) {
             new AlertDialog.Builder(getContext())
-                    .setTitle("Are you sure?")
-                    .setMessage("This will remove all feed entries from your local database and the entries cannot be recovered!")
-                    .setIcon(R.drawable.ic_warning_white_24dp)
-                    .setPositiveButton(android.R.string.yes, this)
-                    .setNegativeButton(android.R.string.no, null).show();
+                    .setTitle("Clear activity and history feed?")
+                    .setPositiveButton("Clear", this)
+                    .setNegativeButton("Dismiss", null).show();
         }
 
         return super.onOptionsItemSelected(item);
