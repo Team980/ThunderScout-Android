@@ -73,91 +73,91 @@ public class TeamWrapper implements ParentListItem, Serializable {
      * Ridiculously cool code
      */
     public enum TeamComparator implements Comparator<TeamWrapper> {
-        SORT_TEAM_NUMBER {
+        SORT_TEAM_NUMBER("Team number") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Integer.valueOf(o1.getTeamNumber())
                         .compareTo(Integer.valueOf(o2.getTeamNumber()));
             }
         },
 
-        SORT_LAST_UPDATED {
+        SORT_LAST_UPDATED("Time updated") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Long.valueOf(o1.getAverageScoutData().getLastUpdated())
                         .compareTo(o2.getAverageScoutData().getLastUpdated());
             }
         },
 
-        SORT_AVERAGE_AUTO_GEARS_DELIVERED {
+        SORT_AVERAGE_AUTO_GEARS_DELIVERED("Auto gears delivered") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Float.valueOf(o1.getAverageScoutData().getAverageAutoGearsDelivered())
                         .compareTo(o2.getAverageScoutData().getAverageAutoGearsDelivered());
             }
         },
 
-        SORT_AVERAGE_AUTO_LOW_GOAL_DUMP_AMOUNT {
+        SORT_AVERAGE_AUTO_LOW_GOAL_DUMP_AMOUNT("Auto low goal dump amount") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return o1.getAverageScoutData().getAverageAutoLowGoalDumpAmount()
                         .compareTo(o2.getAverageScoutData().getAverageAutoLowGoalDumpAmount());
             }
         },
 
-        SORT_AVERAGE_AUTO_HIGH_GOALS {
+        SORT_AVERAGE_AUTO_HIGH_GOALS("Auto high goals") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Float.valueOf(o1.getAverageScoutData().getAverageAutoHighGoals())
                         .compareTo(o2.getAverageScoutData().getAverageAutoHighGoals());
             }
         },
 
-        SORT_AVERAGE_AUTO_MISSED_HIGH_GOALS {
+        SORT_AVERAGE_AUTO_MISSED_HIGH_GOALS("Auto missed high goals") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Float.valueOf(o1.getAverageScoutData().getAverageAutoMissedHighGoals())
                         .compareTo(o2.getAverageScoutData().getAverageAutoMissedHighGoals());
             }
         },
 
-        SORT_CROSSED_BASELINE_PERCENTAGE {
+        SORT_CROSSED_BASELINE_PERCENTAGE("Crossed baseline percentage") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Double.valueOf(o1.getAverageScoutData().getCrossedBaselinePercentage())
                         .compareTo(o2.getAverageScoutData().getCrossedBaselinePercentage());
             }
         },
 
-        SORT_AVERAGE_TELEOP_GEARS_DELIVERED {
+        SORT_AVERAGE_TELEOP_GEARS_DELIVERED("Teleop gears delivered") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Float.valueOf(o1.getAverageScoutData().getAverageTeleopGearsDelivered())
                         .compareTo(o2.getAverageScoutData().getAverageTeleopGearsDelivered());
             }
         },
 
-        SORT_AVERAGE_TELEOP_DUMP_FREQUENCY {
+        SORT_AVERAGE_TELEOP_DUMP_FREQUENCY("Teleop dump frequency") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Float.valueOf(o1.getAverageScoutData().getAverageTeleopDumpFrequency())
                         .compareTo(o2.getAverageScoutData().getAverageTeleopDumpFrequency());
             }
         },
 
-        SORT_AVERAGE_TELEOP_DUMP_AMOUNT {
+        SORT_AVERAGE_TELEOP_DUMP_AMOUNT("Teleop dump amount") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return o1.getAverageScoutData().getAverageTeleopLowGoalDumpAmount()
                         .compareTo(o2.getAverageScoutData().getAverageTeleopLowGoalDumpAmount());
             }
         },
 
-        SORT_AVERAGE_TELEOP_HIGH_GOALS {
+        SORT_AVERAGE_TELEOP_HIGH_GOALS("Teleop high goals") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Float.valueOf(o1.getAverageScoutData().getAverageTeleopHighGoals())
                         .compareTo(o2.getAverageScoutData().getAverageTeleopHighGoals());
             }
         },
 
-        SORT_AVERAGE_TELEOP_MISSED_HIGH_GOALS {
+        SORT_AVERAGE_TELEOP_MISSED_HIGH_GOALS("Teleop missed high goals") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 return Float.valueOf(o1.getAverageScoutData().getAverageTeleopMissedHighGoals())
                         .compareTo(o2.getAverageScoutData().getAverageTeleopMissedHighGoals());
             }
         },
 
-        SORT_CLOMBING_STATS_PERCENTAGE {
+        SORT_CLIMBING_STATS_PERCENTAGE("Teleop climbing stats percentage") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 int pressedTouchpad = Double.valueOf(o1.getAverageScoutData().getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD))
                         .compareTo(o2.getAverageScoutData().getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD));
@@ -171,6 +171,17 @@ public class TeamWrapper implements ParentListItem, Serializable {
             }
         };
 
+        private String displayName;
+
+        TeamComparator(String par1) {
+            displayName = par1;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
+        }
+
         public static Comparator<TeamWrapper> getComparator(final TeamComparator... multipleOptions) {
             return new Comparator<TeamWrapper>() {
                 public int compare(TeamWrapper o1, TeamWrapper o2) {
@@ -183,6 +194,17 @@ public class TeamWrapper implements ParentListItem, Serializable {
                     return 0;
                 }
             };
+        }
+
+        public static String[] getFormattedList() {
+            TeamComparator[] states = values();
+            String[] names = new String[states.length];
+
+            for (int i = 0; i < states.length; i++) {
+                names[i] = states[i].toString();
+            }
+
+            return names;
         }
     }
 }

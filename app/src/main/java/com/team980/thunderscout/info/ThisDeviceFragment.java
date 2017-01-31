@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
 
 public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
-        PopupMenu.OnMenuItemClickListener, View.OnClickListener {
+        View.OnClickListener {
 
     private RecyclerView dataView;
     private LocalDataAdapter adapter;
@@ -166,12 +166,25 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         }
 
         if (id == R.id.action_sort) {
-            PopupMenu popup = new PopupMenu(getContext(), getView().findViewById(R.id.action_sort));
-            popup.setOnMenuItemClickListener(this);
 
-            MenuInflater inflater = popup.getMenuInflater();
-            inflater.inflate(R.menu.sort_modes, popup.getMenu());
-            popup.show();
+            final AlertDialog sortDialog;
+
+            // Creating and Building the Dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Sort teams by... (WIP)"); //TODO custom sorting dialog with asc/desc, spinners, ok/cancel flow
+
+            builder.setSingleChoiceItems(TeamWrapper.TeamComparator.getFormattedList(), -1,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            TeamWrapper.TeamComparator sortMode = TeamWrapper.TeamComparator.values()[item];
+
+                            adapter.sort(sortMode);
+                        }
+                    })
+                    .setPositiveButton("Ok", null);
+
+            sortDialog = builder.create();
+            sortDialog.show();
         }
 
         //Selection mode
@@ -207,20 +220,6 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         } else {
             ScoutDataClearTask clearTask = new ScoutDataClearTask(adapter, getContext());
             clearTask.execute();
-        }
-    }
-
-    /**
-     * Popup menu for sorting mode selection
-     */
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sort_team_number:
-                adapter.sort(SORT_TEAM_NUMBER);
-                return true;
-            default:
-                return false;
         }
     }
 
@@ -283,5 +282,4 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
             }
         }
     }
-
 }

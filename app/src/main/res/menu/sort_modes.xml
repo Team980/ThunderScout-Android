@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/sort_team_number"
-        android:title="By team number" />
-    <!-- TODO these strings are horrible -->
-</menu>
