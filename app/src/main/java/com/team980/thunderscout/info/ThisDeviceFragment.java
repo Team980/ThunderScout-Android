@@ -1,11 +1,14 @@
 package com.team980.thunderscout.info;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +32,7 @@ import android.widget.LinearLayout;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.data.task.CSVExportTask;
 import com.team980.thunderscout.data.task.ScoutDataClearTask;
 import com.team980.thunderscout.data.task.ScoutDataDeleteTask;
 import com.team980.thunderscout.data.task.ScoutDataReadTask;
@@ -163,6 +167,22 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
                     .setIcon(R.drawable.ic_warning_white_24dp)
                     .setPositiveButton("Delete", this)
                     .setNegativeButton("Cancel", null).show();
+        }
+
+        if (id == R.id.action_export_csv) {
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                CSVExportTask exportTask = new CSVExportTask(getContext());
+                exportTask.execute();
+            } else {
+                //Request permission
+                ActivityCompat.requestPermissions(
+                        getActivity(),
+                        new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                        1
+                );
+                //TODO redo export
+            }
         }
 
         if (id == R.id.action_sort) {
