@@ -5,6 +5,7 @@ import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -223,5 +224,38 @@ public class ScoutData implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    // --- OTHER METHODS ---
+
+    public String[] toStringArray() {
+        ArrayList<String> fieldList = new ArrayList<>();
+
+        //Init
+        fieldList.add(getTeamNumber());
+        fieldList.add(String.valueOf(getMatchNumber()));
+        fieldList.add(getAllianceColor().name());
+        fieldList.add(String.valueOf(getDateAdded()));
+        fieldList.add(getDataSource());
+
+        //Auto
+        fieldList.add(String.valueOf(getAutoGearsDelivered()));
+        fieldList.add(getAutoLowGoalDumpAmount().name());
+        fieldList.add(String.valueOf(getAutoHighGoals()));
+        fieldList.add(String.valueOf(getAutoMissedHighGoals()));
+        fieldList.add(String.valueOf(hasCrossedBaseline()));
+
+        //Teleop
+        fieldList.add(String.valueOf(getTeleopGearsDelivered()));
+        fieldList.add(getTeleopLowGoalDumps().toString());
+        fieldList.add(String.valueOf(getTeleopHighGoals()));
+        fieldList.add(String.valueOf(getTeleopMissedHighGoals()));
+        fieldList.add(getClimbingStats().name());
+
+        //Summary
+        fieldList.add(getTroubleWith());
+        fieldList.add(getComments());
+
+        return (String[]) fieldList.toArray(new String[fieldList.size()]);
     }
 }
