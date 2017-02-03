@@ -118,14 +118,14 @@ public class MatchInfoActivity extends AppCompatActivity {
 
         // --- Summary ---
         TextView troubleWith = (TextView) findViewById(R.id.info_match_summaryTroubleWith);
-        if (data.getTroubleWith() != null) {
+        if (data.getTroubleWith() != null && !data.getTroubleWith().equals("")) {
             troubleWith.setText(data.getTroubleWith());
         } else {
             troubleWith.setText("None");
         }
 
         TextView comments = (TextView) findViewById(R.id.info_match_summaryComments);
-        if (data.getComments() != null) {
+        if (data.getComments() != null  && !data.getComments().equals("")) {
             comments.setText(data.getComments());
         } else {
             comments.setText("None");

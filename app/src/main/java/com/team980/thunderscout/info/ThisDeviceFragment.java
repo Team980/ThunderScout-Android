@@ -191,7 +191,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
 
             // Creating and Building the Dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("Sort teams by... (WIP)"); //TODO custom sorting dialog with asc/desc, spinners, ok/cancel flow
+            builder.setTitle("Sort teams by... (WIP)"); //TODO better list of criteria, asc/desc
 
             builder.setSingleChoiceItems(TeamWrapper.TeamComparator.getFormattedList(), -1,
                     new DialogInterface.OnClickListener() {
