@@ -1,14 +1,11 @@
 package com.team980.thunderscout.info;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +15,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -32,15 +28,13 @@ import android.widget.LinearLayout;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.task.CSVExportTask;
 import com.team980.thunderscout.data.task.ScoutDataClearTask;
 import com.team980.thunderscout.data.task.ScoutDataDeleteTask;
 import com.team980.thunderscout.data.task.ScoutDataReadTask;
+import com.team980.thunderscout.export.ExportActivity;
 import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.ArrayList;
-
-import static com.team980.thunderscout.info.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
 
 public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
         View.OnClickListener {
@@ -169,20 +163,9 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
                     .setNegativeButton("Cancel", null).show();
         }
 
-        if (id == R.id.action_export_csv) {
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                CSVExportTask exportTask = new CSVExportTask(getContext());
-                exportTask.execute();
-            } else {
-                //Request permission
-                ActivityCompat.requestPermissions(
-                        getActivity(),
-                        new String[]{ Manifest.permission.WRITE_EXTERNAL_STORAGE },
-                        1
-                );
-                //TODO redo export
-            }
+        if (id == R.id.action_export) {
+            Intent exportIntent = new Intent(getContext(), ExportActivity.class);
+            startActivity(exportIntent);
         }
 
         if (id == R.id.action_sort) {

@@ -9,11 +9,12 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!--<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.INTERNET" />-->
-
+    <!--
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    -->
     <application
         android:name=".ThunderScout"
         android:allowBackup="true"
@@ -28,8 +29,10 @@
             android:theme="@style/ThunderScout.BaseTheme.NavigationPane">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
@@ -58,12 +61,16 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
         </activity>
+        <activity android:name=".export.ExportActivity"
+            android:label="Export"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
         <activity
             android:name=".integrations.IntegrationsActivity"
             android:label="Integrations"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
-        <!--<activity android:name=".sheets.GoogleAuthActivity"></activity>-->
+        <!-- <activity android:name=".sheets.GoogleAuthActivity"></activity> -->
         <activity
             android:name=".AboutActivity"
             android:label="About"
@@ -79,7 +86,9 @@
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
-            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
+
+            <meta-data
+                android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
         </service>
 
@@ -90,7 +99,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

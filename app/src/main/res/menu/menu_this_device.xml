@@ -8,9 +8,9 @@
         android:title="Sort"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_export_csv"
+        android:id="@+id/action_export"
         android:orderInCategory="3"
-        android:title="Export to CSV"
+        android:title="Export"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_delete_all"
