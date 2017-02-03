@@ -205,7 +205,7 @@
                     android:text="PRESSED "
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:id="@+id/info_match_teleopClimbingStats"
-                    android:textSize="25sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
