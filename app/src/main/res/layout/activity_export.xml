@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.team980.thunderscout.export.ExportActivity">
+    tools:context="com.team980.thunderscout.export.ExportActivity"
+    android:orientation="vertical">
 
     <!-- TODO add more options -->
 
@@ -16,6 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/buttonExport"
-        android:text="Export"/>
+        android:text="Export" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonOpenFolder"
+        android:text="Open folder" />
 
 </LinearLayout>
