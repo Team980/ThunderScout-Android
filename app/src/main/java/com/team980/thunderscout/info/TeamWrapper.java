@@ -110,7 +110,7 @@ public class TeamWrapper implements ParentListItem, Serializable {
     public enum TeamComparator implements Comparator<TeamWrapper> {
         SORT_TEAM_NUMBER("Team number") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return Integer.valueOf(o1.getTeamNumber())
+                return -Integer.valueOf(o1.getTeamNumber())
                         .compareTo(Integer.valueOf(o2.getTeamNumber()));
             }
         },
@@ -217,16 +217,10 @@ public class TeamWrapper implements ParentListItem, Serializable {
             return displayName;
         }
 
-        public static Comparator<TeamWrapper> getComparator(final TeamComparator... multipleOptions) {
+        public static Comparator<TeamWrapper> getComparator(final TeamComparator option) {
             return new Comparator<TeamWrapper>() {
                 public int compare(TeamWrapper o1, TeamWrapper o2) {
-                    for (TeamComparator option : multipleOptions) {
-                        int result = option.compare(o1, o2);
-                        if (result != 0) {
-                            return result;
-                        }
-                    }
-                    return 0;
+                    return option.compare(o1, o2) * -1;
                 }
             };
         }
