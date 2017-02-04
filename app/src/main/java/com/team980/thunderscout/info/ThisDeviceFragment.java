@@ -170,21 +170,22 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
 
         if (id == R.id.action_sort) {
 
-            final AlertDialog sortDialog;
+            AlertDialog sortDialog;
 
             // Creating and Building the Dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("Sort teams by... (WIP)"); //TODO better list of criteria, asc/desc
+            builder.setTitle("Sort teams by...");
 
-            builder.setSingleChoiceItems(TeamWrapper.TeamComparator.getFormattedList(), -1,
+            builder.setSingleChoiceItems(TeamWrapper.TeamComparator.getFormattedList(), adapter.getCurrentSortMode().ordinal(),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int item) {
                             TeamWrapper.TeamComparator sortMode = TeamWrapper.TeamComparator.values()[item];
 
                             adapter.sort(sortMode);
+
+                            dialog.dismiss();
                         }
-                    })
-                    .setPositiveButton("Ok", null);
+                    });
 
             sortDialog = builder.create();
             sortDialog.show();

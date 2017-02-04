@@ -157,6 +157,10 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
         notifyParentItemRangeChanged(0, teams.size());
     }
 
+    public TeamWrapper.TeamComparator getCurrentSortMode() {
+        return sortMode;
+    }
+
     public void select(int pos) {
         selectedItems.put(pos, true);
 
