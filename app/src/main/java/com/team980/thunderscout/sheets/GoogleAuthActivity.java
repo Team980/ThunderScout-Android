@@ -1,4 +1,4 @@
-package com.team980.thunderscout.integrations.sheets;
+package com.team980.thunderscout.sheets;
 
 import android.accounts.AccountManager;
 import android.app.Activity;

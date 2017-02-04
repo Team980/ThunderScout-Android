@@ -7,8 +7,8 @@
         android:title="Enable match scouting" />
 
     <PreferenceCategory
-        android:title="Output options"
-        android:dependency="enable_match_scout">
+        android:dependency="enable_match_scout"
+        android:title="Output options">
 
         <CheckBoxPreference
             android:defaultValue="true"
@@ -38,12 +38,25 @@
             android:title="Server Storage Task" />-->
 
         <com.team980.thunderscout.preferences.BluetoothDevicePreference
+            android:dependency="ms_send_to_bt_server"
             android:dialogTitle="Bluetooth Server Device"
             android:key="ms_bt_server_device"
-            android:dependency="ms_send_to_bt_server"
             android:title="Bluetooth server device" />
 
     </PreferenceCategory>
+
+    <!--<PreferenceCategory android:title="Google Sheets">
+
+        <Preference
+            android:key="google_account_auth"
+            android:title="Sign in to your Google account">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.team980.thunderscout.sheets.GoogleAuthActivity"
+                android:targetPackage="com.team980.thunderscout" />
+        </Preference>
+
+    </PreferenceCategory>-->
 
     <!-- These are examples from the tutorial -->
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
