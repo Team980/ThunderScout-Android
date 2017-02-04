@@ -62,12 +62,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".export.ExportActivity"
-            android:label="Export"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
-        <activity
-            android:name=".integrations.IntegrationsActivity"
-            android:label="Integrations"
+            android:label="Export..."
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
         <!-- <activity android:name=".sheets.GoogleAuthActivity"></activity> -->
