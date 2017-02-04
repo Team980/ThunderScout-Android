@@ -167,8 +167,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || MatchScoutPreferenceFragment.class.getName().equals(fragmentName)
-                || BluetoothServerPreferenceFragment.class.getName().equals(fragmentName)
-                || LinkedSheetsPreferenceFragment.class.getName().equals(fragmentName);
+                || BluetoothServerPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -252,31 +251,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-        }
-    }
-
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class LinkedSheetsPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_linked_sheets);
-
-            if (!getResources().getBoolean(R.bool.preferences_prefer_dual_pane)) {
-                SettingsActivity activity = (SettingsActivity) getActivity();
-
-                activity.getSupportActionBar().setTitle("Linked spreadsheets");
-            }
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-
         }
     }
 }

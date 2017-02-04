@@ -1,4 +1,4 @@
-package com.team980.thunderscout.integrations.sheets.task;
+package com.team980.thunderscout.sheets.task;
 
 import android.content.Context;
 import android.content.SharedPreferences;
