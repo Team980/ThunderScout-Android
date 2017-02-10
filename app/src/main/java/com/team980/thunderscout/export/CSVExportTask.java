@@ -240,7 +240,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
     @Override
     protected void onProgressUpdate(String[] values) {
         //Runs on UI thread when publishProgress() is called
-        Toast.makeText(context, "CSV export complete: " + values[0], Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "CSV ic_export_white complete: " + values[0], Toast.LENGTH_LONG).show();
 
         super.onProgressUpdate(values);
     }

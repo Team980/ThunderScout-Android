@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.team980.thunderscout.feed.HomeFragment;
 import com.team980.thunderscout.info.ThisDeviceFragment;
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        TextView appVersion = (TextView) navigationView.getHeaderView(0).findViewById(R.id.app_version);
+        appVersion.setText(BuildConfig.VERSION_NAME);
 
         int shownFragment = getIntent().getIntExtra(INTENT_FLAG_SHOWN_FRAGMENT, INTENT_FLAGS_HOME);
 

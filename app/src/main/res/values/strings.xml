@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">ThunderScout</string>
 
-    <string name="app_version">2017 (BETA)</string> <!--This is where we track the version -->
-
-    <string name="build_variant"></string> <!--Nothing will show-->
+    <string name="build_variant"></string> <!--Nothing will show unless you're running a DEBUG build-->
 
     <string-array name="climbing_stats_array">
         <item>Did not climb</item>
