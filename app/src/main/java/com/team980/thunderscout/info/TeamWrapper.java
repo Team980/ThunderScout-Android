@@ -84,7 +84,8 @@ public class TeamWrapper implements ParentListItem, Serializable {
                 return formatter.format(getAverageScoutData().getAverageTeleopHighGoals()) + " high goals";
             case SORT_AVERAGE_TELEOP_MISSED_HIGH_GOALS:
                 return formatter.format(getAverageScoutData().getAverageTeleopHighGoals()) + " missed high goals";
-            //case SORT_CLIMBING_STATS_PERCENTAGE: TODO
+            case SORT_CLIMBING_STATS_PERCENTAGE:
+                return "Pressed the touchpad in " + formatter.format(getAverageScoutData().getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "% of matches";
             default: //Team number, fallback
                 return getNumberOfMatches() + " matches"; //TODO make the layout change?
         }
@@ -192,7 +193,7 @@ public class TeamWrapper implements ParentListItem, Serializable {
             }
         },
 
-        SORT_CLIMBING_STATS_PERCENTAGE("Teleop climbing stats percentage") {
+        SORT_CLIMBING_STATS_PERCENTAGE("Pressed touchpad percentage") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
                 int pressedTouchpad = Double.valueOf(o1.getAverageScoutData().getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD))
                         .compareTo(o2.getAverageScoutData().getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD));
