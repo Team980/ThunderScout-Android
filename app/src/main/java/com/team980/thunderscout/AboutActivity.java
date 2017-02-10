@@ -110,7 +110,7 @@ public class AboutActivity extends MaterialAboutActivity {
         MaterialAboutCard.Builder teamCard = new MaterialAboutCard.Builder();
         teamCard.addItem(new MaterialAboutTitleItem.Builder()
                 .text("FRC Team 980 ThunderBots")
-                .icon(R.drawable.team980_logo)
+                .icon(R.mipmap.team980_logo)
                 .build());
 
         teamCard.addItem(new MaterialAboutActionItem.Builder()
