@@ -65,7 +65,8 @@ public class AboutActivity extends MaterialAboutActivity {
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.setData(Uri.parse("https://www.chiefdelphi.com/forums/showthread.php?t=151953"));
-                        startActivity(i);                    }
+                        startActivity(i);
+                    }
                 })
                 .build());
 
@@ -120,7 +121,7 @@ public class AboutActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse("https://www.ic_facebook_white.com/Team980ThunderBots"));
+                        i.setData(Uri.parse("https://www.facebook.com/Team980ThunderBots"));
                         startActivity(i);
                     }
                 })
@@ -134,7 +135,7 @@ public class AboutActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse("https://ic_twitter_white.com/frc980"));
+                        i.setData(Uri.parse("https://twitter.com/frc980"));
                         startActivity(i);
                     }
                 })
@@ -148,7 +149,7 @@ public class AboutActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse("https://www.ic_instagram_white.com/frcteam980/"));
+                        i.setData(Uri.parse("https://www.instagram.com/frcteam980/"));
                         startActivity(i);
                     }
                 })
@@ -162,7 +163,7 @@ public class AboutActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse("https://www.ic_snapchat_white.com/add/frcteam980"));
+                        i.setData(Uri.parse("https://www.snapchat.com/add/frcteam980"));
                         startActivity(i);
                     }
                 })
@@ -176,7 +177,7 @@ public class AboutActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse("https://www.ic_youtube_white.com/channel/UCxW_2sc2SANjckwsFJt14AQ"));
+                        i.setData(Uri.parse("https://www.youtube.com/channel/UCxW_2sc2SANjckwsFJt14AQ"));
                         startActivity(i);
                     }
                 })
