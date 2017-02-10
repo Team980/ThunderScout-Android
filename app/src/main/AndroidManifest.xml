@@ -70,7 +70,7 @@
             android:name=".AboutActivity"
             android:label="About"
             android:parentActivityName=".preferences.SettingsActivity"
-            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
+            android:theme="@style/ThunderScout.MaterialAboutActivity" />
 
         <service android:name=".bluetooth.BluetoothServerService" />
         <service
