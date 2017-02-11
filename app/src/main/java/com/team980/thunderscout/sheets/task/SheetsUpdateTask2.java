@@ -1,4 +1,4 @@
-package com.team980.thunderscout.sheets.task;
+/*package com.team980.thunderscout.sheets.task;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * use SheetsUpdateTask instead, this is just for reference
  */
-public class SheetsUpdateTask2 extends AsyncTask<ScoutData, Void, Void> {
+/*public class SheetsUpdateTask2 extends AsyncTask<ScoutData, Void, Void> {
 
     private Context context;
 
@@ -173,4 +173,4 @@ public class SheetsUpdateTask2 extends AsyncTask<ScoutData, Void, Void> {
 
         sheet.setData(gridList);
     }
-}
+}*/

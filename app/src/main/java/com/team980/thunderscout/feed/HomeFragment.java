@@ -1,13 +1,16 @@
 package com.team980.thunderscout.feed;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.service.quicksettings.TileService;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -30,13 +33,16 @@ import android.widget.LinearLayout;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.bluetooth.BluetoothQuickTileService;
+import com.team980.thunderscout.bluetooth.BluetoothServerService;
 import com.team980.thunderscout.feed.task.FeedDataClearTask;
 import com.team980.thunderscout.feed.task.FeedDataReadTask;
 import com.team980.thunderscout.match.ScoutingFlowActivity;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener {
+public class HomeFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
+        DialogInterface.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private RecyclerView feed;
     private ActivityFeedAdapter adapter;
@@ -44,6 +50,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     private SwipeRefreshLayout swipeContainer;
 
     private BroadcastReceiver refreshReceiver;
+
+    private FloatingActionButton scoutButton;
 
     public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.feed.REFRESH_VIEW_PAGER"; //conveniently different from the other one
 
@@ -103,18 +111,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
             }
         };
 
-        FloatingActionButton b = (FloatingActionButton) view.findViewById(R.id.fab_scout);
-        b.setOnClickListener(this);
+        scoutButton = (FloatingActionButton) view.findViewById(R.id.fab_scout);
+        scoutButton.setOnClickListener(this);
+
+        Boolean matchScout = PreferenceManager.getDefaultSharedPreferences(getContext())
+                .getBoolean("enable_match_scout", false);
+
+        if (matchScout) {
+            scoutButton.setVisibility(View.VISIBLE);
+        } else {
+            scoutButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(this);
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+
+        PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -181,5 +203,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         FeedDataClearTask clearTask = new FeedDataClearTask(adapter, getContext());
         clearTask.execute();
 
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("enable_match_scout")) {
+            Boolean matchScout = sharedPreferences.getBoolean("enable_match_scout", false);
+
+            if (matchScout) {
+                scoutButton.setVisibility(View.VISIBLE);
+            } else {
+                scoutButton.setVisibility(View.GONE);
+            }
+        }
     }
 }
