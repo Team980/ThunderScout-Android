@@ -1,4 +1,4 @@
-package com.team980.thunderscout.sheets;
+/*package com.team980.thunderscout.sheets;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -70,4 +70,4 @@ public class GoogleAuthActivity extends AppCompatActivity {
 
 
     }
-}
+}*/
