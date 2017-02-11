@@ -18,5 +18,5 @@ ThunderScout has a simple built-in view for listing and sorting your scouted dat
 ###ALWAYS UPDATING
 ThunderScout gains additional features and capabilities with every update.
 
-###Download
+##DOWNLOAD
 ThunderScout is available to download on [Google Play](https://play.google.com/store/apps/details?id=com.team980.thunderscout).
