@@ -4,5 +4,10 @@
         <attr name="min" format="float" />
         <attr name="max" format="float" />
         <attr name="count" format="float" />
+        <attr name="size" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="large" value="1"/>
+            <enum name="xlarge" value="2"/>
+        </attr>
     </declare-styleable>
 </resources>
