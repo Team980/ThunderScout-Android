@@ -1,5 +1,9 @@
 # Credits
 
+##Assets
+
+Lightning gear icon created by Andrew Fisher-Shin
+
 ##Libraries
 
 ###Expandable RecyclerView
