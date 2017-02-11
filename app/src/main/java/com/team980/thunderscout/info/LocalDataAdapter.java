@@ -96,31 +96,23 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
      * @param data ScoutData to insert
      */
     public void addScoutData(ScoutData data) {
-        Log.d("Adding Data", "Fetching parent item list");
 
         for (int i = 0; i < teams.size(); i++) {
             TeamWrapper tw = teams.get(i);
-            Log.d("Adding Data", "Looping: " + i);
 
             if (tw.getTeamNumber().equals(data.getTeamNumber())) {
                 //Pre-existing team
-                Log.d("Adding Data", "Pre existing team: " + data.getTeamNumber());
 
                 ArrayList<ScoutData> childList = (ArrayList<ScoutData>) tw.getChildItemList();
 
-                Log.d("Adding Data", "Fetching child item list");
-
                 for (ScoutData child : childList) {
-                    Log.d("Adding Data", "Looping child: " + child.getTeamNumber());
                     if (child.getDateAdded() == (data.getDateAdded())) { //TODO verify this works
                         //This child has already been added to the database
-                        Log.d("Adding Data", "Child already in DB");
                         return;
                     }
                 }
 
                 childList.add(data);
-                Log.d("Adding Data", "Adding new child to parent");
                 notifyChildItemInserted(i, childList.size() - 1); //TODO verify this
                 notifyParentItemChanged(i); //This forces the parent to update
 
@@ -129,7 +121,6 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
             }
         }
         //New team
-        Log.d("Adding Data", "Adding new parent to list");
         teams.add(new TeamWrapper(data.getTeamNumber(), data));
         notifyParentItemInserted(teams.size() - 1); //TODO verify this
 
@@ -208,8 +199,6 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
         List<ScoutData> items = new ArrayList<>(selectedItems.size());
         for (int i = 0; i < selectedItems.size(); i++) {
             items.add((ScoutData) mItemList.get(selectedItems.keyAt(i)));
-            Log.d("GetSelected", selectedItems.keyAt(i) + "");
-            Log.d("GetSelected2", ((ScoutData) mItemList.get(selectedItems.keyAt(i))).getDateAdded() + "");
         }
         return items;
     }
@@ -318,9 +307,6 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
             itemView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (fragment.isInSelectionMode()) {
-                        Log.d("ADAPT", MatchViewHolder.super.getAdapterPosition() + "");
-                        Log.d("ADAPT2", checkBox.isChecked() + "");
-                        Log.d("ADAPT3", selectedItems.get(MatchViewHolder.super.getAdapterPosition()) + "");
                         if (selectedItems.get(MatchViewHolder.super.getAdapterPosition())) {
                             deselect(MatchViewHolder.super.getAdapterPosition());
                             checkBox.setChecked(false);
@@ -328,7 +314,6 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
                             select(MatchViewHolder.super.getAdapterPosition());
                             checkBox.setChecked(true);
                         }
-                        Log.d("ADAPT4", selectedItems.toString());
                     } else {
                         Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
                         launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", scoutData);
@@ -340,9 +325,6 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    Log.d("ADAPT", MatchViewHolder.super.getAdapterPosition() + "");
-                    Log.d("ADAPT2", checkBox.isChecked() + "");
-                    Log.d("ADAPT3", selectedItems.get(MatchViewHolder.super.getAdapterPosition()) + "");
                     if (selectedItems.get(MatchViewHolder.super.getAdapterPosition())) {
                         deselect(MatchViewHolder.super.getAdapterPosition());
                         checkBox.setChecked(false);
@@ -350,7 +332,6 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
                         select(MatchViewHolder.super.getAdapterPosition());
                         checkBox.setChecked(true);
                     }
-                    Log.d("ADAPT4", selectedItems.toString());
                     return true;
                 }
             });
@@ -358,9 +339,6 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("ADAPT", MatchViewHolder.super.getAdapterPosition() + "");
-                    Log.d("ADAPT2", checkBox.isChecked() + "");
-                    Log.d("ADAPT3", selectedItems.get(MatchViewHolder.super.getAdapterPosition()) + "");
                     if (selectedItems.get(MatchViewHolder.super.getAdapterPosition())) {
                         deselect(MatchViewHolder.super.getAdapterPosition());
                         checkBox.setChecked(false);
@@ -368,7 +346,6 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
                         select(MatchViewHolder.super.getAdapterPosition());
                         checkBox.setChecked(true);
                     }
-                    Log.d("ADAPT4", selectedItems.toString());
                 }
             });
         }

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
@@ -108,7 +109,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
                     sortOrder                                 // The sort order
             );
         } catch (SQLiteException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             return null;
         }
 
@@ -150,7 +151,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
         try {
             data.setDateAdded(Long.valueOf(dateAdded));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
         }
 
         String dataSource = cursor.getString(

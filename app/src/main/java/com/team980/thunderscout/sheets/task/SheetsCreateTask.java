@@ -18,6 +18,7 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.SpreadsheetProperties;
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -63,9 +64,9 @@ public class SheetsCreateTask extends AsyncTask<Void, Void, String> {
 
         } catch (UserRecoverableAuthIOException e) {
             ((Activity) context).startActivityForResult(e.getIntent(), 1001); //TODO This REALLY should be called somewhere else!
-            e.printStackTrace();
+            FirebaseCrash.report(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
         }
 
         return spreadsheet.getSpreadsheetId();

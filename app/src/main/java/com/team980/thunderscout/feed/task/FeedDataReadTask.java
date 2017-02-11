@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.feed.ActivityFeedAdapter;
 import com.team980.thunderscout.feed.EntryOperationWrapper;
@@ -83,7 +84,7 @@ public class FeedDataReadTask extends AsyncTask<Void, FeedEntry, Void> {
                     sortOrder                                 // The sort order
             );
         } catch (SQLiteException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             return null;
         }
 

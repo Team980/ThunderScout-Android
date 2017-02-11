@@ -34,10 +34,8 @@ dependencies {
     }
     //compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
     //compile 'com.google.android.gms:play-services-auth:9.8.00'
-    //compile 'com.google.firebase:firebase-core:9.6.1'
-    //compile 'com.google.firebase:firebase-crash:9.6.1'
-    //compile 'com.google.firebase:firebase-messaging:9.6.1'
-    //compile 'com.google.firebase:firebase-config:9.6.1'
+    compile 'com.google.firebase:firebase-core:10.0.1'
+    compile 'com.google.firebase:firebase-crash:10.0.1'
     compile 'com.android.support:support-v4:25.1.1'
     compile 'com.android.support:design:25.1.1'
     compile 'com.android.support:appcompat-v7:25.1.1'

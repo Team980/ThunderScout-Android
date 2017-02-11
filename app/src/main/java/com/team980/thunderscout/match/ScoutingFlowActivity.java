@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
@@ -185,7 +186,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         if (v.getId() == R.id.fab) {
             initScoutData();
 
-            Log.d("SCOUTLOOP", "here we go again");
+            FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Starting scouting loop");
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -237,8 +238,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     getResources().getColor(scoutData.getAllianceColor().getColorPrimary()),
                     getResources().getColor(scoutData.getAllianceColor().getColorPrimaryDark()), this);
 
-            Log.d("AllianceColor", scoutData.getAllianceColor().toString());
-
             dialog.dismiss();
         } else {
             //do not dismiss - TODO show error
@@ -259,7 +258,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     }
 
     private void dataOutputLoop() {
-        Log.d("SCOUTLOOP", "ever get that feeling of deja vu?");
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Looping through data output loop");
         if (!operationStateDialog.isShowing()) {
             operationStateDialog.show(); //Show it if it isn't already visible
         }
@@ -307,7 +306,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     }
 
     public void dataOutputCallbackSuccess(final String operationId) {
-        Log.d("SCOUTLOOP", "back into the fray");
         operationStates.putBoolean(operationId, false); //we're done with that!
 
         operationStateDialog.setMessage("");
@@ -316,12 +314,14 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 EntryOperationStatus.OPERATION_SUCCESSFUL);
         feedEntry.addOperation(operation);
 
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Operation " +
+                EntryOperationType.fromOperationId(operationId) + " SUCCESSFUL");
+
         dataOutputLoop();
     }
 
     //TODO broadcast receiver?
     public void dataOutputCallbackFail(final String operationId, Exception ex) {
-        Log.d("SCOUTLOOP", "back into the fray");
 
         operationStateDialog.hide();
 
@@ -352,6 +352,11 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                         dataOutputLoop();
                     }
                 });
+
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Operation " +
+                EntryOperationType.fromOperationId(operationId) + " FAILED");
+        //FirebaseCrash.report(ex); This would create duplicate reports.
+
         AlertDialog alert = builder.create();
         alert.show();
     }

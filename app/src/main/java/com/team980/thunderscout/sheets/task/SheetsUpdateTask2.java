@@ -21,6 +21,7 @@ import com.google.api.services.sheets.v4.model.RowData;
 import com.google.api.services.sheets.v4.model.Sheet;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 
@@ -110,7 +111,7 @@ public class SheetsUpdateTask2 extends AsyncTask<ScoutData, Void, Void> {
             //DimensionRange range1 = new DimensionRange();
             //range1.setSheetId()
         } catch (IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
         }
 
         return null;

@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ScoutDataContract;
@@ -88,7 +89,7 @@ public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
                     null,
                     values);
         } catch (final Exception e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             if (activity != null) {
                 Handler handler = new Handler(Looper.getMainLooper());
 
