@@ -82,7 +82,7 @@
                         android:layout_marginBottom="4dp"
                         android:gravity="center"
                         android:text="State"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/auto_textViewFuelNumericalValue"
@@ -91,7 +91,7 @@
                         android:layout_marginBottom="4dp"
                         android:gravity="center"
                         android:text="0 - 0"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <Button
@@ -177,7 +177,8 @@
                 android:id="@+id/auto_checkBoxCrossedBaseline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp" />
+                android:layout_marginLeft="5dp"
+                android:padding="10dp"/>
 
         </LinearLayout>
 

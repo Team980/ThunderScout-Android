@@ -16,30 +16,30 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Large"/>
+            android:text="Large" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="15dp"
                 android:text="Gears Delivered"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <com.team980.thunderscout.util.CounterCompoundView
                 android:id="@+id/auto_counterGearsDelivered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="18sp" />
+                android:layout_marginLeft="15dp"
+                app:size="large" />
 
 
         </LinearLayout>
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="32dp"
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
@@ -58,22 +58,23 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:text="Fuel Dumped in Low Goal"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/auto_buttonFuelMinus"
                     style="?android:attr/buttonStyleSmall"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
                     android:background="?attr/selectableItemBackground"
                     android:text="-"
                     android:textColor="@color/accent"
-                    android:textSize="20sp" />
+                    android:textSize="30sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -82,32 +83,32 @@
 
                     <TextView
                         android:id="@+id/auto_textViewFuelValue"
-                        android:layout_width="128dp"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:gravity="center"
                         android:text="State"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textSize="22sp" />
 
                     <TextView
                         android:id="@+id/auto_textViewFuelNumericalValue"
-                        android:layout_width="128dp"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:gravity="center"
                         android:text="0 - 0"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/auto_buttonFuelPlus"
                     style="?android:attr/buttonStyleSmall"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
                     android:background="?attr/selectableItemBackground"
                     android:text="+"
                     android:textColor="@color/accent"
-                    android:textSize="20sp" />
+                    android:textSize="30sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -116,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="32dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
@@ -124,19 +125,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginRight="20dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginRight="5dp"
                     android:text="High Goals"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/auto_counterHighGoals"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center"
+                    app:size="large" />
 
             </LinearLayout>
 
@@ -144,6 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -151,12 +158,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Missed High Goals"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/auto_counterMissedHighGoals"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center"
+                    app:size="large" />
 
             </LinearLayout>
 
@@ -167,7 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
             <TextView
@@ -176,13 +186,14 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="8dp"
                 android:text="Crossed Baseline?"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <CheckBox
                 android:id="@+id/auto_checkBoxCrossedBaseline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp" />
+                android:layout_marginLeft="5dp"
+                android:padding="10dp"/>
 
         </LinearLayout>
 
