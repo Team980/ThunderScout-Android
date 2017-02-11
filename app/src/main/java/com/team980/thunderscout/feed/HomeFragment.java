@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         scoutButton.setOnClickListener(this);
 
         Boolean matchScout = PreferenceManager.getDefaultSharedPreferences(getContext())
-                .getBoolean("enable_match_scout", false);
+                .getBoolean("enable_match_scout", true);
 
         if (matchScout) {
             scoutButton.setVisibility(View.VISIBLE);
