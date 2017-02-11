@@ -1,21 +1,22 @@
 # ThunderScout [![Build Status](https://travis-ci.org/Team980/ThunderScout-Android.svg?branch=master)](https://travis-ci.org/Team980/ThunderScout-Android)
-FRC Team 980's Android Scouting App
 
-##NOTE: The information present here is subject to change.
+##THUNDERSCOUT: SCOUT WITH POWER
+ThunderScout is an app for FIRST Robotics Competition teams to facilitate the scouting process at competition events. 
 
-### Currently supports the 2016 game, FIRST Stronghold
+###INTUITIVE USER INTERFACE
+ThunderScout has been designed to help you get scouting done, easily. 
 
-### Configurable to support the constraints of any scouting team's hardware
+###MODULAR DESIGN
+ThunderScout has a configurable modular design to fit the needs of any team's scouting system.
 
-### Works locally, without any connections!
+###BLUETOOTH CONNECTIVITY 
+ThunderScout supports a built-in Bluetooth server to help you consolidate all your data in one place.
 
-### A configurable Bluetooth server with 99% reliability
+###ELEGANT DATA ANALYTICS 
+ThunderScout has a simple built-in view for listing and sorting your scouted data.
 
-### Google Sheets backs up your data to the cloud... and drive team
+###ALWAYS UPDATING
+ThunderScout gains additional features and capabilities with every update.
 
-### Features a professional and customizable Material Design UI
-
-### Coming soon to an app store near you
-
-### Fork and edit to achieve ultimate customizability
-
+###Download
+ThunderScout is available to download on [Google Play](https://play.google.com/store/apps/details?id=com.team980.thunderscout).
