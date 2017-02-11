@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.feed.FeedDataContract;
 import com.team980.thunderscout.feed.FeedDataDbHelper;
@@ -57,7 +58,7 @@ public class FeedDataWriteTask extends AsyncTask<Void, Integer, Void> {
                     null,
                     values);
         } catch (final Exception e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
         }
 
         db.close();
@@ -70,7 +71,6 @@ public class FeedDataWriteTask extends AsyncTask<Void, Integer, Void> {
         super.onPostExecute(o);
 
         Intent intent = new Intent(HomeFragment.ACTION_REFRESH_VIEW_PAGER);
-        Log.d("PINGTEST", "intent");
         localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
     }
 }

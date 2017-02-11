@@ -10,6 +10,7 @@ import android.service.quicksettings.TileService;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.bluetooth.BluetoothQuickTileService;
 import com.team980.thunderscout.bluetooth.BluetoothServerService;
 
@@ -36,7 +37,7 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
 
             return buf;
         } catch (IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             return null;
         }
     }
@@ -50,7 +51,7 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
 
             return object;
         } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             return null;
         }
 
@@ -83,22 +84,15 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
     @Override
     public void onCreate() { //This isn't why loading is slow
         super.onCreate();
-        Log.d("THUNDERSCOUT", "Application.onCreate");
 
-        Log.d("THUNDERSCOUT", "Fetching shared preferences");
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean runServer = sharedPref.getBoolean("enable_bt_server", false);
 
         if (runServer) { //TODO I must be launching multiple instances?
-            Log.d("THUNDERSCOUT", "Starting service...");
             startService(new Intent(this, BluetoothServerService.class));
         }
 
-        Log.d("THUNDERSCOUT", "Registering onPreferenceChangeListener");
         sharedPref.registerOnSharedPreferenceChangeListener(this);
-
-        Log.d("THUNDERSCOUT", "Finished onCreate");
-
     }
 
     @Override
@@ -106,18 +100,13 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
         if (key.equals("enable_bt_server")) {
             Boolean isServer = sharedPreferences.getBoolean("enable_bt_server", false);
 
-            Log.d("PREFLISTEN", "Server preference changed");
-
             if (isServer) {
-                Log.d("PREFLISTEN", "enabling BT server");
                 startService(new Intent(this, BluetoothServerService.class));
             } else {
-                Log.d("PREFLISTEN", "disabling BT server");
                 stopService(new Intent(this, BluetoothServerService.class));
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Log.d("TILETRACE", "requesting tile listening state");
                 TileService.requestListeningState(this, new ComponentName(this, BluetoothQuickTileService.class));
             }
         }

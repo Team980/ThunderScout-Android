@@ -58,7 +58,6 @@ public class TeleopFragment extends Fragment implements View.OnClickListener, Sp
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putParcelable("LayoutManager", layoutManager.onSaveInstanceState());
         adapter.onSaveInstanceState(savedInstanceState);
-        Log.d("InstanceRedux", "Saved");
     }
 
     @Override

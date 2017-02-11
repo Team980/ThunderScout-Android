@@ -50,15 +50,12 @@ public class BluetoothQuickTileService extends TileService {
     @Override
     public void onClick() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Log.d("TILETRACE", "tile clicked");
 
         if (prefs.getBoolean("enable_bt_server", false)) { //Toggles the bluetooth server state
-            Log.d("TILETRACE", "disabling BT server");
             prefs.edit().putBoolean("enable_bt_server", false).apply();
 
         } else {
             prefs.edit().putBoolean("enable_bt_server", true).apply();
-            Log.d("TILETRACE", "enabling BT server");
         }
     }
 }

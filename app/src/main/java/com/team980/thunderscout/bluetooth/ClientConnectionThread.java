@@ -6,8 +6,10 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.match.ScoutingFlowActivity;
 import com.team980.thunderscout.util.TSNotificationBuilder;
@@ -44,6 +46,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             // MY_UUID is the app's UUID string, also used by the server code
             tmp = device.createRfcommSocketToServiceRecord(UUID.fromString(BluetoothInfo.UUID));
         } catch (IOException e) {
+            FirebaseCrash.report(e);
         }
         mmSocket = tmp;
 
@@ -76,13 +79,13 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             try {
                 mmSocket.close();
             } catch (IOException closeException) {
-                closeException.printStackTrace();
+                FirebaseCrash.report(closeException);
             }
             manageError(notificationId, connectException);
             return;
         }
 
-        postToastMessage("Successfully connected to server device");
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Connection to server device successful");
 
         scoutData.setDateAdded(System.currentTimeMillis());
 
@@ -93,20 +96,20 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             ooStream = new ObjectOutputStream(mmSocket.getOutputStream());
             ooStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             manageError(notificationId, e);
             return;
         }
 
         //TODO add version check
 
-        postToastMessage("Sending data...");
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
 
         try {
             ooStream.writeObject(scoutData);
             ooStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             manageError(notificationId, e);
             return;
         }
@@ -130,7 +133,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             ooStream.close();
             ioStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
         }
     }
 
@@ -160,17 +163,5 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
                 }
             });
         }
-    }
-
-    public void postToastMessage(final String message) {
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        handler.post(new Runnable() {
-
-            @Override
-            public void run() {
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

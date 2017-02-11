@@ -4,8 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.feed.ActivityFeedAdapter;
 import com.team980.thunderscout.feed.FeedDataContract.FeedDataTable;
 import com.team980.thunderscout.feed.FeedDataDbHelper;
@@ -35,7 +37,7 @@ public class FeedDataClearTask extends AsyncTask<Void, Integer, Void> {
         try {
             rowsDeleted = db.delete(FeedDataTable.TABLE_NAME, null, null);
         } catch (SQLiteException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             return null;
         }
 
@@ -48,7 +50,7 @@ public class FeedDataClearTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onProgressUpdate(Integer[] values) {
         //Runs on UI thread when publishProgress() is called
-        Toast.makeText(context, values[0] + " rows deleted from DB", Toast.LENGTH_LONG).show();
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), values[0] + " rows deleted from DB");
 
         super.onProgressUpdate(values);
     }

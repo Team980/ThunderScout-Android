@@ -11,9 +11,11 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.opencsv.CSVWriter;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
@@ -35,11 +37,6 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
 
     public CSVExportTask(Context context) {
         this.context = context;
-    }
-
-    @Override
-    protected void onPreExecute() {
-
     }
 
     @Override
@@ -90,7 +87,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
                     sortOrder                                 // The sort order
             );
         } catch (SQLiteException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             return null;
         }
 
@@ -104,7 +101,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
         try {
             writer = new CSVWriter(new FileWriter(csv), ',');
         } catch (IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             return null;
         }
 
@@ -122,7 +119,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             //ignore
         }
 
@@ -163,7 +160,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
         try {
             data.setDateAdded(Long.valueOf(dateAdded));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
         }
 
         String dataSource = cursor.getString(
@@ -240,7 +237,8 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
     @Override
     protected void onProgressUpdate(String[] values) {
         //Runs on UI thread when publishProgress() is called
-        Toast.makeText(context, "CSV ic_export_white complete: " + values[0], Toast.LENGTH_LONG).show();
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "CSV Export complete: " + values[0]);
+
 
         super.onProgressUpdate(values);
     }

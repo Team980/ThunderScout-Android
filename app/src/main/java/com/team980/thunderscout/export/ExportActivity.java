@@ -52,12 +52,9 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(selectedUri, "resource/folder");
 
-            if (intent.resolveActivityInfo(getPackageManager(), 0) != null)
-            {
+            if (intent.resolveActivityInfo(getPackageManager(), 0) != null) {
                 startActivity(intent);
-            }
-            else
-            {
+            } else {
                 // if you reach this place, it means there is no any file
                 // explorer app installed on your device
             }

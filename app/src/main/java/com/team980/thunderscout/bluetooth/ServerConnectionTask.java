@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.task.ScoutDataWriteTask;
 import com.team980.thunderscout.feed.EntryOperationWrapper;
@@ -55,7 +56,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             toScoutStream.flush();
             fromScoutStream = new ObjectInputStream(mmSocket.getInputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
                     notificationId);
             return null;
@@ -67,7 +68,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             data = (ScoutData) fromScoutStream.readObject();
 
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
                     notificationId);
             return null;
@@ -77,7 +78,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             fromScoutStream.close();
             toScoutStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            FirebaseCrash.report(e);
         }
 
         notificationManager.showBtTransferFinished(notificationId);
@@ -89,7 +90,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         //Runs on UI thread when publishProgress() is called
         super.onProgressUpdate(values);
 
-        Toast.makeText(context, "Inserted into DB: Row " + values[0], Toast.LENGTH_LONG).show();
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Inserted ScoutData into DB, row=" + values[0]);
     }
 
     @Override
@@ -122,7 +123,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             FeedDataWriteTask feedDataWriteTask = new FeedDataWriteTask(feedEntry, context);
             feedDataWriteTask.execute();
         } else {
-            Log.d("ServerConnectionTask", "Failed to start FeedDataWriteTask!");
+            FirebaseCrash.logcat(Log.ERROR, this.getClass().getName(), "Failed to start FeedDataWriteTask!");
         }
     }
 

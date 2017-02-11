@@ -97,7 +97,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         refreshReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d("PINGTEST", "I hear you");
 
                 FeedDataReadTask query = new FeedDataReadTask(adapter, getContext(), swipeContainer);
                 query.execute();
@@ -122,7 +121,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     public void onPause() {
         super.onPause();
 
-        Log.d("PINGTEST", "unregister");
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
     }
 
@@ -130,7 +128,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     public void onResume() {
         super.onResume();
 
-        Log.d("PINGTEST", "register");
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter(ACTION_REFRESH_VIEW_PAGER));
     }
 

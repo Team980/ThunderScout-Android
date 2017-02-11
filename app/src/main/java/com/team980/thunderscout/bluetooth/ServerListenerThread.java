@@ -6,7 +6,10 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.google.firebase.crash.FirebaseCrash;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -29,6 +32,7 @@ public class ServerListenerThread extends Thread {
             // MY_UUID is the app's UUID string, also used by the client code
             tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(BluetoothInfo.SERVICE_NAME, UUID.fromString(BluetoothInfo.UUID));
         } catch (IOException e) {
+            FirebaseCrash.report(e);
         }
         mmServerSocket = tmp;
 
@@ -40,17 +44,17 @@ public class ServerListenerThread extends Thread {
         while (true) {
             final BluetoothSocket socket;
             try {
-                postToastMessage("Listening for incoming connections");
+                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Listening for incoming connections");
                 socket = mmServerSocket.accept(); //this is failing why? - needs more testing
             } catch (IOException e) {
-                e.printStackTrace();
+                FirebaseCrash.report(e);
                 break;
             }
             // If a connection was accepted
             if (socket != null) {
                 // Do work to manage the connection (in a separate thread)
 
-                postToastMessage("Connected to " + socket.getRemoteDevice().getName());
+                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Connected to" + socket.getRemoteDevice().getName());
 
                 ServerConnectionTask readTask = new ServerConnectionTask(socket, context);
                 readTask.execute();
@@ -65,19 +69,7 @@ public class ServerListenerThread extends Thread {
         try {
             mmServerSocket.close();
         } catch (IOException e) {
-
+            //ignored
         }
-    }
-
-    public void postToastMessage(final String message) {
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        handler.post(new Runnable() {
-
-            @Override
-            public void run() {
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("FRAGSTATE", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -43,9 +42,7 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState != null) {
             //Restore the fragment's instance
             fragment = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
-            Log.d("FRAGSTATE", "restoring");
         } else {
-            Log.d("FRAGSTATE", "new frag");
             switch (shownFragment) {
                 case 0: //INTENT_FLAGS_HOME
                     navigationView.setCheckedItem(R.id.nav_match_scout);
@@ -62,8 +59,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        Log.d("FRAGSTATE", "frag class: " + fragment.getClass().getName());
-
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment, fragment);
         ft.commit();
@@ -78,9 +73,6 @@ public class MainActivity extends AppCompatActivity
         if (fragment instanceof ThisDeviceFragment) {
             ((ThisDeviceFragment) fragment).saveAdapterState(outState);
         }
-
-        Log.d("FRAGSTATE", "saving");
-        Log.d("FRAGSTATE", "class: " + fragment.getClass());
 
         //Save the fragment's instance
         getSupportFragmentManager().putFragment(outState, "mContent", fragment);

@@ -256,6 +256,6 @@ public class ScoutData implements Serializable {
         fieldList.add(getTroubleWith());
         fieldList.add(getComments());
 
-        return (String[]) fieldList.toArray(new String[fieldList.size()]);
+        return fieldList.toArray(new String[fieldList.size()]);
     }
 }
