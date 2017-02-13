@@ -38,8 +38,7 @@
                 android:id="@+id/auto_counterGearsDelivered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                app:size="xlarge" />
+                android:layout_marginLeft="35dp" />
 
 
         </LinearLayout>
@@ -141,9 +140,7 @@
                     android:id="@+id/auto_counterHighGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:layout_gravity="center"
-                    app:size="xlarge" />
+                    android:layout_gravity="center" />
 
             </LinearLayout>
 
@@ -165,9 +162,7 @@
                     android:id="@+id/auto_counterMissedHighGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:layout_gravity="center"
-                    app:size="xlarge" />
+                    android:layout_gravity="center" />
 
             </LinearLayout>
 
@@ -191,10 +186,11 @@
 
             <CheckBox
                 android:id="@+id/auto_checkBoxCrossedBaseline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginLeft="5dp"
-                android:padding="20dp"/>
+                android:button="@null"
+                android:background="?android:attr/listChoiceIndicatorMultiple"/>
 
         </LinearLayout>
 
