@@ -42,7 +42,7 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
         int numSize = a.getInt(R.styleable.CounterCompoundView_size, 0);
         size = Size.values()[numSize];
 
-        switch (size) {
+        switch (size) { //TODO add alternate resource configurations instead of this
             case LARGE:
                 ((Button) findViewById(R.id.plus)).setTextSize(30);
 

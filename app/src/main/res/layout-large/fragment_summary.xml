@@ -34,6 +34,7 @@
                     android:id="@+id/summary_edittextTroubleWith"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:ems="20" />
 
             </android.support.design.widget.TextInputLayout>
@@ -57,6 +58,7 @@
                     android:id="@+id/summary_edittextComments"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="24sp"
                     android:ems="20" />
 
             </android.support.design.widget.TextInputLayout>
