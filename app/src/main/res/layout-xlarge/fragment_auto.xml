@@ -140,7 +140,8 @@
                     android:id="@+id/auto_counterHighGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:longPress="true"/>
 
             </LinearLayout>
 
@@ -162,7 +163,8 @@
                     android:id="@+id/auto_counterMissedHighGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    app:longPress="true"/>
 
             </LinearLayout>
 
