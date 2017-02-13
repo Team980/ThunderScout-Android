@@ -18,31 +18,30 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Extra Large" />
+            android:text="Large" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="35dp"
                 android:text="Gears Delivered"
-                android:textSize="18sp" />
+                android:textSize="30sp" />
 
             <com.team980.thunderscout.util.CounterCompoundView
                 android:id="@+id/teleop_counterGearsDelivered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="18sp" />
-
+                android:layout_marginLeft="35dp"
+                app:size="xlarge" />
 
         </LinearLayout>
 
@@ -50,8 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -65,15 +64,18 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Fuel Dumped in Low Goal"
-                    android:textSize="18sp" />
+                    android:layout_marginRight="20dp"
+                    android:textSize="30sp" />
 
                 <Button
                     android:id="@+id/teleop_buttonAddFuelDump"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
+                    android:layout_marginLeft="20dp"
                     android:text="ADD"
-                    android:textColor="@color/accent" />
+                    android:textColor="@color/accent"
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
@@ -89,14 +91,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="32dp"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginRight="40dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -104,12 +107,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="High Goals"
-                    android:textSize="18sp" />
+                    android:textSize="30sp" />
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterHighGoals"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:size="xlarge" />
 
             </LinearLayout>
 
@@ -117,6 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -124,12 +130,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Missed High Goals"
-                    android:textSize="18sp" />
+                    android:textSize="30sp" />
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterMissedHighGoals"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_gravity="center"
+
+                    android:layout_height="wrap_content"
+                    app:size="xlarge" />
 
             </LinearLayout>
 
@@ -140,24 +149,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="15dp"
                 android:text="Climbing Stats"
-                android:textSize="18sp" />
+                android:textSize="30sp" />
 
             <Spinner
                 android:id="@+id/teleop_spinnerClimbingStats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:entries="@array/climbing_stats_array" />
+                android:layout_marginLeft="15dp"
+                android:entries="@array/climbing_stats_array"
+                android:textSize="30sp" />
 
         </LinearLayout>
 
