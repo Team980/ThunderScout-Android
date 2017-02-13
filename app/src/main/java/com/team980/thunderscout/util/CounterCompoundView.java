@@ -13,13 +13,16 @@ import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 
-public class CounterCompoundView extends FrameLayout implements View.OnClickListener {
+public class CounterCompoundView extends FrameLayout implements View.OnClickListener, View.OnLongClickListener {
 
     protected LayoutInflater inflater;
     protected float max;
     protected float min;
     protected float count;
     float value;
+
+    protected boolean longPressEnabled;
+    protected float longPressCount;
 
     public CounterCompoundView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,11 +37,19 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.CounterCompoundView, 0, 0);
-        max = a.getFloat(R.styleable.CounterCompoundView_max, 100); //Default max: 100
+        max = a.getFloat(R.styleable.CounterCompoundView_max, 1337); //This impossibly high number should never be reached
         min = a.getFloat(R.styleable.CounterCompoundView_min, 0);
         count = a.getFloat(R.styleable.CounterCompoundView_count, 1);
 
+        longPressEnabled = a.getBoolean(R.styleable.CounterCompoundView_longPress, false); //no long press by default
+        longPressCount = a.getFloat(R.styleable.CounterCompoundView_longPressCount, 5); //default long press count: 5
+
         a.recycle();
+
+        if (longPressEnabled) {
+            findViewById(R.id.plus).setOnLongClickListener(this);
+            findViewById(R.id.minus).setOnLongClickListener(this);
+        }
 
         String text;
 
@@ -81,8 +92,42 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
         ((TextView) findViewById(R.id.value)).setText(text);
     }
 
+    @Override
+    public boolean onLongClick(View v) {
+
+        if (v.getId() == R.id.plus) {
+
+            value += longPressCount;
+            if (value > max)
+                value = max;
+
+        } else if (v.getId() == R.id.minus) {
+
+            value -= longPressCount;
+
+            if (value < min)
+                value = min;
+        }
+
+        String text;
+
+        if (Float.compare(value, Math.round(value)) != 0) {
+            text = Float.toString(value);
+        } else {
+            text = Integer.toString((int) value);
+        }
+
+        ((TextView) findViewById(R.id.value)).setText(text);
+
+        return true;
+    }
+
     public float getValue() {
         return value;
+    }
+
+    public void setValue(float v) {
+        value = v;
     }
 
     @Override

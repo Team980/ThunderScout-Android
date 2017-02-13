@@ -66,9 +66,9 @@
                     android:id="@+id/teleop_buttonAddFuelDump"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/accent"
                     android:background="?attr/selectableItemBackground"
-                    android:text="ADD" />
+                    android:text="ADD"
+                    android:textColor="@color/accent" />
 
             </LinearLayout>
 
@@ -98,13 +98,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textSize="18sp"
-                    android:text="High Goals" />
+                    android:text="High Goals"
+                    android:textSize="18sp" />
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterHighGoals"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:longPress="true"/>
 
             </LinearLayout>
 
@@ -118,13 +119,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textSize="18sp"
-                    android:text="Missed High Goals" />
+                    android:text="Missed High Goals"
+                    android:textSize="18sp" />
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterMissedHighGoals"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:longPress="true"/>
 
             </LinearLayout>
 
