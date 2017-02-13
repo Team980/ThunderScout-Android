@@ -40,8 +40,7 @@
                 android:id="@+id/teleop_counterGearsDelivered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                app:size="large" />
+                android:layout_marginLeft="15dp" />
 
         </LinearLayout>
 
@@ -113,8 +112,7 @@
                     android:id="@+id/teleop_counterHighGoals"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:size="large" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -136,9 +134,7 @@
                     android:id="@+id/teleop_counterMissedHighGoals"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
-
-                    android:layout_height="wrap_content"
-                    app:size="large" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

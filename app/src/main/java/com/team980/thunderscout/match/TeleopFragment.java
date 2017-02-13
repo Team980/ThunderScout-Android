@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -52,6 +53,11 @@ public class TeleopFragment extends Fragment implements View.OnClickListener, Sp
 
         Spinner climbingStats = (Spinner) view.findViewById(R.id.teleop_spinnerClimbingStats);
         climbingStats.setOnItemSelectedListener(this);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.climbing_stats_array, R.layout.spinner_climbing_stats);
+        adapter.setDropDownViewResource(R.layout.spinner_climbing_stats_dropdown);
+        climbingStats.setAdapter(adapter);
     }
 
     @Override

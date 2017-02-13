@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true">
+
+        <Button
+            android:id="@+id/minus"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="-"
+            android:textColor="@color/accent"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/value"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="30sp" />
+
+
+        <Button
+            android:id="@+id/plus"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="+"
+            android:textColor="@color/accent"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+</merge>

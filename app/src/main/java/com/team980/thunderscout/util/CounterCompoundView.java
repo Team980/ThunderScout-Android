@@ -19,7 +19,6 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
     protected float max;
     protected float min;
     protected float count;
-    protected Size size;
     float value;
 
     public CounterCompoundView(Context context, AttributeSet attrs) {
@@ -28,7 +27,7 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
         inflater = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
 
-        inflater.inflate(R.layout.view_counter, this);
+        inflater.inflate(R.layout.counter_view, this);
 
         findViewById(R.id.plus).setOnClickListener(this);
         findViewById(R.id.minus).setOnClickListener(this);
@@ -38,31 +37,6 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
         max = a.getFloat(R.styleable.CounterCompoundView_max, 100); //Default max: 100
         min = a.getFloat(R.styleable.CounterCompoundView_min, 0);
         count = a.getFloat(R.styleable.CounterCompoundView_count, 1);
-
-        int numSize = a.getInt(R.styleable.CounterCompoundView_size, 0);
-        size = Size.values()[numSize];
-
-        switch (size) { //TODO add alternate resource configurations instead of this
-            case LARGE:
-                ((Button) findViewById(R.id.plus)).setTextSize(30);
-
-                ((Button) findViewById(R.id.minus)).setTextSize(30);
-
-                ((TextView) findViewById(R.id.value)).setTextSize(30);
-                ((TextView) findViewById(R.id.value)).setWidth(96);
-                break;
-            case EXTRA_LARGE:
-                ((Button) findViewById(R.id.plus)).setTextSize(40);
-
-                ((Button) findViewById(R.id.minus)).setTextSize(40);
-
-                ((TextView) findViewById(R.id.value)).setTextSize(40);
-                ((TextView) findViewById(R.id.value)).setWidth(144);
-                break;
-            default:
-                //the default sizes are fine
-                break;
-        }
 
         a.recycle();
 
@@ -124,8 +98,6 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
         ss.count = this.count;
         ss.value = this.value;
 
-        ss.size = this.size;
-
         return ss;
     }
 
@@ -146,8 +118,6 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
         this.count = ss.count;
         this.value = ss.value;
 
-        this.size = ss.size;
-
         String text;
 
         if (Float.compare(value, Math.round(value)) != 0) {
@@ -165,8 +135,6 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
         float count;
         float value;
 
-        Size size;
-
         SavedState(Parcelable superState) {
             super(superState);
         }
@@ -177,8 +145,6 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
             this.min = in.readFloat();
             this.count = in.readFloat();
             this.value = in.readFloat();
-
-            this.size = (Size) in.readSerializable();
         }
 
         @Override
@@ -188,8 +154,6 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
             out.writeFloat(this.min);
             out.writeFloat(this.count);
             out.writeFloat(this.value);
-
-            out.writeSerializable(this.size);
         }
 
         //required field that makes Parcelables from a Parcel
@@ -203,11 +167,5 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
                         return new SavedState[size];
                     }
                 };
-    }
-
-    private enum Size { //Get by ordinal
-        NORMAL,
-        LARGE,
-        EXTRA_LARGE
     }
 }

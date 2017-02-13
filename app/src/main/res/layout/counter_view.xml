@@ -23,8 +23,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="0"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/plus"
