@@ -101,7 +101,7 @@ public class FeedEntry implements ParentListItem, Comparable<FeedEntry> {
      */
     public enum EntryType { //TODO @string values
         MATCH_SCOUTED("Match scouted", R.drawable.ic_send_white_24dp), //client scouts match
-        SERVER_RECEIVED_MATCH("Data received from server", R.drawable.ic_bluetooth_searching_white_24dp); //server receives match via bluetooth
+        SERVER_RECEIVED_MATCH("Data received from client", R.drawable.ic_bluetooth_searching_white_24dp); //server receives match via bluetooth
 
         private String name;
         private int icon;
