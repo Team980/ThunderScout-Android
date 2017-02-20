@@ -73,6 +73,8 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
         if (longPressEnabled) {
             findViewById(R.id.plus).setOnLongClickListener(this);
             findViewById(R.id.minus).setOnLongClickListener(this);
+            ((Button) findViewById(R.id.plus)).setTextColor(getResources().getColor(R.color.accent_dark));
+            ((Button) findViewById(R.id.minus)).setTextColor(getResources().getColor(R.color.accent_dark));
         }
 
         String text;
