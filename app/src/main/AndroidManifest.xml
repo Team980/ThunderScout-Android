@@ -86,9 +86,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".export.ExportActivity"
-            android:label="Export..."
+            android:label="Export to CSV"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
+            android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
         <!-- <activity android:name=".sheets.GoogleAuthActivity"></activity> -->
         <activity
             android:name=".AboutActivity"

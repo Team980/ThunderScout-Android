@@ -25,19 +25,15 @@
 package com.team980.thunderscout.export;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.opencsv.CSVWriter;
@@ -48,7 +44,6 @@ import com.team980.thunderscout.data.ScoutDataDbHelper;
 import com.team980.thunderscout.data.enumeration.AllianceColor;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
-import com.team980.thunderscout.info.LocalDataAdapter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -57,16 +52,19 @@ import java.util.ArrayList;
 
 public class CSVExportTask extends AsyncTask<Void, String, File> {
 
-    private Context context;
+    private Activity activity;
 
-    public CSVExportTask(Context context) {
-        this.context = context;
+    private ExportActivity.ExportAction action;
+
+    public CSVExportTask(Activity activity, ExportActivity.ExportAction action) {
+        this.activity = activity;
+        this.action = action;
     }
 
     @Override
     public File doInBackground(Void... params) {
 
-        SQLiteDatabase db = new ScoutDataDbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = new ScoutDataDbHelper(activity).getWritableDatabase();
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -263,7 +261,6 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
         //Runs on UI thread when publishProgress() is called
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "CSV Export complete: " + values[0]);
 
-
         super.onProgressUpdate(values);
     }
 
@@ -271,13 +268,24 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
     protected void onPostExecute(File file) {
         //Runs on UI thread after execution
 
-        String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".CSV");
+        if (action == ExportActivity.ExportAction.OPEN_FILE) {
+            String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".CSV");
 
-        Intent intent = new Intent();
-        intent.setAction(android.content.Intent.ACTION_VIEW);
-        intent.setDataAndType(FileProvider.getUriForFile(context, "com.team980.thunderscout.provider", file), mime);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        ((Activity) context).startActivityForResult(intent, 0); //shh.. this works, I guess?
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setDataAndType(FileProvider.getUriForFile(activity, "com.team980.thunderscout.provider", file), mime);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            activity.startActivityForResult(intent, 0);
+        } else if (action == ExportActivity.ExportAction.SHARE_TO_SYSTEM) {
+            String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".CSV");
+
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("text/plain"); //This is needed to force Bluetooth to show in the list
+            intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(activity, "com.team980.thunderscout.provider", file));
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            activity.startActivity(Intent.createChooser(intent, "Share exported data using"));
+        }
 
         super.onPostExecute(file);
     }

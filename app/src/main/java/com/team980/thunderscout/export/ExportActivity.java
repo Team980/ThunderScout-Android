@@ -34,19 +34,29 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.team980.thunderscout.R;
 
 public class ExportActivity extends AppCompatActivity implements View.OnClickListener,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback, AdapterView.OnItemSelectedListener {
+
+    private ExportAction exportAction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
+
+        exportAction = ExportAction.OPEN_FILE; //TODO save last used action?
+
+        Spinner exportAction = (Spinner) findViewById(R.id.spinnnerExportAction);
+        exportAction.setOnItemSelectedListener(this);
 
         Button buttonExport = (Button) findViewById(R.id.buttonExport);
         buttonExport.setOnClickListener(this);
@@ -61,7 +71,7 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
         if (v.getId() == R.id.buttonExport) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                CSVExportTask exportTask = new CSVExportTask(this);
+                CSVExportTask exportTask = new CSVExportTask(this, exportAction);
                 exportTask.execute();
             } else {
                 //Request permission
@@ -86,11 +96,21 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        exportAction = ExportAction.values()[position];
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        //Do nothing
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1) {
             // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                CSVExportTask exportTask = new CSVExportTask(this);
+                CSVExportTask exportTask = new CSVExportTask(this, exportAction);
                 exportTask.execute();
             } else {
                 //Why would you ever deny the permission?
@@ -101,5 +121,11 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
                 startActivityForResult(intent, 0);
             }
         }
+    }
+
+
+    protected enum ExportAction {
+        OPEN_FILE,
+        SHARE_TO_SYSTEM
     }
 }
