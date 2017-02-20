@@ -29,7 +29,7 @@
     style="?android:attr/spinnerDropDownItemStyle"
     android:maxLines="1"
     android:layout_width="match_parent"
-    android:layout_height="48dip"
+    android:layout_height="64dip"
     android:textSize="24sp"
     tools:text="Hello"
     android:ellipsize="marquee" />
