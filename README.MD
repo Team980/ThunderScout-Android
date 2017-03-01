@@ -1,6 +1,5 @@
-# ThunderScout [![Build Status](https://travis-ci.org/Team980/ThunderScout-Android.svg?branch=master)](https://travis-ci.org/Team980/ThunderScout-Android)
+# ThunderScout: Scout with power [![Build Status](https://travis-ci.org/Team980/ThunderScout-Android.svg?branch=master)](https://travis-ci.org/Team980/ThunderScout-Android)
 
-##ThunderScout: Scout with power
 ThunderScout is an app for FIRST Robotics Competition teams to facilitate the scouting process at competition events. Created by FRC Team 980 Thunderbots, ThunderScout is made to help you get your job done, simpler and faster.
 
 ###Designed from the beginning for the user experience
