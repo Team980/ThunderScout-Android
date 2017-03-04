@@ -66,7 +66,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 })
                 .build());
 
-        /*titleCard.addItem(new MaterialAboutActionItem.Builder()
+        titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("View on Amazon Appstore")
                 .icon(R.drawable.ic_amazon_white)
                 .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
@@ -79,9 +79,9 @@ public class AboutActivity extends MaterialAboutActivity {
                         }
                     }
                 })
-                .build());*/
+                .build());
 
-        /*titleCard.addItem(new MaterialAboutActionItem.Builder()
+        titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Chief Delphi Thread")
                 .icon(R.drawable.ic_forum_white)
                 .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
@@ -92,7 +92,7 @@ public class AboutActivity extends MaterialAboutActivity {
                         startActivity(i);
                     }
                 })
-                .build());*/
+                .build());
 
         titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Fork on GitHub")
