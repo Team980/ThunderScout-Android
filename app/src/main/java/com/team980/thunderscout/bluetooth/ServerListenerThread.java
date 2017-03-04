@@ -78,7 +78,7 @@ public class ServerListenerThread extends Thread {
             if (socket != null) {
                 // Do work to manage the connection (in a separate thread)
 
-                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Connected to" + socket.getRemoteDevice().getName());
+                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Connected to " + socket.getRemoteDevice().getName());
 
                 ServerConnectionTask readTask = new ServerConnectionTask(socket, context);
                 readTask.execute();
