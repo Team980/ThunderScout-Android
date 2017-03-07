@@ -26,6 +26,7 @@ package com.team980.thunderscout.match;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
@@ -126,7 +128,13 @@ public class DumpCounterAdapter extends RecyclerView.Adapter<DumpCounterAdapter.
         }
 
         public void onClick(View v) {
-            FuelDumpAmount value = fuelDumps.get(getLayoutPosition());
+            FuelDumpAmount value;
+
+            try {
+                value = fuelDumps.get(getLayoutPosition()); //This mess should prevent a fatal crash
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                return;  //If there is no fuel dump at that position, just ignore the click
+            }
 
             if (v.getId() == R.id.plus) {
                 int newOrdinal = value.ordinal() + 1;

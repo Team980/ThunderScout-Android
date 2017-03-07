@@ -104,7 +104,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         viewPagerAdapter = new ScoutingFlowViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(this);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -224,6 +224,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             operationStateDialog = new ProgressDialog(this);
             operationStateDialog.setIndeterminate(true); //TODO can we use values too?
             operationStateDialog.setCancelable(false);
+            operationStateDialog.setCanceledOnTouchOutside(false);
             operationStateDialog.setTitle("Storing data...");
 
             feedEntry = new FeedEntry(FeedEntry.EntryType.MATCH_SCOUTED, System.currentTimeMillis());
