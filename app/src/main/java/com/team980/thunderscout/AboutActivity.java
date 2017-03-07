@@ -82,7 +82,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .build());
 
         titleCard.addItem(new MaterialAboutActionItem.Builder()
-                .text("Chief Delphi Thread")
+                .text("View on Chief Delphi")
                 .icon(R.drawable.ic_forum_white)
                 .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
                     @Override
