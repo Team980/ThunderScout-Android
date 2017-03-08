@@ -82,19 +82,6 @@ public class AboutActivity extends MaterialAboutActivity {
                 .build());
 
         titleCard.addItem(new MaterialAboutActionItem.Builder()
-                .text("View on Chief Delphi")
-                .icon(R.drawable.ic_forum_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
-                    @Override
-                    public void onClick() {
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse("https://www.chiefdelphi.com/forums/showthread.php?t=151953"));
-                        startActivity(i);
-                    }
-                })
-                .build());
-
-        titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Fork on GitHub")
                 .subText("Team980/ThunderScout-Android")
                 .icon(R.drawable.ic_github_white)
@@ -103,6 +90,19 @@ public class AboutActivity extends MaterialAboutActivity {
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.setData(Uri.parse("https://github.com/Team980/ThunderScout-Android"));
+                        startActivity(i);
+                    }
+                })
+                .build());
+
+        titleCard.addItem(new MaterialAboutActionItem.Builder()
+                .text("View on Chief Delphi")
+                .icon(R.drawable.ic_forum_white)
+                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse("https://www.chiefdelphi.com/forums/showthread.php?t=151953"));
                         startActivity(i);
                     }
                 })
