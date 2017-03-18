@@ -149,6 +149,9 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
                 ClientConnectionThread connectThread = new ClientConnectionThread(device, o, context, null);
                 connectThread.start();
+
+                feedEntry.addOperation(new EntryOperationWrapper(EntryOperationType.SENT_TO_BLUETOOTH_SERVER,
+                        EntryOperationStatus.OPERATION_SUCCESSFUL)); //TODO determine this based on callback?
             }
 
             /*if (prefs.getBoolean("bt_send_to_linked_sheet", false)) {
