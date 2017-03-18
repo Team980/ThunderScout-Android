@@ -57,6 +57,7 @@ import com.team980.thunderscout.data.task.ScoutDataDeleteTask;
 import com.team980.thunderscout.data.task.ScoutDataReadTask;
 import com.team980.thunderscout.export.ExportActivity;
 import com.team980.thunderscout.util.TransitionUtils;
+import com.team980.thunderscout.ximport.ImportActivity;
 
 import java.util.ArrayList;
 
@@ -183,6 +184,11 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
                     .setIcon(R.drawable.ic_warning_white_24dp)
                     .setPositiveButton("Delete", this)
                     .setNegativeButton("Cancel", null).show();
+        }
+
+        if (id == R.id.action_import) {
+            Intent importIntent = new Intent(getContext(), ImportActivity.class);
+            startActivity(importIntent);
         }
 
         if (id == R.id.action_export) {

@@ -36,6 +36,7 @@
     <string-array name="export_actions_array">
         <item>Open file</item>
         <item>Share to system</item>
+        <item>Export only</item>
     </string-array>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

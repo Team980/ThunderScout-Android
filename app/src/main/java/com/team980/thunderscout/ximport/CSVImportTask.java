@@ -35,6 +35,7 @@ import android.provider.Settings;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
+import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.opencsv.CSVReader;
@@ -89,6 +90,13 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
         }
 
         for (String[] row : rows) {
+
+            try {
+                Integer.parseInt(row[0]);
+            } catch (NumberFormatException ex) { //ignore the exception
+                continue; //skip rows without a valid team number
+            }
+
             publishProgress(ScoutData.fromStringArray(row));
         }
 
@@ -111,6 +119,10 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
     protected void onPostExecute(Void v) {
         //Runs on UI thread after execution
         super.onPostExecute(v);
+
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "CSV import complete");
+        Toast.makeText(activity, "CSV import complete", Toast.LENGTH_SHORT).show();
+        activity.finish();
     }
 
 }

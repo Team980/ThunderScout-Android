@@ -126,6 +126,7 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
 
     protected enum ExportAction {
         OPEN_FILE,
-        SHARE_TO_SYSTEM
+        SHARE_TO_SYSTEM,
+        EXPORT_ONLY
     }
 }
