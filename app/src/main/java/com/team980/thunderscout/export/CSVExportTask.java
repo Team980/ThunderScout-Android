@@ -35,6 +35,7 @@ import android.provider.Settings;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
+import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.opencsv.CSVWriter;
@@ -283,16 +284,29 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
             intent.setAction(Intent.ACTION_VIEW);
             intent.setDataAndType(FileProvider.getUriForFile(activity, "com.team980.thunderscout.provider", file), mime);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            activity.startActivityForResult(intent, 0);
+
+            if (intent.resolveActivity(activity.getPackageManager()) != null) {
+                activity.startActivityForResult(intent, 0);
+            } else {
+                Toast.makeText(activity, "No activities found to handle request", Toast.LENGTH_LONG).show();
+                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "No activities found to handle request");
+            }
+
         } else if (action == ExportActivity.ExportAction.SHARE_TO_SYSTEM) {
-            String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".CSV");
+            //String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".CSV");
 
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("text/plain"); //This is needed to force Bluetooth to show in the list
             intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(activity, "com.team980.thunderscout.provider", file));
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            activity.startActivity(Intent.createChooser(intent, "Share exported data using"));
+
+            if (intent.resolveActivity(activity.getPackageManager()) != null) {
+                activity.startActivity(Intent.createChooser(intent, "Share exported data using"));
+            } else {
+                Toast.makeText(activity, "No activities found to handle request", Toast.LENGTH_LONG).show();
+                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "No activities found to handle request");
+            }
         }
 
         super.onPostExecute(file);
