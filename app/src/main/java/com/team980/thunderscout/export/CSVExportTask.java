@@ -180,7 +180,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
         String allianceColor = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR));
 
-        data.setAllianceColor(AllianceColor.valueOf(allianceColor));
+        data.setAllianceColor(AllianceColor.valueOfCompat(allianceColor));
 
         String dateAdded = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED));

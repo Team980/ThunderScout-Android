@@ -31,6 +31,7 @@ import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Implements data for one team from one match.
@@ -39,13 +40,11 @@ public class ScoutData implements Serializable {
 
     /**
      * ScoutData Version 2017-2
-     *
+     * <p>
      * 2017-2: Serializable ArrayList for dumps in teleop
      * 2017-1: First 2017 spec
      */
     private static final long serialVersionUID = 4;
-
-    public static final String SOURCE_LOCAL_DEVICE = "This device";
 
     // INIT
     private String teamNumber;
@@ -281,5 +280,40 @@ public class ScoutData implements Serializable {
         fieldList.add(getComments());
 
         return fieldList.toArray(new String[fieldList.size()]);
+    }
+
+    public static ScoutData fromStringArray(String[] array) {
+        ScoutData data = new ScoutData();
+
+        //Init
+        data.setTeamNumber(array[0]);
+        data.setMatchNumber(Integer.parseInt(array[1]));
+        data.setAllianceColor(AllianceColor.valueOfCompat(array[2]));
+        data.setDateAdded(Long.parseLong(array[3]));
+        data.setDataSource(array[4]);
+
+        //Auto
+        data.setAutoGearsDelivered(Integer.parseInt(array[5]));
+        data.setAutoLowGoalDumpAmount(FuelDumpAmount.valueOf(array[6]));
+        data.setAutoHighGoals(Integer.parseInt(array[7]));
+        data.setAutoMissedHighGoals(Integer.parseInt(array[8]));
+        data.setCrossedBaseline(Boolean.parseBoolean(array[9]));
+
+        //Teleop
+        data.setTeleopGearsDelivered(Integer.parseInt(array[10]));
+
+        for (String amount : Arrays.asList(array[11].substring(1, array[11].length() - 1).split(", "))) {
+            data.getTeleopLowGoalDumps().add(FuelDumpAmount.valueOf(amount));
+        }
+
+        data.setTeleopHighGoals(Integer.parseInt(array[12]));
+        data.setTeleopMissedHighGoals(Integer.parseInt(array[13]));
+        data.setClimbingStats(ClimbingStats.valueOf(array[14]));
+
+        //Summary
+        data.setTroubleWith(array[15]);
+        data.setComments(array[16]);
+
+        return data;
     }
 }

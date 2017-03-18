@@ -167,7 +167,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
         String allianceColor = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR));
 
-        data.setAllianceColor(AllianceColor.valueOf(allianceColor));
+        data.setAllianceColor(AllianceColor.valueOfCompat(allianceColor));
 
         String dateAdded = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_DATE_ADDED));
