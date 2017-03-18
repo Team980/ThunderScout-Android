@@ -120,11 +120,13 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
 
         File dir = new File(Environment.getExternalStorageDirectory(), "ThunderScout");
         dir.mkdir();
+        dir.setReadable(true, false);
 
         String deviceName = Settings.Secure.getString(activity.getContentResolver(), "bluetooth_name").replace(' ', '_');
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 
         File csv = new File(dir, deviceName + "_exported_" + formatter.format(System.currentTimeMillis()) + ".csv");
+        csv.setReadable(true, false);
 
         try {
             writer = new CSVWriter(new FileWriter(csv), ',');
