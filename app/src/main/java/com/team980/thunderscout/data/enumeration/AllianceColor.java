@@ -51,4 +51,17 @@ public enum AllianceColor {
     public int getColorPrimaryDark() {
         return colorPrimaryDark;
     }
+
+    // Backwards compatible - USE THIS ONE
+    public static AllianceColor valueOfCompat(String name) {
+        if (name.equalsIgnoreCase("RED") || name.equalsIgnoreCase("ALLIANCE_COLOR_RED")) {
+            return AllianceColor.RED;
+        }
+
+        if (name.equalsIgnoreCase("BLUE") || name.equalsIgnoreCase("ALLIANCE_COLOR_BLUE")) {
+            return AllianceColor.BLUE;
+        }
+
+        return null;
+    }
 }

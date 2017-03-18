@@ -77,7 +77,7 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
         matchNumber = (EditText) dialogView.findViewById(R.id.dialog_editTextMatchNumber);
         matchNumber.setText(String.valueOf(prefs.getInt("last_used_match_number", 0) + 1)); //increment the last match number
 
-        allianceColor = AllianceColor.valueOf(prefs.getString("last_used_alliance_color", AllianceColor.RED.name()));
+        allianceColor = AllianceColor.valueOfCompat(prefs.getString("last_used_alliance_color", AllianceColor.RED.name()));
         allianceToggle = (AppCompatButton) dialogView.findViewById(R.id.dialog_allianceToggleButton);
 
         if (getArguments() != null && getArguments().containsKey(EXTRA_DEFAULT_DATA)) { //Fill the data with previously set values

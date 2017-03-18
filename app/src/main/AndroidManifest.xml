@@ -85,6 +85,10 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
         </activity>
+        <activity android:name=".ximport.ImportActivity"
+            android:label="Import from CSV"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
         <activity android:name=".export.ExportActivity"
             android:label="Export to CSV"
             android:parentActivityName=".MainActivity"
