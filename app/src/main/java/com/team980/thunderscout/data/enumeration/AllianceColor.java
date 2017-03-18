@@ -27,8 +27,8 @@ package com.team980.thunderscout.data.enumeration;
 import com.team980.thunderscout.R;
 
 public enum AllianceColor {
-    ALLIANCE_COLOR_RED("Red Alliance", R.color.alliance_red_primary, R.color.alliance_red_primary_dark),
-    ALLIANCE_COLOR_BLUE("Blue Alliance", R.color.alliance_blue_primary, R.color.alliance_blue_primary_dark);
+    RED("Red Alliance", R.color.alliance_red_primary, R.color.alliance_red_primary_dark),
+    BLUE("Blue Alliance", R.color.alliance_blue_primary, R.color.alliance_blue_primary_dark);
 
     String displayString;
     int colorPrimary;

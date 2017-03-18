@@ -24,6 +24,8 @@
 
 package com.team980.thunderscout.bluetooth;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -40,6 +42,7 @@ import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationStatus;
 import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationType;
 import com.team980.thunderscout.feed.FeedEntry;
 import com.team980.thunderscout.feed.task.FeedDataWriteTask;
+import com.team980.thunderscout.match.ScoutingFlowActivity;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;
@@ -136,7 +139,16 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             }
 
             if (prefs.getBoolean("bt_send_to_bt_server", false)) {
-                //TODO is this a really good idea??
+                String address = prefs.getString("bt_bt_server_device", null);
+
+                BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
+
+                if (device.getName() == null) { //This should catch both the no device selected error and the bluetooth off error
+                    throw new NullPointerException("Error initializing Bluetooth!"); //todo better way to notify?
+                }
+
+                ClientConnectionThread connectThread = new ClientConnectionThread(device, o, context, null);
+                connectThread.start();
             }
 
             /*if (prefs.getBoolean("bt_send_to_linked_sheet", false)) {

@@ -41,6 +41,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp"
+                android:text="Crossed Baseline?"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/auto_checkBoxCrossedBaseline"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="5dp"
+                android:button="@null"
+                android:background="?android:attr/listChoiceIndicatorMultiple"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
@@ -179,32 +205,6 @@
                     app:longPress="true"/>
 
             </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="8dp"
-                android:text="Crossed Baseline?"
-                android:textSize="18sp" />
-
-            <CheckBox
-                android:id="@+id/auto_checkBoxCrossedBaseline"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginLeft="5dp"
-                android:button="@null"
-                android:background="?android:attr/listChoiceIndicatorMultiple"/>
 
         </LinearLayout>
 

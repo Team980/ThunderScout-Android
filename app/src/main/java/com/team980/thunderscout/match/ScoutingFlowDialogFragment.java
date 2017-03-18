@@ -77,7 +77,7 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
         matchNumber = (EditText) dialogView.findViewById(R.id.dialog_editTextMatchNumber);
         matchNumber.setText(String.valueOf(prefs.getInt("last_used_match_number", 0) + 1)); //increment the last match number
 
-        allianceColor = AllianceColor.valueOf(prefs.getString("last_used_alliance_color", AllianceColor.ALLIANCE_COLOR_RED.name()));
+        allianceColor = AllianceColor.valueOf(prefs.getString("last_used_alliance_color", AllianceColor.RED.name()));
         allianceToggle = (AppCompatButton) dialogView.findViewById(R.id.dialog_allianceToggleButton);
 
         if (getArguments() != null && getArguments().containsKey(EXTRA_DEFAULT_DATA)) { //Fill the data with previously set values
@@ -86,18 +86,18 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
             teamNumber.setText(fillData.getTeamNumber());
             matchNumber.setText(fillData.getMatchNumber() + "");
 
-            if (fillData.getAllianceColor() == AllianceColor.ALLIANCE_COLOR_RED) {
+            if (fillData.getAllianceColor() == AllianceColor.RED) {
                 allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
                 allianceToggle.setText("Red Alliance");
-                allianceColor = AllianceColor.ALLIANCE_COLOR_RED;
+                allianceColor = AllianceColor.RED;
             } else { //If red, switch to blue, and vice versa
                 allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
                 allianceToggle.setText("Blue Alliance");
-                allianceColor = AllianceColor.ALLIANCE_COLOR_BLUE;
+                allianceColor = AllianceColor.BLUE;
             }
         }
 
-        if (allianceColor == AllianceColor.ALLIANCE_COLOR_BLUE) { //Red is default
+        if (allianceColor == AllianceColor.BLUE) { //Red is default
             allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
             allianceToggle.setText("Blue Alliance");
         }
@@ -105,14 +105,14 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
         allianceToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (allianceColor == AllianceColor.ALLIANCE_COLOR_RED) { //If red, switch to blue, and vice versa
+                if (allianceColor == AllianceColor.RED) { //If red, switch to blue, and vice versa
                     allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
                     allianceToggle.setText("Blue Alliance");
-                    allianceColor = AllianceColor.ALLIANCE_COLOR_BLUE;
+                    allianceColor = AllianceColor.BLUE;
                 } else {
                     allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
                     allianceToggle.setText("Red Alliance");
-                    allianceColor = AllianceColor.ALLIANCE_COLOR_RED;
+                    allianceColor = AllianceColor.RED;
                 }
             }
         });

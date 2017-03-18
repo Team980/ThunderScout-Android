@@ -37,15 +37,33 @@
             android:key="bt_send_to_local_storage"
             android:title="Save to this device" />
 
-        <!--<CheckBoxPreference
+        <CheckBoxPreference
             android:defaultValue="false"
             android:key="bt_send_to_bt_server"
-            android:title="Send to Bluetooth server" />-->
+            android:title="Send to Bluetooth server" />
 
         <!--<CheckBoxPreference
             android:defaultValue="false"
             android:key="bt_send_to_linked_sheet"
             android:title="Send to linked spreadsheet" />-->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Bluetooth">
+
+        <!--<ListPreference
+            android:defaultValue="saveLocally"
+            android:key="server_storage_task"
+            android:entries="@array/server_storage_task"
+            android:entryValues="@array/server_storage_task_values"
+            android:summary="Method of storage for data received via bluetooth server"
+            android:title="Server Storage Task" />-->
+
+        <com.team980.thunderscout.preferences.BluetoothDevicePreference
+            android:dependency="bt_send_to_bt_server"
+            android:dialogTitle="Bluetooth Server Device"
+            android:key="bt_bt_server_device"
+            android:title="Bluetooth server device" />
 
     </PreferenceCategory>
 
