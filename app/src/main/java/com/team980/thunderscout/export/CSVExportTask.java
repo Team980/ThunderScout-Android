@@ -268,7 +268,8 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
     @Override
     protected void onProgressUpdate(String[] values) {
         //Runs on UI thread when publishProgress() is called
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "CSV Export complete: " + values[0]);
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "CSV export complete: " + values[0]);
+        Toast.makeText(activity, "CSV export complete: " + values[0], Toast.LENGTH_SHORT).show();
 
         super.onProgressUpdate(values);
     }

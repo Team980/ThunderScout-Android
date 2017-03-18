@@ -24,6 +24,8 @@
 
 package com.team980.thunderscout.data;
 
+import android.util.Log;
+
 import com.team980.thunderscout.data.enumeration.AllianceColor;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
@@ -301,11 +303,12 @@ public class ScoutData implements Serializable {
 
         //Teleop
         data.setTeleopGearsDelivered(Integer.parseInt(array[10]));
-
         for (String amount : Arrays.asList(array[11].substring(1, array[11].length() - 1).split(", "))) {
-            data.getTeleopLowGoalDumps().add(FuelDumpAmount.valueOf(amount));
+            if (amount.isEmpty()) {
+                break;
+            }
+            data.getTeleopLowGoalDumps().add(FuelDumpAmount.valueOf(amount.toUpperCase()));
         }
-
         data.setTeleopHighGoals(Integer.parseInt(array[12]));
         data.setTeleopMissedHighGoals(Integer.parseInt(array[13]));
         data.setClimbingStats(ClimbingStats.valueOf(array[14]));

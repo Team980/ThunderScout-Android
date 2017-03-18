@@ -33,27 +33,79 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.export.CSVExportTask;
 
+import java.io.File;
+
 public class ImportActivity extends AppCompatActivity implements View.OnClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
+
+    private TextView fileInfo;
+
+    private Button buttonImport;
+
+    private File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import);
+
+        fileInfo = (TextView) findViewById(R.id.fileInfo);
+
+        Button buttonSelectFile = (Button) findViewById(R.id.buttonSelectFile);
+        buttonSelectFile.setOnClickListener(this);
+
+        buttonImport = (Button) findViewById(R.id.buttonImport);
+        buttonImport.setEnabled(false);
+        buttonImport.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.buttonSelectFile) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("file/csv");
+            Intent i = Intent.createChooser(intent, "File");
+            startActivityForResult(i, 2);
+        } else if (v.getId() == R.id.buttonImport) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                CSVImportTask task = new CSVImportTask(this, file);
+                task.execute();
+            } else {
+                //Request permission
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1
+                );
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 2) {
+            if(resultCode == RESULT_OK){
+                fileInfo.setText(data.getData().getPath());
+
+                file = new File(data.getData().getPath());
+
+                buttonImport.setEnabled(true);
+            }
+        }
     }
 
     @Override
@@ -61,7 +113,8 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         if (requestCode == 1) {
             // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+                CSVImportTask task = new CSVImportTask(this, file);
+                task.execute();
             } else {
                 //Why would you ever deny the permission?
                 Toast.makeText(this, "Please manually grant the permission", Toast.LENGTH_SHORT).show();
