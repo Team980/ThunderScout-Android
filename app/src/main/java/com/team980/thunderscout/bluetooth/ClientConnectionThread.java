@@ -125,7 +125,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             return;
         }
 
-        //TODO add version check
+        //TODO add version check?
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
 

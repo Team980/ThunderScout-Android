@@ -34,6 +34,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -289,8 +290,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         }
 
         if (operationStates.getBoolean(OPERATION_SAVE_THIS_DEVICE)) {
-            scoutData.setDataSource(ScoutData.SOURCE_LOCAL_DEVICE);
-
             operationStateDialog.setMessage("Saving scout data to this device");
 
             ScoutDataWriteTask task = new ScoutDataWriteTask(new ScoutData(scoutData), getApplicationContext(), this); //MEMORY LEAK PREVENTION
@@ -302,7 +301,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             String address = prefs.getString("ms_bt_server_device", null);
 
             BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
-            scoutData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
 
             operationStateDialog.setMessage("Sending scout data to " + device.getName());
 
@@ -389,6 +387,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     private void initScoutData() {
         // Init
         scoutData.setDateAdded(System.currentTimeMillis());
+
+        scoutData.setDataSource(Settings.Secure.getString(getContentResolver(), "bluetooth_name"));
 
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();

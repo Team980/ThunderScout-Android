@@ -31,6 +31,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
@@ -48,7 +49,9 @@ import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CSVExportTask extends AsyncTask<Void, String, File> {
 
@@ -64,7 +67,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
     @Override
     public File doInBackground(Void... params) {
 
-        SQLiteDatabase db = new ScoutDataDbHelper(activity).getWritableDatabase();
+        SQLiteDatabase db = new ScoutDataDbHelper(activity).getWritableDatabase(); //TODO use the DatabaseReadTask internally
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -118,7 +121,10 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
         File dir = new File(Environment.getExternalStorageDirectory(), "ThunderScout");
         dir.mkdir();
 
-        File csv = new File(dir, "EXPORTED_" + System.currentTimeMillis() + ".csv");
+        String deviceName = Settings.Secure.getString(activity.getContentResolver(), "bluetooth_name").replace(' ', '_');
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+
+        File csv = new File(dir, deviceName + "_exported_" + formatter.format(System.currentTimeMillis()) + ".csv");
 
         try {
             writer = new CSVWriter(new FileWriter(csv), ',');
