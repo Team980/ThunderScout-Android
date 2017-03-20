@@ -25,6 +25,7 @@
 package com.team980.thunderscout.ximport;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -55,7 +56,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button buttonImport;
 
-    private File file;
+    private Uri fileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +77,13 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         if (v.getId() == R.id.buttonSelectFile) {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("file/csv");
-            Intent i = Intent.createChooser(intent, "File");
+            intent.setType("*/*");
+            Intent i = Intent.createChooser(intent, "Open .csv");
             startActivityForResult(i, 2);
         } else if (v.getId() == R.id.buttonImport) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                CSVImportTask task = new CSVImportTask(this, file);
+                CSVImportTask task = new CSVImportTask(this, fileUri);
                 task.execute();
             } else {
                 //Request permission
@@ -101,7 +102,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
             if(resultCode == RESULT_OK){
                 fileInfo.setText(data.getData().getPath());
 
-                file = new File(data.getData().getPath());
+                fileUri = data.getData();
 
                 buttonImport.setEnabled(true);
             }
@@ -113,7 +114,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         if (requestCode == 1) {
             // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                CSVImportTask task = new CSVImportTask(this, file);
+                CSVImportTask task = new CSVImportTask(this, fileUri);
                 task.execute();
             } else {
                 //Why would you ever deny the permission?
