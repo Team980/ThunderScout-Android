@@ -25,10 +25,13 @@
 package com.team980.thunderscout.ximport;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.Settings;
@@ -54,6 +57,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,11 +67,11 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
 
     private Activity activity;
 
-    private File csvFile;
+    private Uri fileUri;
 
-    public CSVImportTask(Activity activity, File file) {
+    public CSVImportTask(Activity activity, Uri uri) {
         this.activity = activity;
-        csvFile = file;
+        fileUri = uri;
     }
 
     @Override
@@ -75,7 +79,7 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
 
         CSVReader reader;
         try {
-            reader = new CSVReader(new FileReader(csvFile));
+            reader = new CSVReader(new InputStreamReader(activity.getContentResolver().openInputStream(fileUri)));
         } catch (FileNotFoundException e) {
             FirebaseCrash.report(e);
             return null;
@@ -107,7 +111,7 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
     protected void onProgressUpdate(ScoutData[] values) {
         //Runs on UI thread when publishProgress() is called
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Posting ScoutData from CSV " + csvFile.getName() + " to database");
+        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Posting ScoutData from CSV " + fileUri.getLastPathSegment() + " to database");
 
         ScoutDataWriteTask writeTask = new ScoutDataWriteTask(values[0], activity);
         writeTask.execute();
