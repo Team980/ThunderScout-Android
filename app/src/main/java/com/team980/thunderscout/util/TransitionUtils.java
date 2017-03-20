@@ -65,12 +65,10 @@ public class TransitionUtils {
 
                 // Apply blended color to the ActionBar.
                 blended = blendColors(toolbarColor, toolbarToColor, position);
-                ColorDrawable background = new ColorDrawable(blended);
-                activity.getSupportActionBar().setBackgroundDrawable(background);
+                activity.findViewById(R.id.toolbar).setBackgroundColor(blended);
 
-                if (activity instanceof ScoutingFlowActivity) { //we don't want a random null
-                    activity.findViewById(R.id.app_bar_layout).setBackground(background);
-                    activity.findViewById(R.id.tab_layout).setBackground(background);
+                if (activity.findViewById(R.id.tab_layout) != null) { //we don't want a random NPE
+                    activity.findViewById(R.id.tab_layout).setBackgroundColor(blended);
                 }
             }
         });
