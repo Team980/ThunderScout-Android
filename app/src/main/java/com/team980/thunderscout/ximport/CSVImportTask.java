@@ -95,10 +95,8 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
 
         for (String[] row : rows) {
 
-            try {
-                Integer.parseInt(row[0]);
-            } catch (NumberFormatException ex) { //ignore the exception
-                continue; //skip rows without a valid team number
+            if(!ThunderScout.isInteger(row[0])) {
+                continue;
             }
 
             publishProgress(ScoutData.fromStringArray(row));
