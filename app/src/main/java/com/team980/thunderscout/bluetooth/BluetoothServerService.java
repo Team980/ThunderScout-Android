@@ -109,7 +109,7 @@ public class BluetoothServerService extends Service {
             FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Requesting Bluetooth to be enabled");
         } else {
 
-            acceptThread = new ServerListenerThread(this);
+            acceptThread = new ServerListenerThread(getApplicationContext());
             acceptThread.start();
             FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Bluetooth on, starting server accept thread");
         }
