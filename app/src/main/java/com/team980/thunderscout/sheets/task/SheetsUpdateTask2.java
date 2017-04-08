@@ -84,7 +84,7 @@ import java.util.List;
                 Sheet teamSheet = null; //workbook for team
 
                 for (Sheet s : sheets) {
-                    if (s.getProperties().getTitle() == data.getTeamNumber()) {
+                    if (s.getProperties().getTitle() == data.getTeam()) {
                         teamSheet = s;
                         break;
                     } else if (!ThunderScout.isInteger(s.getProperties().getTitle())) {
@@ -94,7 +94,7 @@ import java.util.List;
 
                 if (teamSheet == null) {
                     teamSheet = new Sheet();
-                    teamSheet.getProperties().setTitle(data.getTeamNumber());
+                    teamSheet.getProperties().setTitle(data.getTeam());
                     spreadsheet.getSheets().add(teamSheet);
                     insertInitData(teamSheet);
                 }

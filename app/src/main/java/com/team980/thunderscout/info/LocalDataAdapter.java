@@ -29,7 +29,6 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,13 +123,13 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
         for (int i = 0; i < teams.size(); i++) {
             TeamWrapper tw = teams.get(i);
 
-            if (tw.getTeamNumber().equals(data.getTeamNumber())) {
+            if (tw.getTeamNumber().equals(data.getTeam())) {
                 //Pre-existing team
 
                 ArrayList<ScoutData> childList = (ArrayList<ScoutData>) tw.getChildItemList();
 
                 for (ScoutData child : childList) {
-                    if (child.getDateAdded() == (data.getDateAdded())) { //TODO verify this works
+                    if (child.getDate() == (data.getDate())) { //TODO verify this works
                         //This child has already been added to the database
                         return;
                     }
@@ -145,7 +144,7 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
             }
         }
         //New team
-        teams.add(new TeamWrapper(data.getTeamNumber(), data));
+        teams.add(new TeamWrapper(data.getTeam(), data));
         notifyParentItemInserted(teams.size() - 1); //TODO verify this
 
         sort(sortMode);
@@ -309,10 +308,10 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
         }
 
         public void bind(final ScoutData scoutData) {
-            matchNumber.setText("Match " + scoutData.getMatchNumber());
-            allianceColor.setText(scoutData.getAllianceColor().toString());
+            matchNumber.setText("Match " + scoutData.getMatch());
+            allianceColor.setText(scoutData.getAlliance().toString());
 
-            matchIcon.setColorFilter(new PorterDuffColorFilter(itemView.getResources().getColor(scoutData.getAllianceColor().getColorPrimary()), PorterDuff.Mode.MULTIPLY));
+            matchIcon.setColorFilter(new PorterDuffColorFilter(itemView.getResources().getColor(scoutData.getAlliance().getColorPrimary()), PorterDuff.Mode.MULTIPLY));
 
             if (fragment.isInSelectionMode()) {
                 matchIcon.setVisibility(View.GONE);

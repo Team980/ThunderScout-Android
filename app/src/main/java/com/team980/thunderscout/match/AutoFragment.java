@@ -83,9 +83,9 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
         if (view.getId() == R.id.auto_checkBoxCrossedBaseline) {
             CheckBox checkBox = (CheckBox) view;
 
-            scoutingFlowActivity.getData().setCrossedBaseline(checkBox.isChecked());
+            scoutingFlowActivity.getData().getAutonomous().setCrossedBaseline(checkBox.isChecked());
         } else {
-            FuelDumpAmount value = scoutingFlowActivity.getData().getAutoLowGoalDumpAmount();
+            FuelDumpAmount value = scoutingFlowActivity.getData().getAutonomous().getLowGoalDumpAmount();
 
             if (view.getId() == R.id.auto_buttonFuelPlus) {
                 int newOrdinal = value.ordinal() + 1;
@@ -106,7 +106,7 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
                 }
             }
 
-            scoutingFlowActivity.getData().setAutoLowGoalDumpAmount(value);
+            scoutingFlowActivity.getData().getAutonomous().setLowGoalDumpAmount(value);
 
             TextView textValue = (TextView) getView().findViewById(R.id.auto_textViewFuelValue);
             TextView numericalValue = (TextView) getView().findViewById(R.id.auto_textViewFuelNumericalValue);

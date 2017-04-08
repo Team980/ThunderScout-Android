@@ -46,6 +46,7 @@ public final class ScoutDataContract {
 
         // --- AUTO ---
         public static final String COLUMN_NAME_AUTO_GEARS_DELIVERED = "auto_gears_delivered";
+        public static final String COLUMN_NAME_AUTO_GEARS_DROPPED = "auto_gears_dropped";
         public static final String COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT = "auto_low_goal_dump_amount";
         public static final String COLUMN_NAME_AUTO_HIGH_GOALS = "auto_high_goals";
         public static final String COLUMN_NAME_AUTO_MISSED_HIGH_GOALS = "auto_missed_high_goals";
@@ -53,6 +54,7 @@ public final class ScoutDataContract {
 
         // --- TELEOP ---
         public static final String COLUMN_NAME_TELEOP_GEARS_DELIVERED = "teleop_gears_delivered";
+        public static final String COLUMN_NAME_TELEOP_GEARS_DROPPED = "teleop_gears_dropped";
         public static final String COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS = "teleop_low_goal_dumps";
         public static final String COLUMN_NAME_TELEOP_HIGH_GOALS = "teleop_high_goals";
         public static final String COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS = "teleop_missed_high_goals";

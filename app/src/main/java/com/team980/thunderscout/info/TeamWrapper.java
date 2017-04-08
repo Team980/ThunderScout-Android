@@ -142,7 +142,7 @@ public class TeamWrapper implements ParentListItem, Serializable {
 
         SORT_LAST_UPDATED("Time updated") {
             public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return Long.valueOf(o1.getAverageScoutData().getLastUpdated())
+                return o1.getAverageScoutData().getLastUpdated()
                         .compareTo(o2.getAverageScoutData().getLastUpdated());
             }
         },

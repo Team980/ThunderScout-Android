@@ -24,16 +24,17 @@
 
 package com.team980.thunderscout.data;
 
-import android.util.Log;
-
+import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.data.enumeration.AllianceColor;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Implements data for one team from one match.
@@ -41,34 +42,27 @@ import java.util.Arrays;
 public class ScoutData implements Serializable {
 
     /**
-     * ScoutData Version 2017-2
+     * ScoutData Version 2017-3a
      * <p>
+     * 2017-3a: Update structure, tweak fields, and prepare for GSON serialization
      * 2017-2: Serializable ArrayList for dumps in teleop
      * 2017-1: First 2017 spec
      */
-    private static final long serialVersionUID = 4;
+    private static final long serialVersionUID = 5;
 
     // INIT
-    private String teamNumber;
-    private int matchNumber;
-    private AllianceColor allianceColor;
+    private String team;
+    private int match;
+    private AllianceColor alliance;
 
-    private long dateAdded;
-    private String dataSource;
+    private Date date;
+    private String source;
 
     // AUTO
-    private int autoGearsDelivered;
-    private FuelDumpAmount autoLowGoalDumpAmount;
-    private int autoHighGoals;
-    private int autoMissedHighGoals;
-    private boolean crossedBaseline;
+    private Autonomous autonomous;
 
     // TELEOP
-    private int teleopGearsDelivered;
-    private ArrayList<FuelDumpAmount> teleopLowGoalDumps; //average # of fuel
-    private int teleopHighGoals;
-    private int teleopMissedHighGoals;
-    private ClimbingStats climbingStats;
+    private Teleop teleop;
 
     // SUMMARY
     private String troubleWith;
@@ -76,9 +70,12 @@ public class ScoutData implements Serializable {
 
     public ScoutData() {
         //default values
-        autoLowGoalDumpAmount = FuelDumpAmount.NONE;
-        teleopLowGoalDumps = new ArrayList<>();
-        climbingStats = ClimbingStats.DID_NOT_CLIMB;
+        autonomous = new Autonomous();
+        teleop = new Teleop();
+
+        //TODO implement in view
+        autonomous.setGearsDropped(0);
+        teleop.setGearsDropped(0);
     }
 
     /**
@@ -86,25 +83,29 @@ public class ScoutData implements Serializable {
      */
     public ScoutData(ScoutData other) {
         //Init
-        setTeamNumber(other.getTeamNumber());
-        setMatchNumber(other.getMatchNumber());
-        setAllianceColor(other.getAllianceColor());
-        setDateAdded(other.getDateAdded());
-        setDataSource(other.getDataSource());
+        setTeam(other.getTeam());
+        setMatch(other.getMatch());
+        setAlliance(other.getAlliance());
+        setDate(other.getDate());
+        setSource(other.getSource());
 
         //Auto
-        setAutoGearsDelivered(other.getAutoGearsDelivered());
-        setAutoLowGoalDumpAmount(other.getAutoLowGoalDumpAmount());
-        setAutoHighGoals(other.getAutoHighGoals());
-        setAutoMissedHighGoals(other.getAutoMissedHighGoals());
-        setCrossedBaseline(other.hasCrossedBaseline());
+        autonomous = new Autonomous();
+        autonomous.setGearsDelivered(other.getAutonomous().getGearsDelivered());
+        autonomous.setGearsDropped(other.getAutonomous().getGearsDropped());
+        autonomous.setLowGoalDumpAmount(other.getAutonomous().getLowGoalDumpAmount());
+        autonomous.setHighGoals(other.getAutonomous().getHighGoals());
+        autonomous.setMissedHighGoals(other.getAutonomous().getMissedHighGoals());
+        autonomous.setCrossedBaseline(other.getAutonomous().getCrossedBaseline());
 
         //Teleop
-        setTeleopGearsDelivered(other.getTeleopGearsDelivered());
-        teleopLowGoalDumps = other.getTeleopLowGoalDumps();
-        setTeleopHighGoals(other.getTeleopHighGoals());
-        setTeleopMissedHighGoals(other.getTeleopMissedHighGoals());
-        setClimbingStats(other.getClimbingStats());
+        teleop = new Teleop();
+        teleop.setGearsDelivered(other.getTeleop().getGearsDelivered());
+        teleop.setGearsDropped(other.getTeleop().getGearsDropped());
+        teleop.getLowGoalDumps().addAll(other.getTeleop().getLowGoalDumps());
+        teleop.setHighGoals(other.getTeleop().getHighGoals());
+        teleop.setMissedHighGoals(other.getTeleop().getMissedHighGoals());
+        teleop.setClimbingStats(other.getTeleop().getClimbingStats());
 
         //Summary
         setTroubleWith(other.getTroubleWith());
@@ -113,124 +114,60 @@ public class ScoutData implements Serializable {
 
     // --- INIT ---
 
-    public String getTeamNumber() {
-        return teamNumber;
+    public String getTeam() {
+        return team;
     }
 
-    public void setTeamNumber(String teamNumber) {
-        this.teamNumber = teamNumber;
+    public void setTeam(String team) {
+        this.team = team;
     }
 
-    public int getMatchNumber() {
-        return matchNumber;
+    public int getMatch() {
+        return match;
     }
 
-    public void setMatchNumber(int matchNumber) {
-        this.matchNumber = matchNumber;
+    public void setMatch(int match) {
+        this.match = match;
     }
 
-    public AllianceColor getAllianceColor() {
-        return allianceColor;
+    public AllianceColor getAlliance() {
+        return alliance;
     }
 
-    public void setAllianceColor(AllianceColor allianceColor) {
-        this.allianceColor = allianceColor;
+    public void setAlliance(AllianceColor alliance) {
+        this.alliance = alliance;
     }
 
-    public long getDateAdded() {
-        return dateAdded;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDateAdded(long d) {
-        dateAdded = d;
+    public void setDate(Date d) {
+        date = d;
     }
 
-    public String getDataSource() {
-        return dataSource;
+    public String getSource() {
+        return source;
     }
 
-    public void setDataSource(String d) {
-        dataSource = d;
+    public void setSource(String d) {
+        source = d;
     }
 
     // --- AUTO ---
 
-    public int getAutoGearsDelivered() {
-        return autoGearsDelivered;
-    }
-
-    public void setAutoGearsDelivered(int autoGearsDelivered) {
-        this.autoGearsDelivered = autoGearsDelivered;
-    }
-
-    public FuelDumpAmount getAutoLowGoalDumpAmount() {
-        return autoLowGoalDumpAmount;
-    }
-
-    public void setAutoLowGoalDumpAmount(FuelDumpAmount autoLowGoalDumpAmount) {
-        this.autoLowGoalDumpAmount = autoLowGoalDumpAmount;
-    }
-
-    public int getAutoHighGoals() {
-        return autoHighGoals;
-    }
-
-    public void setAutoHighGoals(int autoHighGoals) {
-        this.autoHighGoals = autoHighGoals;
-    }
-
-    public int getAutoMissedHighGoals() {
-        return autoMissedHighGoals;
-    }
-
-    public void setAutoMissedHighGoals(int autoMissedHighGoals) {
-        this.autoMissedHighGoals = autoMissedHighGoals;
-    }
-
-    public boolean hasCrossedBaseline() {
-        return crossedBaseline;
-    }
-
-    public void setCrossedBaseline(boolean crossedBaseline) {
-        this.crossedBaseline = crossedBaseline;
+    public Autonomous getAutonomous() {
+        return autonomous;
     }
 
     // --- TELEOP ---
 
-    public int getTeleopGearsDelivered() {
-        return teleopGearsDelivered;
+    public Teleop getTeleop() {
+        return teleop;
     }
 
-    public void setTeleopGearsDelivered(int teleopGearsDelivered) {
-        this.teleopGearsDelivered = teleopGearsDelivered;
-    }
-
-    public ArrayList<FuelDumpAmount> getTeleopLowGoalDumps() {
-        return teleopLowGoalDumps;
-    }
-
-    public int getTeleopHighGoals() {
-        return teleopHighGoals;
-    }
-
-    public void setTeleopHighGoals(int teleopHighGoals) {
-        this.teleopHighGoals = teleopHighGoals;
-    }
-
-    public int getTeleopMissedHighGoals() {
-        return teleopMissedHighGoals;
-    }
-
-    public void setTeleopMissedHighGoals(int teleopMissedHighGoals) {
-        this.teleopMissedHighGoals = teleopMissedHighGoals;
-    }
-
-    public ClimbingStats getClimbingStats() {
-        return climbingStats;
-    }
-
-    public void setClimbingStats(ClimbingStats climbingStats) {
-        this.climbingStats = climbingStats;
+    public void setTeleop(Teleop teleop) {
+        this.teleop = teleop;
     }
 
     // --- SUMMARY ---
@@ -257,25 +194,27 @@ public class ScoutData implements Serializable {
         ArrayList<String> fieldList = new ArrayList<>();
 
         //Init
-        fieldList.add(getTeamNumber());
-        fieldList.add(String.valueOf(getMatchNumber()));
-        fieldList.add(getAllianceColor().name());
-        fieldList.add(String.valueOf(getDateAdded()));
-        fieldList.add(getDataSource());
+        fieldList.add(getTeam());
+        fieldList.add(String.valueOf(getMatch()));
+        fieldList.add(getAlliance().name());
+        fieldList.add(getDate().toString());
+        fieldList.add(getSource());
 
         //Auto
-        fieldList.add(String.valueOf(getAutoGearsDelivered()));
-        fieldList.add(getAutoLowGoalDumpAmount().name());
-        fieldList.add(String.valueOf(getAutoHighGoals()));
-        fieldList.add(String.valueOf(getAutoMissedHighGoals()));
-        fieldList.add(String.valueOf(hasCrossedBaseline()));
+        fieldList.add(String.valueOf(getAutonomous().getGearsDelivered()));
+        fieldList.add(String.valueOf(getAutonomous().getGearsDropped()));
+        fieldList.add(getAutonomous().getLowGoalDumpAmount().name());
+        fieldList.add(String.valueOf(getAutonomous().getHighGoals()));
+        fieldList.add(String.valueOf(getAutonomous().getMissedHighGoals()));
+        fieldList.add(String.valueOf(getAutonomous().getCrossedBaseline()));
 
         //Teleop
-        fieldList.add(String.valueOf(getTeleopGearsDelivered()));
-        fieldList.add(getTeleopLowGoalDumps().toString());
-        fieldList.add(String.valueOf(getTeleopHighGoals()));
-        fieldList.add(String.valueOf(getTeleopMissedHighGoals()));
-        fieldList.add(getClimbingStats().name());
+        fieldList.add(String.valueOf(getTeleop().getGearsDelivered()));
+        fieldList.add(String.valueOf(getTeleop().getGearsDropped()));
+        fieldList.add(getTeleop().getLowGoalDumps().toString());
+        fieldList.add(String.valueOf(getTeleop().getHighGoals()));
+        fieldList.add(String.valueOf(getTeleop().getMissedHighGoals()));
+        fieldList.add(getTeleop().getClimbingStats().name());
 
         //Summary
         fieldList.add(getTroubleWith());
@@ -288,35 +227,168 @@ public class ScoutData implements Serializable {
         ScoutData data = new ScoutData();
 
         //Init
-        data.setTeamNumber(array[0]);
-        data.setMatchNumber(Integer.parseInt(array[1]));
-        data.setAllianceColor(AllianceColor.valueOfCompat(array[2]));
-        data.setDateAdded(Long.parseLong(array[3]));
-        data.setDataSource(array[4]);
+        data.setTeam(array[0]);
+        data.setMatch(Integer.parseInt(array[1]));
+        data.setAlliance(AllianceColor.valueOfCompat(array[2]));
+        try {
+            data.setDate(DateFormat.getDateTimeInstance().parse(array[3]));
+        } catch (ParseException e) {
+            FirebaseCrash.report(e);
+        }
+        data.setSource(array[4]);
 
         //Auto
-        data.setAutoGearsDelivered(Integer.parseInt(array[5]));
-        data.setAutoLowGoalDumpAmount(FuelDumpAmount.valueOf(array[6]));
-        data.setAutoHighGoals(Integer.parseInt(array[7]));
-        data.setAutoMissedHighGoals(Integer.parseInt(array[8]));
-        data.setCrossedBaseline(Boolean.parseBoolean(array[9]));
+        data.getAutonomous().setGearsDelivered(Integer.parseInt(array[5]));
+        data.getAutonomous().setGearsDropped(Integer.parseInt(array[6]));
+        data.getAutonomous().setLowGoalDumpAmount(FuelDumpAmount.valueOf(array[7]));
+        data.getAutonomous().setHighGoals(Integer.parseInt(array[8]));
+        data.getAutonomous().setMissedHighGoals(Integer.parseInt(array[9]));
+        data.getAutonomous().setCrossedBaseline(Boolean.parseBoolean(array[10]));
 
         //Teleop
-        data.setTeleopGearsDelivered(Integer.parseInt(array[10]));
-        for (String amount : Arrays.asList(array[11].substring(1, array[11].length() - 1).split(", "))) {
+        data.getTeleop().setGearsDelivered(Integer.parseInt(array[11]));
+        data.getTeleop().setGearsDropped(Integer.parseInt(array[12]));
+        for (String amount : Arrays.asList(array[13].substring(1, array[13].length() - 1).split(", "))) {
             if (amount.isEmpty()) {
                 break;
             }
-            data.getTeleopLowGoalDumps().add(FuelDumpAmount.valueOf(amount.toUpperCase()));
+            data.getTeleop().getLowGoalDumps().add(FuelDumpAmount.valueOf(amount.toUpperCase()));
         }
-        data.setTeleopHighGoals(Integer.parseInt(array[12]));
-        data.setTeleopMissedHighGoals(Integer.parseInt(array[13]));
-        data.setClimbingStats(ClimbingStats.valueOf(array[14]));
+        data.getTeleop().setHighGoals(Integer.parseInt(array[14]));
+        data.getTeleop().setMissedHighGoals(Integer.parseInt(array[15]));
+        data.getTeleop().setClimbingStats(ClimbingStats.valueOf(array[16]));
 
         //Summary
-        data.setTroubleWith(array[15]);
-        data.setComments(array[16]);
+        data.setTroubleWith(array[17]);
+        data.setComments(array[18]);
 
         return data;
+    }
+
+    public class Autonomous implements Serializable {
+
+        private int gearsDelivered;
+        private int gearsDropped;
+        private FuelDumpAmount lowGoalDumpAmount;
+        private int highGoals;
+        private int missedHighGoals;
+        private Boolean crossedBaseline;
+
+        public Autonomous() {
+            lowGoalDumpAmount = FuelDumpAmount.NONE;
+        }
+
+        private final static long serialVersionUID = 5;
+
+        public int getGearsDelivered() {
+            return gearsDelivered;
+        }
+
+        public void setGearsDelivered(int gearsDelivered) {
+            this.gearsDelivered = gearsDelivered;
+        }
+
+        public int getGearsDropped() {
+            return gearsDropped;
+        }
+
+        public void setGearsDropped(int gearsDropped) {
+            this.gearsDropped = gearsDropped;
+        }
+
+        public FuelDumpAmount getLowGoalDumpAmount() {
+            return lowGoalDumpAmount;
+        }
+
+        public void setLowGoalDumpAmount(FuelDumpAmount lowGoalDumpAmount) {
+            this.lowGoalDumpAmount = lowGoalDumpAmount;
+        }
+
+        public int getHighGoals() {
+            return highGoals;
+        }
+
+        public void setHighGoals(int highGoals) {
+            this.highGoals = highGoals;
+        }
+
+        public int getMissedHighGoals() {
+            return missedHighGoals;
+        }
+
+        public void setMissedHighGoals(int missedHighGoals) {
+            this.missedHighGoals = missedHighGoals;
+        }
+
+        public Boolean getCrossedBaseline() {
+            return crossedBaseline;
+        }
+
+        public void setCrossedBaseline(Boolean crossedBaseline) {
+            this.crossedBaseline = crossedBaseline;
+        }
+
+    }
+
+    public class Teleop implements Serializable {
+
+        private int gearsDelivered;
+        private int gearsDropped;
+        private ArrayList<FuelDumpAmount> lowGoalDumps;
+        private int highGoals;
+        private int missedHighGoals;
+        private ClimbingStats climbingStats;
+
+        private final static long serialVersionUID = 5;
+
+        public Teleop() {
+            lowGoalDumps = new ArrayList<>();
+            climbingStats = ClimbingStats.DID_NOT_CLIMB;
+        }
+
+        public int getGearsDelivered() {
+            return gearsDelivered;
+        }
+
+        public void setGearsDelivered(int gearsDelivered) {
+            this.gearsDelivered = gearsDelivered;
+        }
+
+        public int getGearsDropped() {
+            return gearsDropped;
+        }
+
+        public void setGearsDropped(int gearsDropped) {
+            this.gearsDropped = gearsDropped;
+        }
+
+        public ArrayList<FuelDumpAmount> getLowGoalDumps() {
+            return lowGoalDumps;
+        }
+
+        public int getHighGoals() {
+            return highGoals;
+        }
+
+        public void setHighGoals(int highGoals) {
+            this.highGoals = highGoals;
+        }
+
+        public int getMissedHighGoals() {
+            return missedHighGoals;
+        }
+
+        public void setMissedHighGoals(int missedHighGoals) {
+            this.missedHighGoals = missedHighGoals;
+        }
+
+        public ClimbingStats getClimbingStats() {
+            return climbingStats;
+        }
+
+        public void setClimbingStats(ClimbingStats climbingStats) {
+            this.climbingStats = climbingStats;
+        }
+
     }
 }

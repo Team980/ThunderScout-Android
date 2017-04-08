@@ -31,7 +31,6 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.data.ScoutData;
@@ -73,7 +72,7 @@ public class ScoutDataDeleteTask extends AsyncTask<Void, Void, Void> {
 
         StringBuilder where = new StringBuilder("date_added IN (");
         for (ScoutData data : dataToDelete) {
-            where.append(data.getDateAdded()).append(",");
+            where.append(data.getDate()).append(",");
         }
         where.setLength(where.length() - 1); //no more comma
         where.append(")");

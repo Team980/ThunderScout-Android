@@ -33,8 +33,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
@@ -57,47 +55,47 @@ public class MatchInfoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Match Info: Team " + data.getTeamNumber());
-        getSupportActionBar().setSubtitle("Qualification Match " + data.getMatchNumber());
+        getSupportActionBar().setTitle("Match Info: Team " + data.getTeam());
+        getSupportActionBar().setSubtitle("Qualification Match " + data.getMatch());
 
-        toolbar.setBackground(new ColorDrawable(getResources().getColor(data.getAllianceColor().getColorPrimary())));
-        findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(data.getAllianceColor().getColorPrimary())));
+        toolbar.setBackground(new ColorDrawable(getResources().getColor(data.getAlliance().getColorPrimary())));
+        findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(data.getAlliance().getColorPrimary())));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(data.getAllianceColor().getColorPrimaryDark()));
+            getWindow().setStatusBarColor(getResources().getColor(data.getAlliance().getColorPrimaryDark()));
         }
 
         // --- Init ---
         TextView dateAdded = (TextView) findViewById(R.id.info_match_dateAdded);
-        dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(data.getDateAdded()));
+        dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(data.getDate()));
 
         TextView dataSource = (TextView) findViewById(R.id.info_match_dataSource);
-        dataSource.setText("Source: " + data.getDataSource());
+        dataSource.setText("Source: " + data.getSource());
 
         // --- Auto ---
 
         //TODO use @strings with inputs as Spannables for in-view styling
 
         TextView autoGearsDelivered = (TextView) findViewById(R.id.info_match_autoGearsDelivered);
-        autoGearsDelivered.setText(data.getAutoGearsDelivered() + "");
+        autoGearsDelivered.setText(data.getAutonomous().getGearsDelivered() + "");
 
         TextView autoFuelDumpAmount = (TextView) findViewById(R.id.info_match_autoLowGoalDumpAmount);
-        autoFuelDumpAmount.setText(data.getAutoLowGoalDumpAmount().toString());
+        autoFuelDumpAmount.setText(data.getAutonomous().getLowGoalDumpAmount().toString());
 
         TextView autoFuelNumericalDumpAmount = (TextView) findViewById(R.id.info_match_autoLowGoalNumericalDumpAmount);
-        autoFuelNumericalDumpAmount.setText("(" + data.getAutoLowGoalDumpAmount().getMinimumAmount() + " - " +
-                data.getAutoLowGoalDumpAmount().getMaximumAmount() + ")");
+        autoFuelNumericalDumpAmount.setText("(" + data.getAutonomous().getLowGoalDumpAmount().getMinimumAmount() + " - " +
+                data.getAutonomous().getLowGoalDumpAmount().getMaximumAmount() + ")");
 
         TextView autoHighGoals = (TextView) findViewById(R.id.info_match_autoHighGoals);
-        autoHighGoals.setText(data.getAutoHighGoals() + "");
+        autoHighGoals.setText(data.getAutonomous().getHighGoals() + "");
 
         TextView autoMissedGoals = (TextView) findViewById(R.id.info_match_autoMissedHighGoals);
-        autoMissedGoals.setText(data.getAutoMissedHighGoals() + "");
+        autoMissedGoals.setText(data.getAutonomous().getMissedHighGoals() + "");
 
         TextView crossedBaseline = (TextView) findViewById(R.id.info_match_autoCrossedBaseline);
         TextView crossedBaselineAction = (TextView) findViewById(R.id.info_match_autoCrossedBaselineAction);
 
-        if (data.hasCrossedBaseline()) {
+        if (data.getAutonomous().getCrossedBaseline()) {
             crossedBaseline.setText("CROSSED ");
             crossedBaselineAction.setText("the baseline");
         } else {
@@ -107,32 +105,32 @@ public class MatchInfoActivity extends AppCompatActivity {
 
         // --- Teleop ---
         TextView teleopGearsDelivered = (TextView) findViewById(R.id.info_match_teleopGearsDelivered);
-        teleopGearsDelivered.setText(data.getTeleopGearsDelivered() + "");
+        teleopGearsDelivered.setText(data.getTeleop().getGearsDelivered() + "");
 
         TextView teleopFuelDumpAmount = (TextView) findViewById(R.id.info_match_teleopNumberOfLowGoalFuelDumps);
-        teleopFuelDumpAmount.setText(data.getTeleopLowGoalDumps().size() + "");
+        teleopFuelDumpAmount.setText(data.getTeleop().getLowGoalDumps().size() + "");
 
         RecyclerView listFuelDumps = (RecyclerView) findViewById(R.id.info_match_teleopListFuelDumps);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         listFuelDumps.setLayoutManager(mLayoutManager);
 
-        FuelDumpAdapter listDumpsAdapter = new FuelDumpAdapter(data.getTeleopLowGoalDumps());
+        FuelDumpAdapter listDumpsAdapter = new FuelDumpAdapter(data.getTeleop().getLowGoalDumps());
         listFuelDumps.setAdapter(listDumpsAdapter);
 
         TextView teleopHighGoals = (TextView) findViewById(R.id.info_match_teleopHighGoals);
-        teleopHighGoals.setText(data.getAutoHighGoals() + "");
+        teleopHighGoals.setText(data.getTeleop().getHighGoals() + "");
 
         TextView teleopMissedGoals = (TextView) findViewById(R.id.info_match_teleopMissedHighGoals);
-        teleopMissedGoals.setText(data.getAutoMissedHighGoals() + "");
+        teleopMissedGoals.setText(data.getTeleop().getMissedHighGoals() + "");
 
         TextView climbingStats = (TextView) findViewById(R.id.info_match_teleopClimbingStats);
         TextView climbingStatsAction = (TextView) findViewById(R.id.info_match_teleopClimbingStatsAction);
 
-        if (data.getClimbingStats() == ClimbingStats.PRESSED_TOUCHPAD) {
+        if (data.getTeleop().getClimbingStats() == ClimbingStats.PRESSED_TOUCHPAD) {
             climbingStats.setText("PRESSED ");
             climbingStatsAction.setText("the touchpad");
-        } else if (data.getClimbingStats() == ClimbingStats.ATTEMPTED_CLIMB) {
+        } else if (data.getTeleop().getClimbingStats() == ClimbingStats.ATTEMPTED_CLIMB) {
             climbingStats.setText("ATTEMPTED TO CLIMB ");
             climbingStatsAction.setText("the airship");
         } else {
