@@ -31,7 +31,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.data.ScoutData;
@@ -41,6 +40,7 @@ import com.team980.thunderscout.util.TSNotificationBuilder;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Date;
 import java.util.UUID;
 
 public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
@@ -111,7 +111,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Connection to server device successful");
 
-        scoutData.setDateAdded(System.currentTimeMillis());
+        scoutData.setDate(new Date(System.currentTimeMillis()));
 
         ObjectInputStream ioStream = null;
         ObjectOutputStream ooStream;

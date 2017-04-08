@@ -25,42 +25,20 @@
 package com.team980.thunderscout.ximport;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.content.UriMatcher;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.provider.Settings;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
-import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.ScoutDataContract;
-import com.team980.thunderscout.data.ScoutDataDbHelper;
-import com.team980.thunderscout.data.enumeration.AllianceColor;
-import com.team980.thunderscout.data.enumeration.ClimbingStats;
-import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 import com.team980.thunderscout.data.task.ScoutDataWriteTask;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {

@@ -29,7 +29,7 @@ import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.EnumMap;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,11 +48,11 @@ public class AverageScoutData implements Serializable {
     //INIT
 
     public String getTeamNumber() {
-        return dataList.get(0).getTeamNumber();
+        return dataList.get(0).getTeam();
     }
 
-    public long getLastUpdated() {
-        return dataList.get(0).getDateAdded(); //dateAdded of newest match
+    public Date getLastUpdated() {
+        return dataList.get(0).getDate(); //dateAdded of newest match
     }
 
     public int getNumberOfMatches() {
@@ -64,7 +64,7 @@ public class AverageScoutData implements Serializable {
     public float getAverageAutoGearsDelivered() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getAutoGearsDelivered();
+            i += data.getAutonomous().getGearsDelivered();
         }
 
         return i / dataList.size();
@@ -74,7 +74,7 @@ public class AverageScoutData implements Serializable {
     public FuelDumpAmount getAverageAutoLowGoalDumpAmount() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getAutoLowGoalDumpAmount().ordinal();
+            i += data.getAutonomous().getLowGoalDumpAmount().ordinal();
         }
 
         int average = (int) (i / dataList.size());
@@ -85,7 +85,7 @@ public class AverageScoutData implements Serializable {
     public float getAverageAutoHighGoals() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getAutoHighGoals();
+            i += data.getAutonomous().getHighGoals();
         }
 
         return i / dataList.size();
@@ -94,7 +94,7 @@ public class AverageScoutData implements Serializable {
     public float getAverageAutoMissedHighGoals() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getAutoMissedHighGoals();
+            i += data.getAutonomous().getMissedHighGoals();
         }
 
         return i / dataList.size();
@@ -103,7 +103,7 @@ public class AverageScoutData implements Serializable {
     public double getCrossedBaselinePercentage() {
         double i = 0;
         for (ScoutData data : dataList) {
-            if (data.hasCrossedBaseline()) {
+            if (data.getAutonomous().getCrossedBaseline()) {
                 i++;
             }
         }
@@ -116,7 +116,7 @@ public class AverageScoutData implements Serializable {
     public float getAverageTeleopGearsDelivered() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getTeleopGearsDelivered();
+            i += data.getTeleop().getGearsDelivered();
         }
 
         return i / dataList.size();
@@ -125,7 +125,7 @@ public class AverageScoutData implements Serializable {
     public float getAverageTeleopDumpFrequency() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getTeleopLowGoalDumps().size();
+            i += data.getTeleop().getLowGoalDumps().size();
         }
 
         return i / dataList.size();
@@ -135,7 +135,7 @@ public class AverageScoutData implements Serializable {
     public FuelDumpAmount getAverageTeleopLowGoalDumpAmount() {
         float i = 0;
         for (ScoutData data : dataList) {
-            for (FuelDumpAmount amount : data.getTeleopLowGoalDumps()) {
+            for (FuelDumpAmount amount : data.getTeleop().getLowGoalDumps()) {
                 i += amount.ordinal();
             }
         }
@@ -152,7 +152,7 @@ public class AverageScoutData implements Serializable {
     public float getAverageTeleopHighGoals() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getTeleopHighGoals();
+            i += data.getTeleop().getHighGoals();
         }
 
         return i / dataList.size();
@@ -161,7 +161,7 @@ public class AverageScoutData implements Serializable {
     public float getAverageTeleopMissedHighGoals() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getTeleopMissedHighGoals();
+            i += data.getTeleop().getMissedHighGoals();
         }
 
         return i / dataList.size();
@@ -170,7 +170,7 @@ public class AverageScoutData implements Serializable {
     public double getClimbingStatsPercentage(ClimbingStats stat) {
         double i = 0;
         for (ScoutData data : dataList) {
-            if (data.getClimbingStats() == stat) {
+            if (data.getTeleop().getClimbingStats() == stat) {
                 i++;
             }
         }

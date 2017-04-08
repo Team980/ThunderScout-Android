@@ -118,7 +118,7 @@ public class TeleopFragment extends Fragment implements View.OnClickListener, Sp
         String itemSelected = (String) parent.getItemAtPosition(position);
 
         ClimbingStats climbingStats = ClimbingStats.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
-        scoutingFlowActivity.getData().setClimbingStats(climbingStats);
+        scoutingFlowActivity.getData().getTeleop().setClimbingStats(climbingStats);
     }
 
     @Override

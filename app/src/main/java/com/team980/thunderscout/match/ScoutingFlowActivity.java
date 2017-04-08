@@ -30,7 +30,6 @@ import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -45,7 +44,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.google.firebase.crash.FirebaseCrash;
@@ -61,7 +59,7 @@ import com.team980.thunderscout.feed.task.FeedDataWriteTask;
 import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.TransitionUtils;
 
-import java.util.EnumMap;
+import java.util.Date;
 
 public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener {
 
@@ -114,16 +112,16 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
-        if (scoutData.getTeamNumber() != null) { //Generate header based on presence of team number
-            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeamNumber());
-            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
+        if (scoutData.getTeam() != null) { //Generate header based on presence of team number
+            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeam());
+            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatch());
 
-            toolbar.setBackground(new ColorDrawable(getResources().getColor(scoutData.getAllianceColor().getColorPrimary())));
-            tabLayout.setBackground(new ColorDrawable(getResources().getColor(scoutData.getAllianceColor().getColorPrimary())));
-            findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(scoutData.getAllianceColor().getColorPrimary())));
+            toolbar.setBackground(new ColorDrawable(getResources().getColor(scoutData.getAlliance().getColorPrimary())));
+            tabLayout.setBackground(new ColorDrawable(getResources().getColor(scoutData.getAlliance().getColorPrimary())));
+            findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(scoutData.getAlliance().getColorPrimary())));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getWindow().setStatusBarColor(getResources().getColor(scoutData.getAllianceColor().getColorPrimaryDark()));
+                getWindow().setStatusBarColor(getResources().getColor(scoutData.getAlliance().getColorPrimaryDark()));
             }
         } else {
             getSupportActionBar().setTitle("Scout a match...");
@@ -248,8 +246,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         if (dialog.allFieldsComplete()) {
             dialog.initScoutData(scoutData);
 
-            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeamNumber()); //TODO match number, Qualification
-            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
+            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeam()); //TODO match number, Qualification
+            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatch());
 
             int toolbarColor = ((ColorDrawable) findViewById(R.id.toolbar).getBackground()).getColor();
 
@@ -261,8 +259,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             }
 
             TransitionUtils.toolbarAndStatusBarTransition(toolbarColor, statusBarColor,
-                    getResources().getColor(scoutData.getAllianceColor().getColorPrimary()),
-                    getResources().getColor(scoutData.getAllianceColor().getColorPrimaryDark()), this);
+                    getResources().getColor(scoutData.getAlliance().getColorPrimary()),
+                    getResources().getColor(scoutData.getAlliance().getColorPrimaryDark()), this);
 
             dialog.dismiss();
         } else {
@@ -274,7 +272,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     public void onDialogNegativeClick(ScoutingFlowDialogFragment dialog) {
         dialog.dismiss();
 
-        if (scoutData.getTeamNumber() == null) {
+        if (scoutData.getTeam() == null) {
             finish();
         }
     }
@@ -319,8 +317,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             finish();
 
             PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .putInt("last_used_match_number", scoutData.getMatchNumber())
-                    .putString("last_used_alliance_color", scoutData.getAllianceColor().name())
+                    .putInt("last_used_match_number", scoutData.getMatch())
+                    .putString("last_used_alliance_color", scoutData.getAlliance().name())
                     .apply();
 
             FeedDataWriteTask feedDataWriteTask = new FeedDataWriteTask(feedEntry, this);
@@ -386,41 +384,41 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
     private void initScoutData() {
         // Init
-        scoutData.setDateAdded(System.currentTimeMillis());
+        scoutData.setDate(new Date(System.currentTimeMillis()));
 
-        scoutData.setDataSource(Settings.Secure.getString(getContentResolver(), "bluetooth_name"));
+        scoutData.setSource(Settings.Secure.getString(getContentResolver(), "bluetooth_name"));
 
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();
 
         CounterCompoundView autoGearsDelivered = (CounterCompoundView) autoView.findViewById(R.id.auto_counterGearsDelivered); //TODO sometimes this fails... is it another activity state bug?
 
-        scoutData.setAutoGearsDelivered((int) autoGearsDelivered.getValue());
+        scoutData.getAutonomous().setGearsDelivered((int) autoGearsDelivered.getValue());
 
         CounterCompoundView autoHighGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterHighGoals);
 
-        scoutData.setAutoHighGoals((int) autoHighGoals.getValue());
+        scoutData.getAutonomous().setHighGoals((int) autoHighGoals.getValue());
 
         CounterCompoundView autoMissedHighGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterMissedHighGoals);
 
-        scoutData.setAutoMissedHighGoals((int) autoMissedHighGoals.getValue());
+        scoutData.getAutonomous().setMissedHighGoals((int) autoMissedHighGoals.getValue());
 
         // Teleop
         View teleopView = viewPagerAdapter.getItem(1).getView();
 
         CounterCompoundView teleopGearsDelivered = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterGearsDelivered);
 
-        scoutData.setTeleopGearsDelivered((int) teleopGearsDelivered.getValue());
+        scoutData.getTeleop().setGearsDelivered((int) teleopGearsDelivered.getValue());
 
-        scoutData.getTeleopLowGoalDumps().addAll(((TeleopFragment) viewPagerAdapter.getItem(1)).getFuelDumpAdapter().get());
+        scoutData.getTeleop().getLowGoalDumps().addAll(((TeleopFragment) viewPagerAdapter.getItem(1)).getFuelDumpAdapter().get());
 
         CounterCompoundView teleopHighGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterHighGoals);
 
-        scoutData.setTeleopHighGoals((int) teleopHighGoals.getValue());
+        scoutData.getTeleop().setHighGoals((int) teleopHighGoals.getValue());
 
         CounterCompoundView teleopMissedHighGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterMissedHighGoals);
 
-        scoutData.setTeleopMissedHighGoals((int) teleopMissedHighGoals.getValue());
+        scoutData.getTeleop().setMissedHighGoals((int) teleopMissedHighGoals.getValue());
 
         // Summary
         View summaryView = viewPagerAdapter.getItem(2).getView();

@@ -38,9 +38,10 @@ import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ScoutDataContract;
 import com.team980.thunderscout.data.ScoutDataDbHelper;
-import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.info.ThisDeviceFragment;
 import com.team980.thunderscout.match.ScoutingFlowActivity;
+
+import java.text.DateFormat;
 
 public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
 
@@ -81,26 +82,28 @@ public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
         ContentValues values = new ContentValues();
 
         // Init
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER, data.getTeamNumber());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER, data.getMatchNumber());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR, data.getAllianceColor().name());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER, data.getTeam());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER, data.getMatch());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR, data.getAlliance().name());
 
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, data.getDateAdded());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getDataSource());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, ThunderScout.serializeObject(data.getDate()));
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getSource());
 
         // Auto
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED, data.getAutoGearsDelivered());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT, data.getAutoLowGoalDumpAmount().name());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS, data.getAutoHighGoals());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS, data.getAutoMissedHighGoals());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE, data.hasCrossedBaseline());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED, data.getAutonomous().getGearsDelivered());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED, data.getAutonomous().getGearsDropped());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT, data.getAutonomous().getLowGoalDumpAmount().name());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS, data.getAutonomous().getHighGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS, data.getAutonomous().getMissedHighGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE, data.getAutonomous().getCrossedBaseline());
 
         // Teleop
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED, data.getTeleopGearsDelivered());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS, ThunderScout.serializeObject(data.getTeleopLowGoalDumps()));
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleopHighGoals());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS, data.getTeleopMissedHighGoals());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS, data.getClimbingStats().name());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED, data.getTeleop().getGearsDelivered());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED, data.getTeleop().getGearsDropped());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS, ThunderScout.serializeObject(data.getTeleop().getLowGoalDumps()));
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleop().getHighGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS, data.getTeleop().getMissedHighGoals());
+        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS, data.getTeleop().getClimbingStats().name());
 
         // Summary
         values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());

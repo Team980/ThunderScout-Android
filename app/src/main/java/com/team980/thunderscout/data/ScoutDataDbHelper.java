@@ -32,7 +32,7 @@ import static com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
 
 public class ScoutDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     public static final String DATABASE_NAME = "ThunderScout_SCOUT_DATA_2017.db"; //Store year in database name but DO NOT CHANGE FORMAT
 
@@ -48,16 +48,18 @@ public class ScoutDataDbHelper extends SQLiteOpenHelper {
                     ScoutDataTable.COLUMN_NAME_MATCH_NUMBER + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR + TEXT_TYPE + COMMA_SEP +
 
-                    ScoutDataTable.COLUMN_NAME_DATE_ADDED + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_DATE_ADDED + BLOB_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_DATA_SOURCE + TEXT_TYPE + COMMA_SEP +
 
                     ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT + TEXT_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE + INTEGER_TYPE + COMMA_SEP +
 
                     ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS + BLOB_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS + INTEGER_TYPE + COMMA_SEP +

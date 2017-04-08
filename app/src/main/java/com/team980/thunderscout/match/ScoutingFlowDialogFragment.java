@@ -83,10 +83,10 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
         if (getArguments() != null && getArguments().containsKey(EXTRA_DEFAULT_DATA)) { //Fill the data with previously set values
             ScoutData fillData = (ScoutData) getArguments().getSerializable(EXTRA_DEFAULT_DATA);
 
-            teamNumber.setText(fillData.getTeamNumber());
-            matchNumber.setText(fillData.getMatchNumber() + "");
+            teamNumber.setText(fillData.getTeam());
+            matchNumber.setText(fillData.getMatch() + "");
 
-            if (fillData.getAllianceColor() == AllianceColor.RED) {
+            if (fillData.getAlliance() == AllianceColor.RED) {
                 allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
                 allianceToggle.setText("Red Alliance");
                 allianceColor = AllianceColor.RED;
@@ -181,11 +181,11 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
     }
 
     public void initScoutData(ScoutData data) {
-        data.setTeamNumber(teamNumber.getText().toString());
+        data.setTeam(teamNumber.getText().toString());
 
-        data.setMatchNumber(Integer.valueOf(matchNumber.getText().toString()));
+        data.setMatch(Integer.valueOf(matchNumber.getText().toString()));
 
-        data.setAllianceColor(allianceColor);
+        data.setAlliance(allianceColor);
     }
 
     /* The activity that creates an instance of this dialog fragment must
