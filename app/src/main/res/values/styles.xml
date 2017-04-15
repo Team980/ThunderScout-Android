@@ -62,4 +62,14 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
+    <style name="ThunderScout.FirebaseUI" parent="FirebaseUI"> <!-- TODO fix theming -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlNormal">@color/accent</item>
+        <item name="colorControlActivated">@color/accent</item>
+        <item name="colorControlHighlight">@color/accent</item>
+        <item name="android:windowBackground">@color/cardview_dark_background</item>
+    </style>
+
 </resources>
