@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
@@ -21,8 +20,7 @@
   ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
-  -->
-
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.team980.thunderscout">
@@ -85,11 +83,13 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
         </activity>
-        <activity android:name=".ximport.ImportActivity"
+        <activity
+            android:name=".ximport.ImportActivity"
             android:label="Import from CSV"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
-        <activity android:name=".export.ExportActivity"
+        <activity
+            android:name=".export.ExportActivity"
             android:label="Export to CSV"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
@@ -125,8 +125,20 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <meta-data android:name="com.samsung.android.sdk.multiwindow.enable"
+        <meta-data
+            android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
+
+        <activity android:name=".stormdebug.StormDebugActivity"
+            android:label="Storm Debug"
+            android:theme="@style/ThunderScout.BaseTheme.ActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
