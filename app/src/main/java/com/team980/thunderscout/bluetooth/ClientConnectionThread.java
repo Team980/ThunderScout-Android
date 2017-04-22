@@ -120,7 +120,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
         OutputStreamWriter outputWriter;
         try {
-            outputWriter = new OutputStreamWriter(mmSocket.getOutputStream());
+            outputWriter = new OutputStreamWriter(mmSocket.getOutputStream(), "UTF-8");
             outputWriter.flush();
         } catch (IOException e) {
             FirebaseCrash.report(e);
@@ -136,7 +136,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
         try {
-            gson.toJson(scoutData, outputWriter);
+            outputWriter.write(gson.toJson(scoutData));
             outputWriter.flush();
         } catch (Exception e) {
             FirebaseCrash.report(e);
@@ -161,7 +161,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
         try {
             outputWriter.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             FirebaseCrash.report(e);
         }
     }
