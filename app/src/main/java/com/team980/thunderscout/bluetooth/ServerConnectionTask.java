@@ -51,7 +51,9 @@ import com.team980.thunderscout.util.TSNotificationBuilder;
 import org.json.JSONException;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -83,10 +85,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
     protected ScoutData doInBackground(Void[] params) {
         int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName(), true);
 
-        BufferedReader inputReader;
+        InputStream inputStream;
 
         try {
-            inputReader = new BufferedReader(new InputStreamReader(mmSocket.getInputStream()));
+            inputStream = mmSocket.getInputStream();
         } catch (IOException e) {
             FirebaseCrash.report(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
@@ -100,9 +102,16 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
                 .create();
 
         //TODO version check
-        ScoutData data;
+        ScoutData data = null;
         try {
-            data = gson.fromJson(inputReader, ScoutData.class); // bt socket is closing??
+            ByteArrayOutputStream result = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) != -1) {
+                result.write(buffer, 0, length);
+            }
+
+            data = gson.fromJson(result.toString("UTF-8"), ScoutData.class);
         } catch (Exception e) {
             FirebaseCrash.report(e);
             e.printStackTrace();
@@ -112,7 +121,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         }
 
         try {
-            inputReader.close();
+            inputStream.close();
         } catch (IOException e) {
             FirebaseCrash.report(e);
         }
