@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.bluetooth;
+package com.team980.thunderscout.bluetooth.legacy;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -34,11 +34,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.task.ScoutDataWriteTask;
 import com.team980.thunderscout.feed.EntryOperationWrapper;
@@ -48,15 +43,11 @@ import com.team980.thunderscout.feed.FeedEntry;
 import com.team980.thunderscout.feed.task.FeedDataWriteTask;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
-import org.json.JSONException;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.text.DateFormat;
 
+@Deprecated
 public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
     private final BluetoothSocket mmSocket;
@@ -83,13 +74,13 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
     protected ScoutData doInBackground(Void[] params) {
         int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName(), true);
 
-        InputStreamReader inputReader;
-        //ObjectOutputStream toScoutStream;
+        ObjectInputStream fromScoutStream;
+        ObjectOutputStream toScoutStream;
 
         try {
-            //toScoutStream = new ObjectOutputStream(mmSocket.getOutputStream());
-            //toScoutStream.flush();
-            inputReader = new InputStreamReader(mmSocket.getInputStream());
+            toScoutStream = new ObjectOutputStream(mmSocket.getOutputStream());
+            toScoutStream.flush();
+            fromScoutStream = new ObjectInputStream(mmSocket.getInputStream());
         } catch (IOException e) {
             FirebaseCrash.report(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
@@ -97,16 +88,12 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             return null;
         }
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat(DateFormat.DEFAULT) //todo
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
         //TODO version check
-        ScoutData data;
+        ScoutData data = null;
         try {
-            data = gson.fromJson(inputReader, ScoutData.class);
-        } catch (JsonIOException | JsonSyntaxException e) {
+            data = (ScoutData) fromScoutStream.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
             FirebaseCrash.report(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
                     notificationId);
@@ -114,8 +101,8 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         }
 
         try {
-            inputReader.close();
-            //toScoutStream.close();
+            fromScoutStream.close();
+            toScoutStream.close();
         } catch (IOException e) {
             FirebaseCrash.report(e);
         }

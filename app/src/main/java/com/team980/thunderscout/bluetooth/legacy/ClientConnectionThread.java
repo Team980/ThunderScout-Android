@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.bluetooth;
+package com.team980.thunderscout.bluetooth.legacy;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -33,9 +33,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.team980.thunderscout.bluetooth.BluetoothInfo;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.match.ScoutingFlowActivity;
 import com.team980.thunderscout.util.TSNotificationBuilder;
@@ -43,11 +41,10 @@ import com.team980.thunderscout.util.TSNotificationBuilder;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+@Deprecated
 public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
     private final BluetoothSocket mmSocket;
 
@@ -118,12 +115,12 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
         scoutData.setDate(new Date(System.currentTimeMillis()));
 
-        //ObjectInputStream ioStream = null;
-        OutputStreamWriter outputWriter;
+        ObjectInputStream ioStream = null;
+        ObjectOutputStream ooStream;
         try {
-            //ioStream = new ObjectInputStream(mmSocket.getInputStream());
-            outputWriter = new OutputStreamWriter(mmSocket.getOutputStream());
-            outputWriter.flush();
+            ioStream = new ObjectInputStream(mmSocket.getInputStream());
+            ooStream = new ObjectOutputStream(mmSocket.getOutputStream());
+            ooStream.flush();
         } catch (IOException e) {
             FirebaseCrash.report(e);
             manageError(notificationId, e);
@@ -131,19 +128,12 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
         }
 
         //TODO add version check?
-        Gson gson = new GsonBuilder()
-                .setDateFormat(DateFormat.DEFAULT) //todo
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        String json = gson.toJson(scoutData);
-        System.out.println(json);
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
 
         try {
-            outputWriter.write(gson.toJson(scoutData));
-            outputWriter.flush();
+            ooStream.writeObject(scoutData);
+            ooStream.flush();
         } catch (IOException e) {
             FirebaseCrash.report(e);
             manageError(notificationId, e);
@@ -166,8 +156,8 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
         }
 
         try {
-            outputWriter.close();
-            //ioStream.close();
+            ooStream.close();
+            ioStream.close();
         } catch (IOException e) {
             FirebaseCrash.report(e);
         }
