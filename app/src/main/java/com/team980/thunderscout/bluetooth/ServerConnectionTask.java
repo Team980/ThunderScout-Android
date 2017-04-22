@@ -83,13 +83,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
     protected ScoutData doInBackground(Void[] params) {
         int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName(), true);
 
-        InputStreamReader inputReader;
-        //ObjectOutputStream toScoutStream;
+        BufferedReader inputReader;
 
         try {
-            //toScoutStream = new ObjectOutputStream(mmSocket.getOutputStream());
-            //toScoutStream.flush();
-            inputReader = new InputStreamReader(mmSocket.getInputStream());
+            inputReader = new BufferedReader(new InputStreamReader(mmSocket.getInputStream()));
         } catch (IOException e) {
             FirebaseCrash.report(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
@@ -105,9 +102,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         //TODO version check
         ScoutData data;
         try {
-            data = gson.fromJson(inputReader, ScoutData.class);
-        } catch (JsonIOException | JsonSyntaxException e) {
+            data = gson.fromJson(inputReader, ScoutData.class); // bt socket is closing??
+        } catch (Exception e) {
             FirebaseCrash.report(e);
+            e.printStackTrace();
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
                     notificationId);
             return null;
@@ -115,7 +113,6 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
         try {
             inputReader.close();
-            //toScoutStream.close();
         } catch (IOException e) {
             FirebaseCrash.report(e);
         }

@@ -69,7 +69,7 @@ public class ServerListenerThread extends Thread {
             final BluetoothSocket socket;
             try {
                 FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Listening for incoming connections");
-                socket = mmServerSocket.accept(); //this is failing why? - needs more testing
+                socket = mmServerSocket.accept();
             } catch (IOException e) {
                 FirebaseCrash.report(e);
                 break;

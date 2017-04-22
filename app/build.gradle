@@ -33,7 +33,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 12
-        versionName "ThunderStorm-a1"
+        versionName "ThunderStorm-a2"
     }
 
     buildTypes {
