@@ -118,10 +118,10 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
         scoutData.setDate(new Date(System.currentTimeMillis()));
 
-        OutputStreamWriter outputWriter;
+        ObjectOutputStream outputStream;
         try {
-            outputWriter = new OutputStreamWriter(mmSocket.getOutputStream(), "UTF-8");
-            outputWriter.flush();
+            outputStream = new ObjectOutputStream(mmSocket.getOutputStream());
+            outputStream.flush();
         } catch (IOException e) {
             FirebaseCrash.report(e);
             manageError(notificationId, e);
@@ -136,8 +136,8 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
         try {
-            outputWriter.write(gson.toJson(scoutData));
-            outputWriter.flush();
+            outputStream.writeObject(gson.toJson(scoutData));
+            outputStream.flush();
         } catch (Exception e) {
             FirebaseCrash.report(e);
             manageError(notificationId, e);
@@ -160,7 +160,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
         }
 
         try {
-            outputWriter.close();
+            outputStream.close();
         } catch (Exception e) {
             FirebaseCrash.report(e);
         }
