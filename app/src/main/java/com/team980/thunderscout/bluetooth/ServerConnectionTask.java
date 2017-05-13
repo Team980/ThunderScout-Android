@@ -85,10 +85,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
     protected ScoutData doInBackground(Void[] params) {
         int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName(), true);
 
-        InputStream inputStream;
+        ObjectInputStream inputStream;
 
         try {
-            inputStream = mmSocket.getInputStream();
+            inputStream = new ObjectInputStream(mmSocket.getInputStream());
         } catch (IOException e) {
             FirebaseCrash.report(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
@@ -101,17 +101,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
-        //TODO version check
+        //TODO version check?
         ScoutData data = null;
         try {
-            ByteArrayOutputStream result = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = inputStream.read(buffer)) != -1) {
-                result.write(buffer, 0, length);
-            }
-
-            data = gson.fromJson(result.toString("UTF-8"), ScoutData.class);
+            data = gson.fromJson((String) inputStream.readObject(), ScoutData.class);
         } catch (Exception e) {
             FirebaseCrash.report(e);
             e.printStackTrace();
