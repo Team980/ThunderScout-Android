@@ -36,11 +36,11 @@ import android.util.Log;
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.task.ScoutDataWriteTask;
-import com.team980.thunderscout.feed.EntryOperationWrapper;
-import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationStatus;
-import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationType;
-import com.team980.thunderscout.feed.FeedEntry;
-import com.team980.thunderscout.feed.task.FeedDataWriteTask;
+import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
+import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
+import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;
+import com.team980.thunderscout.legacy.feed.FeedEntry;
+import com.team980.thunderscout.legacy.feed.task.FeedDataWriteTask;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;

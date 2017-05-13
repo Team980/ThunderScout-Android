@@ -39,10 +39,8 @@ import com.team980.thunderscout.data.ScoutDataDbHelper;
 import com.team980.thunderscout.data.enumeration.AllianceColor;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
-import com.team980.thunderscout.info.LocalDataAdapter;
+import com.team980.thunderscout.legacy.info.LocalDataAdapter;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 

@@ -29,12 +29,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
 import com.team980.thunderscout.data.ScoutDataDbHelper;
-import com.team980.thunderscout.info.LocalDataAdapter;
+import com.team980.thunderscout.legacy.info.LocalDataAdapter;
 
 public class ScoutDataClearTask extends AsyncTask<Void, Void, Void> {
 

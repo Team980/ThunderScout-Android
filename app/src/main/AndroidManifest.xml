@@ -60,17 +60,17 @@
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
-            android:name=".match.ScoutingFlowActivity"
+            android:name=".scouting_flow.ScoutingFlowActivity"
             android:label="Scout a match..."
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
-            android:name=".info.statistics.MatchInfoActivity"
+            android:name=".legacy.info.statistics.MatchInfoActivity"
             android:label="Match Info"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
-            android:name=".info.statistics.TeamInfoActivity"
+            android:name=".legacy.info.statistics.TeamInfoActivity"
             android:label="Team Info"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
@@ -84,12 +84,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ximport.ImportActivity"
+            android:name=".csv.ImportActivity"
             android:label="Import from CSV"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
         <activity
-            android:name=".export.ExportActivity"
+            android:name=".csv.ExportActivity"
             android:label="Export to CSV"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
@@ -129,7 +129,7 @@
             android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
 
-        <activity android:name=".stormdebug.StormDebugActivity"
+        <activity android:name=".firebase_debug.FirebaseDebugActivity"
             android:label="Storm Debug"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar">
             <intent-filter>

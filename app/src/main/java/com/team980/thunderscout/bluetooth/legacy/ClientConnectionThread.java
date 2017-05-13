@@ -35,7 +35,7 @@ import android.util.Log;
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.bluetooth.BluetoothInfo;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.match.ScoutingFlowActivity;
+import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;

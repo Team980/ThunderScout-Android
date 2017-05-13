@@ -38,10 +38,8 @@ import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.ScoutDataContract;
 import com.team980.thunderscout.data.ScoutDataDbHelper;
-import com.team980.thunderscout.info.ThisDeviceFragment;
-import com.team980.thunderscout.match.ScoutingFlowActivity;
-
-import java.text.DateFormat;
+import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
+import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 
 public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
 

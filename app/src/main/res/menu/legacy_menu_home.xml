@@ -23,17 +23,9 @@
   ~ SOFTWARE.
   -->
 
-<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
-    <shortcut
-        android:shortcutId="match_scout"
-        android:enabled="true"
-        android:icon="@drawable/ic_shortcut_send"
-        android:shortcutShortLabel="@string/shortcut_match_scout_short"
-        android:shortcutLongLabel="@string/shortcut_match_scout_long">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="com.team980.thunderscout"
-            android:targetClass="com.team980.thunderscout.scouting_flow.ScoutingFlowActivity" />
-    </shortcut>
-    <!-- Specify more shortcuts here. -->
-</shortcuts>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_clear"
+        android:orderInCategory="1"
+        android:title="Clear" />
+</menu>
