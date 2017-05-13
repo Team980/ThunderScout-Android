@@ -37,13 +37,11 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.match.ScoutingFlowActivity;
+import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;

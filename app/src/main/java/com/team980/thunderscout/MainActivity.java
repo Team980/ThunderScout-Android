@@ -32,13 +32,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.team980.thunderscout.feed.HomeFragment;
-import com.team980.thunderscout.info.ThisDeviceFragment;
+import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -46,7 +44,10 @@ public class MainActivity extends AppCompatActivity
 
     public static String INTENT_FLAG_SHOWN_FRAGMENT = "SHOWN_FRAGMENT";
     public static int INTENT_FLAGS_HOME = 0;
-    public static int INTENT_FLAGS_THIS_DEVICE = 1;
+    public static int INTENT_FLAGS_MATCHES = 1;
+    public static int INTENT_FLAGS_RANKINGS = 2;
+    public static int INTENT_FLAGS_ALLIANCES = 3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

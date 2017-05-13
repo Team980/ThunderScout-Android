@@ -37,26 +37,17 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.task.ScoutDataWriteTask;
-import com.team980.thunderscout.feed.EntryOperationWrapper;
-import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationStatus;
-import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationType;
-import com.team980.thunderscout.feed.FeedEntry;
-import com.team980.thunderscout.feed.task.FeedDataWriteTask;
+import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
+import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
+import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;
+import com.team980.thunderscout.legacy.feed.FeedEntry;
+import com.team980.thunderscout.legacy.feed.task.FeedDataWriteTask;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
-import org.json.JSONException;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 
 public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {

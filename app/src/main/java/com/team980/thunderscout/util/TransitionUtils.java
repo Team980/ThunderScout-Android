@@ -32,7 +32,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.match.ScoutingFlowActivity;
 
 public class TransitionUtils {
 

@@ -37,6 +37,7 @@ import java.util.List;
  * Created by TeamWrapper.
  */
 
+@Deprecated
 public class AverageScoutData implements Serializable {
 
     private List<ScoutData> dataList;
