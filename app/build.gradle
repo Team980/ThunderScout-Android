@@ -85,9 +85,12 @@ dependencies {
     compile 'com.bignerdranch.android:expandablerecyclerview:2.1.1'
     compile 'com.github.daniel-stoneuk:material-about-library:1.7.1'
     compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.android.support.constraint:constraint-layout:+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     androidTestCompile 'junit:junit:4.12'
 }
+
+
+
 
 
 
