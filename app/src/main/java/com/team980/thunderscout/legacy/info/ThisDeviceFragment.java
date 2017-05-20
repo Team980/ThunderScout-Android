@@ -60,6 +60,7 @@ import com.team980.thunderscout.csv.ImportActivity;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
         View.OnClickListener {
 

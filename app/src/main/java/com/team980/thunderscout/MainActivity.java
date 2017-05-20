@@ -36,6 +36,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.team980.thunderscout.analytics.alliances.AlliancesFragment;
+import com.team980.thunderscout.analytics.matches.MatchesFragment;
+import com.team980.thunderscout.analytics.rankings.RankingsFragment;
+import com.team980.thunderscout.firebase_debug.FirebaseDebugActivity;
 import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
@@ -57,9 +61,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        TextView appVersion = (TextView) navigationView.getHeaderView(0).findViewById(R.id.app_version);
-        appVersion.setText(BuildConfig.VERSION_NAME);
-
         int shownFragment = getIntent().getIntExtra(INTENT_FLAG_SHOWN_FRAGMENT, INTENT_FLAGS_HOME);
 
         Fragment fragment;
@@ -70,15 +71,23 @@ public class MainActivity extends AppCompatActivity
         } else {
             switch (shownFragment) {
                 case 0: //INTENT_FLAGS_HOME
-                    navigationView.setCheckedItem(R.id.nav_match_scout);
+                    navigationView.setCheckedItem(R.id.nav_home);
                     fragment = new HomeFragment();
                     break;
-                case 1: //INTENT_FLAGS_THIS_DEVICE
-                    navigationView.setCheckedItem(R.id.nav_local_storage);
-                    fragment = new ThisDeviceFragment();
+                case 1: //INTENT_FLAGS_MATCHES
+                    navigationView.setCheckedItem(R.id.nav_matches);
+                    fragment = new MatchesFragment();
+                    break;
+                case 2: //INTENT_FLAGS_RANKINGS
+                    navigationView.setCheckedItem(R.id.nav_rankings);
+                    fragment = new RankingsFragment();
+                    break;
+                case 3: //INTENT_FLAGS_ALLIANCES
+                    navigationView.setCheckedItem(R.id.nav_alliances);
+                    fragment = new AlliancesFragment();
                     break;
                 default: //default to INTENT_FLAGS_HOME
-                    navigationView.setCheckedItem(R.id.nav_match_scout);
+                    navigationView.setCheckedItem(R.id.nav_home);
                     fragment = new HomeFragment();
                     break;
             }
@@ -144,11 +153,23 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_match_scout) {
+        if (id == R.id.nav_home) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment, new HomeFragment());
             ft.commit();
-        } else if (id == R.id.nav_local_storage) {
+        } else if (id == R.id.nav_matches) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment, new MatchesFragment());
+            ft.commit();
+        } else if (id == R.id.nav_rankings) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment, new RankingsFragment());
+            ft.commit();
+        } else if (id == R.id.nav_alliances) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment, new AlliancesFragment());
+            ft.commit();
+        } else if (id == R.id.nav_local_storage) { //Legacy
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment, new ThisDeviceFragment());
             ft.commit();
@@ -157,6 +178,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_debug) {
+            Intent intent = new Intent(this, FirebaseDebugActivity.class);
             startActivity(intent);
         }
 

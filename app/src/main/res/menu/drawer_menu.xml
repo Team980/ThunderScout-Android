@@ -28,13 +28,25 @@
     <group android:id="@+id/group_top"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_match_scout"
+            android:id="@+id/nav_home"
             android:icon="@drawable/ic_send_white_24dp"
             android:title="Home" />
         <item
+            android:id="@+id/nav_matches"
+            android:icon="@drawable/ic_save_white_24dp"
+            android:title="Matches" />
+        <item
+            android:id="@+id/nav_rankings"
+            android:icon="@drawable/ic_people_white_24dp"
+            android:title="Rankings" />
+        <item
+            android:id="@+id/nav_alliances"
+            android:icon="@drawable/ic_flag_white_24dp"
+            android:title="Alliances" />
+        <item
             android:id="@+id/nav_local_storage"
             android:icon="@drawable/ic_filter_list_white_24dp"
-            android:title="This device" />
+            android:title="This device (Legacy)" />
     </group>
 
 
@@ -47,5 +59,9 @@
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info_white_24dp"
             android:title="About" />
+        <item
+            android:id="@+id/nav_debug"
+            android:icon="@drawable/ic_cloud_upload_white_24dp"
+            android:title="Storm Debug" />
     </group>
 </menu>
