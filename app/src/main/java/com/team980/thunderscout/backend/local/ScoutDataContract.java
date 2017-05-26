@@ -26,7 +26,6 @@ package com.team980.thunderscout.backend.local;
 
 import android.provider.BaseColumns;
 
-@Deprecated
 public final class ScoutDataContract {
     // To prevent someone from accidentally instantiating the contract class,
     // give it an empty constructor.

@@ -51,32 +51,26 @@ import android.widget.LinearLayout;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.backend.local.task.ScoutDataClearTask;
-import com.team980.thunderscout.backend.local.task.ScoutDataDeleteTask;
-import com.team980.thunderscout.backend.local.task.ScoutDataReadTask;
+import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.csv.ExportActivity;
 import com.team980.thunderscout.util.TransitionUtils;
 import com.team980.thunderscout.csv.ImportActivity;
 
 import java.util.ArrayList;
 
-@Deprecated
+@Deprecated //old UI, assumes LOCAL mode, selection mode is broken but I don't really care
 public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
         View.OnClickListener {
 
     private RecyclerView dataView;
     private LocalDataAdapter adapter;
 
-    private SwipeRefreshLayout swipeContainer;
-
-    private BroadcastReceiver refreshReceiver;
+    protected SwipeRefreshLayout swipeContainer;
 
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private Toolbar toolbar;
     private boolean selectionMode = false;
-
-    public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.legacy.info.REFRESH_VIEW_PAGER";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -122,16 +116,7 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
-        ScoutDataReadTask query = new ScoutDataReadTask(adapter, getContext(), swipeContainer);
-        query.execute();
-
-        refreshReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                ScoutDataReadTask query = new ScoutDataReadTask(adapter, getContext(), swipeContainer);
-                query.execute();
-            }
-        };
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
     }
 
     // TODO convert to method used by TeleopFragment
@@ -156,15 +141,11 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void onPause() {
         super.onPause();
-
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(refreshReceiver);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(refreshReceiver, new IntentFilter(ACTION_REFRESH_VIEW_PAGER));
     }
 
     @Override
@@ -237,8 +218,8 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
      */
     @Override
     public void onRefresh() {
-        ScoutDataReadTask query = new ScoutDataReadTask(adapter, getContext(), swipeContainer);
-        query.execute();
+        adapter.clearData();
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
     }
 
     /**
@@ -247,11 +228,9 @@ public class ThisDeviceFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void onClick(DialogInterface dialog, int whichButton) {
         if (selectionMode) {
-            ScoutDataDeleteTask deleteTask = new ScoutDataDeleteTask(adapter, getContext(), adapter.getSelectedItems());
-            deleteTask.execute();
+            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).removeData(adapter.getSelectedItems(), adapter);
         } else {
-            ScoutDataClearTask clearTask = new ScoutDataClearTask(adapter, getContext());
-            clearTask.execute();
+            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
         }
     }
 

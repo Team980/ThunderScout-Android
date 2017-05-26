@@ -31,38 +31,29 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.ThunderScout;
+import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
 import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 
-@Deprecated
-public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
+import java.util.List;
 
-    private final ScoutData data;
+public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, Boolean> {
+
+    @Nullable
+    private StorageWrapper.StorageListener listener;
     private Context context;
 
-    private LocalBroadcastManager localBroadcastManager;
-
-    private ScoutingFlowActivity activity;
-
-    public ScoutDataWriteTask(ScoutData data, Context context) {
-        this.data = data;
-
+    public ScoutDataWriteTask(@Nullable StorageWrapper.StorageListener listener, Context context) {
+        this.listener = listener;
         this.context = context;
-
-        localBroadcastManager = LocalBroadcastManager.getInstance(context);
-    }
-
-    public ScoutDataWriteTask(ScoutData data, Context context, ScoutingFlowActivity activity) {
-        this(data, context);
-
-        this.activity = activity;
     }
 
     @Override
@@ -72,85 +63,69 @@ public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void[] params) {
+    protected Boolean doInBackground(ScoutData... dataList) {
 
         // Gets the data repository in write mode
         SQLiteDatabase db = new ScoutDataDbHelper(context).getWritableDatabase();
 
-        // Create a new map of values, where column names are the keys
-        ContentValues values = new ContentValues();
+        for (ScoutData data : dataList) {
 
-        // Init
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER, data.getTeam());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER, data.getMatch());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR, data.getAlliance().name());
+            // Create a new map of values, where column names are the keys
+            ContentValues values = new ContentValues();
 
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, ThunderScout.serializeObject(data.getDate()));
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getSource());
+            // Init
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER, data.getTeam());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER, data.getMatch());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR, data.getAlliance().name());
 
-        // Auto
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED, data.getAutonomous().getGearsDelivered());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED, data.getAutonomous().getGearsDropped());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT, data.getAutonomous().getLowGoalDumpAmount().name());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS, data.getAutonomous().getHighGoals());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS, data.getAutonomous().getMissedHighGoals());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE, data.getAutonomous().getCrossedBaseline());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, ThunderScout.serializeObject(data.getDate()));
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getSource());
 
-        // Teleop
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED, data.getTeleop().getGearsDelivered());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED, data.getTeleop().getGearsDropped());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS, ThunderScout.serializeObject(data.getTeleop().getLowGoalDumps()));
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleop().getHighGoals());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS, data.getTeleop().getMissedHighGoals());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS, data.getTeleop().getClimbingStats().name());
+            // Auto
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED, data.getAutonomous().getGearsDelivered());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED, data.getAutonomous().getGearsDropped());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT, data.getAutonomous().getLowGoalDumpAmount().name());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS, data.getAutonomous().getHighGoals());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS, data.getAutonomous().getMissedHighGoals());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE, data.getAutonomous().getCrossedBaseline());
 
-        // Summary
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
-        values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
+            // Teleop
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED, data.getTeleop().getGearsDelivered());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED, data.getTeleop().getGearsDropped());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS, ThunderScout.serializeObject(data.getTeleop().getLowGoalDumps()));
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleop().getHighGoals());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS, data.getTeleop().getMissedHighGoals());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS, data.getTeleop().getClimbingStats().name());
 
-        try {
-            // Insert the new row
-            db.insertOrThrow(
-                    ScoutDataContract.ScoutDataTable.TABLE_NAME,
-                    null,
-                    values);
-        } catch (final Exception e) {
-            FirebaseCrash.report(e);
-            if (activity != null) {
-                Handler handler = new Handler(Looper.getMainLooper());
+            // Summary
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
 
-                handler.post(new Runnable() {
-
-                    @Override
-                    public void run() {  //TODO broadcast reciever
-                        activity.dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SAVE_THIS_DEVICE, e);
-                    }
-                });
+            try {
+                // Insert the new row
+                db.insertOrThrow(
+                        ScoutDataContract.ScoutDataTable.TABLE_NAME,
+                        null,
+                        values);
+            } catch (final Exception e) {
+                FirebaseCrash.report(e);
+                return false;
             }
-        }
 
-        if (activity != null) {
-            Handler handler = new Handler(Looper.getMainLooper());
-
-            handler.post(new Runnable() {
-
-                @Override
-                public void run() {  //TODO broadcast reciever
-                    activity.dataOutputCallbackSuccess(ScoutingFlowActivity.OPERATION_SAVE_THIS_DEVICE);
-                }
-            });
         }
 
         db.close();
-        return null;
+        return true;
     }
 
     @Override
-    protected void onPostExecute(Void o) {
+    protected void onPostExecute(Boolean wasSuccessful) {
         //Runs on UI thread after execution
-        super.onPostExecute(o);
 
-        Intent intent = new Intent(ThisDeviceFragment.ACTION_REFRESH_VIEW_PAGER);
-        localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
+        if (listener != null) {
+            listener.onDataWrite(wasSuccessful);
+        }
+
+        super.onPostExecute(wasSuccessful);
     }
 }

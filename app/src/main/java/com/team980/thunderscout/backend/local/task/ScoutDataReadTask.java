@@ -29,63 +29,40 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.annotation.Nullable;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.ThunderScout;
+import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.AllianceColor;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
-import com.team980.thunderscout.legacy.info.LocalDataAdapter;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-/**
- * TODO Rewrite this class to add sorting/filtering parameters
- */
-@Deprecated
-public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
+public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
 
-    private LocalDataAdapter viewAdapter;
+    @Nullable //no point in passing null, but safer code if I allow it
+    private StorageWrapper.StorageListener listener;
     private Context context;
 
-    private SwipeRefreshLayout swipeLayout;
-
-    public ScoutDataReadTask(LocalDataAdapter adapter, Context context) {
-        viewAdapter = adapter;
+    public ScoutDataReadTask(@Nullable StorageWrapper.StorageListener listener, Context context) {
+        this.listener = listener;
         this.context = context;
-    }
-
-    public ScoutDataReadTask(LocalDataAdapter adapter, Context context, SwipeRefreshLayout refresh) {
-        viewAdapter = adapter;
-        this.context = context;
-
-        swipeLayout = refresh;
     }
 
     @Override
     protected void onPreExecute() {
-        //viewAdapter.clearData();
-
-        if (swipeLayout != null) {
-
-            swipeLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeLayout.setRefreshing(true);
-                }
-            });
-        }
-
         super.onPreExecute();
     }
 
     @Override
-    public Void doInBackground(Void... params) {
+    public List<ScoutData> doInBackground(Void... params) {
 
         SQLiteDatabase db = new ScoutDataDbHelper(context).getReadableDatabase();
 
@@ -139,20 +116,23 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
             return null;
         }
 
+        List<ScoutData> dataList = new ArrayList<>();
+
         if (cursor.moveToFirst()) {
-            initScoutData(cursor);
+            dataList.add(initScoutData(cursor));
         }
 
         while (cursor.moveToNext()) {
-            initScoutData(cursor);
+            dataList.add(initScoutData(cursor));
         }
 
         cursor.close();
         db.close();
-        return null;
+
+        return dataList;
     }
 
-    private void initScoutData(Cursor cursor) {
+    private ScoutData initScoutData(Cursor cursor) {
         ScoutData data = new ScoutData();
 
         // Init
@@ -221,7 +201,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
         int teleopGearsDropped = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED));
 
-        data.getTeleop().setGearsDropped(teleopGearsDelivered);
+        data.getTeleop().setGearsDropped(teleopGearsDropped);
 
         byte[] teleopLowGoalDumps = cursor.getBlob(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS));
@@ -254,31 +234,25 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
 
         data.setComments(comments);
 
-        publishProgress(data);
+        return data;
     }
 
     @Override
-    protected void onProgressUpdate(ScoutData[] values) {
+    protected void onProgressUpdate(Void[] values) {
         //Runs on UI thread when publishProgress() is called
-        viewAdapter.addScoutData(values[0]);
 
         super.onProgressUpdate(values);
     }
 
     @Override
-    protected void onPostExecute(Void o) {
+    protected void onPostExecute(List<ScoutData> dataList) {
         //Runs on UI thread after execution
 
-        if (swipeLayout != null) {
-            swipeLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeLayout.setRefreshing(false);
-                }
-            });
+        if (listener != null) {
+            listener.onDataQuery(dataList); //return the data to the listener
         }
 
-        super.onPostExecute(o);
+        super.onPostExecute(dataList);
     }
 
 }

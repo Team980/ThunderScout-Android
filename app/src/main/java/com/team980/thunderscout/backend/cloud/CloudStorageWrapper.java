@@ -24,6 +24,8 @@
 
 package com.team980.thunderscout.backend.cloud;
 
+import android.support.annotation.Nullable;
+
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.data.ScoutData;
 
@@ -32,22 +34,32 @@ import java.util.List;
 public class CloudStorageWrapper implements StorageWrapper {
 
     @Override
-    public List<ScoutData> getData() {
-        return null;
-    }
-
-    @Override
-    public void putData(ScoutData data) {
+    public void queryData(@Nullable StorageListener listener) {
 
     }
 
     @Override
-    public void removeData(ScoutData data) {
+    public void writeData(ScoutData data, @Nullable StorageListener listener) {
 
     }
 
     @Override
-    public void removeAll() {
+    public void writeData(List<ScoutData> dataList, @Nullable StorageListener listener) {
+
+    }
+
+    @Override
+    public void removeData(ScoutData data, @Nullable StorageListener listener) {
+
+    }
+
+    @Override
+    public void removeData(List<ScoutData> dataList, @Nullable StorageListener listener) {
+
+    }
+
+    @Override
+    public void clearAllData(@Nullable StorageListener listener) {
 
     }
 }

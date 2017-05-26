@@ -28,31 +28,33 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
+import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.legacy.info.LocalDataAdapter;
 
-@Deprecated
-public class ScoutDataClearTask extends AsyncTask<Void, Void, Void> {
+public class ScoutDataClearTask extends AsyncTask<Void, Void, Boolean> {
 
-    private LocalDataAdapter viewAdapter;
+    @Nullable
+    private StorageWrapper.StorageListener listener;
     private Context context;
 
-    public ScoutDataClearTask(LocalDataAdapter adapter, Context context) {
-        viewAdapter = adapter;
+    public ScoutDataClearTask(@Nullable StorageWrapper.StorageListener listener, Context context) {
+        this.listener = listener;
         this.context = context;
     }
 
     @Override
     protected void onPreExecute() {
-        viewAdapter.clearData();
+        super.onPreExecute();
     }
 
     @Override
-    public Void doInBackground(Void... params) {
+    public Boolean doInBackground(Void... params) {
 
         SQLiteDatabase db = new ScoutDataDbHelper(context).getWritableDatabase();
 
@@ -62,12 +64,22 @@ public class ScoutDataClearTask extends AsyncTask<Void, Void, Void> {
             rowsDeleted = db.delete(ScoutDataContract.ScoutDataTable.TABLE_NAME, null, null);
         } catch (SQLiteException e) {
             FirebaseCrash.report(e);
-            return null;
+            return false;
         }
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), rowsDeleted + " rows deleted from DB");
 
         db.close();
-        return null;
+        return true;
+    }
+
+    @Override
+    protected void onPostExecute(Boolean wasSuccessful) {
+
+        if (listener != null) {
+            listener.onDataClear(wasSuccessful);
+        }
+
+        super.onPostExecute(wasSuccessful);
     }
 }

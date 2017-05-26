@@ -33,8 +33,8 @@ import android.widget.Toast;
 import com.google.firebase.crash.FirebaseCrash;
 import com.opencsv.CSVReader;
 import com.team980.thunderscout.ThunderScout;
+import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.backend.local.task.ScoutDataWriteTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -89,8 +89,7 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Posting ScoutData from CSV " + fileUri.getLastPathSegment() + " to database");
 
-        ScoutDataWriteTask writeTask = new ScoutDataWriteTask(values[0], activity);
-        writeTask.execute();
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, activity).writeData(values[0], null); //TODO assumes LOCAL, no callback
 
         super.onProgressUpdate(values);
     }

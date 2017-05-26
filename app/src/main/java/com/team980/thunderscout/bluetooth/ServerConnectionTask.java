@@ -37,8 +37,8 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.backend.local.task.ScoutDataWriteTask;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;
@@ -133,8 +133,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
             if (prefs.getBoolean("bt_send_to_local_storage", true)) {
                 //Put the fetched ScoutData in the local database
-                ScoutDataWriteTask writeTask = new ScoutDataWriteTask(o, context);
-                writeTask.execute();
+                AccountScope.getStorageWrapper(AccountScope.LOCAL, context).writeData(o, null); //TODO assumes LOCAL, no callback
 
                 feedEntry.addOperation(new EntryOperationWrapper(EntryOperationType.SAVED_TO_LOCAL_STORAGE,
                         EntryOperationStatus.OPERATION_SUCCESSFUL)); //TODO determine this based on callback?
