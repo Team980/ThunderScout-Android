@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
@@ -22,32 +22,18 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <string name="app_name">ThunderScout</string>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <string name="build_variant"></string> <!--Nothing will show unless you're running a DEBUG build-->
-
-    <string-array name="climbing_stats_array">
-        <item>Did not climb</item>
-        <item>Attempted climb</item>
-        <item>Pressed touchpad</item>
-    </string-array>
-
-    <string-array name="export_actions_array">
-        <item>Open file</item>
-        <item>Share to system</item>
-        <item>Export only</item>
-    </string-array>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="shortcut_match_scout_short">Match scout</string>
-    <string name="shortcut_match_scout_long">Scout a match</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">Main2Activity</string>
-
-    <string name="action_settings">Settings</string>
-</resources>
+    <item
+        android:id="@+id/nav_account_local"
+        android:icon="@drawable/ic_smartphone_white_24dp"
+        android:title="My device" />
+    <item
+        android:id="@+id/nav_account_cloud"
+        android:icon="@drawable/ic_cloud_white_24dp"
+        android:title="ThunderCloud" />
+    <item
+        android:id="@+id/nav_account_settings"
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:title="Manage accounts" />
+</menu>

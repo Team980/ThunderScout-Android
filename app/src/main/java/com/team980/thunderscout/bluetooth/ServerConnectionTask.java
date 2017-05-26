@@ -38,7 +38,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.task.ScoutDataWriteTask;
+import com.team980.thunderscout.backend.local.task.ScoutDataWriteTask;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;

@@ -26,6 +26,8 @@ package com.team980.thunderscout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -34,17 +36,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.github.tslamic.dn.AndroidDeviceNames;
 import com.team980.thunderscout.analytics.alliances.AlliancesFragment;
 import com.team980.thunderscout.analytics.matches.MatchesFragment;
 import com.team980.thunderscout.analytics.rankings.RankingsFragment;
+import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.firebase_debug.FirebaseDebugActivity;
 import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     public static String INTENT_FLAG_SHOWN_FRAGMENT = "SHOWN_FRAGMENT";
     public static int INTENT_FLAGS_HOME = 0;
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity
     public static int INTENT_FLAGS_RANKINGS = 2;
     public static int INTENT_FLAGS_ALLIANCES = 3;
 
+    boolean accountMenuExpanded = false; //runtime state
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,36 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        navigationView.getHeaderView(0).setOnClickListener(this);
+
+        AccountScope currentScope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("current_account_scope", AccountScope.LOCAL.name()));
+
+        ImageView image = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.account_image);
+        switch (currentScope) {
+            case LOCAL:
+                image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
+
+                String deviceName = AndroidDeviceNames.deviceNames(this).currentDeviceName();
+                if (deviceName != null) {
+                    ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("My " + deviceName);
+                } else {
+                    ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("My device");
+                }
+                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("Local storage");
+
+                //TODO populate
+                break;
+            case CLOUD:
+                image.setImageDrawable(getResources().getDrawable(R.drawable.ic_cloud_circle_white_72dp));
+
+                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("Team 980 (ThunderCloud)"); //TODO tweak based on account data
+                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("account@team980.com");
+
+                //TODO populate
+                break;
+        }
 
         int shownFragment = getIntent().getIntExtra(INTENT_FLAG_SHOWN_FRAGMENT, INTENT_FLAGS_HOME);
 
@@ -153,6 +191,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        //Main navigation menu
         if (id == R.id.nav_home) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment, new HomeFragment());
@@ -173,7 +212,10 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment, new ThisDeviceFragment());
             ft.commit();
-        } else if (id == R.id.nav_settings) {
+        }
+
+        //Secondary navigation menu
+        else if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_about) {
@@ -184,8 +226,92 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
+        //AccountScope navigation menu
+        else if (id == R.id.nav_account_local) {
+            NavigationView view = (NavigationView) findViewById(R.id.nav_view);
+
+            ImageView image = (ImageView) view.getHeaderView(0).findViewById(R.id.account_image);
+            image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
+
+            String deviceName = AndroidDeviceNames.deviceNames(this).currentDeviceName();
+            if (deviceName != null) {
+                ((TextView) view.findViewById(R.id.account_name)).setText("My " + deviceName);
+            } else {
+                ((TextView) view.findViewById(R.id.account_name)).setText("My device");
+            }
+            ((TextView) view.findViewById(R.id.account_id)).setText("Local storage");
+
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .putString("current_account_scope", AccountScope.LOCAL.name()).apply();
+
+            //TODO populate data
+
+            contractAccountMenu();
+        } else if (id == R.id.nav_account_cloud) {
+            NavigationView view = (NavigationView) findViewById(R.id.nav_view);
+
+            ImageView image = (ImageView) view.getHeaderView(0).findViewById(R.id.account_image);
+            image.setImageDrawable(getResources().getDrawable(R.drawable.ic_cloud_circle_white_72dp));
+
+            ((TextView) view.findViewById(R.id.account_name)).setText("Team 980 (ThunderCloud)"); //TODO tweak based on account data
+            ((TextView) view.findViewById(R.id.account_id)).setText("account@team980.com");
+
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .putString("current_account_scope", AccountScope.CLOUD.name()).apply();
+
+            //TODO populate data
+
+            contractAccountMenu();
+        } else if (id == R.id.nav_account_settings) {
+            Toast.makeText(this, "Open settings", Toast.LENGTH_SHORT).show(); //TODO
+
+            contractAccountMenu();
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onClick(View v) {
+        if (accountMenuExpanded) {
+            contractAccountMenu();
+        } else {
+            expandAccountMenu();
+        }
+    }
+
+    private void expandAccountMenu() {
+        NavigationView view = (NavigationView) findViewById(R.id.nav_view);
+        ImageView dropdown = (ImageView) view.getHeaderView(0).findViewById(R.id.account_dropdown);
+
+        view.getMenu().clear();
+        view.inflateMenu(R.menu.drawer_account_menu);
+
+        String deviceName = AndroidDeviceNames.deviceNames(this).currentDeviceName();
+        if (deviceName != null) {
+            view.getMenu().findItem(R.id.nav_account_local).setTitle("My " + deviceName);
+        } else {
+            view.getMenu().findItem(R.id.nav_account_local).setTitle("My device");
+        }
+
+        //TODO do some UI tweaks depending on account values
+        //view.getMenu().findItem(R.id.nav_account_cloud).setIcon(R.drawable.ic_account_circle_white_72dp);
+
+        dropdown.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_drop_up_white_24dp));
+        accountMenuExpanded = true;
+    }
+
+    private void contractAccountMenu() {
+        NavigationView view = (NavigationView) findViewById(R.id.nav_view);
+        ImageView dropdown = (ImageView) view.getHeaderView(0).findViewById(R.id.account_dropdown);
+
+        view.getMenu().clear();
+        view.inflateMenu(R.menu.drawer_menu);
+
+        dropdown.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_drop_down_white_24dp));
+        accountMenuExpanded = false;
+    }
+
 }

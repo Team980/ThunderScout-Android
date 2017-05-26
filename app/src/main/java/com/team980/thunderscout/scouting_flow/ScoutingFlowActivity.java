@@ -50,7 +50,7 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.task.ScoutDataWriteTask;
+import com.team980.thunderscout.backend.local.task.ScoutDataWriteTask;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.data.task;
+package com.team980.thunderscout.backend.local.task;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -33,9 +33,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.ThunderScout;
+import com.team980.thunderscout.backend.local.ScoutDataContract;
+import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
-import com.team980.thunderscout.data.ScoutDataDbHelper;
 import com.team980.thunderscout.data.enumeration.AllianceColor;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
@@ -47,6 +47,7 @@ import java.util.Date;
 /**
  * TODO Rewrite this class to add sorting/filtering parameters
  */
+@Deprecated
 public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
 
     private LocalDataAdapter viewAdapter;
@@ -91,41 +92,41 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
-                ScoutDataTable._ID,
-                ScoutDataTable.COLUMN_NAME_TEAM_NUMBER,
-                ScoutDataTable.COLUMN_NAME_MATCH_NUMBER,
-                ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR,
+                ScoutDataContract.ScoutDataTable._ID,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR,
 
-                ScoutDataTable.COLUMN_NAME_DATE_ADDED,
-                ScoutDataTable.COLUMN_NAME_DATA_SOURCE,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE,
 
-                ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED,
-                ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED,
-                ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT,
-                ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS,
-                ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS,
-                ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE,
 
-                ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED,
-                ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED,
-                ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS,
-                ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS,
-                ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS,
-                ScoutDataTable.COLUMN_NAME_CLIMBING_STATS,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS,
 
-                ScoutDataTable.COLUMN_NAME_TROUBLE_WITH,
-                ScoutDataTable.COLUMN_NAME_COMMENTS
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS
         };
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                ScoutDataTable._ID + " DESC";
+                ScoutDataContract.ScoutDataTable._ID + " DESC";
 
         Cursor cursor;
 
         try {
             cursor = db.query(
-                    ScoutDataTable.TABLE_NAME,  // The table to query
+                    ScoutDataContract.ScoutDataTable.TABLE_NAME,  // The table to query
                     projection,                               // The columns to return
                     null,                                // The columns for the WHERE clause
                     null,                            // The values for the WHERE clause
@@ -156,100 +157,100 @@ public class ScoutDataReadTask extends AsyncTask<Void, ScoutData, Void> {
 
         // Init
         String teamNumber = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TEAM_NUMBER));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER));
 
         data.setTeam(teamNumber);
 
         int matchNumber = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_MATCH_NUMBER));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER));
 
         data.setMatch(matchNumber);
 
         String allianceColor = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR));
 
         data.setAlliance(AllianceColor.valueOfCompat(allianceColor));
 
         byte[] dateAdded = cursor.getBlob(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_DATE_ADDED));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED));
 
         data.setDate((Date) ThunderScout.deserializeObject(dateAdded));
 
         String dataSource = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_DATA_SOURCE));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE));
 
         data.setSource(dataSource);
 
         // Auto
         int autoGearsDelivered = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED));
 
         data.getAutonomous().setGearsDelivered(autoGearsDelivered);
 
         int autoGearsDropped = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED));
 
         data.getAutonomous().setGearsDropped(autoGearsDropped);
 
         String autoLowGoalDumpAmount = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT));
 
         data.getAutonomous().setLowGoalDumpAmount(FuelDumpAmount.valueOf(autoLowGoalDumpAmount));
 
         int autoHighGoals = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS));
 
         data.getAutonomous().setHighGoals(autoHighGoals);
 
         int autoMissedHighGoals = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS));
 
         data.getAutonomous().setMissedHighGoals(autoMissedHighGoals);
 
         int crossedBaseline = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE));
 
         data.getAutonomous().setCrossedBaseline(crossedBaseline != 0); //I2B conversion
 
         // Teleop
         int teleopGearsDelivered = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED));
 
         data.getTeleop().setGearsDelivered(teleopGearsDelivered);
 
         int teleopGearsDropped = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED));
 
         data.getTeleop().setGearsDropped(teleopGearsDelivered);
 
         byte[] teleopLowGoalDumps = cursor.getBlob(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS));
 
         data.getTeleop().getLowGoalDumps().addAll((ArrayList<FuelDumpAmount>) ThunderScout.deserializeObject(teleopLowGoalDumps));
 
         int teleopHighGoals = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS));
 
         data.getTeleop().setHighGoals(teleopHighGoals);
 
         int teleopMissedHighGoals = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS));
 
         data.getTeleop().setMissedHighGoals(teleopMissedHighGoals);
 
         String climbingStats = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_CLIMBING_STATS));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS));
 
         data.getTeleop().setClimbingStats(ClimbingStats.valueOf(climbingStats));
 
         // Summary
         String troubleWith = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_TROUBLE_WITH));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH));
 
         data.setTroubleWith(troubleWith);
 
         String comments = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataTable.COLUMN_NAME_COMMENTS));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS));
 
         data.setComments(comments);
 

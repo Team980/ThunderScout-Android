@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.data.task;
+package com.team980.thunderscout.backend.local.task;
 
 import android.content.Context;
 import android.content.Intent;
@@ -33,14 +33,15 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
+import com.team980.thunderscout.backend.local.ScoutDataContract;
+import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.ScoutDataContract.ScoutDataTable;
-import com.team980.thunderscout.data.ScoutDataDbHelper;
 import com.team980.thunderscout.legacy.info.LocalDataAdapter;
 import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
 
 import java.util.List;
 
+@Deprecated
 public class ScoutDataDeleteTask extends AsyncTask<Void, Void, Void> {
 
     private LocalDataAdapter viewAdapter;
@@ -80,7 +81,7 @@ public class ScoutDataDeleteTask extends AsyncTask<Void, Void, Void> {
         int rowsDeleted;
 
         try {
-            rowsDeleted = db.delete(ScoutDataTable.TABLE_NAME, where.toString(), null);
+            rowsDeleted = db.delete(ScoutDataContract.ScoutDataTable.TABLE_NAME, where.toString(), null);
         } catch (SQLiteException e) {
             FirebaseCrash.report(e);
             return null;
