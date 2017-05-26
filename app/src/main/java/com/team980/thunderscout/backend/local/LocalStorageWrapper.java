@@ -24,30 +24,60 @@
 
 package com.team980.thunderscout.backend.local;
 
+import android.content.Context;
+import android.support.annotation.Nullable;
+
 import com.team980.thunderscout.backend.StorageWrapper;
+import com.team980.thunderscout.backend.local.task.ScoutDataClearTask;
+import com.team980.thunderscout.backend.local.task.ScoutDataRemoveTask;
+import com.team980.thunderscout.backend.local.task.ScoutDataReadTask;
+import com.team980.thunderscout.backend.local.task.ScoutDataWriteTask;
 import com.team980.thunderscout.data.ScoutData;
 
 import java.util.List;
 
+// TODO this doesn't have to be a Singleton
 public class LocalStorageWrapper implements StorageWrapper {
 
-    @Override
-    public List<ScoutData> getData() {
-        return null;
+    private Context applicationContext;
+
+    public LocalStorageWrapper(Context context) {
+        applicationContext = context.getApplicationContext();
     }
 
     @Override
-    public void putData(ScoutData data) {
-
+    public void queryData(@Nullable StorageListener listener) {
+        ScoutDataReadTask readTask = new ScoutDataReadTask(listener, applicationContext);
+        readTask.execute();
     }
 
     @Override
-    public void removeData(ScoutData data) {
-
+    public void writeData(ScoutData data, @Nullable StorageListener listener) {
+        ScoutDataWriteTask writeTask = new ScoutDataWriteTask(listener, applicationContext);
+        writeTask.execute(data);
     }
 
     @Override
-    public void removeAll() {
+    public void writeData(List<ScoutData> dataList, @Nullable StorageListener listener) {
+        ScoutDataWriteTask writeTask = new ScoutDataWriteTask(listener, applicationContext);
+        writeTask.execute((ScoutData[]) dataList.toArray(new ScoutData[dataList.size()]));
+    }
 
+    @Override
+    public void removeData(ScoutData data, @Nullable StorageListener listener) {
+        ScoutDataRemoveTask deleteTask = new ScoutDataRemoveTask(listener, applicationContext);
+        deleteTask.execute(data);
+    }
+
+    @Override
+    public void removeData(List<ScoutData> dataList, @Nullable StorageListener listener) {
+        ScoutDataRemoveTask deleteTask = new ScoutDataRemoveTask(listener, applicationContext);
+        deleteTask.execute((ScoutData[]) dataList.toArray(new ScoutData[dataList.size()]));
+    }
+
+    @Override
+    public void clearAllData(@Nullable StorageListener listener) {
+        ScoutDataClearTask clearTask = new ScoutDataClearTask(listener, applicationContext);
+        clearTask.execute();
     }
 }

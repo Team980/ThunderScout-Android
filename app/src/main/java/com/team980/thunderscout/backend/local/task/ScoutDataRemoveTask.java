@@ -29,10 +29,12 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
+import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.data.ScoutData;
@@ -41,33 +43,24 @@ import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
 
 import java.util.List;
 
-@Deprecated
-public class ScoutDataDeleteTask extends AsyncTask<Void, Void, Void> {
+public class ScoutDataRemoveTask extends AsyncTask<ScoutData, Void, Boolean> {
 
-    private LocalDataAdapter viewAdapter;
+    @Nullable
+    private StorageWrapper.StorageListener listener;
     private Context context;
 
-    private LocalBroadcastManager localBroadcastManager;
-
-    private List<ScoutData> dataToDelete;
-
-
-    public ScoutDataDeleteTask(LocalDataAdapter adapter, Context context, List<ScoutData> datas) {
-        viewAdapter = adapter;
+    public ScoutDataRemoveTask(@Nullable StorageWrapper.StorageListener listener, Context context) {
+        this.listener = listener;
         this.context = context;
-
-        dataToDelete = datas;
-
-        localBroadcastManager = LocalBroadcastManager.getInstance(context);
     }
 
     @Override
     protected void onPreExecute() {
-        viewAdapter.clearSelections();
+        super.onPreExecute();
     }
 
     @Override
-    public Void doInBackground(Void... params) {
+    public Boolean doInBackground(ScoutData... dataToDelete) {
 
         SQLiteDatabase db = new ScoutDataDbHelper(context).getWritableDatabase();
 
@@ -84,24 +77,24 @@ public class ScoutDataDeleteTask extends AsyncTask<Void, Void, Void> {
             rowsDeleted = db.delete(ScoutDataContract.ScoutDataTable.TABLE_NAME, where.toString(), null);
         } catch (SQLiteException e) {
             FirebaseCrash.report(e);
-            return null;
+            return false;
         }
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), rowsDeleted + " rows deleted from DB");
 
         db.close();
-        return null;
+        return true;
     }
 
     @Override
-    protected void onPostExecute(Void o) {
+    protected void onPostExecute(Boolean wasSuccessful) {
         //Runs on UI thread after execution
-        viewAdapter.clearData();
 
-        Intent intent = new Intent(ThisDeviceFragment.ACTION_REFRESH_VIEW_PAGER);
-        localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
+        if (listener != null) {
+            listener.onDataRemove(wasSuccessful);
+        }
 
-        super.onPostExecute(o);
+        super.onPostExecute(wasSuccessful);
     }
 
 }

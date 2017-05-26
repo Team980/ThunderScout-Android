@@ -48,9 +48,10 @@ import android.widget.EditText;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.backend.local.task.ScoutDataWriteTask;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;
@@ -60,8 +61,9 @@ import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.Date;
+import java.util.List;
 
-public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener {
+public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener, StorageWrapper.StorageListener {
 
     private ScoutingFlowViewPagerAdapter viewPagerAdapter;
 
@@ -281,7 +283,10 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         return scoutData;
     }
 
-    private void dataOutputLoop() {
+    private void dataOutputLoop() { //TODO Due to changes in backend this no longer works the same
+        //TODO I would advocate running this in the background again and posting notifications
+        //TODO because this method doesn't work great with the current data structure
+        //TODO it also assumes LOCAL mode
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Looping through data output loop");
         if (!operationStateDialog.isShowing()) {
             operationStateDialog.show(); //Show it if it isn't already visible
@@ -290,8 +295,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         if (operationStates.getBoolean(OPERATION_SAVE_THIS_DEVICE)) {
             operationStateDialog.setMessage("Saving scout data to this device");
 
-            ScoutDataWriteTask task = new ScoutDataWriteTask(new ScoutData(scoutData), getApplicationContext(), this); //MEMORY LEAK PREVENTION
-            task.execute();
+            AccountScope.getStorageWrapper(AccountScope.LOCAL, this).writeData(getData(), this);
+
 
         } else if (operationStates.getBoolean(OPERATION_SEND_BLUETOOTH)) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -430,5 +435,29 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         EditText comments = (EditText) summaryView.findViewById(R.id.summary_edittextComments);
 
         scoutData.setComments(comments.getText().toString());
+    }
+
+    @Override
+    public void onDataQuery(List<ScoutData> dataList) {
+        //do nothing
+    }
+
+    @Override
+    public void onDataWrite(boolean success) {
+        if (success) {
+            dataOutputCallbackSuccess(OPERATION_SAVE_THIS_DEVICE);
+        } else {
+            dataOutputCallbackFail(OPERATION_SAVE_THIS_DEVICE, null);
+        }
+    }
+
+    @Override
+    public void onDataRemove(boolean success) {
+        //do nothing
+    }
+
+    @Override
+    public void onDataClear(boolean success) {
+        //do nothing
     }
 }

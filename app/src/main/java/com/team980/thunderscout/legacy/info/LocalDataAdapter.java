@@ -43,6 +43,8 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.legacy.info.statistics.MatchInfoActivity;
 import com.team980.thunderscout.legacy.info.statistics.TeamInfoActivity;
@@ -54,7 +56,9 @@ import java.util.List;
 import static com.team980.thunderscout.legacy.info.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
 import static com.team980.thunderscout.legacy.info.TeamWrapper.TeamComparator.getComparator;
 
-public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter.TeamViewHolder, LocalDataAdapter.MatchViewHolder> {
+@Deprecated
+public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter.TeamViewHolder, LocalDataAdapter.MatchViewHolder>
+        implements StorageWrapper.StorageListener {
 
     private LayoutInflater mInflator;
 
@@ -91,7 +95,7 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
 
     @Override
     public MatchViewHolder onCreateChildViewHolder(ViewGroup childViewGroup) {
-        View scoutView = mInflator.inflate(R.layout.match_view, childViewGroup, false);
+        View scoutView = mInflator.inflate(R.layout.legacymatch_view, childViewGroup, false);
         return new MatchViewHolder(scoutView);
     }
 
@@ -224,6 +228,33 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
             items.add((ScoutData) mItemList.get(selectedItems.keyAt(i)));
         }
         return items;
+    }
+
+    @Override
+    public void onDataQuery(List<ScoutData> dataList) {
+        for (ScoutData data : dataList) {
+            addScoutData(data);
+        }
+
+        if (fragment.swipeContainer.isRefreshing()) {
+            fragment.swipeContainer.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void onDataWrite(boolean success) {
+        //do nothing
+    }
+
+    @Override
+    public void onDataRemove(boolean success) {
+        clearData();
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, context).queryData(this);
+    }
+
+    @Override
+    public void onDataClear(boolean success) {
+        this.clearData();
     }
 
     public class TeamViewHolder extends ParentViewHolder {

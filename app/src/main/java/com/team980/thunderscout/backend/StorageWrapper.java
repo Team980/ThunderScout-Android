@@ -24,6 +24,8 @@
 
 package com.team980.thunderscout.backend;
 
+import android.support.annotation.Nullable;
+
 import com.team980.thunderscout.data.ScoutData;
 
 import java.util.List;
@@ -33,11 +35,29 @@ import java.util.List;
  */
 public interface StorageWrapper { //TODO refine this
 
-    List<ScoutData> getData();
+    /**
+     * Runs a query to fetch the data
+     * @param listener Class extending StorageListener to return the data to
+     */
+    void queryData(@Nullable StorageListener listener);
 
-    void putData(ScoutData data);
+    void writeData(ScoutData data, @Nullable StorageListener listener);
 
-    void removeData(ScoutData data);
+    void writeData(List<ScoutData> dataList, @Nullable StorageListener listener);
 
-    void removeAll();
+    void removeData(ScoutData data, @Nullable StorageListener listener);
+
+    void removeData(List<ScoutData> dataList, @Nullable StorageListener listener);
+
+    void clearAllData(@Nullable StorageListener listener);
+
+    interface StorageListener {
+        void onDataQuery(List<ScoutData> dataList);
+
+        void onDataWrite(boolean success);
+
+        void onDataRemove(boolean success);
+
+        void onDataClear(boolean success);
+    }
 }
