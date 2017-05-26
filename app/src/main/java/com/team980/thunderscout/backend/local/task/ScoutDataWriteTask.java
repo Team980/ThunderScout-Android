@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.data.task;
+package com.team980.thunderscout.backend.local.task;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -35,12 +35,13 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.ThunderScout;
+import com.team980.thunderscout.backend.local.ScoutDataContract;
+import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.ScoutDataContract;
-import com.team980.thunderscout.data.ScoutDataDbHelper;
 import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
 import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 
+@Deprecated
 public class ScoutDataWriteTask extends AsyncTask<Void, Integer, Void> {
 
     private final ScoutData data;

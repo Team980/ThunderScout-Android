@@ -129,11 +129,10 @@
             android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
 
-        <activity android:name=".firebase_debug.FirebaseDebugActivity"
+        <activity
+            android:name=".firebase_debug.FirebaseDebugActivity"
             android:label="Storm Debug"
-            android:theme="@style/ThunderScout.BaseTheme.ActionBar">
-        </activity>
-
+            android:theme="@style/ThunderScout.BaseTheme.ActionBar"/>
     </application>
 
 </manifest>

@@ -51,9 +51,9 @@ import android.widget.LinearLayout;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.task.ScoutDataClearTask;
-import com.team980.thunderscout.data.task.ScoutDataDeleteTask;
-import com.team980.thunderscout.data.task.ScoutDataReadTask;
+import com.team980.thunderscout.backend.local.task.ScoutDataClearTask;
+import com.team980.thunderscout.backend.local.task.ScoutDataDeleteTask;
+import com.team980.thunderscout.backend.local.task.ScoutDataReadTask;
 import com.team980.thunderscout.csv.ExportActivity;
 import com.team980.thunderscout.util.TransitionUtils;
 import com.team980.thunderscout.csv.ImportActivity;
