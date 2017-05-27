@@ -25,7 +25,7 @@
 package com.team980.thunderscout.data;
 
 import com.google.firebase.crash.FirebaseCrash;
-import com.team980.thunderscout.data.enumeration.AllianceColor;
+import com.team980.thunderscout.data.enumeration.AllianceStation;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
@@ -37,13 +37,14 @@ import java.util.Arrays;
 import java.util.Date;
 
 /**
- * Implements data for one team from one match.
+ * Implements data for one team from one matchNumber.
  */
 public class ScoutData implements Serializable {
 
     /**
      * ScoutData Version 2017-3a
      * <p>
+     * 2017-3b: More structural tweaks, new AllianceStation field
      * 2017-3a: Update structure, tweak fields, and prepare for GSON serialization
      * 2017-2: Serializable ArrayList for dumps in teleop
      * 2017-1: First 2017 spec
@@ -52,8 +53,8 @@ public class ScoutData implements Serializable {
 
     // INIT
     private String team;
-    private int match;
-    private AllianceColor alliance;
+    private int matchNumber;
+    private AllianceStation allianceStation; //TODO implement in UI as stations instead of colors
 
     private Date date;
     private String source;
@@ -73,7 +74,7 @@ public class ScoutData implements Serializable {
         autonomous = new Autonomous();
         teleop = new Teleop();
 
-        //TODO implement in view
+        //TODO implement in scouting flow
         autonomous.setGearsDropped(0);
         teleop.setGearsDropped(0);
     }
@@ -84,8 +85,8 @@ public class ScoutData implements Serializable {
     public ScoutData(ScoutData other) {
         //Init
         setTeam(other.getTeam());
-        setMatch(other.getMatch());
-        setAlliance(other.getAlliance());
+        setMatchNumber(other.getMatchNumber());
+        setAllianceStation(other.getAllianceStation());
         setDate(other.getDate());
         setSource(other.getSource());
 
@@ -122,20 +123,20 @@ public class ScoutData implements Serializable {
         this.team = team;
     }
 
-    public int getMatch() {
-        return match;
+    public int getMatchNumber() {
+        return matchNumber;
     }
 
-    public void setMatch(int match) {
-        this.match = match;
+    public void setMatchNumber(int matchNumber) {
+        this.matchNumber = matchNumber;
     }
 
-    public AllianceColor getAlliance() {
-        return alliance;
+    public AllianceStation getAllianceStation() {
+        return allianceStation;
     }
 
-    public void setAlliance(AllianceColor alliance) {
-        this.alliance = alliance;
+    public void setAllianceStation(AllianceStation alliance) {
+        this.allianceStation = alliance;
     }
 
     public Date getDate() {
@@ -195,8 +196,8 @@ public class ScoutData implements Serializable {
 
         //Init
         fieldList.add(getTeam());
-        fieldList.add(String.valueOf(getMatch()));
-        fieldList.add(getAlliance().name());
+        fieldList.add(String.valueOf(getMatchNumber()));
+        fieldList.add(getAllianceStation().name());
         fieldList.add(getDate().toString());
         fieldList.add(getSource());
 
@@ -228,8 +229,8 @@ public class ScoutData implements Serializable {
 
         //Init
         data.setTeam(array[0]);
-        data.setMatch(Integer.parseInt(array[1]));
-        data.setAlliance(AllianceColor.valueOfCompat(array[2]));
+        data.setMatchNumber(Integer.parseInt(array[1]));
+        data.setAllianceStation(AllianceStation.valueOf(array[2]));
         try {
             data.setDate(DateFormat.getDateTimeInstance().parse(array[3]));
         } catch (ParseException e) {

@@ -339,10 +339,10 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
         }
 
         public void bind(final ScoutData scoutData) {
-            matchNumber.setText("Match " + scoutData.getMatch());
-            allianceColor.setText(scoutData.getAlliance().toString());
+            matchNumber.setText("Match " + scoutData.getMatchNumber());
+            allianceColor.setText(scoutData.getAllianceStation().toString());
 
-            matchIcon.setColorFilter(new PorterDuffColorFilter(itemView.getResources().getColor(scoutData.getAlliance().getColorPrimary()), PorterDuff.Mode.MULTIPLY));
+            matchIcon.setColorFilter(new PorterDuffColorFilter(itemView.getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary()), PorterDuff.Mode.MULTIPLY));
 
             if (fragment.isInSelectionMode()) {
                 matchIcon.setVisibility(View.GONE);

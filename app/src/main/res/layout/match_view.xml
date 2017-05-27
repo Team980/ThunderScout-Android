@@ -30,7 +30,8 @@
 
     <TextView
         android:id="@+id/match_number"
-        android:layout_width="70dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center"
@@ -39,29 +40,30 @@
         android:textSize="36sp" />
 
     <android.support.v7.widget.GridLayout
-        android:layout_width="match_parent"
+        android:id="@+id/match_grid"
+        android:layout_weight="3"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         app:columnCount="3"
         app:orientation="horizontal"
         app:rowCount="2">
 
+        <!--Now generated programmatically
+
         <TextView
             android:id="@+id/match_red1"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/alliance_red_primary"
+            android:background="@color/alliance_red_primary_dark"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            android:text="Red 1"
-            android:gravity="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp"/>
+            android:text="Red 1"/>
 
         <TextView
             android:id="@+id/match_red2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/alliance_red_primary_dark"
+            android:background="@color/alliance_red_primary"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
             android:text="Red 2"
@@ -73,7 +75,7 @@
             android:id="@+id/match_red3"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/alliance_red_primary"
+            android:background="@color/alliance_red_primary_dark"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
             android:text="Red 3"
@@ -85,7 +87,7 @@
             android:id="@+id/match_blue1"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/alliance_blue_primary"
+            android:background="@color/alliance_blue_primary_dark"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
             android:text="Blue 1"
@@ -97,7 +99,7 @@
             android:id="@+id/match_blue2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/alliance_blue_primary_dark"
+            android:background="@color/alliance_blue_primary"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
             android:text="Blue 2"
@@ -109,14 +111,13 @@
             android:id="@+id/match_blue3"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/alliance_blue_primary"
+            android:background="@color/alliance_blue_primary_dark"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
             android:text="Blue 3"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp" />
-
+            android:textSize="24sp" />-->
 
     </android.support.v7.widget.GridLayout>
 

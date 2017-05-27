@@ -37,7 +37,7 @@ import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.AllianceColor;
+import com.team980.thunderscout.data.enumeration.AllianceStation;
 import com.team980.thunderscout.data.enumeration.ClimbingStats;
 import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
 
@@ -72,7 +72,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
                 ScoutDataContract.ScoutDataTable._ID,
                 ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER,
                 ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_STATION,
 
                 ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED,
                 ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE,
@@ -144,12 +144,12 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
         int matchNumber = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER));
 
-        data.setMatch(matchNumber);
+        data.setMatchNumber(matchNumber);
 
-        String allianceColor = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR));
+        String allianceStation = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_STATION));
 
-        data.setAlliance(AllianceColor.valueOfCompat(allianceColor));
+        data.setAllianceStation(AllianceStation.valueOf(allianceStation));
 
         byte[] dateAdded = cursor.getBlob(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED));

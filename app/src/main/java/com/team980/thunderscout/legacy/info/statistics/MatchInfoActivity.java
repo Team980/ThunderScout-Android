@@ -56,13 +56,13 @@ public class MatchInfoActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Match Info: Team " + data.getTeam());
-        getSupportActionBar().setSubtitle("Qualification Match " + data.getMatch());
+        getSupportActionBar().setSubtitle("Qualification Match " + data.getMatchNumber());
 
-        toolbar.setBackground(new ColorDrawable(getResources().getColor(data.getAlliance().getColorPrimary())));
-        findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(data.getAlliance().getColorPrimary())));
+        toolbar.setBackground(new ColorDrawable(getResources().getColor(data.getAllianceStation().getColor().getColorPrimary())));
+        findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(data.getAllianceStation().getColor().getColorPrimary())));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(data.getAlliance().getColorPrimaryDark()));
+            getWindow().setStatusBarColor(getResources().getColor(data.getAllianceStation().getColor().getColorPrimaryDark()));
         }
 
         // --- Init ---

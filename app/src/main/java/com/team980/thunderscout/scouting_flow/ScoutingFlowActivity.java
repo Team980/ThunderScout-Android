@@ -116,14 +116,14 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         if (scoutData.getTeam() != null) { //Generate header based on presence of team number
             getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeam());
-            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatch());
+            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
 
-            toolbar.setBackground(new ColorDrawable(getResources().getColor(scoutData.getAlliance().getColorPrimary())));
-            tabLayout.setBackground(new ColorDrawable(getResources().getColor(scoutData.getAlliance().getColorPrimary())));
-            findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(scoutData.getAlliance().getColorPrimary())));
+            toolbar.setBackground(new ColorDrawable(getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary())));
+            tabLayout.setBackground(new ColorDrawable(getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary())));
+            findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary())));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                getWindow().setStatusBarColor(getResources().getColor(scoutData.getAlliance().getColorPrimaryDark()));
+                getWindow().setStatusBarColor(getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimaryDark()));
             }
         } else {
             getSupportActionBar().setTitle("Scout a match...");
@@ -248,8 +248,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         if (dialog.allFieldsComplete()) {
             dialog.initScoutData(scoutData);
 
-            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeam()); //TODO match number, Qualification
-            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatch());
+            getSupportActionBar().setTitle("Scout: Team " + scoutData.getTeam());
+            getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber()); //TODO match types?
 
             int toolbarColor = ((ColorDrawable) findViewById(R.id.toolbar).getBackground()).getColor();
 
@@ -261,8 +261,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             }
 
             TransitionUtils.toolbarAndStatusBarTransition(toolbarColor, statusBarColor,
-                    getResources().getColor(scoutData.getAlliance().getColorPrimary()),
-                    getResources().getColor(scoutData.getAlliance().getColorPrimaryDark()), this);
+                    getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary()),
+                    getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimaryDark()), this);
 
             dialog.dismiss();
         } else {
@@ -322,8 +322,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             finish();
 
             PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .putInt("last_used_match_number", scoutData.getMatch())
-                    .putString("last_used_alliance_color", scoutData.getAlliance().name())
+                    .putInt("last_used_match_number", scoutData.getMatchNumber())
+                    .putString("last_used_alliance_station", scoutData.getAllianceStation().name())
                     .apply();
 
             FeedDataWriteTask feedDataWriteTask = new FeedDataWriteTask(feedEntry, this);

@@ -35,16 +35,20 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.AllianceColor;
+import com.team980.thunderscout.data.enumeration.AllianceStation;
 
 public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
 
@@ -53,8 +57,8 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
 
     private EditText teamNumber;
     private EditText matchNumber;
-    private AppCompatButton allianceToggle;
-    private AllianceColor allianceColor;
+    private AppCompatSpinner allianceStationSpinner; //TODO this needs nicer UI - spinners are impossibe to customize (possibly make custom View?)
+    private AllianceStation allianceStation;
 
     public static final String EXTRA_DEFAULT_DATA = "com.team980.thunderscout.EXTRA_DEFAULT_DATA";
 
@@ -77,43 +81,48 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
         matchNumber = (EditText) dialogView.findViewById(R.id.dialog_editTextMatchNumber);
         matchNumber.setText(String.valueOf(prefs.getInt("last_used_match_number", 0) + 1)); //increment the last match number
 
-        allianceColor = AllianceColor.valueOfCompat(prefs.getString("last_used_alliance_color", AllianceColor.RED.name()));
-        allianceToggle = (AppCompatButton) dialogView.findViewById(R.id.dialog_allianceToggleButton);
+        allianceStation = AllianceStation.valueOf(prefs.getString("last_used_alliance_station", AllianceStation.RED_1.name()));
+        allianceStationSpinner = (AppCompatSpinner) dialogView.findViewById(R.id.dialog_allianceStationSpinner);
+        allianceStationSpinner.setSelection(allianceStation.ordinal());
 
         if (getArguments() != null && getArguments().containsKey(EXTRA_DEFAULT_DATA)) { //Fill the data with previously set values
             ScoutData fillData = (ScoutData) getArguments().getSerializable(EXTRA_DEFAULT_DATA);
 
             teamNumber.setText(fillData.getTeam());
-            matchNumber.setText(fillData.getMatch() + "");
+            matchNumber.setText(fillData.getMatchNumber() + "");
 
-            if (fillData.getAlliance() == AllianceColor.RED) {
-                allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
-                allianceToggle.setText("Red Alliance");
-                allianceColor = AllianceColor.RED;
+            allianceStation = fillData.getAllianceStation();
+            allianceStationSpinner.setSelection(allianceStation.ordinal());
+            if (allianceStation.getColor() == AllianceStation.AllianceColor.RED) {
+                //((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_red_primary));
             } else { //If red, switch to blue, and vice versa
-                allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
-                allianceToggle.setText("Blue Alliance");
-                allianceColor = AllianceColor.BLUE;
+                //((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_blue_primary));
             }
         }
 
-        if (allianceColor == AllianceColor.BLUE) { //Red is default
-            allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
-            allianceToggle.setText("Blue Alliance");
+        if (allianceStation.getColor() == AllianceStation.AllianceColor.RED) {
+            //((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_red_primary));
+        } else {
+            //((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_blue_primary));
         }
 
-        allianceToggle.setOnClickListener(new View.OnClickListener() {
+        allianceStationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
-            public void onClick(View view) {
-                if (allianceColor == AllianceColor.RED) { //If red, switch to blue, and vice versa
-                    allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
-                    allianceToggle.setText("Blue Alliance");
-                    allianceColor = AllianceColor.BLUE;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemSelected = (String) parent.getItemAtPosition(position);
+                allianceStation = AllianceStation.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
+
+                if (allianceStation.getColor() == AllianceStation.AllianceColor.RED) { //If red, switch to blue, and vice versa
+                    ((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_red_primary));
                 } else {
-                    allianceToggle.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
-                    allianceToggle.setText("Red Alliance");
-                    allianceColor = AllianceColor.RED;
+                    ((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_blue_primary));
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //do nothing
             }
         });
 
@@ -183,9 +192,9 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
     public void initScoutData(ScoutData data) {
         data.setTeam(teamNumber.getText().toString());
 
-        data.setMatch(Integer.valueOf(matchNumber.getText().toString()));
+        data.setMatchNumber(Integer.valueOf(matchNumber.getText().toString()));
 
-        data.setAlliance(allianceColor);
+        data.setAllianceStation(allianceStation);
     }
 
     /* The activity that creates an instance of this dialog fragment must

@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import com.team980.thunderscout.R;
 
+@Deprecated //TODO rework
 public class ExportActivity extends AppCompatActivity implements View.OnClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback, AdapterView.OnItemSelectedListener {
 
