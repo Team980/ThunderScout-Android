@@ -62,13 +62,12 @@
                 android:inputType="number"
                 android:textSize="22sp" />
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/dialog_allianceToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/dialog_allianceStationSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="left"
-                android:backgroundTint="@color/alliance_red_primary"
-                android:text="Red Alliance" />
+                android:entries="@array/alliance_stations_array"/>
 
         </LinearLayout>
 

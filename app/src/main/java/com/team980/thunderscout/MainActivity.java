@@ -244,9 +244,9 @@ public class MainActivity extends AppCompatActivity
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .putString("current_account_scope", AccountScope.LOCAL.name()).apply();
 
-            //TODO populate data
-
             contractAccountMenu();
+
+            //TODO repopulate current fragment
         } else if (id == R.id.nav_account_cloud) {
             NavigationView view = (NavigationView) findViewById(R.id.nav_view);
 
@@ -259,9 +259,9 @@ public class MainActivity extends AppCompatActivity
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .putString("current_account_scope", AccountScope.CLOUD.name()).apply();
 
-            //TODO populate data
-
             contractAccountMenu();
+
+            //TODO repopulate current fragment
         } else if (id == R.id.nav_account_settings) {
             Toast.makeText(this, "Open settings", Toast.LENGTH_SHORT).show(); //TODO
 
@@ -309,6 +309,8 @@ public class MainActivity extends AppCompatActivity
 
         view.getMenu().clear();
         view.inflateMenu(R.menu.drawer_menu);
+
+        view.getMenu().findItem(R.id.nav_home).setChecked(true); //TODO set current item instead of HOME
 
         dropdown.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_drop_down_white_24dp));
         accountMenuExpanded = false;

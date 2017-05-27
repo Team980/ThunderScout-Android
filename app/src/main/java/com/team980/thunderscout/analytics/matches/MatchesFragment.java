@@ -26,6 +26,8 @@ package com.team980.thunderscout.analytics.matches;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -34,11 +36,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -46,12 +52,14 @@ import android.widget.LinearLayout;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.csv.ExportActivity;
+import com.team980.thunderscout.csv.ImportActivity;
 import com.team980.thunderscout.legacy.info.LocalDataAdapter;
 import com.team980.thunderscout.legacy.info.TeamWrapper;
 
 import java.util.ArrayList;
 
-public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener {
 
     private RecyclerView dataView;
 
@@ -85,6 +93,8 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        setHasOptionsMenu(true);
+
         dataView = (RecyclerView) view.findViewById(R.id.dataView);
 
         // use a linear layout manager
@@ -96,7 +106,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         dataView.addItemDecoration(dividerItemDecoration);
 
         // specify an adapter
-        adapter = new MatchesAdapter(getContext());
+        adapter = new MatchesAdapter(this);
         dataView.setAdapter(adapter);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -110,7 +120,53 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_matches, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_delete_all && adapter.getItemCount() > 0) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Delete all matches from this account?")
+                    .setMessage("This cannot be undone!")
+                    .setPositiveButton("Delete", this)
+                    .setNegativeButton("Cancel", null).show();
+            return true;
+        }
+
+        if (id == R.id.action_import) {
+            Intent importIntent = new Intent(getContext(), ImportActivity.class);
+            startActivity(importIntent);
+            return true;
+        }
+
+        if (id == R.id.action_export) {
+            Intent exportIntent = new Intent(getContext(), ExportActivity.class);
+            startActivity(exportIntent);
+            return true;
+        }
+
+        return false;
+    }
+
+    public RecyclerView getDataView() {
+        return dataView;
+    }
+
+    @Override
     public void onRefresh() { //SwipeRefreshLayout
-        //TODO get data
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+    }
+
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+        return swipeContainer;
+    }
+
+    @Override //Deletion dialog
+    public void onClick(DialogInterface dialog, int which) {
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter); //TODO modular account scopes - CLOUD should prompt for password
     }
 }

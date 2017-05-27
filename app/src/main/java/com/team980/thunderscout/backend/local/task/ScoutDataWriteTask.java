@@ -26,13 +26,9 @@ package com.team980.thunderscout.backend.local.task;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.ThunderScout;
@@ -40,10 +36,6 @@ import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
-import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
-
-import java.util.List;
 
 public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, Boolean> {
 
@@ -75,8 +67,8 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, Boolean> {
 
             // Init
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER, data.getTeam());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER, data.getMatch());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_COLOR, data.getAlliance().name());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER, data.getMatchNumber());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_STATION, data.getAllianceStation().name());
 
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, ThunderScout.serializeObject(data.getDate()));
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getSource());

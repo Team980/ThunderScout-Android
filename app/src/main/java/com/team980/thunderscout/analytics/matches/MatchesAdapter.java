@@ -25,16 +25,22 @@
 package com.team980.thunderscout.analytics.matches;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.data.enumeration.AllianceStation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -42,12 +48,19 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
 
     private LayoutInflater mInflator;
 
-    //private List<MatchData> matchList;
+    private MatchesFragment fragment;
 
-    public MatchesAdapter(Context context) {
-        mInflator = LayoutInflater.from(context);
+    private SparseArray<MatchWrapper> matchArray;
 
-        //matchList = new ArrayList<>();
+    public MatchesAdapter(MatchesFragment fragment) {
+        mInflator = LayoutInflater.from(fragment.getContext());
+
+        this.fragment = fragment;
+
+        matchArray = new SparseArray<>();
+
+        fragment.getDataView().getRecycledViewPool().setMaxRecycledViews(0, 0); //disable recyclerview caching - TODO find a way to fix the scroll bugs without doing this as this is bad for performance
+
     }
 
     @Override
@@ -58,39 +71,100 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
 
     @Override
     public void onBindViewHolder(MatchesAdapter.MatchViewHolder holder, int position) {
-        //MatchData match = (MatchData) parentListItem;
-        //holder.bind(match);
+        MatchWrapper match = matchArray.get(matchArray.keyAt(position)); //Treat it like a list for this code
+        holder.bind(match);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return matchArray.size();
     }
 
     @Override
     public void onDataQuery(List<ScoutData> dataList) {
-        //TODO translate ScoutData to a proxy ("MatchWrapper")?
+        int arraySize = matchArray.size();
+        matchArray.clear();
+        notifyItemRangeRemoved(0, arraySize);
+
+        fragment.getDataView().getRecycledViewPool().clear(); //Fixes the GridLayout constraint bug by flushing the cache
+
+        for (ScoutData data : dataList) {
+            MatchWrapper wrapper = matchArray.get(data.getMatchNumber());
+
+            if (wrapper == null) {
+                wrapper = new MatchWrapper(data.getMatchNumber());
+                matchArray.put(data.getMatchNumber(), wrapper);
+                notifyItemInserted(data.getMatchNumber());
+            }
+
+            wrapper.setData(data.getAllianceStation(), data);
+            notifyItemChanged(data.getMatchNumber());
+        }
+
+        fragment.getSwipeRefreshLayout().setRefreshing(false);
     }
 
     @Override
     public void onDataWrite(boolean success) {
-        //do nothing
+        //do nothing for now
     }
 
     @Override
     public void onDataRemove(boolean success) {
-        //do nothing
+        //do nothing for now
     }
 
     @Override
     public void onDataClear(boolean success) {
-        //do nothing
+        int arraySize = matchArray.size();
+        matchArray.clear();
+        notifyItemRangeRemoved(0, arraySize);
     }
 
     public class MatchViewHolder extends RecyclerView.ViewHolder {
+        //TODO needs a way to handle overlapping data (same matchNumber and AllianceStation)
+        //TODO fix the sizing issues when various cells are empty + when team numbers differ in length
+
+        private TextView matchNumber;
+        private GridLayout matchGrid;
 
         public MatchViewHolder(View itemView) {
             super(itemView);
+
+            matchNumber = (TextView) itemView.findViewById(R.id.match_number);
+            matchGrid = (GridLayout) itemView.findViewById(R.id.match_grid);
+        }
+
+        public void bind(MatchWrapper wrapper) {
+            if (wrapper != null) {
+                matchNumber.setText(wrapper.getMatchNumber() + "");
+            }
+
+            for (AllianceStation station : AllianceStation.values()) {
+                TextView matchView = new TextView(mInflator.getContext());
+
+                matchView.setGravity(Gravity.CENTER);
+                matchView.setTextAppearance(mInflator.getContext(), R.style.TextAppearance_AppCompat_Body1);
+                matchView.setTextSize(24.0f);
+
+                if (wrapper.getData(station) != null) {
+                    matchView.setText(wrapper.getData(station).getTeam());
+
+                    matchView.setBackgroundColor(mInflator.getContext()
+                            .getResources().getColor(station.getColorStratified()));
+
+                    //TODO register onClick listener
+                } else {
+                    matchView.setBackgroundColor(mInflator.getContext()
+                            .getResources().getColor(android.R.color.transparent));
+                }
+
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),
+                        GridLayout.spec(GridLayout.UNDEFINED, 1f));
+                matchView.setLayoutParams(params);
+
+                matchGrid.addView(matchView);
+            }
         }
     }
 }

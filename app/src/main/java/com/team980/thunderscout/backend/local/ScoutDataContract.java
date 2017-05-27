@@ -39,7 +39,7 @@ public final class ScoutDataContract {
         // --- INIT ---
         public static final String COLUMN_NAME_TEAM_NUMBER = "team";
         public static final String COLUMN_NAME_MATCH_NUMBER = "match_number";
-        public static final String COLUMN_NAME_ALLIANCE_COLOR = "alliance_color";
+        public static final String COLUMN_NAME_ALLIANCE_STATION = "alliance_station";
 
         public static final String COLUMN_NAME_DATE_ADDED = "date_added";
         public static final String COLUMN_NAME_DATA_SOURCE = "data_source";
