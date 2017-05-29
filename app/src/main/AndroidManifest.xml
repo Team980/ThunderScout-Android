@@ -65,7 +65,7 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
-            android:name=".legacy.info.statistics.MatchInfoActivity"
+            android:name=".analytics.matches.legacy_statistics.MatchInfoActivity"
             android:label="Match Info"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />

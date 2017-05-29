@@ -46,7 +46,7 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.legacy.info.statistics.MatchInfoActivity;
+import com.team980.thunderscout.analytics.matches.legacy_statistics.MatchInfoActivity;
 import com.team980.thunderscout.legacy.info.statistics.TeamInfoActivity;
 
 import java.util.ArrayList;

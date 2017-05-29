@@ -25,6 +25,7 @@
 package com.team980.thunderscout.analytics.matches;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -36,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.analytics.matches.legacy_statistics.MatchInfoActivity;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.AllianceStation;
@@ -154,7 +156,17 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                     matchView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(fragment.getContext(), wrapper.getData(station).getDate().toString(), Toast.LENGTH_SHORT).show();
+                            Intent launchInfoActivity = new Intent(fragment.getContext(), MatchInfoActivity.class);
+                            launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", wrapper.getData(station));
+                            fragment.getContext().startActivity(launchInfoActivity);
+                        }
+                    });
+
+                    matchView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            Toast.makeText(fragment.getContext(), "Selection NYI", Toast.LENGTH_SHORT).show();
+                            return true;
                         }
                     });
                 } else {
@@ -165,6 +177,9 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
 
                     matchView.setOnClickListener(null);
                     matchView.setClickable(false);
+
+                    matchView.setOnLongClickListener(null);
+                    matchView.setLongClickable(false);
                 }
             }
         }
