@@ -151,10 +151,10 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
 
         data.setAllianceStation(AllianceStation.valueOf(allianceStation));
 
-        byte[] dateAdded = cursor.getBlob(
+        long dateAdded = cursor.getLong(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED));
 
-        data.setDate((Date) ThunderScout.deserializeObject(dateAdded));
+        data.setDate(new Date(dateAdded));
 
         String dataSource = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE));
