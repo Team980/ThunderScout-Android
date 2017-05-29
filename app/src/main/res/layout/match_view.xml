@@ -57,7 +57,8 @@
             app:layout_rowWeight="1"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:foreground="?attr/selectableItemBackground"/>
 
         <TextView
             android:id="@+id/match_red2"
@@ -68,7 +69,8 @@
             app:layout_rowWeight="1"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:foreground="?attr/selectableItemBackground"/>
 
         <TextView
             android:id="@+id/match_red3"
@@ -79,7 +81,8 @@
             app:layout_rowWeight="1"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:foreground="?attr/selectableItemBackground"/>
 
         <TextView
             android:id="@+id/match_blue1"
@@ -90,7 +93,8 @@
             app:layout_rowWeight="1"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:foreground="?attr/selectableItemBackground"/>
 
         <TextView
             android:id="@+id/match_blue2"
@@ -101,7 +105,8 @@
             app:layout_rowWeight="1"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:foreground="?attr/selectableItemBackground" />
 
         <TextView
             android:id="@+id/match_blue3"
@@ -112,7 +117,8 @@
             app:layout_rowWeight="1"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:foreground="?attr/selectableItemBackground" />
 
     </android.support.v7.widget.GridLayout>
 

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.legacy.info.statistics;
+package com.team980.thunderscout.analytics.matches.legacy_statistics;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -41,6 +41,7 @@ import com.team980.thunderscout.data.enumeration.ClimbingStats;
 
 import java.text.SimpleDateFormat;
 
+@Deprecated //TODO recreate, use new analytic methods
 public class MatchInfoActivity extends AppCompatActivity {
 
     @Override

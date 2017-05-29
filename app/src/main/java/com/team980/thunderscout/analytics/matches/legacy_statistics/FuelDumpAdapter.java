@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.legacy.info.statistics;
+package com.team980.thunderscout.analytics.matches.legacy_statistics;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
