@@ -33,6 +33,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.StorageWrapper;
@@ -58,9 +59,6 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
         this.fragment = fragment;
 
         matchArray = new SparseArray<>();
-
-        fragment.getDataView().getRecycledViewPool().setMaxRecycledViews(0, 0); //disable recyclerview caching - TODO find a way to fix the scroll bugs without doing this as this is bad for performance
-
     }
 
     @Override
@@ -71,6 +69,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
 
     @Override
     public void onBindViewHolder(MatchesAdapter.MatchViewHolder holder, int position) {
+        holder.setIsRecyclable(false);
+
         MatchWrapper match = matchArray.get(matchArray.keyAt(position)); //Treat it like a list for this code
         holder.bind(match);
     }
@@ -81,12 +81,15 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public void onDataQuery(List<ScoutData> dataList) {
         int arraySize = matchArray.size();
         matchArray.clear();
         notifyItemRangeRemoved(0, arraySize);
-
-        fragment.getDataView().getRecycledViewPool().clear(); //Fixes the GridLayout constraint bug by flushing the cache
 
         for (ScoutData data : dataList) {
             MatchWrapper wrapper = matchArray.get(data.getMatchNumber());
@@ -123,7 +126,6 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
 
     public class MatchViewHolder extends RecyclerView.ViewHolder {
         //TODO needs a way to handle overlapping data (same matchNumber and AllianceStation)
-        //TODO fix the sizing issues when various cells are empty + when team numbers differ in length
 
         private TextView matchNumber;
         private GridLayout matchGrid;
@@ -135,17 +137,13 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
             matchGrid = (GridLayout) itemView.findViewById(R.id.match_grid);
         }
 
-        public void bind(MatchWrapper wrapper) {
-            if (wrapper != null) {
+        public void bind(final MatchWrapper wrapper) {
+            if (wrapper != null) { //Why would this ever be null!?
                 matchNumber.setText(wrapper.getMatchNumber() + "");
             }
 
-            for (AllianceStation station : AllianceStation.values()) {
-                TextView matchView = new TextView(mInflator.getContext());
-
-                matchView.setGravity(Gravity.CENTER);
-                matchView.setTextAppearance(mInflator.getContext(), R.style.TextAppearance_AppCompat_Body1);
-                matchView.setTextSize(24.0f);
+            for (final AllianceStation station : AllianceStation.values()) {
+                TextView matchView = (TextView) matchGrid.findViewById(station.getMatchCellViewID());
 
                 if (wrapper.getData(station) != null) {
                     matchView.setText(wrapper.getData(station).getTeam());
@@ -153,17 +151,21 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                     matchView.setBackgroundColor(mInflator.getContext()
                             .getResources().getColor(station.getColorStratified()));
 
-                    //TODO register onClick listener
+                    matchView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(fragment.getContext(), wrapper.getData(station).getDate().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
+                    matchView.setText("");
+
                     matchView.setBackgroundColor(mInflator.getContext()
                             .getResources().getColor(android.R.color.transparent));
+
+                    matchView.setOnClickListener(null);
+                    matchView.setClickable(false);
                 }
-
-                GridLayout.LayoutParams params = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f),
-                        GridLayout.spec(GridLayout.UNDEFINED, 1f));
-                matchView.setLayoutParams(params);
-
-                matchGrid.addView(matchView);
             }
         }
     }

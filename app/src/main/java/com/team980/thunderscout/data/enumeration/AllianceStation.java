@@ -24,23 +24,28 @@
 
 package com.team980.thunderscout.data.enumeration;
 
+import android.support.annotation.ColorRes;
+import android.support.annotation.IdRes;
+
 import com.team980.thunderscout.R;
 
 public enum AllianceStation {
-    RED_1(AllianceColor.RED, R.color.alliance_red_primary),
-    RED_2(AllianceColor.RED, R.color.alliance_red_primary_dark),
-    RED_3(AllianceColor.RED, R.color.alliance_red_primary),
+    RED_1(AllianceColor.RED, R.color.alliance_red_primary, R.id.match_red1),
+    RED_2(AllianceColor.RED, R.color.alliance_red_primary_dark, R.id.match_red2),
+    RED_3(AllianceColor.RED, R.color.alliance_red_primary, R.id.match_red3),
 
-    BLUE_1(AllianceColor.BLUE, R.color.alliance_blue_primary),
-    BLUE_2(AllianceColor.BLUE, R.color.alliance_blue_primary_dark),
-    BLUE_3(AllianceColor.BLUE, R.color.alliance_blue_primary);
+    BLUE_1(AllianceColor.BLUE, R.color.alliance_blue_primary, R.id.match_blue1),
+    BLUE_2(AllianceColor.BLUE, R.color.alliance_blue_primary_dark, R.id.match_blue2),
+    BLUE_3(AllianceColor.BLUE, R.color.alliance_blue_primary, R.id.match_blue3);
 
     AllianceColor color;
     int colorStratified;
+    int matchCellViewID;
 
-    AllianceStation(AllianceColor color, int colorStratified) {
+    AllianceStation(AllianceColor color, int colorStratified, @IdRes int matchCellViewID) {
         this.color = color;
         this.colorStratified = colorStratified;
+        this.matchCellViewID = matchCellViewID;
     }
 
     public AllianceColor getColor() {
@@ -51,15 +56,19 @@ public enum AllianceStation {
         return colorStratified;
     }
 
+    @IdRes
+    public int getMatchCellViewID() { return  matchCellViewID; }
+
     public enum AllianceColor {
         RED("Red Alliance", R.color.alliance_red_primary, R.color.alliance_red_primary_dark),
         BLUE("Blue Alliance", R.color.alliance_blue_primary, R.color.alliance_blue_primary_dark);
 
         String displayString;
+
         int colorPrimary;
         int colorPrimaryDark;
 
-        AllianceColor(String displayString, int colorPrimary, int colorPrimaryDark) {
+        AllianceColor(String displayString, @ColorRes int colorPrimary, @ColorRes int colorPrimaryDark) {
             this.displayString = displayString;
             this.colorPrimary = colorPrimary;
             this.colorPrimaryDark = colorPrimaryDark;
@@ -69,10 +78,12 @@ public enum AllianceStation {
             return displayString;
         }
 
+        @ColorRes
         public int getColorPrimary() {
             return colorPrimary;
         }
 
+        @ColorRes
         public int getColorPrimaryDark() {
             return colorPrimaryDark;
         }

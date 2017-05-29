@@ -107,6 +107,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         // specify an adapter
         adapter = new MatchesAdapter(this);
+        adapter.setHasStableIds(true);
         dataView.setAdapter(adapter);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
