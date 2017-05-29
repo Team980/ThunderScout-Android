@@ -64,9 +64,9 @@ public class ScoutDataRemoveTask extends AsyncTask<ScoutData, Void, Boolean> {
 
         SQLiteDatabase db = new ScoutDataDbHelper(context).getWritableDatabase();
 
-        StringBuilder where = new StringBuilder("date_added IN (");
+        StringBuilder where = new StringBuilder(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED + " IN (");
         for (ScoutData data : dataToDelete) {
-            where.append(data.getDate()).append(",");
+            where.append(data.getDate().getTime()).append(",");
         }
         where.setLength(where.length() - 1); //no more comma
         where.append(")");

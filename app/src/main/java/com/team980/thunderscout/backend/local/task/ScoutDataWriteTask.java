@@ -70,7 +70,7 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, Boolean> {
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER, data.getMatchNumber());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_STATION, data.getAllianceStation().name());
 
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, ThunderScout.serializeObject(data.getDate()));
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, data.getDate().getTime());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getSource());
 
             // Auto
