@@ -43,20 +43,20 @@ public interface StorageWrapper { //TODO refine this
 
     void writeData(ScoutData data, @Nullable StorageListener listener);
 
-    void writeData(List<ScoutData> dataList, @Nullable StorageListener listener);
+    void writeData(List<ScoutData> dataList, @Nullable StorageListener listener); //TODO use array?
 
     void removeData(ScoutData data, @Nullable StorageListener listener);
 
-    void removeData(List<ScoutData> dataList, @Nullable StorageListener listener);
+    void removeData(List<ScoutData> dataList, @Nullable StorageListener listener); //TODO use array?
 
     void clearAllData(@Nullable StorageListener listener);
 
     interface StorageListener {
         void onDataQuery(List<ScoutData> dataList);
 
-        void onDataWrite(boolean success);
+        void onDataWrite(@Nullable List<ScoutData> dataWritten);
 
-        void onDataRemove(boolean success);
+        void onDataRemove(@Nullable List<ScoutData> dataRemoved);
 
         void onDataClear(boolean success);
     }

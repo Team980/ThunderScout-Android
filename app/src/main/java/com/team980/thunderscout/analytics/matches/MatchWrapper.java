@@ -32,7 +32,7 @@ import java.util.EnumMap;
 /**
  * Represents data for one match, for all of the teams involved.
  */
-public class MatchWrapper {
+public class MatchWrapper { //TODO needs a way to handle overlapping data (same matchNumber and AllianceStation)
 
     private int matchNumber;
 
@@ -53,5 +53,13 @@ public class MatchWrapper {
 
     public void setData(AllianceStation station, ScoutData data) {
         dataMap.put(station, data);
+    }
+
+    public void removeData(AllianceStation station) {
+        dataMap.remove(station);
+    }
+
+    public boolean isEmpty() {
+        return dataMap.isEmpty();
     }
 }

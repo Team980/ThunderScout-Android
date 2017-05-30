@@ -37,7 +37,10 @@ import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.data.ScoutData;
 
-public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, Boolean> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, List<ScoutData>> {
 
     @Nullable
     private StorageWrapper.StorageListener listener;
@@ -55,10 +58,12 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(ScoutData... dataList) {
+    protected List<ScoutData> doInBackground(ScoutData... dataList) {
 
         // Gets the data repository in write mode
         SQLiteDatabase db = new ScoutDataDbHelper(context).getWritableDatabase();
+
+        List<ScoutData> dataWritten = new ArrayList<>();
 
         for (ScoutData data : dataList) {
 
@@ -93,31 +98,35 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, Boolean> {
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
 
+            long rowId;
             try {
                 // Insert the new row
-                db.insertOrThrow(
+                rowId = db.insertOrThrow(
                         ScoutDataContract.ScoutDataTable.TABLE_NAME,
                         null,
                         values);
             } catch (final Exception e) {
                 FirebaseCrash.report(e);
-                return false;
+                return dataWritten;
             }
 
+            if (rowId > 0) {
+                dataWritten.add(data);
+            }
         }
 
         db.close();
-        return true;
+        return dataWritten;
     }
 
     @Override
-    protected void onPostExecute(Boolean wasSuccessful) {
+    protected void onPostExecute(List<ScoutData> dataWritten) {
         //Runs on UI thread after execution
 
         if (listener != null) {
-            listener.onDataWrite(wasSuccessful);
+            listener.onDataWrite(dataWritten);
         }
 
-        super.onPostExecute(wasSuccessful);
+        super.onPostExecute(dataWritten);
     }
 }

@@ -23,35 +23,12 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <color name="primary">#78909C</color>
-    <color name="primary_dark">#546E7A</color>
-
-    <color name="secondary">#757575</color>
-    <color name="secondary_dark">#424242</color>
-
-    <color name="accent">#fbc02d</color>
-    <color name="accent_dark">#F57F17</color>
-
-    <color name="alliance_red_primary">#C0161D</color>
-    <color name="alliance_red_primary_dark">#9C1117</color>
-    <color name="alliance_blue_primary">#005291</color>
-    <color name="alliance_blue_primary_dark">#004275</color>
-
-    <!--<color name="primary">#fbc02d</color>
-    <color name="primary_dark">#F9A825</color>
-    <color name="accent">#fdd835</color>-->
-
-    <color name="background">#303030</color>
-    <color name="background_floating">#424242</color>
-    <color name="background_floating_light">#616161</color>
-    <!--TODO add millions of shades of material blue grey and black -->
-
-    <color name="success">#4CAF50</color>
-    <color name="error">#F44336</color>
-    <!-- TODO deprecate these values-->
-
-    <color name="black_a60">#96000000</color>
-    <color name="black_a40">#64000000</color>
-
-</resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_delete_selection"
+        android:icon="@drawable/ic_delete_white_24dp"
+        android:orderInCategory="4"
+        android:title="Delete"
+        app:showAsAction="always" />
+</menu>

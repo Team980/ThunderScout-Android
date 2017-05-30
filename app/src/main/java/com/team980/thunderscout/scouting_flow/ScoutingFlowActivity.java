@@ -443,8 +443,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     }
 
     @Override
-    public void onDataWrite(boolean success) {
-        if (success) {
+    public void onDataWrite(List<ScoutData> dataWritten) {
+        if (dataWritten != null) {
             dataOutputCallbackSuccess(OPERATION_SAVE_THIS_DEVICE);
         } else {
             dataOutputCallbackFail(OPERATION_SAVE_THIS_DEVICE, null);
@@ -452,7 +452,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     }
 
     @Override
-    public void onDataRemove(boolean success) {
+    public void onDataRemove(List<ScoutData> dataRemoved) {
         //do nothing
     }
 
