@@ -40,6 +40,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -83,6 +84,12 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
 
         allianceStation = AllianceStation.valueOf(prefs.getString("last_used_alliance_station", AllianceStation.RED_1.name()));
         allianceStationSpinner = (AppCompatSpinner) dialogView.findViewById(R.id.dialog_allianceStationSpinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.alliance_stations_array,
+                R.layout.spinner_alliance_station);
+        adapter.setDropDownViewResource(R.layout.spinner_alliance_station_dropdown);
+
+        allianceStationSpinner.setAdapter(adapter);
         allianceStationSpinner.setSelection(allianceStation.ordinal());
 
         if (getArguments() != null && getArguments().containsKey(EXTRA_DEFAULT_DATA)) { //Fill the data with previously set values
@@ -93,17 +100,6 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
 
             allianceStation = fillData.getAllianceStation();
             allianceStationSpinner.setSelection(allianceStation.ordinal());
-            if (allianceStation.getColor() == AllianceStation.AllianceColor.RED) {
-                //((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_red_primary));
-            } else { //If red, switch to blue, and vice versa
-                //((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_blue_primary));
-            }
-        }
-
-        if (allianceStation.getColor() == AllianceStation.AllianceColor.RED) {
-            //((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_red_primary));
-        } else {
-            //((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_blue_primary));
         }
 
         allianceStationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -114,9 +110,9 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment {
                 allianceStation = AllianceStation.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
 
                 if (allianceStation.getColor() == AllianceStation.AllianceColor.RED) { //If red, switch to blue, and vice versa
-                    ((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_red_primary));
+                    ((TextView) allianceStationSpinner.getChildAt(0)).setBackground(getResources().getDrawable(R.color.alliance_red_primary));
                 } else {
-                    ((TextView) allianceStationSpinner.getChildAt(0)).setTextColor(getResources().getColor(R.color.alliance_blue_primary));
+                    ((TextView) allianceStationSpinner.getChildAt(0)).setBackground(getResources().getDrawable(R.color.alliance_blue_primary));
                 }
             }
 
