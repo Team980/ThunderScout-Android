@@ -242,12 +242,12 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
     }
 
     @Override
-    public void onDataWrite(boolean success) {
+    public void onDataWrite(List<ScoutData> dataWritten) {
         //do nothing
     }
 
     @Override
-    public void onDataRemove(boolean success) {
+    public void onDataRemove(List<ScoutData> dataRemoved) {
         clearData();
         AccountScope.getStorageWrapper(AccountScope.LOCAL, context).queryData(this);
     }

@@ -28,21 +28,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.matches.legacy_statistics.MatchInfoActivity;
+import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.data.enumeration.AllianceStation;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,12 +59,16 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
 
     private SparseArray<MatchWrapper> matchArray;
 
+    private ArrayList<ScoutData> selectedItems;
+
     public MatchesAdapter(MatchesFragment fragment) {
         mInflator = LayoutInflater.from(fragment.getContext());
 
         this.fragment = fragment;
 
         matchArray = new SparseArray<>();
+
+        selectedItems = new ArrayList<>();
     }
 
     @Override
@@ -82,9 +90,45 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
         return matchArray.size();
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
+    public void select(ScoutData data) {
+        selectedItems.add(data);
+
+        if (!fragment.isInSelectionMode()) {
+            //enter selection mode
+            fragment.setSelectionMode(true);
+        } else {
+            fragment.updateSelectionModeTitle(getSelectedItemCount());
+        }
+    }
+
+    public void deselect(ScoutData data) {
+        selectedItems.remove(data);
+
+        if (getSelectedItemCount() == 0 && fragment.isInSelectionMode()) {
+            //exit selection mode
+            fragment.setSelectionMode(false);
+        } else {
+            fragment.updateSelectionModeTitle(getSelectedItemCount());
+        }
+    }
+
+    public void clearSelections() {
+        selectedItems.clear();
+
+        if (fragment.isInSelectionMode()) {
+            //exit selection mode
+            fragment.setSelectionMode(false);
+        }
+
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public List<ScoutData> getSelectedItems() {
+        return (List<ScoutData>) selectedItems.clone(); //just to be safe...
     }
 
     @Override
@@ -110,13 +154,21 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     }
 
     @Override
-    public void onDataWrite(boolean success) {
+    public void onDataWrite(List<ScoutData> dataWritten) {
         //do nothing for now
     }
 
     @Override
-    public void onDataRemove(boolean success) {
-        //do nothing for now
+    public void onDataRemove(List<ScoutData> dataRemoved) {
+        for (ScoutData data : dataRemoved) {
+            matchArray.get(data.getMatchNumber()).removeData(data.getAllianceStation());
+
+            if (matchArray.get(data.getMatchNumber()).isEmpty()) {
+                matchArray.delete(data.getMatchNumber());
+            }
+        }
+
+        notifyDataSetChanged(); //only one that works :(
     }
 
     @Override
@@ -129,11 +181,15 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     public class MatchViewHolder extends RecyclerView.ViewHolder {
         //TODO needs a way to handle overlapping data (same matchNumber and AllianceStation)
 
+        private LinearLayout itemView;
+
         private TextView matchNumber;
         private GridLayout matchGrid;
 
         public MatchViewHolder(View itemView) {
             super(itemView);
+
+            this.itemView = (LinearLayout) itemView;
 
             matchNumber = (TextView) itemView.findViewById(R.id.match_number);
             matchGrid = (GridLayout) itemView.findViewById(R.id.match_grid);
@@ -142,38 +198,118 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
         public void bind(final MatchWrapper wrapper) {
             if (wrapper != null) { //Why would this ever be null!?
                 matchNumber.setText(wrapper.getMatchNumber() + "");
+
+                //TODO select/deselect all matches by selecting team
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (fragment.isInSelectionMode()) {
+                            for (AllianceStation station : AllianceStation.values()) {
+                                if (wrapper.getData(station) == null) {
+                                    continue;
+                                }
+
+                                if (selectedItems.contains(wrapper.getData(station))) { //if selected
+                                    deselect(wrapper.getData(station));
+                                    itemView.findViewById(station.getMatchCellViewID())
+                                            .setBackgroundColor(mInflator.getContext()
+                                                    .getResources().getColor(station.getColorStratified()));
+                                } else {
+                                    select(wrapper.getData(station));
+                                    itemView.findViewById(station.getMatchCellViewID())
+                                            .setBackgroundColor(mInflator.getContext()
+                                                    .getResources().getColor(R.color.accent));
+                                }
+                            }
+                        } else {
+                            //Nothing yet
+                        }
+                    }
+                });
+
+                itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        for (AllianceStation station : AllianceStation.values()) {
+                            if (wrapper.getData(station) == null) {
+                                continue;
+                            }
+
+                            if (selectedItems.contains(wrapper.getData(station))) { //if selected
+                                deselect(wrapper.getData(station));
+                                itemView.findViewById(station.getMatchCellViewID())
+                                        .setBackgroundColor(mInflator.getContext()
+                                        .getResources().getColor(station.getColorStratified()));
+                            } else {
+                                select(wrapper.getData(station));
+                                itemView.findViewById(station.getMatchCellViewID())
+                                        .setBackgroundColor(mInflator.getContext()
+                                        .getResources().getColor(R.color.accent));
+                            }
+                        }
+                        return true;
+                    }
+                });
+            } else {
+                matchNumber.setText(""); //is this really neceessary?
             }
 
             for (final AllianceStation station : AllianceStation.values()) {
-                TextView matchView = (TextView) matchGrid.findViewById(station.getMatchCellViewID());
+                final TextView matchView = (TextView) matchGrid.findViewById(station.getMatchCellViewID());
 
                 if (wrapper.getData(station) != null) {
                     matchView.setText(wrapper.getData(station).getTeam());
 
-                    matchView.setBackgroundColor(mInflator.getContext()
-                            .getResources().getColor(station.getColorStratified()));
+                    matchView.setVisibility(View.VISIBLE);
+
+                    if (selectedItems.contains(wrapper.getData(station))) { //if selected
+                        matchView.setBackgroundColor(mInflator.getContext()
+                                .getResources().getColor(R.color.accent));
+                    } else {
+                        matchView.setBackgroundColor(mInflator.getContext()
+                                .getResources().getColor(station.getColorStratified()));
+                    }
 
                     matchView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent launchInfoActivity = new Intent(fragment.getContext(), MatchInfoActivity.class);
-                            launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", wrapper.getData(station));
-                            fragment.getContext().startActivity(launchInfoActivity);
+                            if (fragment.isInSelectionMode()) {
+                                if (selectedItems.contains(wrapper.getData(station))) { //if selected
+                                    deselect(wrapper.getData(station));
+                                    matchView.setBackgroundColor(mInflator.getContext()
+                                            .getResources().getColor(station.getColorStratified()));
+                                } else {
+                                    select(wrapper.getData(station));
+                                    matchView.setBackgroundColor(mInflator.getContext()
+                                            .getResources().getColor(R.color.accent));
+                                }
+                            } else {
+                                Intent launchInfoActivity = new Intent(fragment.getContext(), MatchInfoActivity.class);
+                                launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", wrapper.getData(station));
+                                fragment.getContext().startActivity(launchInfoActivity);
+                            }
                         }
                     });
 
                     matchView.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
-                            Toast.makeText(fragment.getContext(), "Selection NYI", Toast.LENGTH_SHORT).show();
+                            if (selectedItems.contains(wrapper.getData(station))) { //if selected
+                                deselect(wrapper.getData(station));
+                                matchView.setBackgroundColor(mInflator.getContext()
+                                        .getResources().getColor(station.getColorStratified()));
+                            } else {
+                                select(wrapper.getData(station));
+                                matchView.setBackgroundColor(mInflator.getContext()
+                                        .getResources().getColor(R.color.accent));
+                            }
                             return true;
                         }
                     });
                 } else {
                     matchView.setText("");
 
-                    matchView.setBackgroundColor(mInflator.getContext()
-                            .getResources().getColor(android.R.color.transparent));
+                    matchView.setVisibility(View.INVISIBLE);
 
                     matchView.setOnClickListener(null);
                     matchView.setClickable(false);

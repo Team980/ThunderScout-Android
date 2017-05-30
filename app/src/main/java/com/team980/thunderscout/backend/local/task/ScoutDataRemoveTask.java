@@ -41,9 +41,11 @@ import com.team980.thunderscout.data.ScoutData;
 import com.team980.thunderscout.legacy.info.LocalDataAdapter;
 import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class ScoutDataRemoveTask extends AsyncTask<ScoutData, Void, Boolean> {
+public class ScoutDataRemoveTask extends AsyncTask<ScoutData, Void, List<ScoutData>> {
 
     @Nullable
     private StorageWrapper.StorageListener listener;
@@ -60,9 +62,11 @@ public class ScoutDataRemoveTask extends AsyncTask<ScoutData, Void, Boolean> {
     }
 
     @Override
-    public Boolean doInBackground(ScoutData... dataToDelete) {
+    public List<ScoutData> doInBackground(ScoutData... dataToDelete) {
 
         SQLiteDatabase db = new ScoutDataDbHelper(context).getWritableDatabase();
+
+        List<ScoutData> dataRemoved = new ArrayList<>();
 
         StringBuilder where = new StringBuilder(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED + " IN (");
         for (ScoutData data : dataToDelete) {
@@ -77,24 +81,26 @@ public class ScoutDataRemoveTask extends AsyncTask<ScoutData, Void, Boolean> {
             rowsDeleted = db.delete(ScoutDataContract.ScoutDataTable.TABLE_NAME, where.toString(), null);
         } catch (SQLiteException e) {
             FirebaseCrash.report(e);
-            return false;
+            return dataRemoved;
         }
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), rowsDeleted + " rows deleted from DB");
+        if (rowsDeleted > 0) {
+            dataRemoved.addAll(Arrays.asList(dataToDelete));
+        }
 
         db.close();
-        return true;
+        return dataRemoved;
     }
 
     @Override
-    protected void onPostExecute(Boolean wasSuccessful) {
+    protected void onPostExecute(List<ScoutData> dataRemoved) {
         //Runs on UI thread after execution
 
         if (listener != null) {
-            listener.onDataRemove(wasSuccessful);
+            listener.onDataRemove(dataRemoved);
         }
 
-        super.onPostExecute(wasSuccessful);
+        super.onPostExecute(dataRemoved);
     }
 
 }

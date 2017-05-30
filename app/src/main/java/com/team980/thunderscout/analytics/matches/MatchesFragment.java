@@ -37,6 +37,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,16 +57,23 @@ import com.team980.thunderscout.csv.ExportActivity;
 import com.team980.thunderscout.csv.ImportActivity;
 import com.team980.thunderscout.legacy.info.LocalDataAdapter;
 import com.team980.thunderscout.legacy.info.TeamWrapper;
+import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.ArrayList;
 
-public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener {
+import static android.R.id.toggle;
+
+public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, View.OnClickListener {
+
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
 
     private RecyclerView dataView;
-
     private MatchesAdapter adapter;
-
     private SwipeRefreshLayout swipeContainer;
+
+    private boolean selectionMode = false; //TODO this resets on resize/orientation change
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,12 +91,12 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         MainActivity activity = (MainActivity) getActivity();
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle("Matches");
         activity.setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -107,7 +115,6 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         // specify an adapter
         adapter = new MatchesAdapter(this);
-        adapter.setHasStableIds(true);
         dataView.setAdapter(adapter);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -129,15 +136,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_delete_all && adapter.getItemCount() > 0) {
-            new AlertDialog.Builder(getContext())
-                    .setTitle("Delete all matches from this account?")
-                    .setMessage("This cannot be undone!")
-                    .setPositiveButton("Delete", this)
-                    .setNegativeButton("Cancel", null).show();
-            return true;
-        }
-
+        //Default mode
         if (id == R.id.action_import) {
             Intent importIntent = new Intent(getContext(), ImportActivity.class);
             startActivity(importIntent);
@@ -150,7 +149,92 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
             return true;
         }
 
+        if (id == R.id.action_delete_all && adapter.getItemCount() > 0) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Delete all matches from this account?")
+                    .setMessage("This cannot be undone!")
+                    .setIcon(R.drawable.ic_warning_white_24dp)
+                    .setPositiveButton("Delete", this)
+                    .setNegativeButton("Cancel", null).show();
+            return true;
+        }
+
+
+        //Selection mode
+        if (id == R.id.action_delete_selection) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Delete selected matches from this account?")
+                    .setMessage("This cannot be undone!")
+                    .setIcon(R.drawable.ic_warning_white_24dp)
+                    .setPositiveButton("Delete", this)
+                    .setNegativeButton("Cancel", null).show();
+        }
+
         return false;
+    }
+
+    /**
+     * Listener for HOME button when in selection mode
+     */
+    @Override
+    public void onClick(View view) {
+        if (selectionMode) {
+            adapter.clearSelections();
+            setSelectionMode(false);
+        }
+    }
+
+    public boolean isInSelectionMode() {
+        return selectionMode;
+    }
+
+    public void setSelectionMode(boolean value) {
+        selectionMode = value;
+
+        if (selectionMode) {
+            toolbar.setTitle("1 match selected");
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_match_selection);
+            TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.primary, R.color.primary_dark,
+                    R.color.secondary, R.color.secondary_dark, (AppCompatActivity) getActivity());
+
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            toggle.onDrawerStateChanged(DrawerLayout.STATE_IDLE);
+            toggle.setDrawerIndicatorEnabled(false);
+            toggle.syncState();
+
+            MainActivity activity = (MainActivity) getActivity();
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+
+            toolbar.setNavigationOnClickListener(this);
+
+            swipeContainer.setEnabled(false);
+        } else {
+            toolbar.setTitle("Matches");
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_matches);
+            TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.secondary, R.color.secondary_dark,
+                    R.color.primary, R.color.primary_dark, (AppCompatActivity) getActivity());
+
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            toggle = new ActionBarDrawerToggle(
+                    getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+
+            swipeContainer.setEnabled(true);
+        }
+    }
+
+    public void updateSelectionModeTitle(int numItems) {
+        if (selectionMode) {
+            if (numItems == 1) {
+                toolbar.setTitle("1 match selected");
+            } else {
+                toolbar.setTitle(numItems + " matches selected");
+            }
+        }
     }
 
     public RecyclerView getDataView() {
@@ -167,7 +251,12 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override //Deletion dialog
-    public void onClick(DialogInterface dialog, int which) {
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter); //TODO modular account scopes - CLOUD should prompt for password
+    public void onClick(DialogInterface dialog, int which) { //TODO modular account scopes - CLOUD should prompt for password
+        if (selectionMode) {
+            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).removeData(adapter.getSelectedItems(), adapter);
+            adapter.clearSelections();
+        } else {
+            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
+        }
     }
 }
