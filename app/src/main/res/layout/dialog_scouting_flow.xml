@@ -24,6 +24,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -62,12 +63,12 @@
                 android:inputType="number"
                 android:textSize="22sp" />
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/dialog_allianceStationSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:entries="@array/alliance_stations_array"/>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/dialog_allianceStationButton"
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Red 1" />
 
         </LinearLayout>
 
