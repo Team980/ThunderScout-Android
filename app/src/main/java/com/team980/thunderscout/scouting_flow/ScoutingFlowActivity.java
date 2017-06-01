@@ -194,11 +194,9 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setTitle("Are you sure you want to exit?")
-                .setMessage("The data currently in the scouting form will be lost!")
-                .setIcon(R.drawable.ic_warning_white_24dp)
+                .setTitle("Discard draft?")
                 .setNegativeButton("Cancel", null)
-                .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Discard", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
                         ScoutingFlowActivity.super.onBackPressed();

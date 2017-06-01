@@ -151,9 +151,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         if (id == R.id.action_delete_all && adapter.getItemCount() > 0) {
             new AlertDialog.Builder(getContext())
-                    .setTitle("Delete all matches from this account?")
-                    .setMessage("This cannot be undone!")
-                    .setIcon(R.drawable.ic_warning_white_24dp)
+                    .setTitle("Delete all data from this account?")
                     .setPositiveButton("Delete", this)
                     .setNegativeButton("Cancel", null).show();
             return true;
@@ -163,9 +161,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         //Selection mode
         if (id == R.id.action_delete_selection) {
             new AlertDialog.Builder(getContext())
-                    .setTitle("Delete selected matches from this account?")
-                    .setMessage("This cannot be undone!")
-                    .setIcon(R.drawable.ic_warning_white_24dp)
+                    .setTitle("Delete selected data from this account?")
                     .setPositiveButton("Delete", this)
                     .setNegativeButton("Cancel", null).show();
         }
