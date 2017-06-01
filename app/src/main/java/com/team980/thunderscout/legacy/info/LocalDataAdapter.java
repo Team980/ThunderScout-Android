@@ -89,7 +89,7 @@ public class LocalDataAdapter extends ExpandableRecyclerAdapter<LocalDataAdapter
     // onCreate ...
     @Override
     public TeamViewHolder onCreateParentViewHolder(ViewGroup parentViewGroup) {
-        View teamView = mInflator.inflate(R.layout.team_view, parentViewGroup, false);
+        View teamView = mInflator.inflate(R.layout.legacyteam_view, parentViewGroup, false);
         return new TeamViewHolder(teamView);
     }
 

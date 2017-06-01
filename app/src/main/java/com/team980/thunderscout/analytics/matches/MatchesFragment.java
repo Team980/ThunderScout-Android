@@ -73,7 +73,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private MatchesAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
 
-    private boolean selectionMode = false; //TODO this resets on resize/orientation change
+    private boolean selectionMode = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

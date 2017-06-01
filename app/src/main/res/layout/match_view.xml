@@ -24,6 +24,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:background="?attr/selectableItemBackground">
@@ -31,19 +32,19 @@
     <TextView
         android:id="@+id/match_number"
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        tools:text="1" />
 
     <android.support.v7.widget.GridLayout
         android:id="@+id/match_grid"
-        android:layout_weight="3"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="3"
         app:columnCount="3"
         app:orientation="horizontal"
         app:rowCount="2">
@@ -53,72 +54,78 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/alliance_red_primary_dark"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="24sp"
-            android:foreground="?attr/selectableItemBackground"/>
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            tools:text="Red 1" />
 
         <TextView
             android:id="@+id/match_red2"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/alliance_red_primary"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="24sp"
-            android:foreground="?attr/selectableItemBackground"/>
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            tools:text="Red 2" />
 
         <TextView
             android:id="@+id/match_red3"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/alliance_red_primary_dark"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="24sp"
-            android:foreground="?attr/selectableItemBackground"/>
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            tools:text="Red 3" />
 
         <TextView
             android:id="@+id/match_blue1"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/alliance_blue_primary_dark"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="24sp"
-            android:foreground="?attr/selectableItemBackground"/>
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            tools:text="Blue 1" />
 
         <TextView
             android:id="@+id/match_blue2"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/alliance_blue_primary"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="24sp"
-            android:foreground="?attr/selectableItemBackground" />
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            tools:text="Blue 2" />
 
         <TextView
             android:id="@+id/match_blue3"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/alliance_blue_primary_dark"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="24sp"
-            android:foreground="?attr/selectableItemBackground" />
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            tools:text="Blue 3" />
 
     </android.support.v7.widget.GridLayout>
 

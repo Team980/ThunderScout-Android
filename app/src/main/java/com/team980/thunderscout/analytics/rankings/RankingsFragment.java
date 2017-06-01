@@ -29,16 +29,27 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.analytics.matches.MatchesAdapter;
+import com.team980.thunderscout.backend.AccountScope;
 
-public class RankingsFragment extends Fragment {
+public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    private RecyclerView dataView;
+    private RankingsAdapter adapter;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,5 +76,33 @@ public class RankingsFragment extends Fragment {
                 activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        dataView = (RecyclerView) view.findViewById(R.id.dataView);
+
+        // use a linear layout manager
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        dataView.setLayoutManager(mLayoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(dataView.getContext(),
+                LinearLayout.VERTICAL);
+        dataView.addItemDecoration(dividerItemDecoration);
+
+        // specify an adapter
+        adapter = new RankingsAdapter();
+        dataView.setAdapter(adapter);
+
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(this);
+
+        swipeContainer.setColorSchemeResources(R.color.accent);
+        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
+
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+    }
+
+    @Override
+    public void onRefresh() { //SwipeRefreshLayout
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
     }
 }

@@ -43,7 +43,7 @@
         android:paddingRight="16dp">
 
         <TextView
-            android:id="@+id/team_number"
+            android:id="@+id/team_teamNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
@@ -55,18 +55,19 @@
             android:id="@+id/team_descriptor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/team_number"
+            android:layout_below="@id/team_teamNumber"
             android:text="Description"
             android:textSize="14sp" />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/team_rank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/team_expandButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="right|center_vertical"
         android:paddingRight="16dp"
-        android:text="Rank" />
+        android:background="#00000000"
+        android:src="@drawable/ic_expand_more_white_24dp" />
 
 </FrameLayout>
