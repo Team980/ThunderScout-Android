@@ -27,7 +27,7 @@ package com.team980.thunderscout.backend.cloud;
 import android.support.annotation.Nullable;
 
 import com.team980.thunderscout.backend.StorageWrapper;
-import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.schema.ScoutData;
 
 import java.util.List;
 

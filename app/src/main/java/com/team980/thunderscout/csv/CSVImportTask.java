@@ -34,7 +34,7 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.opencsv.CSVReader;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.backend.AccountScope;
-import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.schema.ScoutData;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

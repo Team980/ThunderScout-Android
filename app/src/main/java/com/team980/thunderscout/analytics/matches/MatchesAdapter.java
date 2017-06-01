@@ -24,30 +24,23 @@
 
 package com.team980.thunderscout.analytics.matches;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.analytics.matches.legacy_statistics.MatchInfoActivity;
-import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.analytics.matches.legacy_breakdown.MatchInfoActivity;
 import com.team980.thunderscout.backend.StorageWrapper;
-import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.AllianceStation;
+import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.AllianceStation;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 
 

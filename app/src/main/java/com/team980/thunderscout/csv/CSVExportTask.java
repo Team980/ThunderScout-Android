@@ -40,12 +40,12 @@ import android.widget.Toast;
 import com.google.firebase.crash.FirebaseCrash;
 import com.opencsv.CSVWriter;
 import com.team980.thunderscout.ThunderScout;
-import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
-import com.team980.thunderscout.data.enumeration.AllianceStation;
-import com.team980.thunderscout.data.enumeration.ClimbingStats;
-import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
+import com.team980.thunderscout.schema.enumeration.AllianceStation;
+import com.team980.thunderscout.schema.enumeration.ClimbingStats;
+import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 import java.io.File;
 import java.io.FileWriter;

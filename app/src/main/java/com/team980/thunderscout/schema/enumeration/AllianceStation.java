@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.data.enumeration;
+package com.team980.thunderscout.schema.enumeration;
 
 import android.support.annotation.ColorRes;
 import android.support.annotation.IdRes;

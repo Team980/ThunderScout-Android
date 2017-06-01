@@ -28,7 +28,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -36,24 +35,18 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.ThunderScout;
-import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.AllianceStation;
+import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.AllianceStation;
 
 public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implements PopupMenu.OnMenuItemClickListener {
 

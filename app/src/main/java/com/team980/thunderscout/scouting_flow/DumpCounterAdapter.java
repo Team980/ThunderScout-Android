@@ -34,7 +34,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
+import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 import java.util.ArrayList;
 

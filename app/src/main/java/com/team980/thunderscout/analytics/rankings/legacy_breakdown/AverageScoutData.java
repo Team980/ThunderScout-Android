@@ -22,10 +22,11 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.data;
+package com.team980.thunderscout.analytics.rankings.legacy_breakdown;
 
-import com.team980.thunderscout.data.enumeration.ClimbingStats;
-import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
+import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.ClimbingStats;
+import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 import java.io.Serializable;
 import java.util.ArrayList;

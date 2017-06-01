@@ -24,6 +24,51 @@
 
 package com.team980.thunderscout.analytics.rankings;
 
-public class TeamWrapper {
+import android.support.annotation.NonNull;
 
+import com.team980.thunderscout.schema.ScoutData;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *  Represents data for one team, for all the matches they played in.
+ */
+public class TeamWrapper implements Comparable<TeamWrapper> {
+
+    private String team;
+    private List<ScoutData> dataList;
+
+    public TeamWrapper(String team) {
+        this.team = team;
+        dataList = new ArrayList<>();
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public List<ScoutData> getDataList() {
+        return dataList;
+    }
+
+    public double getExpectedPointContribution() { //This can be a decimal
+        double expected = 0.0;
+
+        for (ScoutData data : dataList) {
+            expected += PointEstimator.getPointContribution(data);
+        }
+
+        expected /= dataList.size(); //yes, that's an operator
+
+        return expected;
+        //average to find the EXPECTED point contribution
+    }
+
+    @Override
+    public int compareTo(@NonNull TeamWrapper other) { //Compare by comparing the expected point contributions
+        return Double.valueOf(getExpectedPointContribution())
+                .compareTo(other.getExpectedPointContribution());
+    }
 }

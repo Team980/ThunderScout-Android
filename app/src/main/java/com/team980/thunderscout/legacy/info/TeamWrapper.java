@@ -26,9 +26,9 @@ package com.team980.thunderscout.legacy.info;
 
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
-import com.team980.thunderscout.data.AverageScoutData;
-import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.ClimbingStats;
+import com.team980.thunderscout.analytics.rankings.legacy_breakdown.AverageScoutData;
+import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -40,6 +40,7 @@ import java.util.List;
 /**
  * Container for ScoutData. Implements averaging, grouping methods by creating an instance of AverageScoutData.
  */
+@Deprecated //superseded by TeamWrapper in RankingsAdapter
 public class TeamWrapper implements ParentListItem, Serializable {
 
     private String teamNumber;
