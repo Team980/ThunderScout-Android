@@ -24,14 +24,9 @@
 
 package com.team980.thunderscout.analytics.matches;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -55,13 +50,7 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.csv.ExportActivity;
 import com.team980.thunderscout.csv.ImportActivity;
-import com.team980.thunderscout.legacy.info.LocalDataAdapter;
-import com.team980.thunderscout.legacy.info.TeamWrapper;
 import com.team980.thunderscout.util.TransitionUtils;
-
-import java.util.ArrayList;
-
-import static android.R.id.toggle;
 
 public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, View.OnClickListener {
 
@@ -129,7 +118,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_matches, menu);
+        inflater.inflate(R.menu.menu_data_tools, menu);
     }
 
     @Override
@@ -209,7 +198,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         } else {
             toolbar.setTitle("Matches");
             toolbar.getMenu().clear();
-            toolbar.inflateMenu(R.menu.menu_matches);
+            toolbar.inflateMenu(R.menu.menu_data_tools);
             TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.secondary, R.color.secondary_dark,
                     R.color.primary, R.color.primary_dark, (AppCompatActivity) getActivity());
 

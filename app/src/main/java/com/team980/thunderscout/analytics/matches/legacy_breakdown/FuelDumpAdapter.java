@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.analytics.matches.legacy_statistics;
+package com.team980.thunderscout.analytics.matches.legacy_breakdown;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,7 +31,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
+import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 import java.util.List;
 

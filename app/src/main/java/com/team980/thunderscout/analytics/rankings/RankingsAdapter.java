@@ -24,36 +24,95 @@
 
 package com.team980.thunderscout.analytics.rankings;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.team980.thunderscout.analytics.matches.MatchesAdapter;
+import com.team980.thunderscout.R;
+import com.team980.thunderscout.analytics.rankings.legacy_breakdown.TeamInfoActivity;
 import com.team980.thunderscout.backend.StorageWrapper;
-import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.analytics.rankings.legacy_breakdown.AverageScoutData;
+import com.team980.thunderscout.schema.ScoutData;
 
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-class RankingsAdapter extends RecyclerView.Adapter implements StorageWrapper.StorageListener {
+class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolder> implements StorageWrapper.StorageListener {
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    private LayoutInflater mInflator;
+
+    private RankingsFragment fragment;
+
+    private List<TeamWrapper> teamList;
+
+    private NumberFormat formatter;
+
+    public RankingsAdapter(RankingsFragment fragment) {
+        mInflator = LayoutInflater.from(fragment.getContext());
+
+        this.fragment = fragment;
+
+        teamList = new ArrayList<>();
+
+        formatter = NumberFormat.getNumberInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(2);
+
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public RankingsAdapter.TeamViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View teamView = mInflator.inflate(R.layout.team_view, parent, false);
+        return new TeamViewHolder(teamView);
+    }
 
+    @Override
+    public void onBindViewHolder(RankingsAdapter.TeamViewHolder holder, int position) {
+        TeamWrapper team = teamList.get(position);
+        holder.bind(team);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return teamList.size();
     }
 
     @Override
     public void onDataQuery(List<ScoutData> dataList) {
-        //do nothing for now
+        int listSize = teamList.size();
+        teamList.clear();
+        notifyItemRangeRemoved(0, listSize);
+
+        data: for (ScoutData data : dataList) {
+            for (int i = 0; i < teamList.size(); i++) { //I wish there was an easier way, but there isn't
+                TeamWrapper wrapper = teamList.get(i);
+
+                if (wrapper.getTeam().equals(data.getTeam())) {
+                    //Pre-existing team
+
+                    wrapper.getDataList().add(data);
+                    notifyItemChanged(i);
+                    continue data; //continues the loop labeled 'DATA'
+                }
+            }
+
+            //New team
+            TeamWrapper wrapper = new TeamWrapper(data.getTeam());
+            wrapper.getDataList().add(data);
+            teamList.add(wrapper);
+            notifyItemInserted(teamList.size() - 1);
+        }
+
+        Collections.sort(teamList);
+        notifyDataSetChanged();
+
+        fragment.getSwipeRefreshLayout().setRefreshing(false);
     }
 
     @Override
@@ -68,6 +127,43 @@ class RankingsAdapter extends RecyclerView.Adapter implements StorageWrapper.Sto
 
     @Override
     public void onDataClear(boolean success) {
-        //do nothing for now
+        int listSize = teamList.size();
+        teamList.clear();
+        notifyItemRangeRemoved(0, listSize);
+    }
+
+    public class TeamViewHolder extends RecyclerView.ViewHolder {
+
+        private View itemView;
+
+        private TextView teamNumber;
+        private TextView descriptor;
+        private TextView rank;
+
+        public TeamViewHolder(View itemView) {
+            super(itemView);
+
+            this.itemView = itemView;
+
+            teamNumber = (TextView) itemView.findViewById(R.id.team_number);
+            descriptor = (TextView) itemView.findViewById(R.id.team_descriptor);
+            rank = (TextView) itemView.findViewById(R.id.team_rank);
+        }
+
+        public void bind(final TeamWrapper wrapper) {
+            teamNumber.setText(wrapper.getTeam());
+            descriptor.setText(wrapper.getDataList().size() + " matches");
+
+            rank.setText(formatter.format(wrapper.getExpectedPointContribution()) + " points");
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent launchInfoActivity = new Intent(v.getContext(), TeamInfoActivity.class);
+                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT", new AverageScoutData(wrapper.getDataList()));
+                    v.getContext().startActivity(launchInfoActivity);
+                }
+            });
+        }
     }
 }

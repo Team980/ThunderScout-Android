@@ -35,7 +35,7 @@ import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.backend.AccountScope;
-import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;

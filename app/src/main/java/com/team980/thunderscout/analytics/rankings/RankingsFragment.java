@@ -24,28 +24,33 @@
 
 package com.team980.thunderscout.analytics.rankings;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.analytics.matches.MatchesAdapter;
 import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.csv.ExportActivity;
+import com.team980.thunderscout.csv.ImportActivity;
 
-public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener {
 
     private RecyclerView dataView;
     private RankingsAdapter adapter;
@@ -77,6 +82,8 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        setHasOptionsMenu(true);
+
         dataView = (RecyclerView) view.findViewById(R.id.dataView);
 
         // use a linear layout manager
@@ -88,7 +95,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         dataView.addItemDecoration(dividerItemDecoration);
 
         // specify an adapter
-        adapter = new RankingsAdapter();
+        adapter = new RankingsAdapter(this);
         dataView.setAdapter(adapter);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -102,7 +109,49 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_data_tools, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //Default mode
+        if (id == R.id.action_import) {
+            Intent importIntent = new Intent(getContext(), ImportActivity.class);
+            startActivity(importIntent);
+            return true;
+        }
+
+        if (id == R.id.action_export) {
+            Intent exportIntent = new Intent(getContext(), ExportActivity.class);
+            startActivity(exportIntent);
+            return true;
+        }
+
+        if (id == R.id.action_delete_all && adapter.getItemCount() > 0) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Delete all data from this account?")
+                    .setPositiveButton("Delete", this)
+                    .setNegativeButton("Cancel", null).show();
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public void onRefresh() { //SwipeRefreshLayout
         AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+    }
+
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+        return swipeContainer;
+    }
+
+    @Override //Deletion dialog
+    public void onClick(DialogInterface dialog, int which) { //TODO modular account scopes - CLOUD should prompt for password
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
     }
 }

@@ -35,7 +35,7 @@ import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
-import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.schema.ScoutData;
 
 import java.util.ArrayList;
 import java.util.List;

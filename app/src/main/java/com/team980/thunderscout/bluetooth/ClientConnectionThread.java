@@ -36,7 +36,7 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 

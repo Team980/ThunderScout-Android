@@ -25,21 +25,16 @@
 package com.team980.thunderscout.backend.local.task;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
-import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.legacy.info.LocalDataAdapter;
-import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
+import com.team980.thunderscout.schema.ScoutData;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -22,12 +22,12 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.data;
+package com.team980.thunderscout.schema;
 
 import com.google.firebase.crash.FirebaseCrash;
-import com.team980.thunderscout.data.enumeration.AllianceStation;
-import com.team980.thunderscout.data.enumeration.ClimbingStats;
-import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
+import com.team980.thunderscout.schema.enumeration.AllianceStation;
+import com.team980.thunderscout.schema.enumeration.ClimbingStats;
+import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -42,7 +42,7 @@ import java.util.Date;
 public class ScoutData implements Serializable {
 
     /**
-     * ScoutData Version 2017-3a
+     * ScoutData Version 2017-3b
      * <p>
      * 2017-3b: More structural tweaks, new AllianceStation field
      * 2017-3a: Update structure, tweak fields, and prepare for GSON serialization
@@ -54,7 +54,7 @@ public class ScoutData implements Serializable {
     // INIT
     private String team;
     private int matchNumber;
-    private AllianceStation allianceStation; //TODO implement in UI as stations instead of colors
+    private AllianceStation allianceStation;
 
     private Date date;
     private String source;

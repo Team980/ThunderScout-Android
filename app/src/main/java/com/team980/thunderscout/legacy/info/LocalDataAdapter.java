@@ -45,9 +45,9 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
-import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.analytics.matches.legacy_statistics.MatchInfoActivity;
-import com.team980.thunderscout.legacy.info.statistics.TeamInfoActivity;
+import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.analytics.matches.legacy_breakdown.MatchInfoActivity;
+import com.team980.thunderscout.analytics.rankings.legacy_breakdown.TeamInfoActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;

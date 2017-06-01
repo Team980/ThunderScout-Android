@@ -24,8 +24,8 @@
 
 package com.team980.thunderscout.analytics.matches;
 
-import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.AllianceStation;
+import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.AllianceStation;
 
 import java.util.EnumMap;
 

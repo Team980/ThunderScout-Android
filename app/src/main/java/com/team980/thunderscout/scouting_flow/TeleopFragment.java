@@ -39,8 +39,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.enumeration.ClimbingStats;
-import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
+import com.team980.thunderscout.schema.enumeration.ClimbingStats;
+import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 public class TeleopFragment extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 

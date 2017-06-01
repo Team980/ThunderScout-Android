@@ -35,7 +35,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.enumeration.FuelDumpAmount;
+import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 public class AutoFragment extends Fragment implements View.OnClickListener {
 

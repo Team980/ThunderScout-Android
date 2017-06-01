@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.analytics.matches.legacy_statistics;
+package com.team980.thunderscout.analytics.matches.legacy_breakdown;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -36,8 +36,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.enumeration.ClimbingStats;
+import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.text.SimpleDateFormat;
 

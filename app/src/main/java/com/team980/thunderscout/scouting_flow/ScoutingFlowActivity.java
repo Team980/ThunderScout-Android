@@ -51,7 +51,7 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
-import com.team980.thunderscout.data.ScoutData;
+import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;
