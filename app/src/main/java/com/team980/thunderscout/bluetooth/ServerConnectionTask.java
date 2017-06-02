@@ -38,12 +38,12 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.team980.thunderscout.backend.AccountScope;
-import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;
 import com.team980.thunderscout.legacy.feed.FeedEntry;
 import com.team980.thunderscout.legacy.feed.task.FeedDataWriteTask;
+import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;

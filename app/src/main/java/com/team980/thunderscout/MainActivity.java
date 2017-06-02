@@ -26,7 +26,6 @@ package com.team980.thunderscout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -47,7 +46,6 @@ import com.team980.thunderscout.analytics.matches.MatchesFragment;
 import com.team980.thunderscout.analytics.rankings.RankingsFragment;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.firebase_debug.FirebaseDebugActivity;
-import com.team980.thunderscout.legacy.info.ThisDeviceFragment;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -142,10 +140,6 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
 
-        if (fragment instanceof ThisDeviceFragment) {
-            ((ThisDeviceFragment) fragment).saveAdapterState(outState);
-        }
-
         //Save the fragment's instance
         getSupportFragmentManager().putFragment(outState, "mContent", fragment);
     }
@@ -155,10 +149,6 @@ public class MainActivity extends AppCompatActivity
         super.onRestoreInstanceState(savedInstanceState);
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
-
-        if (fragment instanceof ThisDeviceFragment) {
-            ((ThisDeviceFragment) fragment).restoreAdapterState(savedInstanceState);
-        }
     }
 
     @Override
@@ -207,10 +197,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_alliances) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment, new AlliancesFragment());
-            ft.commit();
-        } else if (id == R.id.nav_local_storage) { //Legacy
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment, new ThisDeviceFragment());
             ft.commit();
         }
 

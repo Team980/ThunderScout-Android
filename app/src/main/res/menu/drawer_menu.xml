@@ -43,11 +43,6 @@
             android:id="@+id/nav_alliances"
             android:icon="@drawable/ic_flag_white_24dp"
             android:title="Alliances" />
-        <item
-            android:id="@+id/nav_local_storage"
-            android:icon="@drawable/ic_filter_list_white_24dp"
-            android:title="This device (Legacy, LOCAL only)"
-            android:visible="false" />
     </group>
 
 

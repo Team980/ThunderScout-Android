@@ -32,7 +32,6 @@ import android.preference.PreferenceManager;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 
 import com.team980.thunderscout.R;
 

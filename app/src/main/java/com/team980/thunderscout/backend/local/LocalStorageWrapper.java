@@ -29,8 +29,8 @@ import android.support.annotation.Nullable;
 
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.task.ScoutDataClearTask;
-import com.team980.thunderscout.backend.local.task.ScoutDataRemoveTask;
 import com.team980.thunderscout.backend.local.task.ScoutDataReadTask;
+import com.team980.thunderscout.backend.local.task.ScoutDataRemoveTask;
 import com.team980.thunderscout.backend.local.task.ScoutDataWriteTask;
 import com.team980.thunderscout.schema.ScoutData;
 

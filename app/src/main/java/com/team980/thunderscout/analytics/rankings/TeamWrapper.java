@@ -28,7 +28,6 @@ import android.support.annotation.NonNull;
 
 import com.team980.thunderscout.schema.ScoutData;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
