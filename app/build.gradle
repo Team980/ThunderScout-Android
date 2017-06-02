@@ -26,14 +26,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2' //Travis CI updates slowly
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "com.team980.thunderscout"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 12
-        versionName "ThunderStorm-a2"
+        versionName "ThunderStorm-a3"
     }
 
     buildTypes {
@@ -62,14 +62,12 @@ dependencies {
     //FirebaseUI
     compile 'com.firebaseui:firebase-ui-auth:1.2.0'
     //Android Support
-    compile 'com.android.support:support-v4:25.1.1'
-    compile 'com.android.support:design:25.1.1'
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:cardview-v7:25.1.1'
-    compile 'com.android.support:recyclerview-v7:25.1.1'
-    compile 'com.android.support:gridlayout-v7:25.1.1'
-    //Expandable RecyclerView
-    compile 'com.bignerdranch.android:expandablerecyclerview:2.1.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:gridlayout-v7:25.3.1'
     //Material About
     compile 'com.github.daniel-stoneuk:material-about-library:1.7.1'
     //Gson
@@ -78,8 +76,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //DeviceName
     compile 'com.github.tslamic:dn2:1.1'
-    //ConstrainLayout
-    //compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
     androidTestCompile 'junit:junit:4.12'
 }
 
