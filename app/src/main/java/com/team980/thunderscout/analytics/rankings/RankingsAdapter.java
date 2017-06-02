@@ -33,9 +33,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.analytics.rankings.legacy_breakdown.AverageScoutData;
 import com.team980.thunderscout.analytics.rankings.legacy_breakdown.TeamInfoActivity;
 import com.team980.thunderscout.backend.StorageWrapper;
-import com.team980.thunderscout.analytics.rankings.legacy_breakdown.AverageScoutData;
 import com.team980.thunderscout.schema.ScoutData;
 
 import java.text.NumberFormat;

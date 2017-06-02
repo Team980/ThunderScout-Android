@@ -35,7 +35,6 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
-import com.team980.thunderscout.legacy.info.LocalDataAdapter;
 
 public class ScoutDataClearTask extends AsyncTask<Void, Void, Boolean> {
 

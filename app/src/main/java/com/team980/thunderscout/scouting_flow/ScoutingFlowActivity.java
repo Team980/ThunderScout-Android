@@ -51,12 +51,12 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
-import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
 import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;
 import com.team980.thunderscout.legacy.feed.FeedEntry;
 import com.team980.thunderscout.legacy.feed.task.FeedDataWriteTask;
+import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.TransitionUtils;
 

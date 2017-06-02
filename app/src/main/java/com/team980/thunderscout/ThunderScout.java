@@ -31,8 +31,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.service.quicksettings.TileService;
-import android.support.annotation.WorkerThread;
-import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.bluetooth.BluetoothQuickTileService;
