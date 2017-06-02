@@ -63,7 +63,6 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
         formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(2);
-
     }
 
     @Override
