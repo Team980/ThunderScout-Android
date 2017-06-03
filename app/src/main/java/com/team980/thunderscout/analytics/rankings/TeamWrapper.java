@@ -66,8 +66,8 @@ public class TeamWrapper implements Comparable<TeamWrapper> {
     }
 
     @Override
-    public int compareTo(@NonNull TeamWrapper other) { //Compare by comparing the expected point contributions
-        return Double.valueOf(getExpectedPointContribution())
+    public int compareTo(@NonNull TeamWrapper other) { //Compare by comparing the expected point contributions, higher is better
+        return -Double.valueOf(getExpectedPointContribution())
                 .compareTo(other.getExpectedPointContribution());
     }
 }
