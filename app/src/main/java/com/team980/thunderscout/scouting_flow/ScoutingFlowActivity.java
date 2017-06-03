@@ -398,6 +398,10 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         scoutData.getAutonomous().setGearsDelivered((int) autoGearsDelivered.getValue());
 
+        CounterCompoundView autoGearsDropped = (CounterCompoundView) autoView.findViewById(R.id.auto_counterGearsDropped);
+
+        scoutData.getAutonomous().setGearsDropped((int) autoGearsDropped.getValue());
+
         CounterCompoundView autoHighGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterHighGoals);
 
         scoutData.getAutonomous().setHighGoals((int) autoHighGoals.getValue());
@@ -412,6 +416,10 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         CounterCompoundView teleopGearsDelivered = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterGearsDelivered);
 
         scoutData.getTeleop().setGearsDelivered((int) teleopGearsDelivered.getValue());
+
+        CounterCompoundView teleopGearsDropped = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterGearsDropped);
+
+        scoutData.getTeleop().setGearsDropped((int) teleopGearsDropped.getValue());
 
         scoutData.getTeleop().getLowGoalDumps().addAll(((TeleopFragment) viewPagerAdapter.getItem(1)).getFuelDumpAdapter().get());
 

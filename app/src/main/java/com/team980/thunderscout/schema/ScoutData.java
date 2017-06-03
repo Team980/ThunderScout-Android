@@ -73,10 +73,6 @@ public class ScoutData implements Serializable {
         //default values
         autonomous = new Autonomous();
         teleop = new Teleop();
-
-        //TODO implement in scouting flow
-        autonomous.setGearsDropped(0);
-        teleop.setGearsDropped(0);
     }
 
     /**
