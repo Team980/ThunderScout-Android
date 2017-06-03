@@ -26,6 +26,7 @@ package com.team980.thunderscout.analytics.rankings.legacy_breakdown;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,11 +35,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.analytics.rankings.TeamWrapper;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
+@Deprecated
 public class TeamInfoActivity extends AppCompatActivity {
 
     private AverageScoutData scoutData;
@@ -129,6 +132,11 @@ public class TeamInfoActivity extends AppCompatActivity {
 
         comments.setLayoutManager(new LinearLayoutManager(this));
         comments.setAdapter(new CommentsAdapter(scoutData.getCommentsList()));
+
+        TeamWrapper tw = new TeamWrapper(scoutData.getTeamNumber());
+        tw.getDataList().addAll(scoutData.getDataList());
+
+        Snackbar.make(findViewById(R.id.info_average_lastUpdated), "Expected point average:: " + tw.getExpectedPointContribution(), Snackbar.LENGTH_INDEFINITE).show();
     }
 
 }

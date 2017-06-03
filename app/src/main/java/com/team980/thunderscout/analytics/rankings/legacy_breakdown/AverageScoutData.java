@@ -61,6 +61,10 @@ public class AverageScoutData implements Serializable {
         return dataList.size();
     }
 
+    public List<ScoutData> getDataList() { //convenience method for hax
+        return dataList;
+    }
+
     //AUTO
 
     public float getAverageAutoGearsDelivered() {
