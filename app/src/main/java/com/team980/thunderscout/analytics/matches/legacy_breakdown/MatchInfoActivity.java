@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.analytics.rankings.TeamWrapper;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
@@ -153,6 +155,11 @@ public class MatchInfoActivity extends AppCompatActivity {
         } else {
             comments.setText("None");
         }
+
+        TeamWrapper tw = new TeamWrapper(data.getTeam());
+        tw.getDataList().add(data);
+
+        Snackbar.make(findViewById(R.id.info_match_dateAdded), "Expected points: " + tw.getExpectedPointContribution(), Snackbar.LENGTH_INDEFINITE).show();
     }
 }
 
