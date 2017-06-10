@@ -40,6 +40,8 @@
     <application
         android:name=".ThunderScout"
         android:allowBackup="true"
+        android:appCategory="productivity"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="ThunderScout"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -93,7 +95,6 @@
             android:label="Export to CSV"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
-        <!-- <activity android:name=".sheets.GoogleAuthActivity"></activity> -->
         <activity
             android:name=".AboutActivity"
             android:label="About"
