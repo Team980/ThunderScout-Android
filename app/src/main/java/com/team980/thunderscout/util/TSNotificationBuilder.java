@@ -24,13 +24,14 @@
 
 package com.team980.thunderscout.util;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 
 import com.team980.thunderscout.R;
 
-@Deprecated
+@Deprecated //TODO implement notification channels
 public class TSNotificationBuilder {
 
     private static TSNotificationBuilder ourInstance; //TODO the existence of this class is a memory leak
@@ -44,12 +45,21 @@ public class TSNotificationBuilder {
     private TSNotificationBuilder(Context context) { //TODO add click intents
         this.context = context;
 
+        NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) { //No Compat exists yet?
+            NotificationChannel transferChannel = new NotificationChannel("legacy_bt_transfer", "Legacy Bluetooth Transfers", NotificationManager.IMPORTANCE_DEFAULT);
+            transferChannel.setDescription("Ongoing and erroneous Bluetooth transfers");
+            mNotifyMgr.createNotificationChannel(transferChannel);
+        }
+
         btTransferInProgress = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp) //TODO find icon
                 .setContentTitle("Transferring data to device")
                 .setProgress(100, 0, true)
                 .setOngoing(true)
-                .setColor(context.getResources().getColor(R.color.accent)) //TODO use nonyellow accent?
+                .setColor(context.getResources().getColor(R.color.accent))
+                .setChannelId("legacy_bt_transfer")
                 .setGroup("BT_TRANSFER_ONGOING");
 
         btTransferError = new NotificationCompat.Builder(context)
@@ -57,6 +67,7 @@ public class TSNotificationBuilder {
                 .setContentTitle("Data transfer failed")
                 .setContentText("Failed to receive data from device")
                 .setColor(context.getResources().getColor(R.color.error))
+                .setChannelId("legacy_bt_transfer")
                 .setGroup("BT_TRANSFER_ERROR");
     }
 
