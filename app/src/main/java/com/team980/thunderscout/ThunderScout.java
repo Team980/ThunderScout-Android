@@ -45,6 +45,7 @@ import java.io.ObjectOutputStream;
 
 public class ThunderScout extends Application implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    @Deprecated
     public static byte[] serializeObject(Object o) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
@@ -63,6 +64,7 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
         }
     }
 
+    @Deprecated
     public static Object deserializeObject(byte[] b) {
         try {
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(b));
