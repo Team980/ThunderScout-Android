@@ -25,6 +25,7 @@
 package com.team980.thunderscout.bluetooth;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -136,14 +137,24 @@ public class BluetoothServerService extends Service {
     }
 
     public void initNotifications() {
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) { //No Compat exists yet?
+            NotificationChannel serverChannel = new NotificationChannel("bluetooth_server", "Bluetooth Server", NotificationManager.IMPORTANCE_LOW);
+            serverChannel.setDescription("The Bluetooth Server shows a persistent notification when enabled");
+            notificationManager.createNotificationChannel(serverChannel);
+        }
+
         running = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp)
                 .setContentTitle("Bluetooth server is running")
-                .setContentText("Open for scout data to be sent") //todo new icon
+                .setContentText("Open for scout data to be sent") //todo new icon?
                 .setOngoing(true)
                 .setPriority(Notification.PRIORITY_LOW)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setColorized(true)
                 .setColor(getResources().getColor(R.color.primary))
                 .setShowWhen(false)
+                .setChannelId("bluetooth_server")
                 .setGroup("BT_SERVER");
 
         adapterDisabled = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
@@ -151,8 +162,12 @@ public class BluetoothServerService extends Service {
                 .setContentTitle("Bluetooth is disabled")
                 .setContentText("Please enable Bluetooth before using the Bluetooth server")
                 .setOngoing(true)
+                .setPriority(Notification.PRIORITY_LOW)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setColorized(true)
                 .setColor(getResources().getColor(R.color.error))
                 .setShowWhen(false)
+                .setChannelId("bluetooth_server")
                 .setGroup("BT_SERVER");
 
         adapterMissing = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
@@ -160,8 +175,12 @@ public class BluetoothServerService extends Service {
                 .setContentTitle("This device doesn't support Bluetooth")
                 .setContentText("Please disable the Bluetooth server")
                 .setOngoing(true)
+                .setPriority(Notification.PRIORITY_LOW)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setColorized(true)
                 .setColor(getResources().getColor(R.color.error))
                 .setShowWhen(false)
+                .setChannelId("bluetooth_server")
                 .setGroup("BT_SERVER");
 
         PendingIntent serverSettingsIntent = PendingIntent.getActivity(this, 1,
