@@ -35,7 +35,7 @@ import java.util.List;
 
 /**
  * One entry in the home screen's activity feed.
- *
+ * <p>
  * Each entry has ONE EntryType representing the initiating action.
  * It can then have multiple EntryOperationWrappers representing what was done during the action.
  * Each EntryOperationWrapper has a corresponding EntryOperationStatus representing the result of the operation.
@@ -54,7 +54,7 @@ public class FeedEntry implements ParentListItem, Comparable<FeedEntry> {
         operations = new ArrayList<>();
     }
 
-    public EntryType getType(){
+    public EntryType getType() {
         return type;
     }
 

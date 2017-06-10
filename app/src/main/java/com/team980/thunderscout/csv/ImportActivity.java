@@ -55,12 +55,12 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import);
 
-        fileInfo = (TextView) findViewById(R.id.fileInfo);
+        fileInfo = findViewById(R.id.fileInfo);
 
-        Button buttonSelectFile = (Button) findViewById(R.id.buttonSelectFile);
+        Button buttonSelectFile = findViewById(R.id.buttonSelectFile);
         buttonSelectFile.setOnClickListener(this);
 
-        buttonImport = (Button) findViewById(R.id.buttonImport);
+        buttonImport = findViewById(R.id.buttonImport);
         buttonImport.setEnabled(false);
         buttonImport.setOnClickListener(this);
     }
@@ -91,7 +91,7 @@ public class ImportActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 2) {
-            if(resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 fileInfo.setText(data.getData().getPath());
 
                 fileUri = data.getData();

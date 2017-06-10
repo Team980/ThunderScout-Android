@@ -66,9 +66,9 @@
         android:layout_marginRight="16dp"
         android:scaleType="center"
         android:src="@drawable/ic_send_white_24dp"
-        app:fabSize="normal"
         app:backgroundTint="@color/accent"
         app:elevation="6dp"
+        app:fabSize="normal"
         app:pressedTranslationZ="12dp" />
 
 </android.support.design.widget.CoordinatorLayout>

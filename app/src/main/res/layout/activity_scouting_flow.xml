@@ -70,9 +70,9 @@
         android:scaleType="center"
         android:src="@drawable/ic_send_white_24dp"
         android:visibility="invisible"
-        app:fabSize="normal"
         app:backgroundTint="@color/accent"
         app:elevation="6dp"
+        app:fabSize="normal"
         app:pressedTranslationZ="12dp" />
 
 </android.support.design.widget.CoordinatorLayout>

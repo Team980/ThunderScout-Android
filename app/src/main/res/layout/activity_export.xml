@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:entries="@array/export_actions_array"/>
+        android:entries="@array/export_actions_array" />
 
     <LinearLayout
         android:layout_width="match_parent"

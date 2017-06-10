@@ -80,11 +80,11 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         MainActivity activity = (MainActivity) getActivity();
 
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle("Matches");
         activity.setSupportActionBar(toolbar);
 
-        drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        drawer = getActivity().findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -92,7 +92,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         setHasOptionsMenu(true);
 
-        dataView = (RecyclerView) view.findViewById(R.id.dataView);
+        dataView = view.findViewById(R.id.dataView);
 
         // use a linear layout manager
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -106,7 +106,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         adapter = new MatchesAdapter(this);
         dataView.setAdapter(adapter);
 
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
 
         swipeContainer.setOnRefreshListener(this);
 

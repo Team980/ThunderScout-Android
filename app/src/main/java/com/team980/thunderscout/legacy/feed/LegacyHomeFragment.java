@@ -62,16 +62,12 @@ import java.util.ArrayList;
 public class LegacyHomeFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
         DialogInterface.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
+    public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.legacy.feed.REFRESH_VIEW_PAGER"; //conveniently different from the other one
     private RecyclerView feed;
     private ActivityFeedAdapter adapter;
-
     private SwipeRefreshLayout swipeContainer;
-
     private BroadcastReceiver refreshReceiver;
-
     private FloatingActionButton scoutButton;
-
-    public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.legacy.feed.REFRESH_VIEW_PAGER"; //conveniently different from the other one
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,19 +80,19 @@ public class LegacyHomeFragment extends Fragment implements View.OnClickListener
 
         MainActivity activity = (MainActivity) getActivity();
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle("ThunderScout");
         activity.setSupportActionBar(toolbar);
 
         setHasOptionsMenu(true);
 
-        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        feed = (RecyclerView) view.findViewById(R.id.feed);
+        feed = view.findViewById(R.id.feed);
 
         // use a linear layout manager
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -110,7 +106,7 @@ public class LegacyHomeFragment extends Fragment implements View.OnClickListener
         adapter = new ActivityFeedAdapter(new ArrayList<FeedEntry>());
         feed.setAdapter(adapter);
 
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
 
         swipeContainer.setOnRefreshListener(this);
 
@@ -129,7 +125,7 @@ public class LegacyHomeFragment extends Fragment implements View.OnClickListener
             }
         };
 
-        scoutButton = (FloatingActionButton) view.findViewById(R.id.fab_scout);
+        scoutButton = view.findViewById(R.id.fab_scout);
         scoutButton.setOnClickListener(this);
 
         Boolean matchScout = PreferenceManager.getDefaultSharedPreferences(getContext())

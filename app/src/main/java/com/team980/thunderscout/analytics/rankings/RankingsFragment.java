@@ -72,11 +72,11 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         MainActivity activity = (MainActivity) getActivity();
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle("Rankings");
         activity.setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -84,7 +84,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         setHasOptionsMenu(true);
 
-        dataView = (RecyclerView) view.findViewById(R.id.dataView);
+        dataView = view.findViewById(R.id.dataView);
 
         // use a linear layout manager
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -98,7 +98,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         adapter = new RankingsAdapter(this);
         dataView.setAdapter(adapter);
 
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        swipeContainer = view.findViewById(R.id.swipeContainer);
 
         swipeContainer.setOnRefreshListener(this);
 

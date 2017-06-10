@@ -37,6 +37,7 @@ public interface StorageWrapper { //TODO refine this
 
     /**
      * Runs a query to fetch the data
+     *
      * @param listener Class extending StorageListener to return the data to
      */
     void queryData(@Nullable StorageListener listener);

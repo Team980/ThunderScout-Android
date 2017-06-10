@@ -50,16 +50,16 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CheckBox crossedBaseline = (CheckBox) view.findViewById(R.id.auto_checkBoxCrossedBaseline);
+        CheckBox crossedBaseline = view.findViewById(R.id.auto_checkBoxCrossedBaseline);
         crossedBaseline.setOnClickListener(this);
 
-        Button minus = (Button) view.findViewById(R.id.auto_buttonFuelMinus);
-        Button plus = (Button) view.findViewById(R.id.auto_buttonFuelPlus);
+        Button minus = view.findViewById(R.id.auto_buttonFuelMinus);
+        Button plus = view.findViewById(R.id.auto_buttonFuelPlus);
         minus.setOnClickListener(this);
         plus.setOnClickListener(this);
 
-        TextView textValue = (TextView) getView().findViewById(R.id.auto_textViewFuelValue);
-        TextView numericalValue = (TextView) getView().findViewById(R.id.auto_textViewFuelNumericalValue);
+        TextView textValue = getView().findViewById(R.id.auto_textViewFuelValue);
+        TextView numericalValue = getView().findViewById(R.id.auto_textViewFuelNumericalValue);
         textValue.setText(FuelDumpAmount.NONE.toString());
         numericalValue.setText(FuelDumpAmount.NONE.getMinimumAmount() + " - " + FuelDumpAmount.NONE.getMaximumAmount());
     }
@@ -106,8 +106,8 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
 
             scoutingFlowActivity.getData().getAutonomous().setLowGoalDumpAmount(value);
 
-            TextView textValue = (TextView) getView().findViewById(R.id.auto_textViewFuelValue);
-            TextView numericalValue = (TextView) getView().findViewById(R.id.auto_textViewFuelNumericalValue);
+            TextView textValue = getView().findViewById(R.id.auto_textViewFuelValue);
+            TextView numericalValue = getView().findViewById(R.id.auto_textViewFuelNumericalValue);
             textValue.setText(value.toString());
             numericalValue.setText(value.getMinimumAmount() + " - " + value.getMaximumAmount());
         }

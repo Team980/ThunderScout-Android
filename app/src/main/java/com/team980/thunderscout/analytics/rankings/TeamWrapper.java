@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  Represents data for one team, for all the matches they played in.
+ * Represents data for one team, for all the matches they played in.
  */
 public class TeamWrapper implements Comparable<TeamWrapper> {
 

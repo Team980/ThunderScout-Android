@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
@@ -42,12 +41,12 @@
 
     <Button
         android:id="@+id/button_sign_out"
-        android:text="Sign Out"
-        android:onClick="signOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/button_auth_ui"
-        android:layout_marginLeft="111dp" />
+        android:layout_marginLeft="111dp"
+        android:onClick="signOut"
+        android:text="Sign Out"
+        app:layout_constraintLeft_toRightOf="@+id/button_auth_ui" />
 
     <TextView
         android:id="@+id/name"
@@ -92,26 +91,26 @@
         android:layout_marginTop="0dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email"
         app:layout_constraintVertical_bias="0.257"
-        tools:text="verified"
-        app:layout_constraintHorizontal_bias="0.498" />
+        tools:text="verified" />
 
     <ImageView
         android:id="@+id/photo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/name"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/name"
         app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.783" />
 
     <TextView
@@ -124,11 +123,11 @@
         android:layout_marginTop="0dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailVerified"
         app:layout_constraintVertical_bias="0.58"
-        tools:text="uid"
-        app:layout_constraintHorizontal_bias="0.498" />
+        tools:text="uid" />
 
 </android.support.constraint.ConstraintLayout>

@@ -58,38 +58,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
-                android:button="@null"
-                android:background="?android:attr/listChoiceIndicatorMultiple"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Gears Delivered"
-                android:textSize="24sp" />
-
-            <com.team980.thunderscout.util.CounterCompoundView
-                android:id="@+id/auto_counterGearsDelivered"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:background="?android:attr/listChoiceIndicatorMultiple"
+                android:button="@null" />
 
         </LinearLayout>
 
@@ -97,25 +67,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical">
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Gears Dropped"
-                android:textSize="24sp" />
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
 
-            <com.team980.thunderscout.util.CounterCompoundView
-                android:id="@+id/auto_counterGearsDropped"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Gears Delivered"
+                    android:textSize="24sp" />
+
+                <com.team980.thunderscout.util.CounterCompoundView
+                    android:id="@+id/auto_counterGearsDelivered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Gears Dropped"
+                    android:textSize="24sp" />
+
+                <com.team980.thunderscout.util.CounterCompoundView
+                    android:id="@+id/auto_counterGearsDropped"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -213,7 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:longPress="true"/>
+                    app:longPress="true" />
 
             </LinearLayout>
 
@@ -236,7 +236,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:longPress="true"/>
+                    app:longPress="true" />
 
             </LinearLayout>
 

@@ -42,14 +42,6 @@ public enum FuelDumpAmount {
         maximumAmount = max;
     }
 
-    public int getMinimumAmount() {
-        return minimumAmount;
-    }
-
-    public int getMaximumAmount() {
-        return maximumAmount;
-    }
-
     public static FuelDumpAmount getByAmount(int amount) {
         if (amount <= NONE.getMinimumAmount()) {
             return FuelDumpAmount.NONE;
@@ -64,6 +56,14 @@ public enum FuelDumpAmount {
         }
 
         return FuelDumpAmount.NONE;
+    }
+
+    public int getMinimumAmount() {
+        return minimumAmount;
+    }
+
+    public int getMaximumAmount() {
+        return maximumAmount;
     }
 
     @Override

@@ -77,8 +77,8 @@ public class FuelDumpAdapter extends RecyclerView.Adapter<FuelDumpAdapter.FuelDu
         public FuelDumpViewHolder(View itemView) {
             super(itemView);
 
-            value = (TextView) itemView.findViewById(R.id.value);
-            numericalValue = (TextView) itemView.findViewById(R.id.numericalValue);
+            value = itemView.findViewById(R.id.value);
+            numericalValue = itemView.findViewById(R.id.numericalValue);
 
         }
 

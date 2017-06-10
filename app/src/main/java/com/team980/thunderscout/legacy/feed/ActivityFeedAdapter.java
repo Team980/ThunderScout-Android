@@ -116,11 +116,11 @@ public class ActivityFeedAdapter extends ExpandableRecyclerAdapter<ActivityFeedA
         public FeedEntryViewHolder(View itemView) {
             super(itemView);
 
-            icon = (ImageView) itemView.findViewById(R.id.entry_icon);
-            type = (TextView) itemView.findViewById(R.id.entry_type);
-            timestamp = (TextView) itemView.findViewById(R.id.entry_timestamp);
+            icon = itemView.findViewById(R.id.entry_icon);
+            type = itemView.findViewById(R.id.entry_type);
+            timestamp = itemView.findViewById(R.id.entry_timestamp);
 
-            expandButton = (ImageButton) itemView.findViewById(R.id.entry_expandButton);
+            expandButton = itemView.findViewById(R.id.entry_expandButton);
         }
 
         public void bind(FeedEntry entry) {
@@ -169,9 +169,9 @@ public class ActivityFeedAdapter extends ExpandableRecyclerAdapter<ActivityFeedA
         public OperationViewHolder(View itemView) {
             super(itemView);
 
-            icon = (ImageView) itemView.findViewById(R.id.operation_icon);
-            operationType = (TextView) itemView.findViewById(R.id.operation_type);
-            operationStatus = (TextView) itemView.findViewById(R.id.operation_status);
+            icon = itemView.findViewById(R.id.operation_icon);
+            operationType = itemView.findViewById(R.id.operation_type);
+            operationStatus = itemView.findViewById(R.id.operation_status);
         }
 
         public void bind(EntryOperationWrapper wrapper) {

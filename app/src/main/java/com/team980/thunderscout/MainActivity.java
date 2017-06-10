@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.getHeaderView(0).setOnClickListener(this);
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         AccountScope currentScope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(this)
                 .getString("current_account_scope", AccountScope.LOCAL.name()));
 
-        ImageView image = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.account_image);
+        ImageView image = navigationView.getHeaderView(0).findViewById(R.id.account_image);
         switch (currentScope) {
             case LOCAL:
                 image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -214,9 +214,9 @@ public class MainActivity extends AppCompatActivity
 
         //AccountScope navigation menu
         else if (id == R.id.nav_account_local) {
-            NavigationView view = (NavigationView) findViewById(R.id.nav_view);
+            NavigationView view = findViewById(R.id.nav_view);
 
-            ImageView image = (ImageView) view.getHeaderView(0).findViewById(R.id.account_image);
+            ImageView image = view.getHeaderView(0).findViewById(R.id.account_image);
             image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
 
             String deviceName = AndroidDeviceNames.deviceNames(this).currentDeviceName();
@@ -234,9 +234,9 @@ public class MainActivity extends AppCompatActivity
 
             //TODO repopulate current fragment
         } else if (id == R.id.nav_account_cloud) {
-            NavigationView view = (NavigationView) findViewById(R.id.nav_view);
+            NavigationView view = findViewById(R.id.nav_view);
 
-            ImageView image = (ImageView) view.getHeaderView(0).findViewById(R.id.account_image);
+            ImageView image = view.getHeaderView(0).findViewById(R.id.account_image);
             image.setImageDrawable(getResources().getDrawable(R.drawable.ic_cloud_circle_white_72dp));
 
             ((TextView) view.findViewById(R.id.account_name)).setText("Team 980 (ThunderCloud)"); //TODO tweak based on account data
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity
             contractAccountMenu();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -269,8 +269,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void expandAccountMenu() {
-        NavigationView view = (NavigationView) findViewById(R.id.nav_view);
-        ImageView dropdown = (ImageView) view.getHeaderView(0).findViewById(R.id.account_dropdown);
+        NavigationView view = findViewById(R.id.nav_view);
+        ImageView dropdown = view.getHeaderView(0).findViewById(R.id.account_dropdown);
 
         view.getMenu().clear();
         view.inflateMenu(R.menu.drawer_account_menu);
@@ -290,8 +290,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void contractAccountMenu() {
-        NavigationView view = (NavigationView) findViewById(R.id.nav_view);
-        ImageView dropdown = (ImageView) view.getHeaderView(0).findViewById(R.id.account_dropdown);
+        NavigationView view = findViewById(R.id.nav_view);
+        ImageView dropdown = view.getHeaderView(0).findViewById(R.id.account_dropdown);
 
         view.getMenu().clear();
         view.inflateMenu(R.menu.drawer_menu);

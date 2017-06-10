@@ -50,15 +50,13 @@ import com.team980.thunderscout.schema.enumeration.AllianceStation;
 
 public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implements PopupMenu.OnMenuItemClickListener {
 
+    public static final String EXTRA_DEFAULT_DATA = "com.team980.thunderscout.EXTRA_DEFAULT_DATA";
     // Use this instance of the interface to deliver action events
     private ScoutingFlowDialogFragmentListener mListener;
-
     private EditText teamNumber;
     private EditText matchNumber;
     private AppCompatButton allianceStationButton;
     private AllianceStation allianceStation;
-
-    public static final String EXTRA_DEFAULT_DATA = "com.team980.thunderscout.EXTRA_DEFAULT_DATA";
 
     @NonNull
     @Override
@@ -70,17 +68,17 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-        final Toolbar toolbar = (Toolbar) dialogView.findViewById(R.id.toolbar);
+        final Toolbar toolbar = dialogView.findViewById(R.id.toolbar);
         toolbar.setTitle("Match Settings");
 
-        teamNumber = (EditText) dialogView.findViewById(R.id.dialog_editTextTeamNumber);
+        teamNumber = dialogView.findViewById(R.id.dialog_editTextTeamNumber);
         teamNumber.requestFocus();
 
-        matchNumber = (EditText) dialogView.findViewById(R.id.dialog_editTextMatchNumber);
+        matchNumber = dialogView.findViewById(R.id.dialog_editTextMatchNumber);
         matchNumber.setText(String.valueOf(prefs.getInt("last_used_match_number", 0) + 1)); //increment the last match number
 
         allianceStation = AllianceStation.valueOf(prefs.getString("last_used_alliance_station", AllianceStation.RED_1.name()));
-        allianceStationButton = (AppCompatButton) dialogView.findViewById(R.id.dialog_allianceStationButton);
+        allianceStationButton = dialogView.findViewById(R.id.dialog_allianceStationButton);
 
         allianceStationButton.setText(allianceStation.toString().replace('_', ' '));
 

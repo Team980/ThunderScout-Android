@@ -88,7 +88,8 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
         teamList.clear();
         notifyItemRangeRemoved(0, listSize);
 
-        data: for (ScoutData data : dataList) {
+        data:
+        for (ScoutData data : dataList) {
             for (int i = 0; i < teamList.size(); i++) { //I wish there was an easier way, but there isn't
                 TeamWrapper wrapper = teamList.get(i);
 
@@ -144,9 +145,9 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
             this.itemView = itemView;
 
-            teamNumber = (TextView) itemView.findViewById(R.id.team_number);
-            descriptor = (TextView) itemView.findViewById(R.id.team_descriptor);
-            rank = (TextView) itemView.findViewById(R.id.team_rank);
+            teamNumber = itemView.findViewById(R.id.team_number);
+            descriptor = itemView.findViewById(R.id.team_descriptor);
+            rank = itemView.findViewById(R.id.team_rank);
         }
 
         public void bind(final TeamWrapper wrapper) {

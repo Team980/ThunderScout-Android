@@ -63,7 +63,7 @@
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterGearsDelivered"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -83,7 +83,7 @@
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterGearsDropped"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
