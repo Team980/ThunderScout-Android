@@ -111,115 +111,6 @@ public class ScoutData implements Serializable {
 
     // --- INIT ---
 
-    public String getTeam() {
-        return team;
-    }
-
-    public void setTeam(String team) {
-        this.team = team;
-    }
-
-    public int getMatchNumber() {
-        return matchNumber;
-    }
-
-    public void setMatchNumber(int matchNumber) {
-        this.matchNumber = matchNumber;
-    }
-
-    public AllianceStation getAllianceStation() {
-        return allianceStation;
-    }
-
-    public void setAllianceStation(AllianceStation alliance) {
-        this.allianceStation = alliance;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date d) {
-        date = d;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String d) {
-        source = d;
-    }
-
-    // --- AUTO ---
-
-    public Autonomous getAutonomous() {
-        return autonomous;
-    }
-
-    // --- TELEOP ---
-
-    public Teleop getTeleop() {
-        return teleop;
-    }
-
-    public void setTeleop(Teleop teleop) {
-        this.teleop = teleop;
-    }
-
-    // --- SUMMARY ---
-
-    public String getTroubleWith() {
-        return troubleWith;
-    }
-
-    public void setTroubleWith(String troubleWith) {
-        this.troubleWith = troubleWith;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    // --- OTHER METHODS ---
-
-    public String[] toStringArray() {
-        ArrayList<String> fieldList = new ArrayList<>();
-
-        //Init
-        fieldList.add(getTeam());
-        fieldList.add(String.valueOf(getMatchNumber()));
-        fieldList.add(getAllianceStation().name());
-        fieldList.add(getDate().toString());
-        fieldList.add(getSource());
-
-        //Auto
-        fieldList.add(String.valueOf(getAutonomous().getGearsDelivered()));
-        fieldList.add(String.valueOf(getAutonomous().getGearsDropped()));
-        fieldList.add(getAutonomous().getLowGoalDumpAmount().name());
-        fieldList.add(String.valueOf(getAutonomous().getHighGoals()));
-        fieldList.add(String.valueOf(getAutonomous().getMissedHighGoals()));
-        fieldList.add(String.valueOf(getAutonomous().getCrossedBaseline()));
-
-        //Teleop
-        fieldList.add(String.valueOf(getTeleop().getGearsDelivered()));
-        fieldList.add(String.valueOf(getTeleop().getGearsDropped()));
-        fieldList.add(getTeleop().getLowGoalDumps().toString());
-        fieldList.add(String.valueOf(getTeleop().getHighGoals()));
-        fieldList.add(String.valueOf(getTeleop().getMissedHighGoals()));
-        fieldList.add(getTeleop().getClimbingStats().name());
-
-        //Summary
-        fieldList.add(getTroubleWith());
-        fieldList.add(getComments());
-
-        return fieldList.toArray(new String[fieldList.size()]);
-    }
-
     public static ScoutData fromStringArray(String[] array) {
         ScoutData data = new ScoutData();
 
@@ -262,8 +153,118 @@ public class ScoutData implements Serializable {
         return data;
     }
 
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public int getMatchNumber() {
+        return matchNumber;
+    }
+
+    public void setMatchNumber(int matchNumber) {
+        this.matchNumber = matchNumber;
+    }
+
+    public AllianceStation getAllianceStation() {
+        return allianceStation;
+    }
+
+    public void setAllianceStation(AllianceStation alliance) {
+        this.allianceStation = alliance;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date d) {
+        date = d;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    // --- AUTO ---
+
+    public void setSource(String d) {
+        source = d;
+    }
+
+    // --- TELEOP ---
+
+    public Autonomous getAutonomous() {
+        return autonomous;
+    }
+
+    public Teleop getTeleop() {
+        return teleop;
+    }
+
+    // --- SUMMARY ---
+
+    public void setTeleop(Teleop teleop) {
+        this.teleop = teleop;
+    }
+
+    public String getTroubleWith() {
+        return troubleWith;
+    }
+
+    public void setTroubleWith(String troubleWith) {
+        this.troubleWith = troubleWith;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    // --- OTHER METHODS ---
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public String[] toStringArray() {
+        ArrayList<String> fieldList = new ArrayList<>();
+
+        //Init
+        fieldList.add(getTeam());
+        fieldList.add(String.valueOf(getMatchNumber()));
+        fieldList.add(getAllianceStation().name());
+        fieldList.add(getDate().toString());
+        fieldList.add(getSource());
+
+        //Auto
+        fieldList.add(String.valueOf(getAutonomous().getGearsDelivered()));
+        fieldList.add(String.valueOf(getAutonomous().getGearsDropped()));
+        fieldList.add(getAutonomous().getLowGoalDumpAmount().name());
+        fieldList.add(String.valueOf(getAutonomous().getHighGoals()));
+        fieldList.add(String.valueOf(getAutonomous().getMissedHighGoals()));
+        fieldList.add(String.valueOf(getAutonomous().getCrossedBaseline()));
+
+        //Teleop
+        fieldList.add(String.valueOf(getTeleop().getGearsDelivered()));
+        fieldList.add(String.valueOf(getTeleop().getGearsDropped()));
+        fieldList.add(getTeleop().getLowGoalDumps().toString());
+        fieldList.add(String.valueOf(getTeleop().getHighGoals()));
+        fieldList.add(String.valueOf(getTeleop().getMissedHighGoals()));
+        fieldList.add(getTeleop().getClimbingStats().name());
+
+        //Summary
+        fieldList.add(getTroubleWith());
+        fieldList.add(getComments());
+
+        return fieldList.toArray(new String[fieldList.size()]);
+    }
+
     public class Autonomous implements Serializable {
 
+        private final static long serialVersionUID = 5;
         private int gearsDelivered;
         private int gearsDropped;
         private FuelDumpAmount lowGoalDumpAmount;
@@ -274,8 +275,6 @@ public class ScoutData implements Serializable {
         public Autonomous() {
             lowGoalDumpAmount = FuelDumpAmount.NONE;
         }
-
-        private final static long serialVersionUID = 5;
 
         public int getGearsDelivered() {
             return gearsDelivered;
@@ -329,14 +328,13 @@ public class ScoutData implements Serializable {
 
     public class Teleop implements Serializable {
 
+        private final static long serialVersionUID = 5;
         private int gearsDelivered;
         private int gearsDropped;
         private ArrayList<FuelDumpAmount> lowGoalDumps;
         private int highGoals;
         private int missedHighGoals;
         private ClimbingStats climbingStats;
-
-        private final static long serialVersionUID = 5;
 
         public Teleop() {
             lowGoalDumps = new ArrayList<>();

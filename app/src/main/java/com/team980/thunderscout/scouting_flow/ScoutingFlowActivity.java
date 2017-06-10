@@ -65,17 +65,13 @@ import java.util.List;
 
 public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener, StorageWrapper.StorageListener {
 
-    private ScoutingFlowViewPagerAdapter viewPagerAdapter;
-
-    private ScoutData scoutData;
-    private FeedEntry feedEntry;
-
-    private FloatingActionButton fab;
-
     // IDs for callback
     public static final String OPERATION_SAVE_THIS_DEVICE = "SAVE_THIS_DEVICE";
     public static final String OPERATION_SEND_BLUETOOTH = "SEND_BLUETOOTH";
-
+    private ScoutingFlowViewPagerAdapter viewPagerAdapter;
+    private ScoutData scoutData;
+    private FeedEntry feedEntry;
+    private FloatingActionButton fab;
     private Bundle operationStates; //used for task loop
 
     private ProgressDialog operationStateDialog;
@@ -95,23 +91,23 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         setContentView(R.layout.activity_scouting_flow);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        ViewPager viewPager = findViewById(R.id.view_pager);
 
         viewPagerAdapter = new ScoutingFlowViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(this);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
         if (scoutData.getTeam() != null) { //Generate header based on presence of team number
@@ -394,51 +390,51 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();
 
-        CounterCompoundView autoGearsDelivered = (CounterCompoundView) autoView.findViewById(R.id.auto_counterGearsDelivered); //TODO sometimes this fails... is it another activity state bug?
+        CounterCompoundView autoGearsDelivered = autoView.findViewById(R.id.auto_counterGearsDelivered); //TODO sometimes this fails... is it another activity state bug?
 
         scoutData.getAutonomous().setGearsDelivered((int) autoGearsDelivered.getValue());
 
-        CounterCompoundView autoGearsDropped = (CounterCompoundView) autoView.findViewById(R.id.auto_counterGearsDropped);
+        CounterCompoundView autoGearsDropped = autoView.findViewById(R.id.auto_counterGearsDropped);
 
         scoutData.getAutonomous().setGearsDropped((int) autoGearsDropped.getValue());
 
-        CounterCompoundView autoHighGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterHighGoals);
+        CounterCompoundView autoHighGoals = autoView.findViewById(R.id.auto_counterHighGoals);
 
         scoutData.getAutonomous().setHighGoals((int) autoHighGoals.getValue());
 
-        CounterCompoundView autoMissedHighGoals = (CounterCompoundView) autoView.findViewById(R.id.auto_counterMissedHighGoals);
+        CounterCompoundView autoMissedHighGoals = autoView.findViewById(R.id.auto_counterMissedHighGoals);
 
         scoutData.getAutonomous().setMissedHighGoals((int) autoMissedHighGoals.getValue());
 
         // Teleop
         View teleopView = viewPagerAdapter.getItem(1).getView();
 
-        CounterCompoundView teleopGearsDelivered = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterGearsDelivered);
+        CounterCompoundView teleopGearsDelivered = teleopView.findViewById(R.id.teleop_counterGearsDelivered);
 
         scoutData.getTeleop().setGearsDelivered((int) teleopGearsDelivered.getValue());
 
-        CounterCompoundView teleopGearsDropped = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterGearsDropped);
+        CounterCompoundView teleopGearsDropped = teleopView.findViewById(R.id.teleop_counterGearsDropped);
 
         scoutData.getTeleop().setGearsDropped((int) teleopGearsDropped.getValue());
 
         scoutData.getTeleop().getLowGoalDumps().addAll(((TeleopFragment) viewPagerAdapter.getItem(1)).getFuelDumpAdapter().get());
 
-        CounterCompoundView teleopHighGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterHighGoals);
+        CounterCompoundView teleopHighGoals = teleopView.findViewById(R.id.teleop_counterHighGoals);
 
         scoutData.getTeleop().setHighGoals((int) teleopHighGoals.getValue());
 
-        CounterCompoundView teleopMissedHighGoals = (CounterCompoundView) teleopView.findViewById(R.id.teleop_counterMissedHighGoals);
+        CounterCompoundView teleopMissedHighGoals = teleopView.findViewById(R.id.teleop_counterMissedHighGoals);
 
         scoutData.getTeleop().setMissedHighGoals((int) teleopMissedHighGoals.getValue());
 
         // Summary
         View summaryView = viewPagerAdapter.getItem(2).getView();
 
-        EditText troubleWith = (EditText) summaryView.findViewById(R.id.summary_edittextTroubleWith);
+        EditText troubleWith = summaryView.findViewById(R.id.summary_edittextTroubleWith);
 
         scoutData.setTroubleWith(troubleWith.getText().toString());
 
-        EditText comments = (EditText) summaryView.findViewById(R.id.summary_edittextComments);
+        EditText comments = summaryView.findViewById(R.id.summary_edittextComments);
 
         scoutData.setComments(comments.getText().toString());
     }

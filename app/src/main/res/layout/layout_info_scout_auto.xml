@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
@@ -230,19 +229,19 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/info_match_autoCrossedBaseline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="CROSSED "
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:id="@+id/info_match_autoCrossedBaseline"
                     android:textSize="22sp" />
 
                 <TextView
+                    android:id="@+id/info_match_autoCrossedBaselineAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="the baseline"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:id="@+id/info_match_autoCrossedBaselineAction"
                     android:textSize="20sp" />
             </LinearLayout>
 

@@ -58,19 +58,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
         MainActivity activity = (MainActivity) getActivity();
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle("ThunderScout");
         activity.setSupportActionBar(toolbar);
 
         setHasOptionsMenu(true);
 
-        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        scoutButton = (FloatingActionButton) view.findViewById(R.id.fab_scout);
+        scoutButton = view.findViewById(R.id.fab_scout);
         scoutButton.setOnClickListener(this);
 
         Boolean matchScout = PreferenceManager.getDefaultSharedPreferences(getContext())

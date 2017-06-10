@@ -184,8 +184,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
 
             this.itemView = (LinearLayout) itemView;
 
-            matchNumber = (TextView) itemView.findViewById(R.id.match_number);
-            matchGrid = (GridLayout) itemView.findViewById(R.id.match_grid);
+            matchNumber = itemView.findViewById(R.id.match_number);
+            matchGrid = itemView.findViewById(R.id.match_grid);
         }
 
         public void bind(final MatchWrapper wrapper) {
@@ -232,12 +232,12 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                                 deselect(wrapper.getData(station));
                                 itemView.findViewById(station.getMatchCellViewID())
                                         .setBackgroundColor(mInflator.getContext()
-                                        .getResources().getColor(station.getColorStratified()));
+                                                .getResources().getColor(station.getColorStratified()));
                             } else {
                                 select(wrapper.getData(station));
                                 itemView.findViewById(station.getMatchCellViewID())
                                         .setBackgroundColor(mInflator.getContext()
-                                        .getResources().getColor(R.color.accent));
+                                                .getResources().getColor(R.color.accent));
                             }
                         }
                         return true;
@@ -248,7 +248,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
             }
 
             for (final AllianceStation station : AllianceStation.values()) {
-                final TextView matchView = (TextView) matchGrid.findViewById(station.getMatchCellViewID());
+                final TextView matchView = matchGrid.findViewById(station.getMatchCellViewID());
 
                 if (wrapper.getData(station) != null) {
                     matchView.setText(wrapper.getData(station).getTeam());

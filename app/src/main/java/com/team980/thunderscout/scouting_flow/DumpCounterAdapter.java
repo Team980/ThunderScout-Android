@@ -105,12 +105,12 @@ public class DumpCounterAdapter extends RecyclerView.Adapter<DumpCounterAdapter.
         public FuelDumpViewHolder(View itemView) {
             super(itemView);
 
-            plus = (Button) itemView.findViewById(R.id.plus);
-            minus = (Button) itemView.findViewById(R.id.minus);
-            remove = (ImageButton) itemView.findViewById(R.id.remove);
+            plus = itemView.findViewById(R.id.plus);
+            minus = itemView.findViewById(R.id.minus);
+            remove = itemView.findViewById(R.id.remove);
 
-            text = (TextView) itemView.findViewById(R.id.value);
-            numericValue = (TextView) itemView.findViewById(R.id.numericalValue);
+            text = itemView.findViewById(R.id.value);
+            numericValue = itemView.findViewById(R.id.numericalValue);
         }
 
         public void bind() {

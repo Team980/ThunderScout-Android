@@ -73,7 +73,7 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
 
         for (String[] row : rows) {
 
-            if(!ThunderScout.isInteger(row[0])) {
+            if (!ThunderScout.isInteger(row[0])) {
                 continue;
             }
 

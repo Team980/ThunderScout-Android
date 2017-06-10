@@ -55,13 +55,13 @@ public class ExportActivity extends AppCompatActivity implements View.OnClickLis
 
         exportAction = ExportAction.OPEN_FILE; //TODO save last used action?
 
-        Spinner exportAction = (Spinner) findViewById(R.id.spinnnerExportAction);
+        Spinner exportAction = findViewById(R.id.spinnnerExportAction);
         exportAction.setOnItemSelectedListener(this);
 
-        Button buttonExport = (Button) findViewById(R.id.buttonExport);
+        Button buttonExport = findViewById(R.id.buttonExport);
         buttonExport.setOnClickListener(this);
 
-        Button buttonOpenFolder = (Button) findViewById(R.id.buttonOpenFolder);
+        Button buttonOpenFolder = findViewById(R.id.buttonOpenFolder);
         buttonOpenFolder.setOnClickListener(this);
 
     }

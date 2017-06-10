@@ -31,8 +31,8 @@
     <item
         android:id="@+id/nav_account_cloud"
         android:icon="@drawable/ic_cloud_white_24dp"
-        android:visible="false"
-        android:title="ThunderCloud" />
+        android:title="ThunderCloud"
+        android:visible="false" />
     <item
         android:id="@+id/nav_account_settings"
         android:icon="@drawable/ic_settings_white_24dp"

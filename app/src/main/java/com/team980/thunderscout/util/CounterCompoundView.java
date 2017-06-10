@@ -43,10 +43,9 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
     protected float max;
     protected float min;
     protected float count;
-    float value;
-
     protected boolean longPressEnabled;
     protected float longPressCount;
+    float value;
 
     public CounterCompoundView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -201,6 +200,17 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
     }
 
     static class SavedState extends BaseSavedState {
+        //required field that makes Parcelables from a Parcel
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
         float max;
         float min;
         float count;
@@ -226,17 +236,5 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
             out.writeFloat(this.count);
             out.writeFloat(this.value);
         }
-
-        //required field that makes Parcelables from a Parcel
-        public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
-                    public SavedState createFromParcel(Parcel in) {
-                        return new SavedState(in);
-                    }
-
-                    public SavedState[] newArray(int size) {
-                        return new SavedState[size];
-                    }
-                };
     }
 }

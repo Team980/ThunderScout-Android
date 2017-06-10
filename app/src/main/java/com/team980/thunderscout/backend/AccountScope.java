@@ -39,7 +39,7 @@ public enum AccountScope {
     /**
      * Singleton to fetch StorageWrappers from AccountScopes
      *
-     * @param scope the current AccountScope being used
+     * @param scope   the current AccountScope being used
      * @param context Android context
      * @return corresponding StorageWrapper instance
      */

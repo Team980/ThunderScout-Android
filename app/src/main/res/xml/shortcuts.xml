@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
@@ -25,15 +24,15 @@
 
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
-        android:shortcutId="match_scout"
         android:enabled="true"
         android:icon="@drawable/ic_shortcut_send"
-        android:shortcutShortLabel="@string/shortcut_match_scout_short"
-        android:shortcutLongLabel="@string/shortcut_match_scout_long">
+        android:shortcutId="match_scout"
+        android:shortcutLongLabel="@string/shortcut_match_scout_long"
+        android:shortcutShortLabel="@string/shortcut_match_scout_short">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.team980.thunderscout"
-            android:targetClass="com.team980.thunderscout.scouting_flow.ScoutingFlowActivity" />
+            android:targetClass="com.team980.thunderscout.scouting_flow.ScoutingFlowActivity"
+            android:targetPackage="com.team980.thunderscout" />
     </shortcut>
     <!-- Specify more shortcuts here. -->
 </shortcuts>

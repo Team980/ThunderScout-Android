@@ -83,19 +83,19 @@ public class FirebaseDebugActivity extends AppCompatActivity {
             System.out.println(uid);
         }
 
-        TextView nameView = (TextView) findViewById(R.id.name);
+        TextView nameView = findViewById(R.id.name);
         nameView.setText(name);
 
-        TextView emailView = (TextView) findViewById(R.id.email);
+        TextView emailView = findViewById(R.id.email);
         emailView.setText(email);
 
-        TextView verifiedView = (TextView) findViewById(R.id.emailVerified);
+        TextView verifiedView = findViewById(R.id.emailVerified);
         verifiedView.setText(emailVerified + "");
 
-        TextView uidView = (TextView) findViewById(R.id.uid);
+        TextView uidView = findViewById(R.id.uid);
         uidView.setText(uid);
 
-        ImageView photoView = (ImageView) findViewById(R.id.photo);
+        ImageView photoView = findViewById(R.id.photo);
         photoView.setImageURI(photoUrl);
     }
 

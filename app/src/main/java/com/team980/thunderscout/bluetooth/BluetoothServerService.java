@@ -43,14 +43,12 @@ import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class BluetoothServerService extends Service {
 
+    private static int SERVER_NOTIFICATION_ID = 1;
     private ServerListenerThread acceptThread;
-
     private NotificationManager notificationManager;
     private NotificationCompat.Builder running;
     private NotificationCompat.Builder adapterDisabled;
     private NotificationCompat.Builder adapterMissing;
-    private static int SERVER_NOTIFICATION_ID = 1;
-
     private BroadcastReceiver receiver;
 
     public void onCreate() {

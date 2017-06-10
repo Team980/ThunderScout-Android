@@ -34,13 +34,12 @@ import java.io.Serializable;
  * Required for ExpandableRecyclerView ;/
  */
 public class EntryOperationWrapper implements Serializable {
-    private EntryOperationType type;
-    private EntryOperationStatus status;
-
     /**
      * Serialization UID
      */
     private static final long serialVersionUID = 1; //should never need to change this
+    private EntryOperationType type;
+    private EntryOperationStatus status;
 
     public EntryOperationWrapper(EntryOperationType t, EntryOperationStatus s) {
         type = t;
@@ -70,11 +69,6 @@ public class EntryOperationWrapper implements Serializable {
             icon = i;
         }
 
-        @Override
-        public String toString() {
-            return name;
-        }
-
         public static EntryOperationType fromOperationId(String operationId) {
             switch (operationId) {
                 case ScoutingFlowActivity.OPERATION_SAVE_THIS_DEVICE:
@@ -84,6 +78,11 @@ public class EntryOperationWrapper implements Serializable {
                 default:
                     return null;
             }
+        }
+
+        @Override
+        public String toString() {
+            return name;
         }
 
         public int getIcon() {

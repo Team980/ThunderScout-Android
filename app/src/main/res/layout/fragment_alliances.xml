@@ -48,8 +48,8 @@
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_gravity="center_horizontal"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
+        app:layout_gravity="center_horizontal">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"

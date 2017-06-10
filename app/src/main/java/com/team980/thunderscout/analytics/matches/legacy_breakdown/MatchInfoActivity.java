@@ -54,7 +54,7 @@ public class MatchInfoActivity extends AppCompatActivity {
         Intent launchIntent = getIntent();
         ScoutData data = (ScoutData) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_SCOUT");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,34 +69,34 @@ public class MatchInfoActivity extends AppCompatActivity {
         }
 
         // --- Init ---
-        TextView dateAdded = (TextView) findViewById(R.id.info_match_dateAdded);
+        TextView dateAdded = findViewById(R.id.info_match_dateAdded);
         dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(data.getDate()));
 
-        TextView dataSource = (TextView) findViewById(R.id.info_match_dataSource);
+        TextView dataSource = findViewById(R.id.info_match_dataSource);
         dataSource.setText("Source: " + data.getSource());
 
         // --- Auto ---
 
         //TODO use @strings with inputs as Spannables for in-view styling
 
-        TextView autoGearsDelivered = (TextView) findViewById(R.id.info_match_autoGearsDelivered);
+        TextView autoGearsDelivered = findViewById(R.id.info_match_autoGearsDelivered);
         autoGearsDelivered.setText(data.getAutonomous().getGearsDelivered() + "");
 
-        TextView autoFuelDumpAmount = (TextView) findViewById(R.id.info_match_autoLowGoalDumpAmount);
+        TextView autoFuelDumpAmount = findViewById(R.id.info_match_autoLowGoalDumpAmount);
         autoFuelDumpAmount.setText(data.getAutonomous().getLowGoalDumpAmount().toString());
 
-        TextView autoFuelNumericalDumpAmount = (TextView) findViewById(R.id.info_match_autoLowGoalNumericalDumpAmount);
+        TextView autoFuelNumericalDumpAmount = findViewById(R.id.info_match_autoLowGoalNumericalDumpAmount);
         autoFuelNumericalDumpAmount.setText("(" + data.getAutonomous().getLowGoalDumpAmount().getMinimumAmount() + " - " +
                 data.getAutonomous().getLowGoalDumpAmount().getMaximumAmount() + ")");
 
-        TextView autoHighGoals = (TextView) findViewById(R.id.info_match_autoHighGoals);
+        TextView autoHighGoals = findViewById(R.id.info_match_autoHighGoals);
         autoHighGoals.setText(data.getAutonomous().getHighGoals() + "");
 
-        TextView autoMissedGoals = (TextView) findViewById(R.id.info_match_autoMissedHighGoals);
+        TextView autoMissedGoals = findViewById(R.id.info_match_autoMissedHighGoals);
         autoMissedGoals.setText(data.getAutonomous().getMissedHighGoals() + "");
 
-        TextView crossedBaseline = (TextView) findViewById(R.id.info_match_autoCrossedBaseline);
-        TextView crossedBaselineAction = (TextView) findViewById(R.id.info_match_autoCrossedBaselineAction);
+        TextView crossedBaseline = findViewById(R.id.info_match_autoCrossedBaseline);
+        TextView crossedBaselineAction = findViewById(R.id.info_match_autoCrossedBaselineAction);
 
         if (data.getAutonomous().getCrossedBaseline()) {
             crossedBaseline.setText("CROSSED ");
@@ -107,13 +107,13 @@ public class MatchInfoActivity extends AppCompatActivity {
         }
 
         // --- Teleop ---
-        TextView teleopGearsDelivered = (TextView) findViewById(R.id.info_match_teleopGearsDelivered);
+        TextView teleopGearsDelivered = findViewById(R.id.info_match_teleopGearsDelivered);
         teleopGearsDelivered.setText(data.getTeleop().getGearsDelivered() + "");
 
-        TextView teleopFuelDumpAmount = (TextView) findViewById(R.id.info_match_teleopNumberOfLowGoalFuelDumps);
+        TextView teleopFuelDumpAmount = findViewById(R.id.info_match_teleopNumberOfLowGoalFuelDumps);
         teleopFuelDumpAmount.setText(data.getTeleop().getLowGoalDumps().size() + "");
 
-        RecyclerView listFuelDumps = (RecyclerView) findViewById(R.id.info_match_teleopListFuelDumps);
+        RecyclerView listFuelDumps = findViewById(R.id.info_match_teleopListFuelDumps);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         listFuelDumps.setLayoutManager(mLayoutManager);
@@ -121,14 +121,14 @@ public class MatchInfoActivity extends AppCompatActivity {
         FuelDumpAdapter listDumpsAdapter = new FuelDumpAdapter(data.getTeleop().getLowGoalDumps());
         listFuelDumps.setAdapter(listDumpsAdapter);
 
-        TextView teleopHighGoals = (TextView) findViewById(R.id.info_match_teleopHighGoals);
+        TextView teleopHighGoals = findViewById(R.id.info_match_teleopHighGoals);
         teleopHighGoals.setText(data.getTeleop().getHighGoals() + "");
 
-        TextView teleopMissedGoals = (TextView) findViewById(R.id.info_match_teleopMissedHighGoals);
+        TextView teleopMissedGoals = findViewById(R.id.info_match_teleopMissedHighGoals);
         teleopMissedGoals.setText(data.getTeleop().getMissedHighGoals() + "");
 
-        TextView climbingStats = (TextView) findViewById(R.id.info_match_teleopClimbingStats);
-        TextView climbingStatsAction = (TextView) findViewById(R.id.info_match_teleopClimbingStatsAction);
+        TextView climbingStats = findViewById(R.id.info_match_teleopClimbingStats);
+        TextView climbingStatsAction = findViewById(R.id.info_match_teleopClimbingStatsAction);
 
         if (data.getTeleop().getClimbingStats() == ClimbingStats.PRESSED_TOUCHPAD) {
             climbingStats.setText("PRESSED ");
@@ -142,15 +142,15 @@ public class MatchInfoActivity extends AppCompatActivity {
         }
 
         // --- Summary ---
-        TextView troubleWith = (TextView) findViewById(R.id.info_match_summaryTroubleWith);
+        TextView troubleWith = findViewById(R.id.info_match_summaryTroubleWith);
         if (data.getTroubleWith() != null && !data.getTroubleWith().equals("")) {
             troubleWith.setText(data.getTroubleWith());
         } else {
             troubleWith.setText("None");
         }
 
-        TextView comments = (TextView) findViewById(R.id.info_match_summaryComments);
-        if (data.getComments() != null  && !data.getComments().equals("")) {
+        TextView comments = findViewById(R.id.info_match_summaryComments);
+        if (data.getComments() != null && !data.getComments().equals("")) {
             comments.setText(data.getComments());
         } else {
             comments.setText("None");

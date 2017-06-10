@@ -58,7 +58,7 @@ public class TeleopFragment extends Fragment implements View.OnClickListener, Sp
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView fuelDumps = (RecyclerView) view.findViewById(R.id.teleop_recyclerViewFuelDumps);
+        RecyclerView fuelDumps = view.findViewById(R.id.teleop_recyclerViewFuelDumps);
 
         layoutManager = new LinearLayoutManager(getContext());
         fuelDumps.setLayoutManager(layoutManager);
@@ -71,10 +71,10 @@ public class TeleopFragment extends Fragment implements View.OnClickListener, Sp
             adapter.onRestoreInstanceState(savedInstanceState);
         }
 
-        Button addDumpButton = (Button) view.findViewById(R.id.teleop_buttonAddFuelDump);
+        Button addDumpButton = view.findViewById(R.id.teleop_buttonAddFuelDump);
         addDumpButton.setOnClickListener(this);
 
-        Spinner climbingStats = (Spinner) view.findViewById(R.id.teleop_spinnerClimbingStats);
+        Spinner climbingStats = view.findViewById(R.id.teleop_spinnerClimbingStats);
         climbingStats.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
@@ -27,9 +26,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
     style="?android:attr/spinnerDropDownItemStyle"
-    android:maxLines="1"
     android:layout_width="match_parent"
     android:layout_height="80dip"
+    android:ellipsize="marquee"
+    android:maxLines="1"
     android:textSize="30sp"
-    tools:text="Hello"
-    android:ellipsize="marquee" />
+    tools:text="Hello" />

@@ -57,7 +57,9 @@ public enum AllianceStation {
     }
 
     @IdRes
-    public int getMatchCellViewID() { return  matchCellViewID; }
+    public int getMatchCellViewID() {
+        return matchCellViewID;
+    }
 
     public enum AllianceColor {
         RED("Red Alliance", R.color.alliance_red_primary, R.color.alliance_red_primary_dark),
