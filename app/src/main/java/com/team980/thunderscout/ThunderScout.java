@@ -25,9 +25,12 @@
 package com.team980.thunderscout;
 
 import android.app.Application;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.service.quicksettings.TileService;
@@ -115,6 +118,34 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
         }
 
         sharedPref.registerOnSharedPreferenceChangeListener(this);
+
+        //TODO integrate into scouting flow?
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {  //Pins shortcut to home screen - for testing adaptive icon
+            ShortcutManager mShortcutManager = getSystemService(ShortcutManager.class);
+
+            if (mShortcutManager.isRequestPinShortcutSupported()) {
+                // Assumes there's already a shortcut with the ID "match_scout".
+                // The shortcut must be enabled.
+                ShortcutInfo pinShortcutInfo =
+                        new ShortcutInfo.Builder(this, "match_scout").build();
+
+                // Create the PendingIntent object only if your app needs to be notified
+                // that the user allowed the shortcut to be pinned. Note that, if the
+                // pinning operation fails, your app isn't notified. We assume here that the
+                // app has implemented a method called createShortcutResultIntent() that
+                // returns a broadcast intent.
+                Intent pinnedShortcutCallbackIntent =
+                        mShortcutManager.createShortcutResultIntent(pinShortcutInfo);
+
+                // Configure the intent so that your app's broadcast receiver gets
+                // the callback successfully.
+                PendingIntent successCallback = PendingIntent.getBroadcast(this, 0,
+                        pinnedShortcutCallbackIntent, 0);
+
+                mShortcutManager.requestPinShortcut(pinShortcutInfo,
+                        successCallback.getIntentSender());
+            }
+        }
     }
 
     @Override
