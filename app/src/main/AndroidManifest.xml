@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
@@ -21,10 +20,8 @@
   ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   ~ SOFTWARE.
-  -->
-
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.team980.thunderscout">
 
     <uses-feature
@@ -35,18 +32,15 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!--
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    -->
     <application
         android:name=".ThunderScout"
         android:allowBackup="true"
+        android:appCategory="productivity"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="ThunderScout"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/ThunderScout.BaseTheme"
-        tools:ignore="ManifestResource">
+        android:theme="@style/ThunderScout.BaseTheme">
         <activity
             android:name=".MainActivity"
             android:label="Thunder Scout"
@@ -62,22 +56,23 @@
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
-            android:name=".match.ScoutingFlowActivity"
+            android:name=".scouting_flow.ScoutingFlowActivity"
             android:label="Scout a match..."
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
-            android:name=".info.statistics.MatchInfoActivity"
+            android:name=".analytics.matches.breakdown.MatchInfoActivity"
             android:label="Match Info"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
-            android:name=".info.statistics.TeamInfoActivity"
+            android:name=".analytics.rankings.breakdown.TeamInfoActivity"
             android:label="Team Info"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
             android:name=".preferences.SettingsActivity"
+            android:exported="false"
             android:label="Settings"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar">
@@ -85,19 +80,20 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
         </activity>
-        <activity android:name=".ximport.ImportActivity"
+        <activity
+            android:name=".csv.ImportActivity"
             android:label="Import from CSV"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
-        <activity android:name=".export.ExportActivity"
+        <activity
+            android:name=".csv.ExportActivity"
             android:label="Export to CSV"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
-        <!-- <activity android:name=".sheets.GoogleAuthActivity"></activity> -->
         <activity
             android:name=".AboutActivity"
             android:label="About"
-            android:parentActivityName=".preferences.SettingsActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.MaterialAboutActivity" />
 
         <service android:name=".bluetooth.BluetoothServerService" />
@@ -125,8 +121,14 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <meta-data android:name="com.samsung.android.sdk.multiwindow.enable"
+        <meta-data
+            android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
+
+        <!--<activity
+            android:name=".firebase_debug.FirebaseDebugActivity"
+            android:label="Storm Debug"
+            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />-->
     </application>
 
 </manifest>

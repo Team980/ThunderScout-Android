@@ -25,7 +25,14 @@
 <resources>
     <string name="app_name">ThunderScout</string>
 
-    <string name="build_variant"></string> <!--Nothing will show unless you're running a DEBUG build-->
+    <string-array name="alliance_stations_array">
+        <item>Red 1</item>
+        <item>Red 2</item>
+        <item>Red 3</item>
+        <item>Blue 1</item>
+        <item>Blue 2</item>
+        <item>Blue 3</item>
+    </string-array>
 
     <string-array name="climbing_stats_array">
         <item>Did not climb</item>

@@ -28,10 +28,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 
@@ -41,8 +38,6 @@ import java.util.UUID;
 public class ServerListenerThread extends Thread {
     private final BluetoothServerSocket mmServerSocket;
 
-    private BluetoothAdapter mBluetoothAdapter;
-
     private Context context;
 
     public ServerListenerThread(Context context) {
@@ -50,7 +45,7 @@ public class ServerListenerThread extends Thread {
         // because mmServerSocket is final
         BluetoothServerSocket tmp = null;
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         try {
             // MY_UUID is the app's UUID string, also used by the client code
@@ -69,7 +64,7 @@ public class ServerListenerThread extends Thread {
             final BluetoothSocket socket;
             try {
                 FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Listening for incoming connections");
-                socket = mmServerSocket.accept(); //this is failing why? - needs more testing
+                socket = mmServerSocket.accept();
             } catch (IOException e) {
                 FirebaseCrash.report(e);
                 break;

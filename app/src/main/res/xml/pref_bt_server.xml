@@ -30,7 +30,9 @@
         android:summary="Enable receiving scouting data from other devices via Bluetooth"
         android:title="Enable Bluetooth Server" />
 
-    <PreferenceCategory android:title="Storage options" android:dependency="enable_bt_server">
+    <PreferenceCategory
+        android:dependency="enable_bt_server"
+        android:title="Storage options">
 
         <CheckBoxPreference
             android:defaultValue="true"
@@ -59,9 +61,8 @@
             android:summary="Method of storage for data received via bluetooth server"
             android:title="Server Storage Task" />-->
 
-        <com.team980.thunderscout.preferences.BluetoothDevicePreference
+        <com.team980.thunderscout.preferences.BluetoothDevicePickerPreference
             android:dependency="bt_send_to_bt_server"
-            android:dialogTitle="Bluetooth Server Device"
             android:key="bt_bt_server_device"
             android:title="Bluetooth server device" />
 

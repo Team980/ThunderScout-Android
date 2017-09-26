@@ -7,7 +7,7 @@ android:
   # Build Tools + Android
   - tools
   - platform-tools
-  - build-tools-25.0.1
+  - build-tools-25.0.2
   - android-25
   # Support Libraries + Play Services
   - extra-google-google_play_services
@@ -26,3 +26,6 @@ script:
 
 before_install:
   - chmod +x gradlew
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"

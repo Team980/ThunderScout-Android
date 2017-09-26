@@ -34,6 +34,7 @@ import com.danielstone.materialaboutlibrary.items.MaterialAboutTitleItem;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
 
+@Deprecated //TODO replace with crossplatform design
 public class AboutActivity extends MaterialAboutActivity {
 
     @Override

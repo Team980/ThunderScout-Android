@@ -29,7 +29,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
-    tools:context=".match.ScoutingFlowActivity">
+    tools:context=".scouting_flow.ScoutingFlowActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,23 +43,53 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="15dp"
-                android:text="Gears Delivered"
-                android:textSize="24sp" />
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
 
-            <com.team980.thunderscout.util.CounterCompoundView
-                android:id="@+id/teleop_counterGearsDelivered"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Gears Delivered"
+                    android:textSize="24sp" />
+
+                <com.team980.thunderscout.util.CounterCompoundView
+                    android:id="@+id/teleop_counterGearsDelivered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp" />
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Gears Dropped"
+                    android:textSize="24sp" />
+
+                <com.team980.thunderscout.util.CounterCompoundView
+                    android:id="@+id/teleop_counterGearsDropped"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -81,16 +111,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Fuel Dumped in Low Goal"
                     android:layout_marginRight="10dp"
+                    android:text="Fuel Dumped in Low Goal"
                     android:textSize="24sp" />
 
                 <Button
                     android:id="@+id/teleop_buttonAddFuelDump"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
                     android:layout_marginLeft="10dp"
+                    android:background="?attr/selectableItemBackground"
                     android:text="ADD"
                     android:textColor="@color/accent"
                     android:textSize="18sp" />
@@ -129,10 +159,10 @@
 
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterHighGoals"
-                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:longPress="true"/>
+                    android:layout_gravity="center"
+                    app:longPress="true" />
 
             </LinearLayout>
 
@@ -153,9 +183,9 @@
                 <com.team980.thunderscout.util.CounterCompoundView
                     android:id="@+id/teleop_counterMissedHighGoals"
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
-                    app:longPress="true"/>
+                    android:layout_gravity="center"
+                    app:longPress="true" />
 
             </LinearLayout>
 

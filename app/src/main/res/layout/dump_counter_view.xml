@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
@@ -23,11 +22,11 @@
   ~ SOFTWARE.
   -->
 
-<LinearLayout android:id="@+id/controls"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/controls"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_alignParentRight="true">
 
     <ImageButton
         android:id="@+id/remove"
@@ -35,7 +34,7 @@
         android:layout_height="56dp"
         android:background="?attr/selectableItemBackground"
         android:src="@drawable/ic_clear_white_24dp"
-        android:tint="@color/accent"/>
+        android:tint="@color/accent" />
 
     <Button
         android:id="@+id/minus"
@@ -55,8 +54,8 @@
             android:id="@+id/value"
             android:layout_width="128dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginBottom="4dp"
+            android:gravity="center"
             android:text="State"
             android:textSize="18sp" />
 
@@ -64,8 +63,8 @@
             android:id="@+id/numericalValue"
             android:layout_width="128dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginBottom="4dp"
+            android:gravity="center"
             android:text="0 - 0"
             android:textSize="15sp" />
     </LinearLayout>
