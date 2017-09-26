@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportHeight="48.0"
+    android:viewportWidth="48.0">
+
+    <!--<path android:name="test-bg"
+        android:fillColor="#FFFFFF"
+        android:pathData="M0,0h48v48H0z" />-->
+
+    <path
+        android:name="finish"
+        android:fillAlpha="0.1"
+        android:pathData="M0,0h48v48H0z">
+
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:centerX="0"
+                android:centerY="0"
+                android:gradientRadius="48"
+                android:type="radial">
+                <item
+                    android:color="#ffffff"
+                    android:offset="0.0" />
+                <item
+                    android:color="#80ffffff"
+                    android:offset="0.33" />
+                <item
+                    android:color="#00ffffff"
+                    android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <path
+        android:name="long-shadow"
+        android:pathData="M 14.32235,36.741393 25.525002,47.98056 H 47.953441 L 48,11.088277 37.662265,0.01100226 24.69,20.73 12,25.7 l 5.433515,5.073393 z"><!--android:fillColor="@color/primary">-->
+
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="48"
+                android:endY="48"
+                android:startX="17"
+                android:startY="7"
+                android:type="linear">
+                <item
+                    android:color="#303030"
+                    android:offset="0.0" />
+                <item
+                    android:color="#33303030"
+                    android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+
+    </path>
+
+    <path
+        android:name="bolt-shadow"
+        android:fillAlpha="0.2"
+        android:fillColor="#000000"
+        android:pathData="M 24.027303,0.01083303 12.399509,25.787936 h 8.07 l -5.76,11.065558 21.91,-16.035558 h -11.53 L 38.061775,0.09894013 Z" />
+
+    <path
+        android:name="bolt"
+        android:pathData="M 23.627794,-0.07710489 12,25.7 h 8.07 L 14.31,36.765558 36.22,20.73 H 24.69 L 37.662265,0.01100226 Z"><!--android:fillColor="@color/accent">-->
+
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="24"
+                android:endY="40"
+                android:startX="24"
+                android:startY="0"
+                android:type="linear">
+                <item
+                    android:color="#fbc02d"
+                    android:offset="0.0" />
+                <item
+                    android:color="#f57f17"
+                    android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+</vector>

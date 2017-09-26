@@ -53,13 +53,12 @@
                 android:text="Crossed Baseline?"
                 android:textSize="18sp" />
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/auto_checkBoxCrossedBaseline"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="5dp"
-                android:background="?android:attr/listChoiceIndicatorMultiple"
-                android:button="@null" />
+                android:button="@drawable/abc_btn_check_material" />
 
         </LinearLayout>
 

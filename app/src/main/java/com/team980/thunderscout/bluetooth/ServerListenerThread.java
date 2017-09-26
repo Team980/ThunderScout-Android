@@ -38,8 +38,6 @@ import java.util.UUID;
 public class ServerListenerThread extends Thread {
     private final BluetoothServerSocket mmServerSocket;
 
-    private BluetoothAdapter mBluetoothAdapter;
-
     private Context context;
 
     public ServerListenerThread(Context context) {
@@ -47,7 +45,7 @@ public class ServerListenerThread extends Thread {
         // because mmServerSocket is final
         BluetoothServerSocket tmp = null;
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         try {
             // MY_UUID is the app's UUID string, also used by the client code

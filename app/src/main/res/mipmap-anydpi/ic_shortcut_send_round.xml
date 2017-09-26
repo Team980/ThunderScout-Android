@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--TODO rescale once Google updates guidelines to demonstrate proper scaling on 8.0-->
-    <background android:drawable="@color/ic_shortcut_send_background" />
-    <foreground android:drawable="@mipmap/ic_shortcut_send_foreground" />
-</adaptive-icon>

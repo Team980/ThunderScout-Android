@@ -26,10 +26,10 @@ package com.team980.thunderscout.analytics.rankings;
 
 import android.support.annotation.NonNull;
 
+import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
 import com.team980.thunderscout.schema.ScoutData;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents data for one team, for all the matches they played in.
@@ -37,7 +37,7 @@ import java.util.List;
 public class TeamWrapper implements Comparable<TeamWrapper> {
 
     private String team;
-    private List<ScoutData> dataList;
+    private ArrayList<ScoutData> dataList;
 
     public TeamWrapper(String team) {
         this.team = team;
@@ -48,26 +48,22 @@ public class TeamWrapper implements Comparable<TeamWrapper> {
         return team;
     }
 
-    public List<ScoutData> getDataList() {
+    public ArrayList<ScoutData> getDataList() {
         return dataList;
     }
 
     public double getExpectedPointContribution() { //This can be a decimal
-        double expected = 0.0;
-
-        for (ScoutData data : dataList) {
-            expected += PointEstimator.getPointContribution(data);
-        }
-
-        expected /= dataList.size(); //yes, that's an operator
-
-        return expected;
-        //average to find the EXPECTED point contribution
+        return TeamPointEstimator.getPointContribution(new AverageScoutData(dataList));
     }
 
     @Override
     public int compareTo(@NonNull TeamWrapper other) { //Compare by comparing the expected point contributions, higher is better
-        return -Double.valueOf(getExpectedPointContribution())
-                .compareTo(other.getExpectedPointContribution());
+        if (getExpectedPointContribution() == other.getExpectedPointContribution()) { //If the expected contributions are equal, compare by team number (lower is better)
+            return Integer.valueOf(getTeam())
+                    .compareTo(Integer.valueOf(other.getTeam()));
+        } else {
+            return -Double.valueOf(getExpectedPointContribution())
+                    .compareTo(other.getExpectedPointContribution());
+        }
     }
 }

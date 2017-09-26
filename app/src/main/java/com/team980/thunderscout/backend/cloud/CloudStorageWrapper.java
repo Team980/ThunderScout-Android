@@ -31,7 +31,7 @@ import com.team980.thunderscout.schema.ScoutData;
 
 import java.util.List;
 
-public class CloudStorageWrapper implements StorageWrapper {
+public class CloudStorageWrapper implements StorageWrapper { //Stub - TODO
 
     @Override
     public void queryData(@Nullable StorageListener listener) {

@@ -133,7 +133,8 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
     }
 
     private ScoutData initScoutData(Cursor cursor) {
-        ScoutData data = new ScoutData();
+        ScoutData data = new ScoutData(cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable._ID)));
 
         // Init
         String teamNumber = cursor.getString(

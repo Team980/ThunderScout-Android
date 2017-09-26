@@ -33,8 +33,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.analytics.rankings.legacy_breakdown.AverageScoutData;
-import com.team980.thunderscout.analytics.rankings.legacy_breakdown.TeamInfoActivity;
+import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
+import com.team980.thunderscout.analytics.rankings.breakdown.TeamInfoActivity;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.schema.ScoutData;
 
@@ -152,7 +152,12 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
         public void bind(final TeamWrapper wrapper) {
             teamNumber.setText(wrapper.getTeam());
-            descriptor.setText(wrapper.getDataList().size() + " matches");
+
+            if (wrapper.getDataList().size() == 1) {
+                descriptor.setText("1 match");
+            } else {
+                descriptor.setText(wrapper.getDataList().size() + " matches");
+            }
 
             rank.setText(formatter.format(wrapper.getExpectedPointContribution()) + " points");
 

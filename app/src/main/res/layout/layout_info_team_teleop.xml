@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_floating"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Teleop"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="25sp" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Avg. Low Goals"
+            android:textSize="22sp"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_team_teleopLowGoalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Avg. High Goals"
+            android:textSize="22sp"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_team_teleopHighGoalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Avg. Missed High Goals"
+            android:textSize="22sp"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_team_teleopMissedGoalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Avg. Fuel Points"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_team_teleopFuelPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Avg. Gears Delivered"
+            android:textSize="22sp"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_team_teleopGearDeliveryCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Avg. Gears Dropped"
+            android:textSize="22sp"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_team_teleopGearDropCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Avg. Rotor Points"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_team_teleopRotorPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Climbing %"
+            android:textSize="22sp"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_team_teleopClimbPercentage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0%" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Avg. Climbing Points"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_team_teleopClimbPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+    </android.support.v7.widget.GridLayout>
+
+</LinearLayout>
