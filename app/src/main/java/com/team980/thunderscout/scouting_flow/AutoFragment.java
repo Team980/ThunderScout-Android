@@ -27,11 +27,11 @@ package com.team980.thunderscout.scouting_flow;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
@@ -50,7 +50,7 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CheckBox crossedBaseline = view.findViewById(R.id.auto_checkBoxCrossedBaseline);
+        AppCompatCheckBox crossedBaseline = view.findViewById(R.id.auto_checkBoxCrossedBaseline);
         crossedBaseline.setOnClickListener(this);
 
         Button minus = view.findViewById(R.id.auto_buttonFuelMinus);
@@ -79,7 +79,7 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.auto_checkBoxCrossedBaseline) {
-            CheckBox checkBox = (CheckBox) view;
+            AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
 
             scoutingFlowActivity.getData().getAutonomous().setCrossedBaseline(checkBox.isChecked());
         } else {

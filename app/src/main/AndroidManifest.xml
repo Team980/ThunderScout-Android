@@ -22,7 +22,6 @@
   ~ SOFTWARE.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.team980.thunderscout">
 
     <uses-feature
@@ -33,10 +32,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!--
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    -->
     <application
         android:name=".ThunderScout"
         android:allowBackup="true"
@@ -45,8 +40,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="ThunderScout"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/ThunderScout.BaseTheme"
-        tools:ignore="ManifestResource">
+        android:theme="@style/ThunderScout.BaseTheme">
         <activity
             android:name=".MainActivity"
             android:label="Thunder Scout"
@@ -67,17 +61,18 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
-            android:name=".analytics.matches.legacy_breakdown.MatchInfoActivity"
+            android:name=".analytics.matches.breakdown.MatchInfoActivity"
             android:label="Match Info"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
-            android:name=".analytics.rankings.legacy_breakdown.TeamInfoActivity"
+            android:name=".analytics.rankings.breakdown.TeamInfoActivity"
             android:label="Team Info"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
         <activity
             android:name=".preferences.SettingsActivity"
+            android:exported="false"
             android:label="Settings"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar">
@@ -98,7 +93,7 @@
         <activity
             android:name=".AboutActivity"
             android:label="About"
-            android:parentActivityName=".preferences.SettingsActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.MaterialAboutActivity" />
 
         <service android:name=".bluetooth.BluetoothServerService" />
@@ -130,10 +125,10 @@
             android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
 
-        <activity
+        <!--<activity
             android:name=".firebase_debug.FirebaseDebugActivity"
             android:label="Storm Debug"
-            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
+            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />-->
     </application>
 
 </manifest>

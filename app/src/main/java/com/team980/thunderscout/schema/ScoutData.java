@@ -24,32 +24,39 @@
 
 package com.team980.thunderscout.schema;
 
-import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
 /**
- * Implements data for one team from one matchNumber.
+ * Implements data for one team from one match.
  */
 public class ScoutData implements Serializable {
+    //TODO for next major revision of spec: label all quantities identically
+    //TODO example: gearsDelivered -> gearDeliveryCount
+    //TODO original name can still be in UI ("Gears Delivered")
 
     /**
-     * ScoutData Version 2017-3b
+     * ScoutData Version 2017-3c
      * <p>
+     * 2017-3c: Use an internal primary key (ALWAYS use the primary key!)
      * 2017-3b: More structural tweaks, new AllianceStation field
      * 2017-3a: Update structure, tweak fields, and prepare for GSON serialization
      * 2017-2: Serializable ArrayList for dumps in teleop
      * 2017-1: First 2017 spec
      */
-    private static final long serialVersionUID = 5;
+    private static final long serialVersionUID = 6;
+
+    /**
+     * The unique ID used internally by the chosen storage provider
+     * Used ONLY for internal tracking / data deletion
+     */
+    private int id;
 
     // INIT
     private String team;
@@ -71,6 +78,20 @@ public class ScoutData implements Serializable {
 
     public ScoutData() {
         //default values
+        allianceStation = AllianceStation.RED_1;
+        date = new Date(0);
+
+        autonomous = new Autonomous();
+        teleop = new Teleop();
+    }
+
+    public ScoutData(int primaryKey) { //ID can only be set at object creation
+        id = primaryKey;
+
+        //default values
+        allianceStation = AllianceStation.RED_1;
+        date = new Date(0);
+
         autonomous = new Autonomous();
         teleop = new Teleop();
     }
@@ -78,7 +99,8 @@ public class ScoutData implements Serializable {
     /**
      * Copy constructor
      */
-    public ScoutData(ScoutData other) {
+    @Deprecated
+    public ScoutData(ScoutData other) { //Does not copy the ID!
         //Init
         setTeam(other.getTeam());
         setMatchNumber(other.getMatchNumber());
@@ -111,18 +133,14 @@ public class ScoutData implements Serializable {
 
     // --- INIT ---
 
-    public static ScoutData fromStringArray(String[] array) {
+    public static ScoutData fromStringArray(String[] array) { //used by CSV
         ScoutData data = new ScoutData();
 
         //Init
         data.setTeam(array[0]);
         data.setMatchNumber(Integer.parseInt(array[1]));
         data.setAllianceStation(AllianceStation.valueOf(array[2]));
-        try {
-            data.setDate(DateFormat.getDateTimeInstance().parse(array[3]));
-        } catch (ParseException e) {
-            FirebaseCrash.report(e);
-        }
+        data.setDate(new Date(Long.getLong(array[3])));
         data.setSource(array[4]);
 
         //Auto
@@ -151,6 +169,14 @@ public class ScoutData implements Serializable {
         data.setComments(array[18]);
 
         return data;
+    }
+
+    /**
+     * The unique ID used internally by the chosen storage provider
+     * Used ONLY for internal tracking / data deletion
+     */
+    public int getId() {
+        return id;
     }
 
     public String getTeam() {
@@ -236,7 +262,7 @@ public class ScoutData implements Serializable {
         fieldList.add(getTeam());
         fieldList.add(String.valueOf(getMatchNumber()));
         fieldList.add(getAllianceStation().name());
-        fieldList.add(getDate().toString());
+        fieldList.add(String.valueOf(getDate().getTime()));
         fieldList.add(getSource());
 
         //Auto

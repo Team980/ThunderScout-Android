@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatButton;
@@ -83,9 +84,9 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
         allianceStationButton.setText(allianceStation.toString().replace('_', ' '));
 
         if (allianceStation.getColor() == AllianceStation.AllianceColor.RED) {
-            allianceStationButton.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
+            ViewCompat.setBackgroundTintList(allianceStationButton, ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
         } else { //If red, switch to blue, and vice versa
-            allianceStationButton.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
+            ViewCompat.setBackgroundTintList(allianceStationButton, ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
         }
 
         if (getArguments() != null && getArguments().containsKey(EXTRA_DEFAULT_DATA)) { //Fill the data with previously set values
@@ -99,9 +100,9 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
             allianceStationButton.setText(fillData.getAllianceStation().toString().replace('_', ' '));
 
             if (fillData.getAllianceStation().getColor() == AllianceStation.AllianceColor.RED) {
-                allianceStationButton.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
+                ViewCompat.setBackgroundTintList(allianceStationButton, ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
             } else { //If red, switch to blue, and vice versa
-                allianceStationButton.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
+                ViewCompat.setBackgroundTintList(allianceStationButton, ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
             }
         }
 
@@ -166,6 +167,7 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
         }
     }
 
+
     public boolean allFieldsComplete() {
         if (teamNumber.getText().toString().isEmpty()) {
             return false;
@@ -190,9 +192,9 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
         allianceStationButton.setText(item.getTitle().toString());
 
         if (allianceStation.getColor() == AllianceStation.AllianceColor.RED) {
-            allianceStationButton.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
+            ViewCompat.setBackgroundTintList(allianceStationButton, ContextCompat.getColorStateList(getContext(), R.color.alliance_red_primary));
         } else { //If red, switch to blue, and vice versa
-            allianceStationButton.setSupportBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
+            ViewCompat.setBackgroundTintList(allianceStationButton, ContextCompat.getColorStateList(getContext(), R.color.alliance_blue_primary));
         }
         return true;
     }

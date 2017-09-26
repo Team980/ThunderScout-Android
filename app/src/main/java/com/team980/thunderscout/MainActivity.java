@@ -25,6 +25,7 @@
 package com.team980.thunderscout;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -38,14 +39,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.tslamic.dn.AndroidDeviceNames;
 import com.team980.thunderscout.analytics.alliances.AlliancesFragment;
 import com.team980.thunderscout.analytics.matches.MatchesFragment;
 import com.team980.thunderscout.analytics.rankings.RankingsFragment;
 import com.team980.thunderscout.backend.AccountScope;
-import com.team980.thunderscout.firebase_debug.FirebaseDebugActivity;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -77,24 +75,19 @@ public class MainActivity extends AppCompatActivity
             case LOCAL:
                 image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
 
-                String deviceName = AndroidDeviceNames.deviceNames(this).currentDeviceName();
-                if (deviceName != null) {
-                    ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("My " + deviceName);
-                } else {
-                    ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("My device");
-                }
+                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("My " + Build.MODEL);
                 ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("Local storage");
 
                 //TODO populate
                 break;
-            case CLOUD:
+            /*case CLOUD:
                 image.setImageDrawable(getResources().getDrawable(R.drawable.ic_cloud_circle_white_72dp));
 
                 ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("Team 980 (ThunderCloud)"); //TODO tweak based on account data
                 ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("account@team980.com");
 
                 //TODO populate
-                break;
+                break;*/
         }
 
         int shownFragment = getIntent().getIntExtra(INTENT_FLAG_SHOWN_FRAGMENT, INTENT_FLAGS_HOME);
@@ -207,10 +200,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_debug) {
+        } /*else if (id == R.id.nav_debug) {
             Intent intent = new Intent(this, FirebaseDebugActivity.class);
             startActivity(intent);
-        }
+        }*/
 
         //AccountScope navigation menu
         else if (id == R.id.nav_account_local) {
@@ -219,12 +212,8 @@ public class MainActivity extends AppCompatActivity
             ImageView image = view.getHeaderView(0).findViewById(R.id.account_image);
             image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
 
-            String deviceName = AndroidDeviceNames.deviceNames(this).currentDeviceName();
-            if (deviceName != null) {
-                ((TextView) view.findViewById(R.id.account_name)).setText("My " + deviceName);
-            } else {
-                ((TextView) view.findViewById(R.id.account_name)).setText("My device");
-            }
+            ((TextView) view.findViewById(R.id.account_name)).setText("My " + Build.MODEL);
+
             ((TextView) view.findViewById(R.id.account_id)).setText("Local storage");
 
             PreferenceManager.getDefaultSharedPreferences(this).edit()
@@ -233,7 +222,7 @@ public class MainActivity extends AppCompatActivity
             contractAccountMenu();
 
             //TODO repopulate current fragment
-        } else if (id == R.id.nav_account_cloud) {
+        } /*else if (id == R.id.nav_account_cloud) {
             NavigationView view = findViewById(R.id.nav_view);
 
             ImageView image = view.getHeaderView(0).findViewById(R.id.account_image);
@@ -252,7 +241,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Open settings", Toast.LENGTH_SHORT).show(); //TODO
 
             contractAccountMenu();
-        }
+        }*/
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -264,7 +253,7 @@ public class MainActivity extends AppCompatActivity
         if (accountMenuExpanded) {
             contractAccountMenu();
         } else {
-            expandAccountMenu();
+            //expandAccountMenu(); TODO reenable
         }
     }
 
@@ -275,12 +264,7 @@ public class MainActivity extends AppCompatActivity
         view.getMenu().clear();
         view.inflateMenu(R.menu.drawer_account_menu);
 
-        String deviceName = AndroidDeviceNames.deviceNames(this).currentDeviceName();
-        if (deviceName != null) {
-            view.getMenu().findItem(R.id.nav_account_local).setTitle("My " + deviceName);
-        } else {
-            view.getMenu().findItem(R.id.nav_account_local).setTitle("My device");
-        }
+        view.getMenu().findItem(R.id.nav_account_local).setTitle("My " + Build.MODEL);
 
         //TODO do some UI tweaks depending on account values
         //view.getMenu().findItem(R.id.nav_account_cloud).setIcon(R.drawable.ic_account_circle_white_72dp);

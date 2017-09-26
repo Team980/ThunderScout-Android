@@ -63,9 +63,9 @@ public class ScoutDataRemoveTask extends AsyncTask<ScoutData, Void, List<ScoutDa
 
         List<ScoutData> dataRemoved = new ArrayList<>();
 
-        StringBuilder where = new StringBuilder(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED + " IN (");
+        StringBuilder where = new StringBuilder(ScoutDataContract.ScoutDataTable._ID + " IN (");
         for (ScoutData data : dataToDelete) {
-            where.append(data.getDate().getTime()).append(",");
+            where.append(data.getId()).append(",");
         }
         where.setLength(where.length() - 1); //no more comma
         where.append(")");

@@ -26,15 +26,14 @@ package com.team980.thunderscout.backend;
 
 import android.content.Context;
 
-import com.team980.thunderscout.backend.cloud.CloudStorageWrapper;
 import com.team980.thunderscout.backend.local.LocalStorageWrapper;
 
 public enum AccountScope {
-    LOCAL, //This device
-    CLOUD; //ThunderCloud (Firebase)
+    LOCAL; //This device
+    //CLOUD; //ThunderCloud (Firebase) - Unimplemented
 
     private static LocalStorageWrapper localStorageWrapper;
-    private static CloudStorageWrapper cloudStorageWrapper;
+    //private static CloudStorageWrapper cloudStorageWrapper;
 
     /**
      * Singleton to fetch StorageWrappers from AccountScopes
@@ -50,11 +49,11 @@ public enum AccountScope {
                     localStorageWrapper = new LocalStorageWrapper(context);
                 }
                 return localStorageWrapper;
-            case CLOUD:
+            /*case CLOUD:
                 if (cloudStorageWrapper == null) {
                     cloudStorageWrapper = new CloudStorageWrapper();
                 }
-                return cloudStorageWrapper;
+                return cloudStorageWrapper;*/
             default:
                 return null;
         }

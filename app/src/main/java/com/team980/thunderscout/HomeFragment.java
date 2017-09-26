@@ -43,7 +43,7 @@ import android.view.ViewGroup;
 
 import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 
-public class HomeFragment extends Fragment implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class HomeFragment extends Fragment implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener, View.OnLongClickListener {
 
     private FloatingActionButton scoutButton;
 
@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
         scoutButton = view.findViewById(R.id.fab_scout);
         scoutButton.setOnClickListener(this);
+        scoutButton.setOnLongClickListener(this);
 
         Boolean matchScout = PreferenceManager.getDefaultSharedPreferences(getContext())
                 .getBoolean("enable_match_scout", true);
@@ -135,5 +136,53 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
                 scoutButton.setVisibility(View.GONE);
             }
         }
+    }
+
+    public boolean onLongClick(View view) {
+
+        /*ArrayList<ScoutData> debug = new ArrayList<>();
+
+        Random random = new Random();
+
+        for (int i = 1; i < 101; i++) {
+
+            for (int j = 0; j < 6; j++) {
+
+                ScoutData data = new ScoutData();
+                data.setTeam(String.valueOf(random.nextInt(70)));
+                data.setMatchNumber(i);
+                data.setSource(Build.MANUFACTURER + " " + Build.MODEL);
+
+                data.setAllianceStation(AllianceStation.values()[j]);
+
+                debug.add(data);
+
+            }
+        }
+
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).writeData(debug, new StorageWrapper.StorageListener() {
+            @Override
+            public void onDataQuery(List<ScoutData> dataList) {
+
+            }
+
+            @Override
+            public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
+                Toast.makeText(getContext(), "Written " + dataWritten.size(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDataRemove(@Nullable List<ScoutData> dataRemoved) {
+
+            }
+
+            @Override
+            public void onDataClear(boolean success) {
+
+            }
+        });
+
+        Toast.makeText(getContext(), "Started " + debug.size(), Toast.LENGTH_SHORT).show();*/
+        return true;
     }
 }

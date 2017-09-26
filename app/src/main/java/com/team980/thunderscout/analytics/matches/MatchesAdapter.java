@@ -35,7 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.analytics.matches.legacy_breakdown.MatchInfoActivity;
+import com.team980.thunderscout.analytics.matches.breakdown.MatchInfoActivity;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
@@ -72,8 +72,6 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
 
     @Override
     public void onBindViewHolder(MatchesAdapter.MatchViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
-
         MatchWrapper match = matchArray.get(matchArray.keyAt(position)); //Treat it like a list for this code
         holder.bind(match);
     }
@@ -121,7 +119,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     }
 
     public List<ScoutData> getSelectedItems() {
-        return (List<ScoutData>) selectedItems.clone(); //just to be safe...
+        return selectedItems;
     }
 
     @Override
@@ -155,13 +153,15 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     public void onDataRemove(List<ScoutData> dataRemoved) {
         for (ScoutData data : dataRemoved) {
             matchArray.get(data.getMatchNumber()).removeData(data.getAllianceStation());
+            notifyItemChanged(data.getMatchNumber());
 
             if (matchArray.get(data.getMatchNumber()).isEmpty()) {
                 matchArray.delete(data.getMatchNumber());
+                notifyItemRemoved(data.getMatchNumber());
             }
         }
 
-        notifyDataSetChanged(); //only one that works :(
+        //notifyDataSetChanged(); //only one that works :(
     }
 
     @Override
@@ -192,7 +192,6 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
             if (wrapper != null) { //Why would this ever be null!?
                 matchNumber.setText(wrapper.getMatchNumber() + "");
 
-                //TODO select/deselect all matches by selecting team
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -244,7 +243,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                     }
                 });
             } else {
-                matchNumber.setText(""); //is this really neceessary?
+                matchNumber.setText(""); //is this really necessary?
             }
 
             for (final AllianceStation station : AllianceStation.values()) {

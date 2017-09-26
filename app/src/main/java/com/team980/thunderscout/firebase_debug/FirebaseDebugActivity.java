@@ -102,10 +102,12 @@ public class FirebaseDebugActivity extends AppCompatActivity {
     public void authButton(View v) {
         startActivityForResult(AuthUI.getInstance()
                         .createSignInIntentBuilder()
-                        .setTheme(R.style.ThunderScout_FirebaseUI)
+                        .setTheme(R.style.ThunderScout_BaseTheme_ActionBar)
                         .setIsSmartLockEnabled(false)
+                        .setPrivacyPolicyUrl("https://thunderscout.team980.com/privacy-policy.html")
                         .setLogo(R.mipmap.team980_logo)
-                        .setProviders(Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                        .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                                new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
                                 new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
                         .build(),
                 121);

@@ -24,10 +24,12 @@
 
 package com.team980.thunderscout.scouting_flow;
 
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -36,6 +38,9 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.pm.ShortcutInfoCompat;
+import android.support.v4.content.pm.ShortcutManagerCompat;
+import android.support.v4.graphics.drawable.IconCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -45,17 +50,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.bluetooth.ClientConnectionThread;
-import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
-import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
-import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;
-import com.team980.thunderscout.legacy.feed.FeedEntry;
-import com.team980.thunderscout.legacy.feed.task.FeedDataWriteTask;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.util.CounterCompoundView;
 import com.team980.thunderscout.util.TransitionUtils;
@@ -70,7 +71,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     public static final String OPERATION_SEND_BLUETOOTH = "SEND_BLUETOOTH";
     private ScoutingFlowViewPagerAdapter viewPagerAdapter;
     private ScoutData scoutData;
-    private FeedEntry feedEntry;
     private FloatingActionButton fab;
     private Bundle operationStates; //used for task loop
 
@@ -86,6 +86,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             scoutData = new ScoutData();
 
             ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
+            dialogFragment.setCancelable(false);
             dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
         }
 
@@ -149,6 +150,38 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             dialogFragment.setArguments(args);
 
             dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
+        }
+
+        if (id == R.id.action_add_to_home_screen) {
+            if (ShortcutManagerCompat.isRequestPinShortcutSupported(this)) {
+
+                ShortcutInfoCompat pinShortcutInfo =
+                        new ShortcutInfoCompat.Builder(this, "match_scout")
+                                .setShortLabel("Match scout")
+                                .setLongLabel("Scout a match")
+                                .setIcon(IconCompat.createWithResource(this, R.drawable.ic_shortcut_send))
+                                .setIntent(new Intent(this, ScoutingFlowActivity.class)
+                                        .setAction(Intent.ACTION_VIEW))
+                                .build();
+
+                // Create the PendingIntent object only if your app needs to be notified
+                // that the user allowed the shortcut to be pinned. Note that, if the
+                // pinning operation fails, your app isn't notified. We assume here that the
+                // app has implemented a method called createShortcutResultIntent() that
+                // returns a broadcast intent.
+                Intent pinnedShortcutCallbackIntent =
+                        ShortcutManagerCompat.createShortcutResultIntent(this, pinShortcutInfo);
+
+                // Configure the intent so that your app's broadcast receiver gets
+                // the callback successfully.
+                PendingIntent successCallback = PendingIntent.getBroadcast(this, 0,
+                        pinnedShortcutCallbackIntent, 0);
+
+                ShortcutManagerCompat.requestPinShortcut(this, pinShortcutInfo,
+                        successCallback.getIntentSender());
+            } else {
+                Toast.makeText(this, "Not supported by your launcher or OS", Toast.LENGTH_SHORT).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -221,8 +254,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             operationStateDialog.setCancelable(false);
             operationStateDialog.setCanceledOnTouchOutside(false);
             operationStateDialog.setTitle("Storing data...");
-
-            feedEntry = new FeedEntry(FeedEntry.EntryType.MATCH_SCOUTED, System.currentTimeMillis());
 
             dataOutputLoop();
 
@@ -297,11 +328,17 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             String address = prefs.getString("ms_bt_server_device", null);
 
-            BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
+            BluetoothDevice device;
+            try {
+                device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
+            } catch (IllegalArgumentException e) {
+                dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, e);
+                return;
+            }
 
             operationStateDialog.setMessage("Sending scout data to " + device.getName());
 
-            if (device.getName() == null) { //This should catch both the no device selected error and the bluetooth off error
+            if (device.getName() == null) { //This should catch the bluetooth off error
                 dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, new NullPointerException("Error initializing Bluetooth!"));
                 return;
             }
@@ -319,9 +356,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     .putInt("last_used_match_number", scoutData.getMatchNumber())
                     .putString("last_used_alliance_station", scoutData.getAllianceStation().name())
                     .apply();
-
-            FeedDataWriteTask feedDataWriteTask = new FeedDataWriteTask(feedEntry, this);
-            feedDataWriteTask.execute();
         }
     }
 
@@ -330,12 +364,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         operationStateDialog.setMessage("");
 
-        EntryOperationWrapper operation = new EntryOperationWrapper(EntryOperationType.fromOperationId(operationId),
-                EntryOperationStatus.OPERATION_SUCCESSFUL);
-        feedEntry.addOperation(operation);
-
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Operation " +
-                EntryOperationType.fromOperationId(operationId) + " SUCCESSFUL");
+                operationId + " SUCCESSFUL");
 
         dataOutputLoop();
     }
@@ -354,10 +384,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     public void onClick(DialogInterface dialog, int id) {
                         operationStates.putBoolean(operationId, true); //retry
 
-                        EntryOperationWrapper operation = new EntryOperationWrapper(EntryOperationType.fromOperationId(operationId),
-                                EntryOperationStatus.OPERATION_FAILED);
-                        feedEntry.addOperation(operation);
-
                         dataOutputLoop();
                     }
                 })
@@ -365,16 +391,12 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     public void onClick(DialogInterface dialog, int id) {
                         operationStates.putBoolean(operationId, false); //do not retry
 
-                        EntryOperationWrapper operation = new EntryOperationWrapper(EntryOperationType.fromOperationId(operationId),
-                                EntryOperationStatus.OPERATION_ABORTED);
-                        feedEntry.addOperation(operation);
-
                         dataOutputLoop();
                     }
                 });
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Operation " +
-                EntryOperationType.fromOperationId(operationId) + " FAILED");
+                operationId + " FAILED");
         //FirebaseCrash.report(ex); This would create duplicate reports.
 
         AlertDialog alert = builder.create();
@@ -385,7 +407,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         // Init
         scoutData.setDate(new Date(System.currentTimeMillis()));
 
-        scoutData.setSource(Settings.Secure.getString(getContentResolver(), "bluetooth_name"));
+        scoutData.setSource(Settings.Secure.getString(getContentResolver(), "bluetooth_name")); //TODO use this for
 
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();
@@ -451,6 +473,10 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         } else {
             dataOutputCallbackFail(OPERATION_SAVE_THIS_DEVICE, null);
         }
+
+        //TODO figure out how to send a refresh intent to both fragments
+        //Intent intent = new Intent(HomeFragment.ACTION_REFRESH_VIEW_PAGER);
+        //localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
     }
 
     @Override

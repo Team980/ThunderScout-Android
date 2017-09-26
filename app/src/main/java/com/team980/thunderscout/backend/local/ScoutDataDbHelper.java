@@ -30,9 +30,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class ScoutDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 242; //todo reset
+    public static final int DATABASE_VERSION = 3;
 
-    public static final String DATABASE_NAME = "ThunderScout_LOCAL_STORAGE.db"; //Data migration can wait until later
+    public static final String DATABASE_NAME = "ThunderScout_SCOUT_DATA_2017.db";
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String FLOAT_TYPE = " REAL";

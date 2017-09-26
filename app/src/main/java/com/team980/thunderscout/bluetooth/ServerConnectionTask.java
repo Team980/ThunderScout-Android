@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
@@ -38,17 +39,14 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.team980.thunderscout.backend.AccountScope;
-import com.team980.thunderscout.legacy.feed.EntryOperationWrapper;
-import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationStatus;
-import com.team980.thunderscout.legacy.feed.EntryOperationWrapper.EntryOperationType;
-import com.team980.thunderscout.legacy.feed.FeedEntry;
-import com.team980.thunderscout.legacy.feed.task.FeedDataWriteTask;
+import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.text.DateFormat;
+import java.util.List;
 
 public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
@@ -129,39 +127,56 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         if (o != null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-            FeedEntry feedEntry = new FeedEntry(FeedEntry.EntryType.SERVER_RECEIVED_MATCH, System.currentTimeMillis());
-
             if (prefs.getBoolean("bt_send_to_local_storage", true)) {
                 //Put the fetched ScoutData in the local database
-                AccountScope.getStorageWrapper(AccountScope.LOCAL, context).writeData(o, null); //TODO assumes LOCAL, no callback
+                AccountScope.getStorageWrapper(AccountScope.LOCAL, context).writeData(o, new StorageWrapper.StorageListener() {
 
-                feedEntry.addOperation(new EntryOperationWrapper(EntryOperationType.SAVED_TO_LOCAL_STORAGE,
-                        EntryOperationStatus.OPERATION_SUCCESSFUL)); //TODO determine this based on callback?
+                    @Override
+                    public void onDataQuery(List<ScoutData> dataList) {
+                        //stub
+                    }
+
+                    @Override
+                    public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
+                        //TODO figure out how to send a refresh intent to both fragments
+                        //Intent intent = new Intent(HomeFragment.ACTION_REFRESH_VIEW_PAGER);
+                        //localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
+                    }
+
+                    @Override
+                    public void onDataRemove(@Nullable List<ScoutData> dataRemoved) {
+                        //stub
+                    }
+
+                    @Override
+                    public void onDataClear(boolean success) {
+                        //stub
+                    }
+                }); //TODO assumes LOCAL, no callback
             }
 
             if (prefs.getBoolean("bt_send_to_bt_server", false)) {
                 String address = prefs.getString("bt_bt_server_device", null);
 
-                BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
+                BluetoothDevice device;
+                try {
+                    device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
+                } catch (IllegalArgumentException e) {
+                    throw e; //todo better way to notify?
+                }
 
-                if (device.getName() == null) { //This should catch both the no device selected error and the bluetooth off error
+                if (device.getName() == null) { //This should catch the bluetooth off error
                     throw new NullPointerException("Error initializing Bluetooth!"); //todo better way to notify?
                 }
 
                 ClientConnectionThread connectThread = new ClientConnectionThread(device, o, context, null);
                 connectThread.start();
-
-                feedEntry.addOperation(new EntryOperationWrapper(EntryOperationType.SENT_TO_BLUETOOTH_SERVER,
-                        EntryOperationStatus.OPERATION_SUCCESSFUL)); //TODO determine this based on callback?
             }
 
             /*if (prefs.getBoolean("bt_send_to_linked_sheet", false)) {
                 SheetsUpdateTask task = new SheetsUpdateTask(context);
                 task.execute(o);
             }*/
-
-            FeedDataWriteTask feedDataWriteTask = new FeedDataWriteTask(feedEntry, context);
-            feedDataWriteTask.execute();
         } else {
             FirebaseCrash.logcat(Log.ERROR, this.getClass().getName(), "Failed to start FeedDataWriteTask!");
         }

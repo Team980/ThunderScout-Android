@@ -30,4 +30,9 @@
         android:orderInCategory="2"
         android:title="Edit"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_add_to_home_screen"
+        android:orderInCategory="3"
+        android:title="Add to home screen"
+        app:showAsAction="never" />
 </menu>

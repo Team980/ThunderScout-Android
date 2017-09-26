@@ -68,7 +68,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
     @Override
     public File doInBackground(Void... params) {
 
-        SQLiteDatabase db = new ScoutDataDbHelper(activity).getWritableDatabase(); //TODO use the DatabaseReadTask internally
+        SQLiteDatabase db = new ScoutDataDbHelper(activity).getWritableDatabase(); //TODO use the DatabaseReadTask internally - shouldn't be that hard
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
