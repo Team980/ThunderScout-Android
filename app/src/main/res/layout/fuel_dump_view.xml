@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
@@ -23,12 +22,11 @@
   ~ SOFTWARE.
   -->
 
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:layout_gravity="center"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/value"

@@ -31,23 +31,22 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
-import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.data.task.ScoutDataWriteTask;
-import com.team980.thunderscout.feed.EntryOperationWrapper;
-import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationStatus;
-import com.team980.thunderscout.feed.EntryOperationWrapper.EntryOperationType;
-import com.team980.thunderscout.feed.FeedEntry;
-import com.team980.thunderscout.feed.task.FeedDataWriteTask;
-import com.team980.thunderscout.match.ScoutingFlowActivity;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.backend.StorageWrapper;
+import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.text.DateFormat;
+import java.util.List;
 
 public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
 
@@ -75,13 +74,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
     protected ScoutData doInBackground(Void[] params) {
         int notificationId = notificationManager.showBtTransferInProgress(mmSocket.getRemoteDevice().getName(), true);
 
-        ObjectInputStream fromScoutStream;
-        ObjectOutputStream toScoutStream;
+        ObjectInputStream inputStream;
 
         try {
-            toScoutStream = new ObjectOutputStream(mmSocket.getOutputStream());
-            toScoutStream.flush();
-            fromScoutStream = new ObjectInputStream(mmSocket.getInputStream());
+            inputStream = new ObjectInputStream(mmSocket.getInputStream());
         } catch (IOException e) {
             FirebaseCrash.report(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
@@ -89,21 +85,25 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             return null;
         }
 
-        //TODO version check
+        Gson gson = new GsonBuilder()
+                .setDateFormat(DateFormat.DEFAULT) //todo
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        //TODO version check?
         ScoutData data = null;
         try {
-            data = (ScoutData) fromScoutStream.readObject();
-
-        } catch (IOException | ClassNotFoundException e) {
+            data = gson.fromJson((String) inputStream.readObject(), ScoutData.class);
+        } catch (Exception e) {
             FirebaseCrash.report(e);
+            e.printStackTrace();
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
                     notificationId);
             return null;
         }
 
         try {
-            fromScoutStream.close();
-            toScoutStream.close();
+            inputStream.close();
         } catch (IOException e) {
             FirebaseCrash.report(e);
         }
@@ -127,40 +127,56 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         if (o != null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-            FeedEntry feedEntry = new FeedEntry(FeedEntry.EntryType.SERVER_RECEIVED_MATCH, System.currentTimeMillis());
-
             if (prefs.getBoolean("bt_send_to_local_storage", true)) {
                 //Put the fetched ScoutData in the local database
-                ScoutDataWriteTask writeTask = new ScoutDataWriteTask(o, context);
-                writeTask.execute();
+                AccountScope.getStorageWrapper(AccountScope.LOCAL, context).writeData(o, new StorageWrapper.StorageListener() {
 
-                feedEntry.addOperation(new EntryOperationWrapper(EntryOperationType.SAVED_TO_LOCAL_STORAGE,
-                        EntryOperationStatus.OPERATION_SUCCESSFUL)); //TODO determine this based on callback?
+                    @Override
+                    public void onDataQuery(List<ScoutData> dataList) {
+                        //stub
+                    }
+
+                    @Override
+                    public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
+                        //TODO figure out how to send a refresh intent to both fragments
+                        //Intent intent = new Intent(HomeFragment.ACTION_REFRESH_VIEW_PAGER);
+                        //localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
+                    }
+
+                    @Override
+                    public void onDataRemove(@Nullable List<ScoutData> dataRemoved) {
+                        //stub
+                    }
+
+                    @Override
+                    public void onDataClear(boolean success) {
+                        //stub
+                    }
+                }); //TODO assumes LOCAL, no callback
             }
 
             if (prefs.getBoolean("bt_send_to_bt_server", false)) {
                 String address = prefs.getString("bt_bt_server_device", null);
 
-                BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
+                BluetoothDevice device;
+                try {
+                    device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
+                } catch (IllegalArgumentException e) {
+                    throw e; //todo better way to notify?
+                }
 
-                if (device.getName() == null) { //This should catch both the no device selected error and the bluetooth off error
+                if (device.getName() == null) { //This should catch the bluetooth off error
                     throw new NullPointerException("Error initializing Bluetooth!"); //todo better way to notify?
                 }
 
                 ClientConnectionThread connectThread = new ClientConnectionThread(device, o, context, null);
                 connectThread.start();
-
-                feedEntry.addOperation(new EntryOperationWrapper(EntryOperationType.SENT_TO_BLUETOOTH_SERVER,
-                        EntryOperationStatus.OPERATION_SUCCESSFUL)); //TODO determine this based on callback?
             }
 
             /*if (prefs.getBoolean("bt_send_to_linked_sheet", false)) {
                 SheetsUpdateTask task = new SheetsUpdateTask(context);
                 task.execute(o);
             }*/
-
-            FeedDataWriteTask feedDataWriteTask = new FeedDataWriteTask(feedEntry, context);
-            feedDataWriteTask.execute();
         } else {
             FirebaseCrash.logcat(Log.ERROR, this.getClass().getName(), "Failed to start FeedDataWriteTask!");
         }

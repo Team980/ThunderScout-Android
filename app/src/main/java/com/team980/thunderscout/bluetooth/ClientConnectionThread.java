@@ -31,16 +31,19 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
-import com.team980.thunderscout.data.ScoutData;
-import com.team980.thunderscout.match.ScoutingFlowActivity;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 import com.team980.thunderscout.util.TSNotificationBuilder;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
@@ -111,14 +114,12 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Connection to server device successful");
 
-        scoutData.setDateAdded(System.currentTimeMillis());
+        scoutData.setDate(new Date(System.currentTimeMillis()));
 
-        ObjectInputStream ioStream = null;
-        ObjectOutputStream ooStream;
+        ObjectOutputStream outputStream;
         try {
-            ioStream = new ObjectInputStream(mmSocket.getInputStream());
-            ooStream = new ObjectOutputStream(mmSocket.getOutputStream());
-            ooStream.flush();
+            outputStream = new ObjectOutputStream(mmSocket.getOutputStream());
+            outputStream.flush();
         } catch (IOException e) {
             FirebaseCrash.report(e);
             manageError(notificationId, e);
@@ -126,13 +127,16 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
         }
 
         //TODO add version check?
+        Gson gson = new GsonBuilder()
+                .setDateFormat(DateFormat.DEFAULT) //todo
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
 
         FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
-
         try {
-            ooStream.writeObject(scoutData);
-            ooStream.flush();
-        } catch (IOException e) {
+            outputStream.writeObject(gson.toJson(scoutData));
+            outputStream.flush();
+        } catch (Exception e) {
             FirebaseCrash.report(e);
             manageError(notificationId, e);
             return;
@@ -154,9 +158,8 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
         }
 
         try {
-            ooStream.close();
-            ioStream.close();
-        } catch (IOException e) {
+            outputStream.close();
+        } catch (Exception e) {
             FirebaseCrash.report(e);
         }
     }

@@ -32,14 +32,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.team980.thunderscout.export.ExportActivity">
+    tools:context="com.team980.thunderscout.csv.ExportActivity">
 
     <Spinner
         android:id="@+id/spinnnerExportAction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:entries="@array/export_actions_array"/>
+        android:entries="@array/export_actions_array" />
 
     <LinearLayout
         android:layout_width="match_parent"

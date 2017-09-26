@@ -25,6 +25,7 @@
 package com.team980.thunderscout.bluetooth;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -34,7 +35,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
@@ -43,14 +44,12 @@ import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class BluetoothServerService extends Service {
 
+    private static int SERVER_NOTIFICATION_ID = 1;
     private ServerListenerThread acceptThread;
-
     private NotificationManager notificationManager;
     private NotificationCompat.Builder running;
     private NotificationCompat.Builder adapterDisabled;
     private NotificationCompat.Builder adapterMissing;
-    private static int SERVER_NOTIFICATION_ID = 1;
-
     private BroadcastReceiver receiver;
 
     public void onCreate() {
@@ -138,30 +137,45 @@ public class BluetoothServerService extends Service {
     }
 
     public void initNotifications() {
-        running = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel serverChannel = new NotificationChannel("bluetooth_server", "Bluetooth Server", NotificationManager.IMPORTANCE_LOW);
+            serverChannel.setDescription("The Bluetooth Server shows a persistent notification when enabled");
+            notificationManager.createNotificationChannel(serverChannel);
+        }
+
+        running = new NotificationCompat.Builder(this, "bluetooth_server")
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp)
-                .setContentTitle("Bluetooth server is running")
-                .setContentText("Open for scout data to be sent") //todo new icon
+                .setContentTitle("Bluetooth Server")
+                .setContentText("Now accepting incoming transfers") //todo new icon?
                 .setOngoing(true)
                 .setPriority(Notification.PRIORITY_LOW)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setColorized(true)
                 .setColor(getResources().getColor(R.color.primary))
                 .setShowWhen(false)
                 .setGroup("BT_SERVER");
 
-        adapterDisabled = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+        adapterDisabled = new NotificationCompat.Builder(this, "bluetooth_server")
                 .setSmallIcon(R.drawable.ic_warning_white_24dp)
                 .setContentTitle("Bluetooth is disabled")
-                .setContentText("Please enable Bluetooth before using the Bluetooth server")
+                .setContentText("Please enable Bluetooth before using the Bluetooth Server")
                 .setOngoing(true)
+                .setPriority(Notification.PRIORITY_LOW)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setColorized(true)
                 .setColor(getResources().getColor(R.color.error))
                 .setShowWhen(false)
                 .setGroup("BT_SERVER");
 
-        adapterMissing = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+        adapterMissing = new NotificationCompat.Builder(this, "bluetooth_server")
                 .setSmallIcon(R.drawable.ic_warning_white_24dp)
                 .setContentTitle("This device doesn't support Bluetooth")
-                .setContentText("Please disable the Bluetooth server")
+                .setContentText("Please disable the Bluetooth Server")
                 .setOngoing(true)
+                .setPriority(Notification.PRIORITY_LOW)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setColorized(true)
                 .setColor(getResources().getColor(R.color.error))
                 .setShowWhen(false)
                 .setGroup("BT_SERVER");

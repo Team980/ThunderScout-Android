@@ -61,9 +61,8 @@
             android:summary="Method of storage for data received via bluetooth server"
             android:title="Server Storage Task" />-->
 
-        <com.team980.thunderscout.preferences.BluetoothDevicePreference
+        <com.team980.thunderscout.preferences.BluetoothDevicePickerPreference
             android:dependency="ms_send_to_bt_server"
-            android:dialogTitle="Bluetooth Server Device"
             android:key="ms_bt_server_device"
             android:title="Bluetooth server device" />
 

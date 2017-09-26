@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
@@ -38,15 +37,21 @@
     <color name="alliance_blue_primary">#005291</color>
     <color name="alliance_blue_primary_dark">#004275</color>
 
-    <!--<color name="primary">#fbc02d</color>
+    <color name="success">#4CAF50</color>
+    <color name="error">#F44336</color>
+
+    <!--<color name="primary">#fbc02d</color> Old theme
     <color name="primary_dark">#F9A825</color>
     <color name="accent">#fdd835</color>-->
 
-    <color name="background_floating">#FF424242</color>
-    <color name="background_floating_light">#FF616161</color>
-    <!--TODO add millions of shades of material blue grey and black -->
+    <color name="background">#303030</color>
+    <color name="background_floating">#424242</color>
+    <color name="background_floating_light">#616161</color>
+    <!-- TODO replace all Android color resources with custom white/black -->
 
-    <color name="success">#4CAF50</color>
-    <color name="error">#F44336</color>
-    <!-- TODO deprecate these values-->
+    <color name="black_a60">#96000000</color>
+    <color name="black_a40">#64000000</color>
+
+    <color name="shortcut_background">#F5F5F5</color>
+
 </resources>

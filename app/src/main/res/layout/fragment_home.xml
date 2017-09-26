@@ -44,19 +44,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/feed"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
-    </android.support.v4.widget.SwipeRefreshLayout>
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_scout"
         android:layout_width="wrap_content"
@@ -66,9 +53,9 @@
         android:layout_marginRight="16dp"
         android:scaleType="center"
         android:src="@drawable/ic_send_white_24dp"
-        app:fabSize="normal"
         app:backgroundTint="@color/accent"
         app:elevation="6dp"
+        app:fabSize="normal"
         app:pressedTranslationZ="12dp" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -31,8 +31,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.service.quicksettings.TileService;
-import android.support.annotation.WorkerThread;
-import android.util.Log;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.team980.thunderscout.bluetooth.BluetoothQuickTileService;
@@ -47,6 +45,7 @@ import java.io.ObjectOutputStream;
 
 public class ThunderScout extends Application implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    @Deprecated
     public static byte[] serializeObject(Object o) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
@@ -65,6 +64,7 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
         }
     }
 
+    @Deprecated
     public static Object deserializeObject(byte[] b) {
         try {
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(b));
@@ -110,7 +110,7 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean runServer = sharedPref.getBoolean("enable_bt_server", false);
 
-        if (runServer) { //TODO I must be launching multiple instances?
+        if (runServer) { //I must be launching multiple instances?
             startService(new Intent(this, BluetoothServerService.class));
         }
 
