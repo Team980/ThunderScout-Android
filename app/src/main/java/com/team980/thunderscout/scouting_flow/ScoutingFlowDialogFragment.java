@@ -76,9 +76,9 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
         teamNumber.requestFocus();
 
         matchNumber = dialogView.findViewById(R.id.dialog_editTextMatchNumber);
-        matchNumber.setText(String.valueOf(prefs.getInt("last_used_match_number", 0) + 1)); //increment the last match number
+        matchNumber.setText(String.valueOf(prefs.getInt(getResources().getString(R.string.pref_last_used_match_number), 0) + 1)); //increment the last match number
 
-        allianceStation = AllianceStation.valueOf(prefs.getString("last_used_alliance_station", AllianceStation.RED_1.name()));
+        allianceStation = AllianceStation.valueOf(prefs.getString(getResources().getString(R.string.pref_last_used_alliance_station), AllianceStation.RED_1.name()));
         allianceStationButton = dialogView.findViewById(R.id.dialog_allianceStationButton);
 
         allianceStationButton.setText(allianceStation.toString().replace('_', ' '));

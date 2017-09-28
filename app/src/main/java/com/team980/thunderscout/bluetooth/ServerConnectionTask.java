@@ -38,6 +38,7 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.schema.ScoutData;
@@ -127,7 +128,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         if (o != null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-            if (prefs.getBoolean("bt_send_to_local_storage", true)) {
+            if (prefs.getBoolean(context.getResources().getString(R.string.pref_bt_save_to_local_device), true)) {
                 //Put the fetched ScoutData in the local database
                 AccountScope.getStorageWrapper(AccountScope.LOCAL, context).writeData(o, new StorageWrapper.StorageListener() {
 
@@ -155,8 +156,8 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
                 }); //TODO assumes LOCAL, no callback
             }
 
-            if (prefs.getBoolean("bt_send_to_bt_server", false)) {
-                String address = prefs.getString("bt_bt_server_device", null);
+            if (prefs.getBoolean(context.getResources().getString(R.string.pref_bt_send_to_bluetooth_server), false)) {
+                String address = prefs.getString(context.getResources().getString(R.string.pref_bt_bluetooth_server_device), null);
 
                 BluetoothDevice device;
                 try {
@@ -177,8 +178,6 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
                 SheetsUpdateTask task = new SheetsUpdateTask(context);
                 task.execute(o);
             }*/
-        } else {
-            FirebaseCrash.logcat(Log.ERROR, this.getClass().getName(), "Failed to start FeedDataWriteTask!");
         }
     }
 

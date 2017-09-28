@@ -26,84 +26,33 @@
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="enable_match_scout"
+        android:key="@string/pref_enable_match_scouting"
         android:summary="Enable scouting matches from this device"
         android:title="Enable match scouting" />
 
     <PreferenceCategory
-        android:dependency="enable_match_scout"
+        android:dependency="@string/pref_enable_match_scouting"
         android:title="Output options">
 
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="ms_send_to_local_storage"
+            android:key="@string/pref_ms_save_to_local_device"
             android:title="Save to this device" />
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="ms_send_to_bt_server"
+            android:key="@string/pref_ms_send_to_bluetooth_server"
             android:title="Send to Bluetooth server" />
-
-        <!--<CheckBoxPreference
-            android:defaultValue="false"
-            android:key="ms_send_to_linked_sheet"
-            android:title="Send to linked spreadsheet" />-->
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Bluetooth">
 
-        <!--<ListPreference
-            android:defaultValue="saveLocally"
-            android:key="server_storage_task"
-            android:entries="@array/server_storage_task"
-            android:entryValues="@array/server_storage_task_values"
-            android:summary="Method of storage for data received via bluetooth server"
-            android:title="Server Storage Task" />-->
-
         <com.team980.thunderscout.preferences.BluetoothDevicePickerPreference
-            android:dependency="ms_send_to_bt_server"
-            android:key="ms_bt_server_device"
+            android:dependency="@string/pref_ms_send_to_bluetooth_server"
+            android:key="@string/pref_ms_bluetooth_server_device"
             android:title="Bluetooth server device" />
 
     </PreferenceCategory>
-
-    <!--<PreferenceCategory android:title="Google Sheets">
-
-        <Preference
-            android:key="google_account_auth"
-            android:title="Sign in to your Google account">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:targetClass="com.team980.thunderscout.sheets.GoogleAuthActivity"
-                android:targetPackage="com.team980.thunderscout" />
-        </Preference>
-
-    </PreferenceCategory>-->
-
-    <!-- These are examples from the tutorial -->
-    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
-    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
-    <!--<EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="@string/pref_default_display_name"
-        android:inputType="textCapWords"
-        android:key="example_text"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_title_display_name" />-->
-
-    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
-         dismiss it. -->
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
-    <!--<ListPreference
-        android:defaultValue="-1"
-        android:entries="@array/pref_example_list_titles"
-        android:entryValues="@array/pref_example_list_values"
-        android:key="example_list"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_add_friends_to_messages" />-->
 
 </PreferenceScreen>

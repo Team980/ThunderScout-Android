@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         scoutButton.setOnLongClickListener(this);
 
         Boolean matchScout = PreferenceManager.getDefaultSharedPreferences(getContext())
-                .getBoolean("enable_match_scout", true);
+                .getBoolean(getResources().getString(R.string.pref_enable_match_scouting), true);
 
         if (matchScout) {
             scoutButton.setVisibility(View.VISIBLE);
@@ -104,8 +104,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         if (view.getId() == R.id.fab_scout) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-            if (!prefs.getBoolean("enable_match_scout", true)) { //Saving locally
-                return; //TODO hide the button
+            if (!prefs.getBoolean(getResources().getString(R.string.pref_enable_match_scouting), true)) {
+                return;
             }
 
             Intent scoutIntent = new Intent(getContext(), ScoutingFlowActivity.class);
@@ -127,8 +127,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("enable_match_scout")) {
-            Boolean matchScout = sharedPreferences.getBoolean("enable_match_scout", false);
+        if (key.equals(getResources().getString(R.string.pref_enable_match_scouting))) {
+            Boolean matchScout = sharedPreferences.getBoolean(getResources().getString(R.string.pref_enable_match_scouting), false);
 
             if (matchScout) {
                 scoutButton.setVisibility(View.VISIBLE);
