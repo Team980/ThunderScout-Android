@@ -29,7 +29,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_send_white_24dp"
+            android:icon="@drawable/ic_home_white_24dp"
             android:title="Home" />
         <item
             android:id="@+id/nav_matches"
