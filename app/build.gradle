@@ -32,7 +32,7 @@ android {
         applicationId "com.team980.thunderscout"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 12 //Next public release: 12
+        versionCode 12 //Next public release: 13
         versionName "2.0-beta1" //2018 will be when I make the semantic change
         resConfigs "en"
     }
