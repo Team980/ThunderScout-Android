@@ -25,6 +25,7 @@
 package com.team980.thunderscout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -33,6 +34,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,8 +69,10 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.getHeaderView(0).setOnClickListener(this);
 
-        AccountScope currentScope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(this)
-                .getString("current_account_scope", AccountScope.LOCAL.name()));
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        AccountScope currentScope = AccountScope.valueOf(sharedPrefs.getString(getResources().getString(R.string.pref_current_account_scope),
+                AccountScope.LOCAL.name()));
 
         ImageView image = navigationView.getHeaderView(0).findViewById(R.id.account_image);
         switch (currentScope) {
@@ -125,6 +129,18 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment, fragment);
         ft.commit();
+
+        if (sharedPrefs.getInt(getResources().getString(R.string.pref_last_presented_update_dialog), 1) < BuildConfig.VERSION_CODE) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle("New in version " + BuildConfig.VERSION_NAME);
+            builder.setMessage(R.string.update_notes);
+            builder.setPositiveButton("OK", null);
+
+            builder.create().show();
+
+            sharedPrefs.edit().putInt(getResources().getString(R.string.pref_last_presented_update_dialog), BuildConfig.VERSION_CODE).apply();
+        }
     }
 
     @Override
@@ -217,7 +233,7 @@ public class MainActivity extends AppCompatActivity
             ((TextView) view.findViewById(R.id.account_id)).setText("Local storage");
 
             PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .putString("current_account_scope", AccountScope.LOCAL.name()).apply();
+                    .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
 
             contractAccountMenu();
 
@@ -232,7 +248,7 @@ public class MainActivity extends AppCompatActivity
             ((TextView) view.findViewById(R.id.account_id)).setText("account@team980.com");
 
             PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .putString("current_account_scope", AccountScope.CLOUD.name()).apply();
+                    .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.CLOUD.name()).apply();
 
             contractAccountMenu();
 

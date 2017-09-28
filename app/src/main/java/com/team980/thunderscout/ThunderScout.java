@@ -108,7 +108,7 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
         super.onCreate();
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean runServer = sharedPref.getBoolean("enable_bt_server", false);
+        boolean runServer = sharedPref.getBoolean(getResources().getString(R.string.pref_enable_bluetooth_server), false);
 
         if (runServer) { //I must be launching multiple instances?
             startService(new Intent(this, BluetoothServerService.class));
@@ -119,8 +119,8 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("enable_bt_server")) {
-            Boolean isServer = sharedPreferences.getBoolean("enable_bt_server", false);
+        if (key.equals(getResources().getString(R.string.pref_enable_bluetooth_server))) {
+            Boolean isServer = sharedPreferences.getBoolean(getResources().getString(R.string.pref_enable_bluetooth_server), false);
 
             if (isServer) {
                 startService(new Intent(this, BluetoothServerService.class));

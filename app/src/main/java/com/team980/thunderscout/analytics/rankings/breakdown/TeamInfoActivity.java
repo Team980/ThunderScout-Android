@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -115,11 +114,9 @@ public class TeamInfoActivity extends AppCompatActivity { //TODO finish this
         TextView troubleWithPlaceholder = findViewById(R.id.info_team_troubleWithPlaceholder);
 
         if (data.getTroublesList() == null || data.getTroublesList().isEmpty() || listIsEmpty(data.getTroublesList())) {
-            Log.d("DATATEST-A", "Placeholder");
             troubleWith.setVisibility(View.GONE);
             troubleWithPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            Log.d("DATATEST-A", "Recycler");
             troubleWith.setVisibility(View.VISIBLE);
             troubleWithPlaceholder.setVisibility(View.GONE);
 

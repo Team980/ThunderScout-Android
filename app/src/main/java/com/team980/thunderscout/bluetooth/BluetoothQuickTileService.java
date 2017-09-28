@@ -56,7 +56,7 @@ public class BluetoothQuickTileService extends TileService {
 
         Tile tile = getQsTile();
 
-        if (prefs.getBoolean("enable_bt_server", false)) { //TODO this isn't data from the server itself... it's just of the preference
+        if (prefs.getBoolean(getResources().getString(R.string.pref_enable_bluetooth_server), false)) { //TODO this isn't data from the server itself... it's just of the preference
             //TODO this should reflect error states better...
             tile.setIcon(Icon.createWithResource(this,
                     R.drawable.ic_bluetooth_searching_white_24dp));
@@ -74,11 +74,11 @@ public class BluetoothQuickTileService extends TileService {
     public void onClick() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (prefs.getBoolean("enable_bt_server", false)) { //Toggles the bluetooth server state
-            prefs.edit().putBoolean("enable_bt_server", false).apply();
+        if (prefs.getBoolean(getResources().getString(R.string.pref_enable_bluetooth_server), false)) { //Toggles the bluetooth server state
+            prefs.edit().putBoolean(getResources().getString(R.string.pref_enable_bluetooth_server), false).apply();
 
         } else {
-            prefs.edit().putBoolean("enable_bt_server", true).apply();
+            prefs.edit().putBoolean(getResources().getString(R.string.pref_enable_bluetooth_server), true).apply();
         }
     }
 }

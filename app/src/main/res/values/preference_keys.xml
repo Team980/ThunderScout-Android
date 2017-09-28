@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Preference keys -->
+<resources>
+
+    <!-- System -->
+    <string name="pref_current_account_scope">current_acount_scope</string>
+
+    <string name="pref_last_used_match_number">last_used_match_number</string>
+    <string name="pref_last_used_alliance_station">last_used_alliance_station</string>
+
+    <string name="pref_last_presented_update_dialog">last_update_notified</string>
+
+    <!-- Match scouting -->
+    <string name="pref_enable_match_scouting">enable_match_scout</string>
+    <string name="pref_ms_save_to_local_device">ms_send_to_local_storage</string>
+    <string name="pref_ms_send_to_bluetooth_server">ms_send_to_bt_server</string>
+    <string name="pref_ms_bluetooth_server_device">ms_bt_server_device</string>
+
+    <!-- Bluetooth server -->
+    <string name="pref_enable_bluetooth_server">enable_bt_server</string>
+    <string name="pref_bt_save_to_local_device">bt_send_to_local_storage</string>
+    <string name="pref_bt_send_to_bluetooth_server">bt_send_to_bt_server</string>
+    <string name="pref_bt_bluetooth_server_device">bt_bt_server_device</string>
+</resources>

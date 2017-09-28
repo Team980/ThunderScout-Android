@@ -242,8 +242,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-            boolean saveToThisDevice = prefs.getBoolean("ms_send_to_local_storage", true);
-            boolean sendToBluetoothServer = prefs.getBoolean("ms_send_to_bt_server", false);
+            boolean saveToThisDevice = prefs.getBoolean(getResources().getString(R.string.pref_ms_save_to_local_device), true);
+            boolean sendToBluetoothServer = prefs.getBoolean(getResources().getString(R.string.pref_ms_send_to_bluetooth_server), false);
 
             operationStates = new Bundle();
             operationStates.putBoolean(OPERATION_SAVE_THIS_DEVICE, saveToThisDevice);
@@ -326,7 +326,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         } else if (operationStates.getBoolean(OPERATION_SEND_BLUETOOTH)) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-            String address = prefs.getString("ms_bt_server_device", null);
+            String address = prefs.getString(getResources().getString(R.string.pref_ms_bluetooth_server_device), null);
 
             BluetoothDevice device;
             try {
@@ -353,8 +353,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             finish();
 
             PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .putInt("last_used_match_number", scoutData.getMatchNumber())
-                    .putString("last_used_alliance_station", scoutData.getAllianceStation().name())
+                    .putInt(getResources().getString(R.string.pref_last_used_match_number), scoutData.getMatchNumber())
+                    .putString(getResources().getString(R.string.pref_last_used_alliance_station), scoutData.getAllianceStation().name())
                     .apply();
         }
     }
@@ -407,7 +407,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         // Init
         scoutData.setDate(new Date(System.currentTimeMillis()));
 
-        scoutData.setSource(Settings.Secure.getString(getContentResolver(), "bluetooth_name")); //TODO use this for
+        scoutData.setSource(Settings.Secure.getString(getContentResolver(), "bluetooth_name"));
 
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();

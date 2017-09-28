@@ -26,71 +26,33 @@
 
     <SwitchPreference
         android:defaultValue="false"
-        android:key="enable_bt_server"
+        android:key="@string/pref_enable_bluetooth_server"
         android:summary="Enable receiving scouting data from other devices via Bluetooth"
         android:title="Enable Bluetooth Server" />
 
     <PreferenceCategory
-        android:dependency="enable_bt_server"
+        android:dependency="@string/pref_enable_bluetooth_server"
         android:title="Storage options">
 
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="bt_send_to_local_storage"
+            android:key="@string/pref_bt_save_to_local_device"
             android:title="Save to this device" />
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="bt_send_to_bt_server"
+            android:key="@string/pref_bt_send_to_bluetooth_server"
             android:title="Send to Bluetooth server" />
-
-        <!--<CheckBoxPreference
-            android:defaultValue="false"
-            android:key="bt_send_to_linked_sheet"
-            android:title="Send to linked spreadsheet" />-->
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Bluetooth">
 
-        <!--<ListPreference
-            android:defaultValue="saveLocally"
-            android:key="server_storage_task"
-            android:entries="@array/server_storage_task"
-            android:entryValues="@array/server_storage_task_values"
-            android:summary="Method of storage for data received via bluetooth server"
-            android:title="Server Storage Task" />-->
-
         <com.team980.thunderscout.preferences.BluetoothDevicePickerPreference
-            android:dependency="bt_send_to_bt_server"
-            android:key="bt_bt_server_device"
+            android:dependency="@string/pref_bt_send_to_bluetooth_server"
+            android:key="@string/pref_bt_bluetooth_server_device"
             android:title="Bluetooth server device" />
 
     </PreferenceCategory>
-
-    <!-- These are examples from the tutorial -->
-    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
-    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
-    <!--<EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="@string/pref_default_display_name"
-        android:inputType="textCapWords"
-        android:key="example_text"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_title_display_name" />-->
-
-    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
-         dismiss it. -->
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
-    <!--<ListPreference
-        android:defaultValue="-1"
-        android:entries="@array/pref_example_list_titles"
-        android:entryValues="@array/pref_example_list_values"
-        android:key="example_list"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/pref_title_add_friends_to_messages" />-->
 
 </PreferenceScreen>

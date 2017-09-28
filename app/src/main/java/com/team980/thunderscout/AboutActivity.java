@@ -27,6 +27,7 @@ package com.team980.thunderscout;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 
 import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
@@ -34,7 +35,6 @@ import com.danielstone.materialaboutlibrary.items.MaterialAboutTitleItem;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
 
-@Deprecated //TODO replace with crossplatform design
 public class AboutActivity extends MaterialAboutActivity {
 
     @Override
@@ -47,9 +47,19 @@ public class AboutActivity extends MaterialAboutActivity {
                 .build());
 
         titleCard.addItem(new MaterialAboutActionItem.Builder()
-                .text("Version")
-                .subText(BuildConfig.VERSION_NAME)
+                .text("Version " + BuildConfig.VERSION_NAME)
+                .subText("Click for patch notes")
                 .icon(R.drawable.ic_info_outline_white)
+                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AboutActivity.this);
+                        builder.setTitle("New in version " + BuildConfig.VERSION_NAME);
+                        builder.setMessage(R.string.update_notes);
+                        builder.setPositiveButton("OK", null);
+                        builder.create().show();
+                    }
+                })
                 .build());
 
         titleCard.addItem(new MaterialAboutActionItem.Builder()

@@ -35,6 +35,7 @@ import com.team980.thunderscout.R;
 public class TSNotificationBuilder {
 
     private static TSNotificationBuilder ourInstance; //TODO the existence of this class is a memory leak
+    //TODO We also need to implement a proper notification system (why this is still called Legacy)
 
     private Context context;
 
