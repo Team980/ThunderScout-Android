@@ -78,7 +78,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         ObjectInputStream inputStream;
 
         try {
-            inputStream = new ObjectInputStream(mmSocket.getInputStream());
+            inputStream = new ObjectInputStream(mmSocket.getInputStream()); //TODO fix the IOException caused by the missing socket...
         } catch (IOException e) {
             FirebaseCrash.report(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
