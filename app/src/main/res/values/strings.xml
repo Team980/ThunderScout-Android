@@ -26,26 +26,9 @@
     <string name="app_name">ThunderScout</string>
 
     <!--- TODO These must be updated for every public release!-->
-    <!--- TODO Last update: v12 -->
+    <!--- TODO Last update: v13 -->
     <string name="update_notes">
-        ThunderScout 2.0 redesigns the app\'s analytic features from the ground up to be more useful, relevant, and elegant.
-        \n
-        \nThe data analysis is now broken up into three tabs: Matches, Rankings, and Alliances.
-        \n
-        \nThe Matches tab displays a generated schedule of the event, allowing you to see at a glance all the data you have collected, or may be missing.
-        \n
-        \nThe Rankings tab ranks teams by an estimation of how many points they would score, on average, alone on the field based on your collected data.
-        \n
-        \nThe match and team breakdowns have been updated to highlight statistical performance and point estimations, and now take up less space.
-        \n
-        \nOther notable changes:
-        \n&#8226; A "gears dropped" field has been added to auto and teleop.
-        \n&#8226; The alliance field has been updated to reflect individual alliance stations.
-        \n&#8226; The Bluetooth Device selection preference now opens a system dialog.
-        \n&#8226; New squircle icon (now Adaptive on Android Oreo)
-        \n&#8226; And don\'t forget this very dialog, which is also accessible in the About menu!
-        \n
-        \nThere are a lot of other under-the-hood changes as well.
+        Beta 2 adds a variable delay to client-side Bluetooth transmissions based on the data\'s AllianceStation. This should improve Bluetooth reliability.
         \n
         \nKnown issues:
         \n&#8226; The match schedule currently does not show when multiple matches occupy the same slot.

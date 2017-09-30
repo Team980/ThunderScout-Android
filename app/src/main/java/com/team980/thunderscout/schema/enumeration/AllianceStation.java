@@ -30,22 +30,24 @@ import android.support.annotation.IdRes;
 import com.team980.thunderscout.R;
 
 public enum AllianceStation {
-    RED_1(AllianceColor.RED, R.color.alliance_red_primary, R.id.match_red1),
-    RED_2(AllianceColor.RED, R.color.alliance_red_primary_dark, R.id.match_red2),
-    RED_3(AllianceColor.RED, R.color.alliance_red_primary, R.id.match_red3),
+    RED_1(AllianceColor.RED, R.color.alliance_red_primary, R.id.match_red1, 0),
+    RED_2(AllianceColor.RED, R.color.alliance_red_primary_dark, R.id.match_red2, 100),
+    RED_3(AllianceColor.RED, R.color.alliance_red_primary, R.id.match_red3, 200),
 
-    BLUE_1(AllianceColor.BLUE, R.color.alliance_blue_primary, R.id.match_blue1),
-    BLUE_2(AllianceColor.BLUE, R.color.alliance_blue_primary_dark, R.id.match_blue2),
-    BLUE_3(AllianceColor.BLUE, R.color.alliance_blue_primary, R.id.match_blue3);
+    BLUE_1(AllianceColor.BLUE, R.color.alliance_blue_primary, R.id.match_blue1, 300),
+    BLUE_2(AllianceColor.BLUE, R.color.alliance_blue_primary_dark, R.id.match_blue2, 400),
+    BLUE_3(AllianceColor.BLUE, R.color.alliance_blue_primary, R.id.match_blue3, 500);
 
     AllianceColor color;
     int colorStratified;
     int matchCellViewID;
+    long delayInMillis;
 
-    AllianceStation(AllianceColor color, int colorStratified, @IdRes int matchCellViewID) {
+    AllianceStation(AllianceColor color, int colorStratified, @IdRes int matchCellViewID, long delayInMillis) {
         this.color = color;
         this.colorStratified = colorStratified;
         this.matchCellViewID = matchCellViewID;
+        this.delayInMillis = delayInMillis;
     }
 
     public AllianceColor getColor() {
@@ -59,6 +61,10 @@ public enum AllianceStation {
     @IdRes
     public int getMatchCellViewID() {
         return matchCellViewID;
+    }
+
+    public long getDelay() { //Client delay to prevent socket errors
+        return delayInMillis;
     }
 
     public enum AllianceColor {

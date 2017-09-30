@@ -92,6 +92,12 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
     }
 
     public void run() {
+        try {
+            Thread.sleep(scoutData.getAllianceStation().getDelay()); //Variable delay based on AllianceStation
+        } catch (InterruptedException e) {
+            FirebaseCrash.report(e);
+        }
+
         // Cancel discovery because it will slow down the connection
         mBluetoothAdapter.cancelDiscovery();
 
