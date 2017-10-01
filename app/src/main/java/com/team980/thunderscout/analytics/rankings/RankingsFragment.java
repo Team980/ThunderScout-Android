@@ -182,9 +182,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onClick(View view) {
-        SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
-        searchView.requestFocus();
-
         swipeContainer.setEnabled(false);
     }
 
