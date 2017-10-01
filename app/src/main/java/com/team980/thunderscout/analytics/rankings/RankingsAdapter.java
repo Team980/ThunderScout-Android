@@ -49,7 +49,8 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
     private RankingsFragment fragment;
 
-    private List<TeamWrapper> teamList;
+    private List<TeamWrapper> teamList; //The list that represents all the loaded data
+    private List<TeamWrapper> displayList; //The list that represents the shown data
 
     private NumberFormat formatter;
 
@@ -59,6 +60,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
         this.fragment = fragment;
 
         teamList = new ArrayList<>();
+        displayList = new ArrayList<>();
 
         formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(0);
@@ -73,13 +75,34 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
     @Override
     public void onBindViewHolder(RankingsAdapter.TeamViewHolder holder, int position) {
-        TeamWrapper team = teamList.get(position);
+        TeamWrapper team = displayList.get(position);
         holder.bind(team);
     }
 
     @Override
     public int getItemCount() {
-        return teamList.size();
+        return displayList.size();
+    }
+
+    public void filterByTeam(String query) {
+        final List<TeamWrapper> filteredList = new ArrayList<>();
+        for (TeamWrapper team : teamList) {
+            final String text = team.getTeam().toLowerCase();
+            if (text.contains(query.toLowerCase())) {
+                filteredList.add(team);
+            }
+        }
+
+        displayList.clear();
+        displayList.addAll(filteredList);
+
+        notifyDataSetChanged();
+    }
+
+    public void resetFilters() {
+        displayList.clear();
+        displayList.addAll(teamList);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -112,6 +135,9 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
         Collections.sort(teamList);
         notifyDataSetChanged();
 
+        displayList.clear();
+        displayList.addAll(teamList);
+
         fragment.getSwipeRefreshLayout().setRefreshing(false);
     }
 
@@ -127,8 +153,9 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
     @Override
     public void onDataClear(boolean success) {
-        int listSize = teamList.size();
+        int listSize = displayList.size();
         teamList.clear();
+        displayList.clear();
         notifyItemRangeRemoved(0, listSize);
     }
 
