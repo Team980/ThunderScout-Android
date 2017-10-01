@@ -32,11 +32,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -46,15 +44,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.csv.ExportActivity;
 import com.team980.thunderscout.csv.ImportActivity;
-import com.team980.thunderscout.util.TransitionUtils;
 
-public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, SearchView.OnQueryTextListener, View.OnClickListener {
+public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, SearchView.OnQueryTextListener, View.OnClickListener, SearchView.OnCloseListener {
 
     private Toolbar toolbar;
     private DrawerLayout drawer;
@@ -118,7 +116,14 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_data_tools, menu);
+        inflater.inflate(R.menu.menu_rank_tools, menu);
+
+        SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+        searchView.setOnSearchClickListener(this);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(this);
+        searchView.setQueryHint("Search for team...");
+        searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 
     @Override
@@ -126,41 +131,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         int id = item.getItemId();
 
         //Default mode
-        if (id == R.id.action_search) {
-            toolbar.getMenu().clear();
-            toolbar.inflateMenu(R.menu.menu_data_search);
-
-            SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
-            searchView.setOnQueryTextListener(this);
-
-            searchView.setQueryHint("Search for team...");
-            searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-            ViewGroup.LayoutParams layoutParams = searchView.getLayoutParams();
-            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            searchView.setLayoutParams(layoutParams); //fixes width
-            searchView.setMaxWidth(Integer.MAX_VALUE);
-
-            searchView.setIconifiedByDefault(false);
-
-            toolbar.setTitle("");
-            TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.primary, R.color.primary_dark,
-                    R.color.secondary, R.color.secondary_dark, (AppCompatActivity) getActivity());
-
-            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            toggle.onDrawerStateChanged(DrawerLayout.STATE_IDLE);
-            toggle.setDrawerIndicatorEnabled(false);
-            toggle.syncState();
-
-            MainActivity activity = (MainActivity) getActivity();
-            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
-
-            toolbar.setNavigationOnClickListener(this);
-
-            swipeContainer.setEnabled(false);
-        }
-
         if (id == R.id.action_import) {
             Intent importIntent = new Intent(getContext(), ImportActivity.class);
             startActivity(importIntent);
@@ -212,20 +182,17 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onClick(View view) {
+        SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+        searchView.requestFocus();
+
+        swipeContainer.setEnabled(false);
+    }
+
+    @Override
+    public boolean onClose() {
         adapter.resetFilters();
 
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_data_tools);
-        toolbar.setTitle("Rankings");
-        TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.secondary, R.color.secondary_dark,
-                R.color.primary, R.color.primary_dark, (AppCompatActivity) getActivity());
-
-        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        toggle = new ActionBarDrawerToggle(
-                getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
         swipeContainer.setEnabled(true);
+        return false;
     }
 }
