@@ -131,6 +131,28 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         int id = item.getItemId();
 
         //Default mode
+        if (id == R.id.action_sort) {
+            AlertDialog sortDialog;
+
+            // Creating and Building the Dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Sort teams by...");
+
+            builder.setSingleChoiceItems(TeamComparator.getFormattedList(), adapter.getCurrentSortMode().ordinal(),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            TeamComparator sortMode = TeamComparator.values()[item];
+
+                            adapter.sort(sortMode);
+
+                            dialog.dismiss();
+                        }
+                    });
+
+            sortDialog = builder.create();
+            sortDialog.show();
+        }
+
         if (id == R.id.action_import) {
             Intent importIntent = new Intent(getContext(), ImportActivity.class);
             startActivity(importIntent);

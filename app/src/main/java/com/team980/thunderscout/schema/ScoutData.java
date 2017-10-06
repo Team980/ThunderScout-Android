@@ -37,7 +37,7 @@ import java.util.Date;
  * Implements data for one team from one match.
  */
 public class ScoutData implements Serializable {
-    //TODO for next major revision of spec: label all quantities identically
+    //TODO 2018: label all quantities identically
     //TODO example: gearsDelivered -> gearDeliveryCount
     //TODO original name can still be in UI ("Gears Delivered")
 
@@ -59,7 +59,7 @@ public class ScoutData implements Serializable {
     private int id;
 
     // INIT
-    private String team;
+    private String team; //TODO 2018: Why isn't this an integer?
     private int matchNumber;
     private AllianceStation allianceStation;
 
