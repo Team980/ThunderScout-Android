@@ -50,7 +50,9 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
     private RankingsFragment fragment;
 
     private List<TeamWrapper> teamList; //The list that represents all the loaded data
-    private List<TeamWrapper> displayList; //The list that represents the shown data
+    private List<TeamWrapper> displayList; //The list that represents the shown data - TODO I'm still unsure if this is a good idea
+
+    private TeamComparator sortMode = TeamComparator.SORT_POINT_CONTRIBUTION;
 
     private NumberFormat formatter;
 
@@ -84,6 +86,20 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
         return displayList.size();
     }
 
+    public TeamComparator getCurrentSortMode() {
+        return sortMode;
+    }
+
+    public void sort(TeamComparator mode) {
+        sortMode = mode;
+
+        Collections.sort(teamList, TeamComparator.getComparator(sortMode));
+
+        displayList.clear();
+        displayList.addAll(teamList);
+        notifyDataSetChanged();
+    }
+
     public void filterByTeam(String query) {
         final List<TeamWrapper> filteredList = new ArrayList<>();
         for (TeamWrapper team : teamList) {
@@ -95,7 +111,6 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
         displayList.clear();
         displayList.addAll(filteredList);
-
         notifyDataSetChanged();
     }
 
@@ -109,7 +124,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
     public void onDataQuery(List<ScoutData> dataList) {
         int listSize = teamList.size();
         teamList.clear();
-        notifyItemRangeRemoved(0, listSize);
+        //notifyItemRangeRemoved(0, listSize);
 
         data:
         for (ScoutData data : dataList) {
@@ -120,7 +135,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
                     //Pre-existing team
 
                     wrapper.getDataList().add(data);
-                    notifyItemChanged(i);
+                    //notifyItemChanged(i);
                     continue data; //continues the loop labeled 'DATA'
                 }
             }
@@ -129,14 +144,14 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
             TeamWrapper wrapper = new TeamWrapper(data.getTeam());
             wrapper.getDataList().add(data);
             teamList.add(wrapper);
-            notifyItemInserted(teamList.size() - 1);
+            //notifyItemInserted(teamList.size() - 1);
         }
 
-        Collections.sort(teamList);
-        notifyDataSetChanged();
+        Collections.sort(teamList, TeamComparator.getComparator(sortMode));
 
         displayList.clear();
         displayList.addAll(teamList);
+        notifyDataSetChanged();
 
         fragment.getSwipeRefreshLayout().setRefreshing(false);
     }
@@ -165,7 +180,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
         private TextView teamNumber;
         private TextView descriptor;
-        private TextView rank;
+        //private TextView rank;
 
         public TeamViewHolder(View itemView) {
             super(itemView);
@@ -174,19 +189,14 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
             teamNumber = itemView.findViewById(R.id.team_number);
             descriptor = itemView.findViewById(R.id.team_descriptor);
-            rank = itemView.findViewById(R.id.team_rank);
+            //rank = itemView.findViewById(R.id.team_rank);
         }
 
         public void bind(final TeamWrapper wrapper) {
             teamNumber.setText(wrapper.getTeam());
+            descriptor.setText(wrapper.getDescriptor(sortMode));
 
-            if (wrapper.getDataList().size() == 1) {
-                descriptor.setText("1 match");
-            } else {
-                descriptor.setText(wrapper.getDataList().size() + " matches");
-            }
-
-            rank.setText(formatter.format(wrapper.getExpectedPointContribution()) + " points");
+            //rank.setText(formatter.format(wrapper.getExpectedPointContribution()) + " points");
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
