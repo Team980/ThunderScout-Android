@@ -126,6 +126,11 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         int id = item.getItemId();
 
         //Default mode
+        if (id == R.id.action_refresh) {
+            swipeContainer.setRefreshing(true);
+            onRefresh();
+        }
+
         if (id == R.id.action_import) {
             Intent importIntent = new Intent(getContext(), ImportActivity.class);
             startActivity(importIntent);
