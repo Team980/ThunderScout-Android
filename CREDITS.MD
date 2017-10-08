@@ -1,21 +1,26 @@
 # Credits
 
-##Assets
+## Libraries
 
-Lightning gear icon created by Andrew Fisher-Shin
+### Firebase
+https://firebase.google.com/
 
-##Libraries
+### FirebaseUI-Android
+https://github.com/firebase/FirebaseUI-Android
 
-###Expandable RecyclerView
-https://github.com/bignerdranch/expandable-recycler-view
+### Android Support
+https://developer.android.com/topic/libraries/support-library/
 
-###OpenCSV
-http://opencsv.sourceforge.net
-
-###Material About Library
+### Material About Library
 https://github.com/daniel-stoneuk/material-about-library
 
-##Other
+### OpenCSV
+http://opencsv.sourceforge.net
 
-###Google Play
+### Gson
+https://github.com/google/gson
+
+## Other notices
+
+### Google Play
 Google Play and the Google Play logo are trademarks of Google Inc.
