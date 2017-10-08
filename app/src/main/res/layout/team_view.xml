@@ -60,14 +60,12 @@
 
     </RelativeLayout>
 
-
-    <!-- TODO work out the UI for this list item-->
-    <!--<TextView
+    <TextView
         android:id="@+id/team_rank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
         android:paddingRight="16dp"
-        android:text="Rank" />-->
+        android:text="Rank" />
 
 </FrameLayout>

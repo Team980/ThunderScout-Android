@@ -49,7 +49,8 @@ public class TSNotificationBuilder {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel transferChannel = new NotificationChannel("legacy_bt_transfer", "Legacy Bluetooth Transfers", NotificationManager.IMPORTANCE_LOW);
+            NotificationChannel transferChannel = new NotificationChannel("legacy_bt_transfer", "Legacy Bluetooth Transfers", NotificationManager.IMPORTANCE_DEFAULT);
+            transferChannel.setImportance(NotificationManager.IMPORTANCE_DEFAULT);
             transferChannel.setDescription("Ongoing and erroneous Bluetooth transfers");
             mNotifyMgr.createNotificationChannel(transferChannel);
         }

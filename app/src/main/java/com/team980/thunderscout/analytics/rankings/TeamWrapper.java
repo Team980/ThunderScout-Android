@@ -24,31 +24,24 @@
 
 package com.team980.thunderscout.analytics.rankings;
 
+import android.support.annotation.NonNull;
+
 import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
 import com.team980.thunderscout.schema.ScoutData;
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
  * Represents data for one team, for all the matches they played in.
  */
-public class TeamWrapper { //TODO We shouldn't be creating this many AverageScoutData instances
+public class TeamWrapper implements Comparable<TeamWrapper> {
 
     private String team;
     private ArrayList<ScoutData> dataList;
 
-    private NumberFormat formatter;
-
     public TeamWrapper(String team) {
         this.team = team;
         dataList = new ArrayList<>();
-
-        formatter = NumberFormat.getNumberInstance();
-        formatter.setMinimumFractionDigits(0);
-        formatter.setMaximumFractionDigits(1);
     }
 
     public String getTeam() {
@@ -59,42 +52,18 @@ public class TeamWrapper { //TODO We shouldn't be creating this many AverageScou
         return dataList;
     }
 
-    public String getDescriptor(TeamComparator sortMode) { //TODO account for singular/plural?
-        switch (sortMode) {
-            case SORT_POINT_CONTRIBUTION:
-                return formatter.format(TeamPointEstimator.getPointContribution(new AverageScoutData(dataList))) + " points";
-            case SORT_TEAM_NUMBER:
-                return dataList.size() + " matches";
-            case SORT_LAST_UPDATED:
-                return "Last updated " + SimpleDateFormat.getDateTimeInstance().format(new AverageScoutData(dataList).getLastUpdated());
-            case SORT_AUTO_GEARS_DELIVERED:
-                return formatter.format(new AverageScoutData(dataList).getAverageAutoGearsDelivered()) + " gears delivered";
-            case SORT_AUTO_GEARS_DROPPED:
-                return formatter.format(new AverageScoutData(dataList).getAverageAutoGearsDropped()) + " gears dropped";
-            case SORT_AUTO_LOW_GOAL_DUMP_AMOUNT:
-                return new AverageScoutData(dataList).getAverageAutoLowGoalDumpAmount() + " amount of fuel dumped";
-            case SORT_AUTO_HIGH_GOALS:
-                return formatter.format(new AverageScoutData(dataList).getAverageAutoHighGoals()) + " high goals";
-            case SORT_AUTO_MISSED_HIGH_GOALS:
-                return formatter.format(new AverageScoutData(dataList).getAverageAutoHighGoals()) + " missed high goals";
-            case SORT_CROSSED_BASELINE_PERCENTAGE:
-                return "Crossed the baseline in " + formatter.format(new AverageScoutData(dataList).getCrossedBaselinePercentage()) + "% of matches";
-            case SORT_TELEOP_GEARS_DELIVERED:
-                return formatter.format(new AverageScoutData(dataList).getAverageTeleopGearsDelivered()) + " gears delivered";
-            case SORT_TELEOP_GEARS_DROPPED:
-                return formatter.format(new AverageScoutData(dataList).getAverageAutoGearsDropped()) + " gears dropped";
-            case SORT_TELEOP_DUMP_FREQUENCY:
-                return formatter.format(new AverageScoutData(dataList).getAverageTeleopDumpFrequency()) + " dumps per match";
-            case SORT_TELEOP_DUMP_AMOUNT:
-                return new AverageScoutData(dataList).getAverageTeleopLowGoalDumpAmount() + " amount of fuel dumped";
-            case SORT_TELEOP_HIGH_GOALS:
-                return formatter.format(new AverageScoutData(dataList).getAverageTeleopHighGoals()) + " high goals";
-            case SORT_TELEOP_MISSED_HIGH_GOALS:
-                return formatter.format(new AverageScoutData(dataList).getAverageTeleopHighGoals()) + " missed high goals";
-            case SORT_CLIMBING_STATS_PERCENTAGE:
-                return "Pressed the touchpad in " + formatter.format(new AverageScoutData(dataList).getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "% of matches";
-            default: //Fallback - shouldn't trigger
-                return dataList.size() + " matches";
+    public double getExpectedPointContribution() { //This can be a decimal
+        return TeamPointEstimator.getPointContribution(new AverageScoutData(dataList));
+    }
+
+    @Override
+    public int compareTo(@NonNull TeamWrapper other) { //Compare by comparing the expected point contributions, higher is better
+        if (getExpectedPointContribution() == other.getExpectedPointContribution()) { //If the expected contributions are equal, compare by team number (lower is better)
+            return Integer.valueOf(getTeam())
+                    .compareTo(Integer.valueOf(other.getTeam()));
+        } else {
+            return -Double.valueOf(getExpectedPointContribution())
+                    .compareTo(other.getExpectedPointContribution());
         }
     }
 }
