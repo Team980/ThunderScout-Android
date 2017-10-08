@@ -82,7 +82,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         } catch (IOException e) {
             FirebaseCrash.report(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
-                    notificationId);
+                    notificationId, e);
             return null;
         }
 
@@ -99,7 +99,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             FirebaseCrash.report(e);
             e.printStackTrace();
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
-                    notificationId);
+                    notificationId, e);
             return null;
         }
 
