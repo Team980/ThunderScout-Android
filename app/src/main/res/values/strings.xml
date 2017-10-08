@@ -26,11 +26,12 @@
     <string name="app_name">ThunderScout</string>
 
     <!--- TODO These must be updated for every public release!-->
-    <!--- TODO Last update: v13 -->
+    <!--- TODO Last update: v14 -->
     <string name="update_notes">
-        Beta 2 adds a variable delay to client-side Bluetooth transmissions based on the data\'s AllianceStation. This should improve Bluetooth reliability.
+        Hotfix release: Fixed the bug that was causing all CSV imports to fail and crash the app.
         \n
         \nKnown issues:
+        \n&#8226; The Bluetooth server may fail to receive matches logged as successfully sent by the client device.
         \n&#8226; The match schedule currently does not show when multiple matches occupy the same slot.
         \n&#8226; The Alliances menu is unimplemented.
         \n&#8226; The Feed has been removed and will be replaced with a similar feature in a future release.
