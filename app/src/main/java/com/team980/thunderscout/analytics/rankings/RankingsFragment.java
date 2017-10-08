@@ -36,6 +36,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,6 +44,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
@@ -50,7 +52,11 @@ import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.csv.ExportActivity;
 import com.team980.thunderscout.csv.ImportActivity;
 
-public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener {
+public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, SearchView.OnQueryTextListener, View.OnClickListener, SearchView.OnCloseListener {
+
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
 
     private RecyclerView dataView;
     private RankingsAdapter adapter;
@@ -72,12 +78,12 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         MainActivity activity = (MainActivity) getActivity();
 
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle("Rankings");
         activity.setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawer = getActivity().findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -110,7 +116,14 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_data_tools, menu);
+        inflater.inflate(R.menu.menu_rank_tools, menu);
+
+        SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+        searchView.setOnSearchClickListener(this);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(this);
+        searchView.setQueryHint("Search for team...");
+        searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 
     @Override
@@ -118,6 +131,28 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         int id = item.getItemId();
 
         //Default mode
+        if (id == R.id.action_sort) {
+            AlertDialog sortDialog;
+
+            // Creating and Building the Dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Sort teams by...");
+
+            builder.setSingleChoiceItems(TeamComparator.getFormattedList(), adapter.getCurrentSortMode().ordinal(),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            TeamComparator sortMode = TeamComparator.values()[item];
+
+                            adapter.sort(sortMode);
+
+                            dialog.dismiss();
+                        }
+                    });
+
+            sortDialog = builder.create();
+            sortDialog.show();
+        }
+
         if (id == R.id.action_import) {
             Intent importIntent = new Intent(getContext(), ImportActivity.class);
             startActivity(importIntent);
@@ -153,5 +188,30 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override //Deletion dialog
     public void onClick(DialogInterface dialog, int which) { //TODO modular account scopes - CLOUD should prompt for password
         AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        adapter.filterByTeam(query);
+        dataView.scrollToPosition(0);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public void onClick(View view) {
+        swipeContainer.setEnabled(false);
+    }
+
+    @Override
+    public boolean onClose() {
+        adapter.resetFilters();
+
+        swipeContainer.setEnabled(true);
+        return false;
     }
 }
