@@ -101,6 +101,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         swipeContainer = view.findViewById(R.id.swipeContainer);
 
         swipeContainer.setOnRefreshListener(this);
+        swipeContainer.setEnabled(false);
 
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);

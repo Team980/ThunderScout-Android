@@ -109,6 +109,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         swipeContainer = view.findViewById(R.id.swipeContainer);
 
         swipeContainer.setOnRefreshListener(this);
+        swipeContainer.setEnabled(false);
 
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
