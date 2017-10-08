@@ -140,7 +140,7 @@ public class ScoutData implements Serializable {
         data.setTeam(array[0]);
         data.setMatchNumber(Integer.parseInt(array[1]));
         data.setAllianceStation(AllianceStation.valueOf(array[2]));
-        data.setDate(new Date(Long.getLong(array[3])));
+        data.setDate(new Date(Long.parseLong(array[3])));
         data.setSource(array[4]);
 
         //Auto
