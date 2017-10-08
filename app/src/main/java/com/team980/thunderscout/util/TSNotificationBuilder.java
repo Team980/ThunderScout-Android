@@ -49,8 +49,7 @@ public class TSNotificationBuilder {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel transferChannel = new NotificationChannel("legacy_bt_transfer", "Legacy Bluetooth Transfers", NotificationManager.IMPORTANCE_DEFAULT);
-            transferChannel.setImportance(NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel transferChannel = new NotificationChannel("legacy_bt_transfer", "Legacy Bluetooth Transfers", NotificationManager.IMPORTANCE_LOW);
             transferChannel.setDescription("Ongoing and erroneous Bluetooth transfers");
             mNotifyMgr.createNotificationChannel(transferChannel);
         }
@@ -67,6 +66,7 @@ public class TSNotificationBuilder {
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp) //TODO find icon
                 .setContentTitle("Data transfer failed")
                 .setContentText("Failed to receive data from device")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText("Error UNKNOWN"))
                 .setColor(context.getResources().getColor(R.color.error))
                 .setGroup("BT_TRANSFER_ERROR");
     }
@@ -99,9 +99,11 @@ public class TSNotificationBuilder {
     }
 
     @Deprecated
-    public void showBtTransferError(String deviceName, int id) {
+    public void showBtTransferError(String deviceName, int id, Exception ex) {
         NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         btTransferError.setContentText("Failed to receive data from " + deviceName);
+        btTransferError.setStyle(new NotificationCompat.BigTextStyle().bigText("Failed to receive data from " + deviceName
+                + "\n\nError:" + ex.getMessage()));
         btTransferError.setWhen(System.currentTimeMillis());
 
         mNotifyMgr.notify(id, btTransferError.build());
