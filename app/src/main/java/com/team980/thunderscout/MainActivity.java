@@ -46,6 +46,7 @@ import com.team980.thunderscout.analytics.alliances.AlliancesFragment;
 import com.team980.thunderscout.analytics.matches.MatchesFragment;
 import com.team980.thunderscout.analytics.rankings.RankingsFragment;
 import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.home.HomeFragment;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity

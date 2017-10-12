@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout;
+package com.team980.thunderscout.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,7 +32,10 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,9 +44,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.team980.thunderscout.MainActivity;
+import com.team980.thunderscout.R;
 import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 
-public class HomeFragment extends Fragment implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener, View.OnLongClickListener {
+public class HomeFragment extends Fragment implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener, View.OnLongClickListener, SwipeRefreshLayout.OnRefreshListener {
+
+    private RecyclerView dataView;
+    private FeedAdapter adapter;
+    private SwipeRefreshLayout swipeContainer;
 
     private FloatingActionButton scoutButton;
 
@@ -64,11 +73,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
         setHasOptionsMenu(true);
 
+        dataView = view.findViewById(R.id.dataView);
+
+        // use a linear layout manager
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        dataView.setLayoutManager(mLayoutManager);
+
+        // specify an adapter
+        adapter = new FeedAdapter(this);
+        dataView.setAdapter(adapter);
+        adapter.initCardList();
+
         DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 activity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(this);
+
+        swipeContainer.setColorSchemeResources(R.color.accent);
+        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
         scoutButton = view.findViewById(R.id.fab_scout);
         scoutButton.setOnClickListener(this);
@@ -123,6 +150,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRefresh() {
+        adapter.initCardList(); //TODO actually refresh the cards
+        swipeContainer.setRefreshing(false);
     }
 
     @Override
