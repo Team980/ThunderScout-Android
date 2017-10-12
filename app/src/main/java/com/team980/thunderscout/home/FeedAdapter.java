@@ -56,17 +56,25 @@ public class FeedAdapter extends RecyclerView.Adapter<CardViewHolder> {
         return cardList.get(position).getCardType().ordinal(); //Use the ordinal as the type
     }
 
+    public void dismissCard(int position) {
+        cardList.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public void initCardList() {
         cardList.clear();
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(fragment.getContext());
+
+        cardList.add(new Card(CardType.PENDING_MATCHES));
+        cardList.add(new Card(CardType.UNFINISHED_MATCHES));
 
         AccountScope.getStorageWrapper(AccountScope.LOCAL, fragment.getContext()) //It already calls getApplicationContext
                 .queryData(new StorageWrapper.StorageListener() {
                     @Override
                     public void onDataQuery(List<ScoutData> dataList) {
                         if (!dataList.isEmpty()) {
-                            cardList.add(new Card(CardType.DEVICE_STORAGE_STATS));
+                            cardList.add(new Card(CardType.DEVICE_STORAGE_STATS)); //TODO is there a way to do this without querying?
                             Collections.sort(cardList);
                             notifyDataSetChanged();
                         }

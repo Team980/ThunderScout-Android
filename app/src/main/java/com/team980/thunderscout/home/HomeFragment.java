@@ -24,8 +24,11 @@
 
 package com.team980.thunderscout.home;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -37,15 +40,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.home.card_views.PendingMatchesViewHolder;
 import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener, View.OnLongClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -53,6 +59,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
     private RecyclerView dataView;
     private FeedAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
+
+    private FeedUpdateReceiver receiver;
 
     private FloatingActionButton scoutButton;
 
@@ -82,6 +90,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         // specify an adapter
         adapter = new FeedAdapter(this);
         dataView.setAdapter(adapter);
+
+        ItemTouchHelper.Callback callback =
+                new ItemTouchHelper.SimpleCallback(0, 0) { //TODO move to own class?
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                        adapter.dismissCard(viewHolder.getAdapterPosition());
+                        Toast.makeText(getContext(), "Dismissed card", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                        if (viewHolder instanceof PendingMatchesViewHolder) {
+                            return ItemTouchHelper.RIGHT;
+                        } else {
+                            return 0;
+                        }
+                    }
+                };
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(dataView);
+
         adapter.initCardList();
 
         DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
@@ -115,8 +149,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(this);
+        PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(this);
 
+        receiver = new FeedUpdateReceiver();
+        context.registerReceiver(receiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)); //TODO refresh via internal intent
     }
 
     @Override
@@ -124,6 +160,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         super.onDetach();
 
         PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(this);
+        getContext().unregisterReceiver(receiver);
     }
 
     @Override
@@ -217,5 +254,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
         Toast.makeText(getContext(), "Started " + debug.size(), Toast.LENGTH_SHORT).show();*/
         return true;
+    }
+
+    public class FeedUpdateReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            adapter.initCardList();
+        }
     }
 }
