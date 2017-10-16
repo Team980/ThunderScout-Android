@@ -214,7 +214,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
             drawer.addDrawerListener(toggle);
             toggle.syncState();
 
-            swipeContainer.setEnabled(true);
+            //swipeContainer.setEnabled(true);
         }
     }
 

@@ -24,10 +24,14 @@
 
 package com.team980.thunderscout.analytics.matches;
 
+import android.support.annotation.Nullable;
+
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 
 /**
  * Represents data for one match, for all of the teams involved.
@@ -36,7 +40,7 @@ public class MatchWrapper { //TODO needs a way to handle overlapping data (same 
 
     private int matchNumber;
 
-    private EnumMap<AllianceStation, ScoutData> dataMap;
+    private EnumMap<AllianceStation, List<ScoutData>> dataMap;
 
     public MatchWrapper(int matchNumber) {
         this.matchNumber = matchNumber;
@@ -47,16 +51,37 @@ public class MatchWrapper { //TODO needs a way to handle overlapping data (same 
         return matchNumber;
     }
 
+    @Nullable
     public ScoutData getData(AllianceStation station) {
+        if (dataMap.get(station) == null) {
+            return null;
+        }
+
+        return dataMap.get(station).get(0);
+    }
+
+    public List<ScoutData> getDataList(AllianceStation station) {
         return dataMap.get(station);
     }
 
     public void setData(AllianceStation station, ScoutData data) {
-        dataMap.put(station, data);
+        if (!dataMap.containsKey(station)) {
+            dataMap.put(station, new ArrayList<ScoutData>());
+        }
+
+        dataMap.get(station).add(data);
     }
 
     public void removeData(AllianceStation station) {
         dataMap.remove(station);
+    }
+
+    public void removeData(AllianceStation station, ScoutData data) {
+        dataMap.get(station).remove(data);
+
+        if (dataMap.get(station).isEmpty()) {
+            dataMap.remove(station);
+        }
     }
 
     public boolean isEmpty() {

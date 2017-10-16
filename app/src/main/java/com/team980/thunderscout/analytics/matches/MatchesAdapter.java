@@ -24,8 +24,11 @@
 
 package com.team980.thunderscout.analytics.matches;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.widget.GridLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -152,12 +155,12 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     @Override
     public void onDataRemove(List<ScoutData> dataRemoved) {
         for (ScoutData data : dataRemoved) {
-            matchArray.get(data.getMatchNumber()).removeData(data.getAllianceStation());
-            notifyItemChanged(data.getMatchNumber());
+            matchArray.get(data.getMatchNumber()).removeData(data.getAllianceStation(), data);
+            notifyItemChanged(data.getMatchNumber() - 1); //This makes very little sense
 
             if (matchArray.get(data.getMatchNumber()).isEmpty()) {
                 matchArray.delete(data.getMatchNumber());
-                notifyItemRemoved(data.getMatchNumber());
+                notifyItemRemoved(data.getMatchNumber()); //Again, why are these different
             }
         }
 
@@ -250,22 +253,44 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                 final TextView matchView = matchGrid.findViewById(station.getMatchCellViewID());
 
                 if (wrapper.getData(station) != null) {
-                    matchView.setText(wrapper.getData(station).getTeam());
 
-                    matchView.setVisibility(View.VISIBLE);
+                    if (wrapper.getDataList(station).size() == 1) { //Single match, treat as normal
+                        matchView.setText(wrapper.getData(station).getTeam());
 
-                    if (selectedItems.contains(wrapper.getData(station))) { //if selected
-                        matchView.setBackgroundColor(mInflator.getContext()
-                                .getResources().getColor(R.color.accent));
-                    } else {
-                        matchView.setBackgroundColor(mInflator.getContext()
-                                .getResources().getColor(station.getColorStratified()));
-                    }
+                        matchView.setVisibility(View.VISIBLE);
 
-                    matchView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (fragment.isInSelectionMode()) {
+                        if (selectedItems.contains(wrapper.getData(station))) { //if selected
+                            matchView.setBackgroundColor(mInflator.getContext()
+                                    .getResources().getColor(R.color.accent));
+                        } else {
+                            matchView.setBackgroundColor(mInflator.getContext()
+                                    .getResources().getColor(station.getColorStratified()));
+                        }
+
+                        matchView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (fragment.isInSelectionMode()) {
+                                    if (selectedItems.contains(wrapper.getData(station))) { //if selected
+                                        deselect(wrapper.getData(station));
+                                        matchView.setBackgroundColor(mInflator.getContext()
+                                                .getResources().getColor(station.getColorStratified()));
+                                    } else {
+                                        select(wrapper.getData(station));
+                                        matchView.setBackgroundColor(mInflator.getContext()
+                                                .getResources().getColor(R.color.accent));
+                                    }
+                                } else {
+                                    Intent launchInfoActivity = new Intent(fragment.getContext(), MatchInfoActivity.class);
+                                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", wrapper.getData(station));
+                                    fragment.getContext().startActivity(launchInfoActivity);
+                                }
+                            }
+                        });
+
+                        matchView.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
                                 if (selectedItems.contains(wrapper.getData(station))) { //if selected
                                     deselect(wrapper.getData(station));
                                     matchView.setBackgroundColor(mInflator.getContext()
@@ -275,29 +300,44 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                                     matchView.setBackgroundColor(mInflator.getContext()
                                             .getResources().getColor(R.color.accent));
                                 }
-                            } else {
-                                Intent launchInfoActivity = new Intent(fragment.getContext(), MatchInfoActivity.class);
-                                launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", wrapper.getData(station));
-                                fragment.getContext().startActivity(launchInfoActivity);
+                                return true;
                             }
-                        }
-                    });
+                        });
 
-                    matchView.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if (selectedItems.contains(wrapper.getData(station))) { //if selected
-                                deselect(wrapper.getData(station));
-                                matchView.setBackgroundColor(mInflator.getContext()
-                                        .getResources().getColor(station.getColorStratified()));
-                            } else {
-                                select(wrapper.getData(station));
-                                matchView.setBackgroundColor(mInflator.getContext()
-                                        .getResources().getColor(R.color.accent));
+                    } else { //MULTIPLE matches in this slot - display error!
+                        matchView.setText("!");
+
+                        matchView.setVisibility(View.VISIBLE);
+
+                        matchView.setBackgroundColor(mInflator.getContext()
+                                .getResources().getColor(R.color.accent_dark));
+
+
+                        matchView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (fragment.isInSelectionMode()) {
+                                    return;
+                                }
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getContext());
+                                View dialogView = mInflator.inflate(R.layout.dialog_match_conflict, null);
+
+                                builder.setView(dialogView)
+                                        .setTitle("Resolve conflict...")
+                                        .setNegativeButton("Cancel", null);
+
+                                Dialog dialog = builder.create();
+
+                                RecyclerView conflictView = dialogView.findViewById(R.id.dialog_matchConflictAdapter);
+                                conflictView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
+                                conflictView.setAdapter(new MatchConflictAdapter(wrapper.getDataList(station),
+                                        MatchesAdapter.this, dialog, fragment.getContext()));
+
+                                dialog.show();
                             }
-                            return true;
-                        }
-                    });
+                        });
+                    }
                 } else {
                     matchView.setText("");
 
