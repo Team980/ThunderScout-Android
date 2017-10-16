@@ -12,10 +12,20 @@ import com.team980.thunderscout.home.card_views.UnfinishedMatchesViewHolder;
 
 public enum CardType {
     //WELCOME(R.layout.card_pending_matches), TODO First run card that explains the basics
+
+    //Requires scouting flow refactor
     PENDING_MATCHES(R.layout.card_pending_matches), //Matches currently being processed by the scouting flow or just failed to be sent via Bluetooth
+
+    //Requires data cache implementation
     UNFINISHED_MATCHES(R.layout.card_unfinished_matches), //Matches that were saved upon exiting the scouting flow
-    DEVICE_STORAGE_STATS(R.layout.card_device_storage),
+
+    //Requires data cache implementation
     RECENT_MATCHES(R.layout.card_recent_matches), //Matches that were recently scouted, and what happened to them
+
+    //Requires LocalStorage status access
+    DEVICE_STORAGE_STATS(R.layout.card_device_storage), //Data on local device - completion, recent matches
+
+    //Requires Bluetooth Server status access
     BLUETOOTH_SERVER_STATS(R.layout.card_bluetooth_server); //Also includes recently received matches and what happened to them
 
     @LayoutRes

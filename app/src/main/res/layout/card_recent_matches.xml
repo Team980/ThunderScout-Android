@@ -15,30 +15,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="6dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="12dp">
+            android:padding="12dp">
 
             <ImageView
+                android:id="@+id/card_icon"
                 android:layout_width="21dp"
                 android:layout_height="21dp"
+                android:layout_alignParentLeft="true"
                 android:src="@drawable/ic_assignment_turned_in_white_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/card_icon"
                 android:gravity="center_vertical"
                 android:text="Recent matches"
                 android:textColor="@android:color/white" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/card_text"

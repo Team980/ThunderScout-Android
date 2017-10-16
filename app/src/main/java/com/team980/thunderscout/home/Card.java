@@ -1,5 +1,6 @@
 package com.team980.thunderscout.home;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 /**
@@ -9,12 +10,19 @@ public class Card implements Comparable<Card> {
 
     private CardType type;
 
-    public Card(CardType type) {
+    private Context context;
+
+    public Card(CardType type, Context context) {
         this.type = type;
+        this.context = context;
     }
 
     public CardType getCardType() {
         return type;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     @Override
