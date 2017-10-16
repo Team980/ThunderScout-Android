@@ -9,5 +9,7 @@ abstract public class CardViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    abstract public void bind(Card card);
+    abstract public void bind(); //ViewHolder registers listener types
+
+    abstract public void update(); //Called when listener has data to pass to the card
 }

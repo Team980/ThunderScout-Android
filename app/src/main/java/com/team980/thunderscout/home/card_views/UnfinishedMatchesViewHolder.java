@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.home.Card;
 import com.team980.thunderscout.home.CardViewHolder;
 
 public class UnfinishedMatchesViewHolder extends CardViewHolder {
@@ -18,7 +17,12 @@ public class UnfinishedMatchesViewHolder extends CardViewHolder {
     }
 
     @Override
-    public void bind(Card card) {
+    public void bind() {
         cardText.setText("Unfinished matches show up here");
+    }
+
+    @Override
+    public void update() {
+
     }
 }

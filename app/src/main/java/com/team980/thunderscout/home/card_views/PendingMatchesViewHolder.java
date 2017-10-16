@@ -6,7 +6,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.home.Card;
 import com.team980.thunderscout.home.CardViewHolder;
 
 public class PendingMatchesViewHolder extends CardViewHolder {
@@ -24,7 +23,7 @@ public class PendingMatchesViewHolder extends CardViewHolder {
     }
 
     @Override
-    public void bind(final Card card) {
+    public void bind() {
         cardProgress.setIndeterminate(true);
         dismissButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,5 +32,10 @@ public class PendingMatchesViewHolder extends CardViewHolder {
             }
         });
         cardText.setText("Sending to UNKNOWN...");
+    }
+
+    @Override
+    public void update() {
+
     }
 }

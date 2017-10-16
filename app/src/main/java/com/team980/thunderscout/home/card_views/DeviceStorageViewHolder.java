@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.matches.MatchWrapper;
 import com.team980.thunderscout.analytics.matches.breakdown.MatchInfoActivity;
-import com.team980.thunderscout.home.Card;
 import com.team980.thunderscout.home.CardViewHolder;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
 
@@ -33,10 +32,15 @@ public class DeviceStorageViewHolder extends CardViewHolder {
     }
 
     @Override
-    public void bind(final Card card) {
+    public void bind() {
         dataCompletionText.setText("XX% complete - missing Y matches");
 
         ((LinearLayout) matchNumber.getParent()).setVisibility(View.GONE); //TODO figure out how to refresh
+    }
+
+    @Override
+    public void update() {
+
     }
 
     public void refreshLastMatch(final Context context, final MatchWrapper wrapper) {

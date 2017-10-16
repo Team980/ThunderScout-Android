@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+//TODO FeedAdapter listens for updates, and
 public class FeedAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     private LayoutInflater mInflator;
@@ -43,7 +44,7 @@ public class FeedAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
-        holder.bind(cardList.get(position));
+        holder.bind();
     }
 
     @Override
@@ -66,16 +67,16 @@ public class FeedAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(fragment.getContext());
 
-        cardList.add(new Card(CardType.PENDING_MATCHES, fragment.getContext()));
-        cardList.add(new Card(CardType.UNFINISHED_MATCHES, fragment.getContext()));
-        cardList.add(new Card(CardType.RECENT_MATCHES, fragment.getContext()));
+        cardList.add(new Card(CardType.PENDING_MATCHES));
+        cardList.add(new Card(CardType.UNFINISHED_MATCHES));
+        cardList.add(new Card(CardType.RECENT_MATCHES));
 
         AccountScope.getStorageWrapper(AccountScope.LOCAL, fragment.getContext()) //It already calls getApplicationContext
                 .queryData(new StorageWrapper.StorageListener() {
                     @Override
                     public void onDataQuery(List<ScoutData> dataList) {
                         if (!dataList.isEmpty()) {
-                            cardList.add(new Card(CardType.DEVICE_STORAGE_STATS, fragment.getContext())); //TODO is there a way to do this without querying?
+                            cardList.add(new Card(CardType.DEVICE_STORAGE_STATS)); //TODO is there a way to do this without querying?
                             Collections.sort(cardList);
                             notifyDataSetChanged();
                         }
@@ -98,7 +99,7 @@ public class FeedAdapter extends RecyclerView.Adapter<CardViewHolder> {
                 });
 
         if (sharedPrefs.getBoolean(fragment.getResources().getString(R.string.pref_enable_bluetooth_server), true)) {
-            cardList.add(new Card(CardType.BLUETOOTH_SERVER_STATS, fragment.getContext()));
+            cardList.add(new Card(CardType.BLUETOOTH_SERVER_STATS));
         }
 
         Collections.sort(cardList);
