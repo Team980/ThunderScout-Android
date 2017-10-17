@@ -25,6 +25,17 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:enabled="true"
+        android:icon="@drawable/ic_shortcut_bluetooth"
+        android:shortcutId="toggle_bluetooth_server"
+        android:shortcutLongLabel="@string/shortcut_toggle_bluetooth_server_long"
+        android:shortcutShortLabel="@string/shortcut_toggle_bluetooth_server_short">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="com.team980.thunderscout.bluetooth.BluetoothServerToggleActivity"
+            android:targetPackage="com.team980.thunderscout" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
         android:icon="@drawable/ic_shortcut_send"
         android:shortcutId="match_scout"
         android:shortcutLongLabel="@string/shortcut_match_scout_long"

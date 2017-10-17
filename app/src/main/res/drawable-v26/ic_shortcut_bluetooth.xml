@@ -3,7 +3,7 @@
     <background android:drawable="@drawable/ic_shortcut_background" />
     <foreground>
         <inset
-            android:drawable="@drawable/ic_shortcut_send_foreground"
+            android:drawable="@drawable/ic_shortcut_bluetooth_foreground"
             android:inset="33.4%" />
     </foreground>
 </adaptive-icon>
