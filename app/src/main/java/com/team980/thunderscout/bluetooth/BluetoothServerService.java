@@ -185,16 +185,6 @@ public class BluetoothServerService extends Service {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         running.setContentIntent(serverSettingsIntent);
-        adapterMissing.setContentIntent(serverSettingsIntent);
-
-        NotificationCompat.Action openServerSetting = new NotificationCompat.Action(
-                R.drawable.ic_settings_white_24dp,
-                "MORE OPTIONS",
-                serverSettingsIntent
-        );
-
-        running.addAction(openServerSetting);
-        adapterMissing.addAction(openServerSetting);
 
         PendingIntent enableBluetoothIntent = PendingIntent.getActivity(this, 1,
                 new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),
@@ -203,12 +193,26 @@ public class BluetoothServerService extends Service {
         adapterDisabled.setContentIntent(enableBluetoothIntent);
 
         NotificationCompat.Action enableBluetoothSetting = new NotificationCompat.Action(
-                R.drawable.ic_settings_bluetooth_white_24dp,
-                "ENABLE BLUETOOTH",
+                R.drawable.ic_bluetooth_searching_white_24dp,
+                "Enable Bluetooth",
                 enableBluetoothIntent
         );
 
+        PendingIntent disableServerIntent = PendingIntent.getActivity(this, 1,
+                new Intent(this, BluetoothServerToggleActivity.class),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        adapterMissing.setContentIntent(disableServerIntent);
+
+        NotificationCompat.Action disableServerSetting = new NotificationCompat.Action(
+                R.drawable.ic_clear_white_24dp,
+                "Disable Server",
+                disableServerIntent
+        );
+
+        running.addAction(disableServerSetting);
+
         adapterDisabled.addAction(enableBluetoothSetting);
-        adapterDisabled.addAction(openServerSetting);
+        adapterDisabled.addAction(disableServerSetting);
     }
 }
