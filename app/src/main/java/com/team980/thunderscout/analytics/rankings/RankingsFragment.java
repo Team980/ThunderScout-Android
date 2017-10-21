@@ -203,13 +203,13 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view) { //SearchView
         swipeContainer.setEnabled(false);
     }
 
     @Override
-    public boolean onClose() {
-        adapter.resetFilters();
+    public boolean onClose() { //SearchView
+        adapter.filterByTeam("");
 
         swipeContainer.setEnabled(true);
         return false;
