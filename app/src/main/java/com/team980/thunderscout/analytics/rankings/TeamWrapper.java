@@ -69,28 +69,28 @@ public class TeamWrapper { //TODO We shouldn't be creating this many AverageScou
                 return "Last updated " + SimpleDateFormat.getDateTimeInstance().format(new AverageScoutData(dataList).getLastUpdated());
             case SORT_AUTO_GEARS_DELIVERED:
                 return formatter.format(new AverageScoutData(dataList).getAverageAutoGearsDelivered()) + " gears delivered";
-            case SORT_AUTO_GEARS_DROPPED:
-                return formatter.format(new AverageScoutData(dataList).getAverageAutoGearsDropped()) + " gears dropped";
-            case SORT_AUTO_LOW_GOAL_DUMP_AMOUNT:
-                return new AverageScoutData(dataList).getAverageAutoLowGoalDumpAmount() + " amount of fuel dumped";
+            //case SORT_AUTO_GEARS_DROPPED:
+            //return formatter.format(new AverageScoutData(dataList).getAverageAutoGearsDropped()) + " gears dropped";
+            //case SORT_AUTO_LOW_GOAL_DUMP_AMOUNT:
+            //return new AverageScoutData(dataList).getAverageAutoLowGoalDumpAmount() + " amount of fuel dumped";
             case SORT_AUTO_HIGH_GOALS:
                 return formatter.format(new AverageScoutData(dataList).getAverageAutoHighGoals()) + " high goals";
-            case SORT_AUTO_MISSED_HIGH_GOALS:
-                return formatter.format(new AverageScoutData(dataList).getAverageAutoHighGoals()) + " missed high goals";
-            case SORT_CROSSED_BASELINE_PERCENTAGE:
-                return "Crossed the baseline in " + formatter.format(new AverageScoutData(dataList).getCrossedBaselinePercentage()) + "% of matches";
+            //case SORT_AUTO_MISSED_HIGH_GOALS:
+            //return formatter.format(new AverageScoutData(dataList).getAverageAutoHighGoals()) + " missed high goals";
+            //case SORT_CROSSED_BASELINE_PERCENTAGE:
+            //return "Crossed the baseline in " + formatter.format(new AverageScoutData(dataList).getCrossedBaselinePercentage()) + "% of matches";
             case SORT_TELEOP_GEARS_DELIVERED:
                 return formatter.format(new AverageScoutData(dataList).getAverageTeleopGearsDelivered()) + " gears delivered";
-            case SORT_TELEOP_GEARS_DROPPED:
-                return formatter.format(new AverageScoutData(dataList).getAverageAutoGearsDropped()) + " gears dropped";
-            case SORT_TELEOP_DUMP_FREQUENCY:
-                return formatter.format(new AverageScoutData(dataList).getAverageTeleopDumpFrequency()) + " dumps per match";
-            case SORT_TELEOP_DUMP_AMOUNT:
-                return new AverageScoutData(dataList).getAverageTeleopLowGoalDumpAmount() + " amount of fuel dumped";
+            //case SORT_TELEOP_GEARS_DROPPED:
+            //return formatter.format(new AverageScoutData(dataList).getAverageAutoGearsDropped()) + " gears dropped";
+            //case SORT_TELEOP_DUMP_FREQUENCY:
+            //return formatter.format(new AverageScoutData(dataList).getAverageTeleopDumpFrequency()) + " dumps per match";
+            //case SORT_TELEOP_DUMP_AMOUNT:
+            //return new AverageScoutData(dataList).getAverageTeleopLowGoalDumpAmount() + " amount of fuel dumped";
             case SORT_TELEOP_HIGH_GOALS:
                 return formatter.format(new AverageScoutData(dataList).getAverageTeleopHighGoals()) + " high goals";
-            case SORT_TELEOP_MISSED_HIGH_GOALS:
-                return formatter.format(new AverageScoutData(dataList).getAverageTeleopHighGoals()) + " missed high goals";
+            //case SORT_TELEOP_MISSED_HIGH_GOALS:
+            //return formatter.format(new AverageScoutData(dataList).getAverageTeleopHighGoals()) + " missed high goals";
             case SORT_CLIMBING_STATS_PERCENTAGE:
                 return "Pressed the touchpad in " + formatter.format(new AverageScoutData(dataList).getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "% of matches";
             default: //Fallback - shouldn't trigger

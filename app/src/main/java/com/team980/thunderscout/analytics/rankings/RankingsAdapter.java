@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
 import com.team980.thunderscout.analytics.rankings.breakdown.TeamInfoActivity;
+import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.schema.ScoutData;
 
@@ -50,9 +51,9 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
     private RankingsFragment fragment;
 
     private List<TeamWrapper> teamList; //The list that represents all the loaded data
-    private List<TeamWrapper> displayList; //The list that represents the shown data - TODO I'm still unsure if this is a good idea
 
     private TeamComparator sortMode = TeamComparator.SORT_POINT_CONTRIBUTION;
+    private String teamFilter = "";
 
     private NumberFormat formatter;
 
@@ -62,7 +63,6 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
         this.fragment = fragment;
 
         teamList = new ArrayList<>();
-        displayList = new ArrayList<>();
 
         formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(0);
@@ -77,13 +77,13 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
     @Override
     public void onBindViewHolder(RankingsAdapter.TeamViewHolder holder, int position) {
-        TeamWrapper team = displayList.get(position);
+        TeamWrapper team = teamList.get(position);
         holder.bind(team);
     }
 
     @Override
     public int getItemCount() {
-        return displayList.size();
+        return teamList.size();
     }
 
     public TeamComparator getCurrentSortMode() {
@@ -95,28 +95,13 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
         Collections.sort(teamList, TeamComparator.getComparator(sortMode));
 
-        displayList.clear();
-        displayList.addAll(teamList);
         notifyDataSetChanged();
     }
 
     public void filterByTeam(String query) {
-        final List<TeamWrapper> filteredList = new ArrayList<>();
-        for (TeamWrapper team : teamList) {
-            final String text = team.getTeam().toLowerCase();
-            if (text.contains(query.toLowerCase())) {
-                filteredList.add(team);
-            }
-        }
+        teamFilter = query;
 
-        displayList.clear();
-        displayList.addAll(filteredList);
-        notifyDataSetChanged();
-    }
-
-    public void resetFilters() {
-        displayList.clear();
-        displayList.addAll(teamList);
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, fragment.getContext()).queryData(this);
         notifyDataSetChanged();
     }
 
@@ -140,17 +125,16 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
                 }
             }
 
-            //New team
-            TeamWrapper wrapper = new TeamWrapper(data.getTeam());
-            wrapper.getDataList().add(data);
-            teamList.add(wrapper);
-            //notifyItemInserted(teamList.size() - 1);
+            if (data.getTeam().toLowerCase().startsWith(teamFilter.toLowerCase())) { //Inline filtering in query - TODO add a setting to use contains?
+                //New team
+                TeamWrapper wrapper = new TeamWrapper(data.getTeam());
+                wrapper.getDataList().add(data);
+                teamList.add(wrapper);
+                //notifyItemInserted(teamList.size() - 1);
+            }
         }
 
         Collections.sort(teamList, TeamComparator.getComparator(sortMode));
-
-        displayList.clear();
-        displayList.addAll(teamList);
         notifyDataSetChanged();
 
         fragment.getSwipeRefreshLayout().setRefreshing(false);
@@ -168,9 +152,8 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
     @Override
     public void onDataClear(boolean success) {
-        int listSize = displayList.size();
+        int listSize = teamList.size();
         teamList.clear();
-        displayList.clear();
         notifyItemRangeRemoved(0, listSize);
     }
 
