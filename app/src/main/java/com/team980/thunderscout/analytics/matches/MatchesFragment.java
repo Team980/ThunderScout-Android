@@ -119,7 +119,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_data_tools, menu);
+        inflater.inflate(R.menu.menu_match_tools, menu);
     }
 
     @Override
@@ -204,7 +204,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         } else {
             toolbar.setTitle("Matches");
             toolbar.getMenu().clear();
-            toolbar.inflateMenu(R.menu.menu_data_tools);
+            toolbar.inflateMenu(R.menu.menu_rank_tools);
             TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.secondary, R.color.secondary_dark,
                     R.color.primary, R.color.primary_dark, (AppCompatActivity) getActivity());
 
