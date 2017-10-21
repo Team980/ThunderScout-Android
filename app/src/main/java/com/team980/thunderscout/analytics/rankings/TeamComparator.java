@@ -45,19 +45,19 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_AUTO_GEARS_DROPPED("Auto gears dropped") {
+    /*SORT_AUTO_GEARS_DROPPED("Auto gears dropped") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Float.valueOf(new AverageScoutData(o1.getDataList()).getAverageAutoGearsDropped())
                     .compareTo(new AverageScoutData(o2.getDataList()).getAverageAutoGearsDropped());
         }
-    },
+    },*/
 
-    SORT_AUTO_LOW_GOAL_DUMP_AMOUNT("Auto low goal dump amount") {
+    /*SORT_AUTO_LOW_GOAL_DUMP_AMOUNT("Auto low goal dump amount") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return new AverageScoutData(o1.getDataList()).getAverageAutoLowGoalDumpAmount()
                     .compareTo(new AverageScoutData(o2.getDataList()).getAverageAutoLowGoalDumpAmount());
         }
-    },
+    },*/
 
     SORT_AUTO_HIGH_GOALS("Auto high goals") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
@@ -66,19 +66,19 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_AUTO_MISSED_HIGH_GOALS("Auto missed high goals") {
+    /*SORT_AUTO_MISSED_HIGH_GOALS("Auto missed high goals") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Float.valueOf(new AverageScoutData(o1.getDataList()).getAverageAutoMissedHighGoals())
                     .compareTo(new AverageScoutData(o2.getDataList()).getAverageAutoMissedHighGoals());
         }
-    },
+    },*/
 
-    SORT_CROSSED_BASELINE_PERCENTAGE("Crossed baseline percentage") {
+    /*SORT_CROSSED_BASELINE_PERCENTAGE("Crossed baseline percentage") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(new AverageScoutData(o1.getDataList()).getCrossedBaselinePercentage())
                     .compareTo(new AverageScoutData(o2.getDataList()).getCrossedBaselinePercentage());
         }
-    },
+    },*/
 
     SORT_TELEOP_GEARS_DELIVERED("Teleop gears delivered") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
@@ -87,26 +87,26 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_TELEOP_GEARS_DROPPED("Teleop gears dropped") {
+    /*SORT_TELEOP_GEARS_DROPPED("Teleop gears dropped") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Float.valueOf(new AverageScoutData(o1.getDataList()).getAverageTeleopGearsDropped())
                     .compareTo(new AverageScoutData(o2.getDataList()).getAverageTeleopGearsDropped());
         }
-    },
+    },*/
 
-    SORT_TELEOP_DUMP_FREQUENCY("Teleop dump frequency") {
+    /*SORT_TELEOP_DUMP_FREQUENCY("Teleop dump frequency") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Float.valueOf(new AverageScoutData(o1.getDataList()).getAverageTeleopDumpFrequency())
                     .compareTo(new AverageScoutData(o2.getDataList()).getAverageTeleopDumpFrequency());
         }
-    },
+    },*/
 
-    SORT_TELEOP_DUMP_AMOUNT("Teleop dump amount") {
+    /*SORT_TELEOP_DUMP_AMOUNT("Teleop dump amount") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return new AverageScoutData(o1.getDataList()).getAverageTeleopLowGoalDumpAmount()
                     .compareTo(new AverageScoutData(o2.getDataList()).getAverageTeleopLowGoalDumpAmount());
         }
-    },
+    },*/
 
     SORT_TELEOP_HIGH_GOALS("Teleop high goals") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
@@ -115,12 +115,12 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_TELEOP_MISSED_HIGH_GOALS("Teleop missed high goals") {
+    /*SORT_TELEOP_MISSED_HIGH_GOALS("Teleop missed high goals") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Float.valueOf(new AverageScoutData(o1.getDataList()).getAverageTeleopMissedHighGoals())
                     .compareTo(new AverageScoutData(o2.getDataList()).getAverageTeleopMissedHighGoals());
         }
-    },
+    },*/
 
     SORT_CLIMBING_STATS_PERCENTAGE("Pressed touchpad percentage") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {

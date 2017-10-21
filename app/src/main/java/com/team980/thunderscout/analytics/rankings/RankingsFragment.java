@@ -134,7 +134,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         if (id == R.id.action_sort) {
             AlertDialog sortDialog;
 
-            // Creating and Building the Dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("Sort teams by...");
 
@@ -203,13 +202,13 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view) { //SearchView
         swipeContainer.setEnabled(false);
     }
 
     @Override
-    public boolean onClose() {
-        adapter.resetFilters();
+    public boolean onClose() { //SearchView
+        adapter.filterByTeam("");
 
         swipeContainer.setEnabled(true);
         return false;
