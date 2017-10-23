@@ -209,7 +209,7 @@ public class AverageScoutData implements Serializable {
 
         for (ScoutData data : dataList) {
             if (data.getTroubleWith() != null && !data.getTroubleWith().isEmpty()) {
-                troublesList.add(data.getTroubleWith());
+                troublesList.add("[" + data.getMatchNumber() + "] " + data.getTroubleWith()); //Prefix match number on comment
             }
         }
 
