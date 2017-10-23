@@ -40,6 +40,7 @@ import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.matches.breakdown.MatchInfoActivity;
+import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
@@ -55,6 +56,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     private MatchesFragment fragment;
 
     private SparseArray<MatchWrapper> matchArray;
+
+    private String teamFilter = "";
 
     private ArrayList<ScoutData> selectedItems;
 
@@ -83,6 +86,13 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     @Override
     public int getItemCount() {
         return matchArray.size();
+    }
+
+    public void filterByTeam(String query) {
+        teamFilter = query;
+
+        AccountScope.getStorageWrapper(AccountScope.LOCAL, fragment.getContext()).queryData(this);
+        notifyDataSetChanged();
     }
 
     public void select(ScoutData data) {
@@ -133,16 +143,18 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
         notifyItemRangeRemoved(0, arraySize);
 
         for (ScoutData data : dataList) {
-            MatchWrapper wrapper = matchArray.get(data.getMatchNumber());
+            if (data.getTeam().toLowerCase().startsWith(teamFilter.toLowerCase())) { //Inline filtering in query - TODO add a setting to use contains?
+                MatchWrapper wrapper = matchArray.get(data.getMatchNumber());
 
-            if (wrapper == null) {
-                wrapper = new MatchWrapper(data.getMatchNumber());
-                matchArray.put(data.getMatchNumber(), wrapper);
-                notifyItemInserted(data.getMatchNumber());
+                if (wrapper == null) {
+                    wrapper = new MatchWrapper(data.getMatchNumber());
+                    matchArray.put(data.getMatchNumber(), wrapper);
+                    notifyItemInserted(data.getMatchNumber());
+                }
+
+                wrapper.setData(data.getAllianceStation(), data);
+                notifyItemChanged(data.getMatchNumber());
             }
-
-            wrapper.setData(data.getAllianceStation(), data);
-            notifyItemChanged(data.getMatchNumber());
         }
 
         fragment.getSwipeRefreshLayout().setRefreshing(false);

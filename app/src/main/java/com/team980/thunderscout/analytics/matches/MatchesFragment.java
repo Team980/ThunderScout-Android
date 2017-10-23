@@ -37,6 +37,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +45,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
@@ -52,7 +54,7 @@ import com.team980.thunderscout.csv.ExportActivity;
 import com.team980.thunderscout.csv.ImportActivity;
 import com.team980.thunderscout.util.TransitionUtils;
 
-public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, View.OnClickListener {
+public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, View.OnClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     private Toolbar toolbar;
     private DrawerLayout drawer;
@@ -120,6 +122,13 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_match_tools, menu);
+
+        SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+        searchView.setOnSearchClickListener(this);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(this);
+        searchView.setQueryHint("Search for team...");
+        searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 
     @Override
@@ -164,15 +173,16 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         return false;
     }
 
-    /**
-     * Listener for HOME button when in selection mode
-     */
     @Override
     public void onClick(View view) {
-        if (selectionMode) {
+        if (view.getId() == android.R.id.home && selectionMode) {
             adapter.clearSelections();
             setSelectionMode(false);
         }
+
+        //if (view.getId() == R.id.action_search) {
+        //swipeContainer.setEnabled(false);
+        //}
     }
 
     public boolean isInSelectionMode() {
@@ -249,5 +259,25 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         } else {
             AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
         }
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        adapter.filterByTeam(query);
+        dataView.scrollToPosition(0);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onClose() { //SearchView
+        adapter.filterByTeam("");
+
+        //swipeContainer.setEnabled(true);
+        return false;
     }
 }

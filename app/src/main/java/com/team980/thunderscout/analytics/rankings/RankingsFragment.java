@@ -182,6 +182,13 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
+    public void onClick(View view) {
+        //if (view.getId() == R.id.action_search) {
+        //swipeContainer.setEnabled(false);
+        //}
+    }
+
+    @Override
     public void onRefresh() { //SwipeRefreshLayout
         AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
     }
@@ -208,15 +215,10 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void onClick(View view) { //SearchView
-        swipeContainer.setEnabled(false);
-    }
-
-    @Override
     public boolean onClose() { //SearchView
         adapter.filterByTeam("");
 
-        swipeContainer.setEnabled(true);
+        //swipeContainer.setEnabled(true);
         return false;
     }
 }
