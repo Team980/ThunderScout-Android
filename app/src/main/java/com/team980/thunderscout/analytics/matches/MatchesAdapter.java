@@ -24,6 +24,7 @@
 
 package com.team980.thunderscout.analytics.matches;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -283,7 +284,15 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                                 } else {
                                     Intent launchInfoActivity = new Intent(fragment.getContext(), MatchInfoActivity.class);
                                     launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", wrapper.getData(station));
-                                    fragment.getContext().startActivity(launchInfoActivity);
+
+                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                                        ActivityOptions options = ActivityOptions
+                                                .makeSceneTransitionAnimation(fragment.getActivity(), matchView, "match");
+                                        matchView.setTransitionName("match");
+                                        fragment.getContext().startActivity(launchInfoActivity, options.toBundle());
+                                    } else {
+                                        fragment.getContext().startActivity(launchInfoActivity);
+                                    }
                                 }
                             }
                         });

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -137,6 +138,16 @@ public class TeamInfoActivity extends AppCompatActivity { //TODO finish this
             comments.setLayoutManager(new LinearLayoutManager(this));
             comments.setAdapter(new CommentsAdapter(data.getCommentsList()));
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            supportFinishAfterTransition();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private boolean listIsEmpty(List<String> list) {

@@ -24,6 +24,7 @@
 
 package com.team980.thunderscout.analytics.rankings;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -184,9 +185,17 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(v.getContext(), TeamInfoActivity.class);
+                    Intent launchInfoActivity = new Intent(fragment.getContext(), TeamInfoActivity.class);
                     launchInfoActivity.putExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT", new AverageScoutData(wrapper.getDataList()));
-                    v.getContext().startActivity(launchInfoActivity);
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        ActivityOptions options = ActivityOptions
+                                .makeSceneTransitionAnimation(fragment.getActivity(), itemView, "team");
+                        itemView.setTransitionName("team");
+                        fragment.getContext().startActivity(launchInfoActivity, options.toBundle());
+                    } else {
+                        fragment.getContext().startActivity(launchInfoActivity);
+                    }
                 }
             });
         }
