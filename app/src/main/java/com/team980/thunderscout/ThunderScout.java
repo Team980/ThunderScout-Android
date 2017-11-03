@@ -24,13 +24,13 @@
 
 package com.team980.thunderscout;
 
-import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.service.quicksettings.TileService;
+import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.bluetooth.BluetoothQuickTileService;
@@ -43,7 +43,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
-public class ThunderScout extends Application implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class ThunderScout extends MultiDexApplication implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Deprecated
     public static byte[] serializeObject(Object o) {

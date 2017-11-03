@@ -37,6 +37,7 @@ android {
         applicationId "com.team980.thunderscout"
         minSdkVersion 16
         targetSdkVersion 27
+        multiDexEnabled true
         versionCode 15 //Next public release: 15
         versionName "2.0-beta4" //2018 will be when I make the semantic change
         resConfigs "en"
@@ -97,11 +98,13 @@ dependencies {
 
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    implementation 'com.android.support:multidex:1.0.2'
+
     //Material About
     implementation 'com.github.daniel-stoneuk:material-about-library:2.2.3-support26.1.0' //Weird version system
 
     //OpenCSV
-    implementation('com.opencsv:opencsv:4.0') {
+    implementation('com.opencsv:opencsv:4.0') { //Transitively requires Apache Commons, which necessitates multidex...
         exclude group: 'commons-beanutils'
     }
 
