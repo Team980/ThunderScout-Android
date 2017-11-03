@@ -52,7 +52,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
@@ -238,7 +238,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         if (v.getId() == R.id.fab) {
             initScoutData();
 
-            FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Starting scouting loop");
+            Crashlytics.log(Log.INFO, this.getClass().getName(), "Starting scouting loop");
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -312,7 +312,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         //TODO I would advocate running this in the background again and posting notifications
         //TODO because this method doesn't work great with the current data structure
         //TODO it also assumes LOCAL mode
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Looping through data output loop");
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Looping through data output loop");
         if (!operationStateDialog.isShowing()) {
             operationStateDialog.show(); //Show it if it isn't already visible
         }
@@ -364,7 +364,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         operationStateDialog.setMessage("");
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Operation " +
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Operation " +
                 operationId + " SUCCESSFUL");
 
         dataOutputLoop();
@@ -395,9 +395,9 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     }
                 });
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Operation " +
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Operation " +
                 operationId + " FAILED");
-        //FirebaseCrash.report(ex); This would create duplicate reports.
+        //Crashlytics.logException(ex); This would create duplicate reports.
 
         AlertDialog alert = builder.create();
         alert.show();

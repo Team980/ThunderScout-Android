@@ -37,7 +37,7 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.opencsv.CSVWriter;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
@@ -115,7 +115,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
                     sortOrder                                 // The sort order
             );
         } catch (SQLiteException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             return null;
         }
 
@@ -134,7 +134,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
         try {
             writer = new CSVWriter(new FileWriter(csv), ',');
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             return null;
         }
 
@@ -152,7 +152,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             //ignore
         }
 
@@ -276,7 +276,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
     @Override
     protected void onProgressUpdate(String[] values) {
         //Runs on UI thread when publishProgress() is called
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "CSV export complete: " + values[0]);
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "CSV export complete: " + values[0]);
         Toast.makeText(activity, "CSV export complete: " + values[0], Toast.LENGTH_SHORT).show();
 
         super.onProgressUpdate(values);
@@ -298,7 +298,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
                 activity.startActivityForResult(intent, 0);
             } else {
                 Toast.makeText(activity, "No activities found to handle request", Toast.LENGTH_LONG).show();
-                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "No activities found to handle request");
+                Crashlytics.log(Log.INFO, this.getClass().getName(), "No activities found to handle request");
             }
 
         } else if (action == ExportActivity.ExportAction.SHARE_TO_SYSTEM) {
@@ -314,7 +314,7 @@ public class CSVExportTask extends AsyncTask<Void, String, File> {
                 activity.startActivity(Intent.createChooser(intent, "Share exported data using"));
             } else {
                 Toast.makeText(activity, "No activities found to handle request", Toast.LENGTH_LONG).show();
-                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "No activities found to handle request");
+                Crashlytics.log(Log.INFO, this.getClass().getName(), "No activities found to handle request");
             }
         }
 

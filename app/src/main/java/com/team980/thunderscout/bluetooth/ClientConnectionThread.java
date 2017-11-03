@@ -32,7 +32,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -73,7 +73,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             // MY_UUID is the app's UUID string, also used by the server code
             tmp = device.createRfcommSocketToServiceRecord(UUID.fromString(BluetoothInfo.UUID));
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
         mmSocket = tmp;
 
@@ -95,7 +95,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
         try {
             Thread.sleep(scoutData.getAllianceStation().getDelay()); //Variable delay based on AllianceStation
         } catch (InterruptedException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
 
         // Cancel discovery because it will slow down the connection
@@ -112,13 +112,13 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             try {
                 mmSocket.close();
             } catch (IOException closeException) {
-                FirebaseCrash.report(closeException);
+                Crashlytics.logException(closeException);
             }
             manageError(notificationId, connectException);
             return;
         }
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Connection to server device successful");
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Connection to server device successful");
 
         scoutData.setDate(new Date(System.currentTimeMillis()));
 
@@ -127,7 +127,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             outputStream = new ObjectOutputStream(mmSocket.getOutputStream());
             outputStream.flush();
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             manageError(notificationId, e);
             return;
         }
@@ -138,12 +138,12 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
         try {
             outputStream.writeObject(gson.toJson(scoutData));
             outputStream.flush();
         } catch (Exception e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             manageError(notificationId, e);
             return;
         }
@@ -166,7 +166,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
         try {
             outputStream.close();
         } catch (Exception e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
     }
 

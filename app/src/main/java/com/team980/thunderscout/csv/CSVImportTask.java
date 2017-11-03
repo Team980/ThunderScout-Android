@@ -30,7 +30,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.opencsv.CSVReader;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.backend.AccountScope;
@@ -59,7 +59,7 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
         try {
             reader = new CSVReader(new InputStreamReader(activity.getContentResolver().openInputStream(fileUri)));
         } catch (FileNotFoundException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             return null;
         }
 
@@ -67,7 +67,7 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
         try {
             rows = reader.readAll();
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             return null;
         }
 
@@ -87,7 +87,7 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
     protected void onProgressUpdate(ScoutData[] values) {
         //Runs on UI thread when publishProgress() is called
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Posting ScoutData from CSV " + fileUri.getLastPathSegment() + " to database");
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Posting ScoutData from CSV " + fileUri.getLastPathSegment() + " to database");
 
         AccountScope.getStorageWrapper(AccountScope.LOCAL, activity).writeData(values[0], null); //TODO assumes LOCAL, no callback
 
@@ -99,7 +99,7 @@ public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
         //Runs on UI thread after execution
         super.onPostExecute(v);
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "CSV import complete");
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "CSV import complete");
         Toast.makeText(activity, "CSV import complete", Toast.LENGTH_SHORT).show();
         activity.finish();
     }

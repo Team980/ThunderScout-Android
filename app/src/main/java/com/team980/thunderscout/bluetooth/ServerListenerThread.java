@@ -30,7 +30,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -51,7 +51,7 @@ public class ServerListenerThread extends Thread {
             // MY_UUID is the app's UUID string, also used by the client code
             tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(BluetoothInfo.SERVICE_NAME, UUID.fromString(BluetoothInfo.UUID));
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
         mmServerSocket = tmp;
 
@@ -63,17 +63,17 @@ public class ServerListenerThread extends Thread {
         while (true) {
             final BluetoothSocket socket;
             try {
-                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Listening for incoming connections");
+                Crashlytics.log(Log.INFO, this.getClass().getName(), "Listening for incoming connections");
                 socket = mmServerSocket.accept();
             } catch (IOException e) {
-                FirebaseCrash.report(e);
+                Crashlytics.logException(e);
                 break;
             }
             // If a connection was accepted
             if (socket != null) {
                 // Do work to manage the connection (in a separate thread)
 
-                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Connected to " + socket.getRemoteDevice().getName());
+                Crashlytics.log(Log.INFO, this.getClass().getName(), "Connected to " + socket.getRemoteDevice().getName());
 
                 ServerConnectionTask readTask = new ServerConnectionTask(socket, context);
                 readTask.execute();

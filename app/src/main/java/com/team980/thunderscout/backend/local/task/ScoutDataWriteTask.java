@@ -30,7 +30,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
@@ -106,7 +106,7 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, List<ScoutDat
                         null,
                         values);
             } catch (final Exception e) {
-                FirebaseCrash.report(e);
+                Crashlytics.logException(e);
                 return dataWritten;
             }
 

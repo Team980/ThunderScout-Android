@@ -31,7 +31,7 @@ import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
@@ -62,11 +62,11 @@ public class ScoutDataClearTask extends AsyncTask<Void, Void, Boolean> {
         try {
             rowsDeleted = db.delete(ScoutDataContract.ScoutDataTable.TABLE_NAME, null, null);
         } catch (SQLiteException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             return false;
         }
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), rowsDeleted + " rows deleted from DB");
+        Crashlytics.log(Log.INFO, this.getClass().getName(), rowsDeleted + " rows deleted from DB");
 
         db.close();
         return true;

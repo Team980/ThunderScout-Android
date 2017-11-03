@@ -31,6 +31,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
+import com.danielstone.materialaboutlibrary.items.MaterialAboutItemOnClickAction;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutTitleItem;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
@@ -50,7 +51,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .text("Version " + BuildConfig.VERSION_NAME)
                 .subText("Click for patch notes")
                 .icon(R.drawable.ic_info_outline_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         AlertDialog.Builder builder = new AlertDialog.Builder(AboutActivity.this);
@@ -65,7 +66,7 @@ public class AboutActivity extends MaterialAboutActivity {
         titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("View on Google Play")
                 .icon(R.drawable.ic_google_play_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         try {
@@ -80,7 +81,7 @@ public class AboutActivity extends MaterialAboutActivity {
         titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("View on Amazon Appstore")
                 .icon(R.drawable.ic_amazon_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         try {
@@ -96,7 +97,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .text("Fork on GitHub")
                 .subText("Team980/ThunderScout-Android")
                 .icon(R.drawable.ic_github_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
@@ -109,7 +110,7 @@ public class AboutActivity extends MaterialAboutActivity {
         titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("View on Chief Delphi")
                 .icon(R.drawable.ic_forum_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
@@ -132,7 +133,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .text("Chief Delphi")
                 .subText("@19lmyers")
                 .icon(R.drawable.ic_forum_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
@@ -152,7 +153,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .text("Like us on Facebook")
                 .subText("@Team980Thunderbots")
                 .icon(R.drawable.ic_facebook_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
@@ -166,7 +167,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .text("Follow us on Twitter")
                 .subText("@frc980")
                 .icon(R.drawable.ic_twitter_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
@@ -180,7 +181,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .text("Follow us on Instagram")
                 .subText("@frcteam980")
                 .icon(R.drawable.ic_instagram_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
@@ -194,7 +195,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .text("Follow us on Snapchat")
                 .subText("@frcteam980")
                 .icon(R.drawable.ic_snapchat_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
@@ -208,7 +209,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .text("Subscribe to us on YouTube")
                 .subText("FRC Team 980 Official")
                 .icon(R.drawable.ic_youtube_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);
@@ -222,7 +223,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .text("Visit our website")
                 .subText("team980.com")
                 .icon(R.drawable.ic_web_white)
-                .setOnClickListener(new MaterialAboutActionItem.OnClickListener() {
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
                         Intent i = new Intent(Intent.ACTION_VIEW);

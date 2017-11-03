@@ -34,7 +34,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -80,7 +80,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         try {
             inputStream = new ObjectInputStream(mmSocket.getInputStream()); //TODO fix the IOException caused by the missing socket...
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
                     notificationId, e);
             return null;
@@ -96,7 +96,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         try {
             data = gson.fromJson((String) inputStream.readObject(), ScoutData.class);
         } catch (Exception e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             e.printStackTrace();
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
                     notificationId, e);
@@ -106,7 +106,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         try {
             inputStream.close();
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
         }
 
         notificationManager.showBtTransferFinished(notificationId);
@@ -118,7 +118,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
         //Runs on UI thread when publishProgress() is called
         super.onProgressUpdate(values);
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Inserted ScoutData into DB, row=" + values[0]);
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Inserted ScoutData into DB, row=" + values[0]);
     }
 
     @Override

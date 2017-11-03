@@ -32,7 +32,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.service.quicksettings.TileService;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.bluetooth.BluetoothQuickTileService;
 import com.team980.thunderscout.bluetooth.BluetoothServerService;
 
@@ -59,7 +59,7 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
 
             return buf;
         } catch (IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             return null;
         }
     }
@@ -73,7 +73,7 @@ public class ThunderScout extends Application implements SharedPreferences.OnSha
 
             return object;
         } catch (ClassNotFoundException | IOException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             return null;
         }
 

@@ -38,7 +38,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
@@ -61,13 +61,13 @@ public class BluetoothServerService extends Service {
             @Override
             public void onReceive(Context context, Intent intent) {
                 final String action = intent.getAction();
-                FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Change detected in Bluetooth adapter");
+                Crashlytics.log(Log.INFO, this.getClass().getName(), "Change detected in Bluetooth adapter");
 
                 if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
                     final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,
                             BluetoothAdapter.ERROR);
 
-                    FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Bluetooth adapter state: " + state);
+                    Crashlytics.log(Log.INFO, this.getClass().getName(), "Bluetooth adapter state: " + state);
                     switch (state) {
                         case BluetoothAdapter.STATE_TURNING_OFF:
                             notificationManager.notify(SERVER_NOTIFICATION_ID, adapterDisabled.build());
@@ -94,23 +94,23 @@ public class BluetoothServerService extends Service {
         //TODO manage notifications in here; more diverse and explanatory descriptions and states
 
         registerReceiver(receiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Starting Bluetooth service");
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Starting Bluetooth service");
 
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
 
             notificationManager.notify(SERVER_NOTIFICATION_ID, adapterMissing.build());
-            FirebaseCrash.logcat(Log.ERROR, this.getClass().getName(), "NULL Bluetooth adapter");
+            Crashlytics.log(Log.ERROR, this.getClass().getName(), "NULL Bluetooth adapter");
         } else if (!mBluetoothAdapter.isEnabled()) {
 
             //mBluetoothAdapter.enable(); //Applications should NEVER call this directly
             notificationManager.notify(SERVER_NOTIFICATION_ID, adapterDisabled.build());
-            FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Requesting Bluetooth to be enabled");
+            Crashlytics.log(Log.INFO, this.getClass().getName(), "Requesting Bluetooth to be enabled");
         } else {
 
             acceptThread = new ServerListenerThread(getApplicationContext());
             acceptThread.start();
-            FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Bluetooth on, starting server accept thread");
+            Crashlytics.log(Log.INFO, this.getClass().getName(), "Bluetooth on, starting server accept thread");
         }
 
         // If we get killed, after returning from here, restart - TODO is this why it runs twice?
@@ -127,7 +127,7 @@ public class BluetoothServerService extends Service {
     public void onDestroy() {
         stopForeground(true);
 
-        FirebaseCrash.logcat(Log.INFO, this.getClass().getName(), "Stopping Bluetooth service");
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Stopping Bluetooth service");
 
         unregisterReceiver(receiver);
 

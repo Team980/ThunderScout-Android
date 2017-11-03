@@ -31,7 +31,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
@@ -112,7 +112,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
                     sortOrder                                 // The sort order
             );
         } catch (SQLiteException e) {
-            FirebaseCrash.report(e);
+            Crashlytics.logException(e);
             return null;
         }
 
