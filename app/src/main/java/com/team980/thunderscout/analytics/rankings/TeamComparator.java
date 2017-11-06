@@ -143,11 +143,7 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
     }
 
     public static Comparator<TeamWrapper> getComparator(final TeamComparator option) {
-        return new Comparator<TeamWrapper>() {
-            public int compare(TeamWrapper o1, TeamWrapper o2) {
-                return option.compare(o1, o2) * -1;
-            }
-        };
+        return (o1, o2) -> option.compare(o1, o2) * -1;
     }
 
     public static String[] getFormattedList() {

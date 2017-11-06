@@ -24,7 +24,6 @@
 
 package com.team980.thunderscout.preferences;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -58,25 +57,22 @@ public class BluetoothDevicePickerPreference extends Preference {
     @Override
     protected void onClick() {
         BluetoothDeviceManager bdm = new BluetoothDeviceManager(getContext());
-        bdm.pickDevice(new BluetoothDeviceManager.BluetoothDevicePickResultHandler() {
-            @Override
-            public void onDevicePicked(BluetoothDevice device) {
-                if (device != null) {
-                    address = device.getAddress();
-                    name = device.getName();
+        bdm.pickDevice(device -> {
+            if (device != null) {
+                address = device.getAddress();
+                name = device.getName();
 
-                    setSummary(name);
-                } else {
-                    address = null;
-                    name = null;
+                setSummary(name);
+            } else {
+                address = null;
+                name = null;
 
-                    setSummary("Not selected");
-                }
-
-                getEditor().putString(getKey(), address)
-                        .putString(getKey() + "_cached_name", name)
-                        .commit();
+                setSummary("Not selected");
             }
+
+            getEditor().putString(getKey(), address)
+                    .putString(getKey() + "_cached_name", name)
+                    .commit();
         });
     }
 

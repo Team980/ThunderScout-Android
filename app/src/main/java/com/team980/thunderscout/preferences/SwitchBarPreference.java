@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
@@ -42,30 +41,23 @@ public class SwitchBarPreference extends TwoStatePreference {
             status.setText("Off");
         }
 
-        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!callChangeListener(isChecked)) {
-                    // Listener didn't like it, change it back.
-                    // CompoundButton will make sure we don't recurse.
-                    buttonView.setChecked(!isChecked);
-                    return;
-                }
-
-                if (isChecked) {
-                    status.setText("On");
-                } else {
-                    status.setText("Off");
-                }
-
-                setChecked(isChecked);
+        toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!callChangeListener(isChecked)) {
+                // Listener didn't like it, change it back.
+                // CompoundButton will make sure we don't recurse.
+                buttonView.setChecked(!isChecked);
+                return;
             }
+
+            if (isChecked) {
+                status.setText("On");
+            } else {
+                status.setText("Off");
+            }
+
+            setChecked(isChecked);
         });
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle.setChecked(!isChecked());
-            }
-        });
+        view.setOnClickListener(view1 -> toggle.setChecked(!isChecked()));
     }
 }

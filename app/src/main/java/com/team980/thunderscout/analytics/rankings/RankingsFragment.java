@@ -144,14 +144,12 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
             builder.setTitle("Sort teams by...");
 
             builder.setSingleChoiceItems(TeamComparator.getFormattedList(), adapter.getCurrentSortMode().ordinal(),
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int item) {
-                            TeamComparator sortMode = TeamComparator.values()[item];
+                    (dialog, item1) -> {
+                        TeamComparator sortMode = TeamComparator.values()[item1];
 
-                            adapter.sort(sortMode);
+                        adapter.sort(sortMode);
 
-                            dialog.dismiss();
-                        }
+                        dialog.dismiss();
                     });
 
             sortDialog = builder.create();

@@ -28,7 +28,6 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -225,12 +224,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         new AlertDialog.Builder(this)
                 .setTitle("Discard draft?")
                 .setNegativeButton("Cancel", null)
-                .setPositiveButton("Discard", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        ScoutingFlowActivity.super.onBackPressed();
-                    }
-                }).create().show();
+                .setPositiveButton("Discard", (arg0, arg1) -> ScoutingFlowActivity.super.onBackPressed()).create().show();
     }
 
     @Override
@@ -380,19 +374,15 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 .setIcon(R.drawable.ic_warning_white_24dp)
                 .setMessage(ex.getLocalizedMessage() + "\n" + "\n" + "Would you like to reattempt the operation?")
                 .setCancelable(false)
-                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        operationStates.putBoolean(operationId, true); //retry
+                .setPositiveButton("Retry", (dialog, id) -> {
+                    operationStates.putBoolean(operationId, true); //retry
 
-                        dataOutputLoop();
-                    }
+                    dataOutputLoop();
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        operationStates.putBoolean(operationId, false); //do not retry
+                .setNegativeButton("Cancel", (dialog, id) -> {
+                    operationStates.putBoolean(operationId, false); //do not retry
 
-                        dataOutputLoop();
-                    }
+                    dataOutputLoop();
                 });
 
         Crashlytics.log(Log.INFO, this.getClass().getName(), "Operation " +

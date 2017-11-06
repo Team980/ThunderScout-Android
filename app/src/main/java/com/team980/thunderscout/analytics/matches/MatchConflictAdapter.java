@@ -26,7 +26,6 @@ package com.team980.thunderscout.analytics.matches;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -106,36 +105,25 @@ public class MatchConflictAdapter extends RecyclerView.Adapter<MatchConflictAdap
             dataSource.setText(data.getSource());
             //dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(data.getDate()));
 
-            infoButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
-                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", data);
-                    context.startActivity(launchInfoActivity);
-                }
+            infoButton.setOnClickListener(v -> {
+                Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
+                launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", data);
+                context.startActivity(launchInfoActivity);
             });
 
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new AlertDialog.Builder(context)
-                            .setTitle("Delete this match from this account?")
-                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    AccountScope.getStorageWrapper(AccountScope.LOCAL, context).removeData(data, parentAdapter); //TODO support multiple accounts, use snackbar
+            deleteButton.setOnClickListener(v -> new AlertDialog.Builder(context)
+                    .setTitle("Delete this match from this account?")
+                    .setPositiveButton("Delete", (dialog, which) -> {
+                        AccountScope.getStorageWrapper(AccountScope.LOCAL, context).removeData(data, parentAdapter); //TODO support multiple accounts, use snackbar
 
-                                    dataList.remove(data);
-                                    notifyItemRemoved(getAdapterPosition());
+                        dataList.remove(data);
+                        notifyItemRemoved(getAdapterPosition());
 
-                                    if (dataList.size() <= 1) {
-                                        parentDialog.dismiss();
-                                    }
-                                }
-                            })
-                            .setNegativeButton("Cancel", null).show();
-                }
-            });
+                        if (dataList.size() <= 1) {
+                            parentDialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton("Cancel", null).show());
         }
     }
 }

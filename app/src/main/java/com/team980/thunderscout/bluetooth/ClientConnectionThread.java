@@ -154,13 +154,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
             Handler handler = new Handler(Looper.getMainLooper());
 
-            handler.post(new Runnable() {
-
-                @Override
-                public void run() {
-                    activity.dataOutputCallbackSuccess(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH);
-                }
-            });
+            handler.post(() -> activity.dataOutputCallbackSuccess(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH));
         }
 
         try {
@@ -188,13 +182,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
 
             Handler handler = new Handler(Looper.getMainLooper());
 
-            handler.post(new Runnable() {
-
-                @Override
-                public void run() {
-                    activity.dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, ex);
-                }
-            });
+            handler.post(() -> activity.dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, ex));
         }
     }
 }

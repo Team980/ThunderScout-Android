@@ -208,36 +208,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
             if (wrapper != null) { //Why would this ever be null!?
                 matchNumber.setText(wrapper.getMatchNumber() + "");
 
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (fragment.isInSelectionMode()) {
-                            for (AllianceStation station : AllianceStation.values()) {
-                                if (wrapper.getData(station) == null) {
-                                    continue;
-                                }
-
-                                if (selectedItems.contains(wrapper.getData(station))) { //if selected
-                                    deselect(wrapper.getData(station));
-                                    itemView.findViewById(station.getMatchCellViewID())
-                                            .setBackgroundColor(mInflator.getContext()
-                                                    .getResources().getColor(station.getColorStratified()));
-                                } else {
-                                    select(wrapper.getData(station));
-                                    itemView.findViewById(station.getMatchCellViewID())
-                                            .setBackgroundColor(mInflator.getContext()
-                                                    .getResources().getColor(R.color.accent));
-                                }
-                            }
-                        } else {
-                            //Nothing yet
-                        }
-                    }
-                });
-
-                itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
+                itemView.setOnClickListener(v -> {
+                    if (fragment.isInSelectionMode()) {
                         for (AllianceStation station : AllianceStation.values()) {
                             if (wrapper.getData(station) == null) {
                                 continue;
@@ -255,8 +227,30 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                                                 .getResources().getColor(R.color.accent));
                             }
                         }
-                        return true;
+                    } else {
+                        //Nothing yet
                     }
+                });
+
+                itemView.setOnLongClickListener(v -> {
+                    for (AllianceStation station : AllianceStation.values()) {
+                        if (wrapper.getData(station) == null) {
+                            continue;
+                        }
+
+                        if (selectedItems.contains(wrapper.getData(station))) { //if selected
+                            deselect(wrapper.getData(station));
+                            itemView.findViewById(station.getMatchCellViewID())
+                                    .setBackgroundColor(mInflator.getContext()
+                                            .getResources().getColor(station.getColorStratified()));
+                        } else {
+                            select(wrapper.getData(station));
+                            itemView.findViewById(station.getMatchCellViewID())
+                                    .setBackgroundColor(mInflator.getContext()
+                                            .getResources().getColor(R.color.accent));
+                        }
+                    }
+                    return true;
                 });
             } else {
                 matchNumber.setText(""); //is this really necessary?
@@ -280,38 +274,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                                     .getResources().getColor(station.getColorStratified()));
                         }
 
-                        matchView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (fragment.isInSelectionMode()) {
-                                    if (selectedItems.contains(wrapper.getData(station))) { //if selected
-                                        deselect(wrapper.getData(station));
-                                        matchView.setBackgroundColor(mInflator.getContext()
-                                                .getResources().getColor(station.getColorStratified()));
-                                    } else {
-                                        select(wrapper.getData(station));
-                                        matchView.setBackgroundColor(mInflator.getContext()
-                                                .getResources().getColor(R.color.accent));
-                                    }
-                                } else {
-                                    Intent launchInfoActivity = new Intent(fragment.getContext(), MatchInfoActivity.class);
-                                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", wrapper.getData(station));
-
-                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                                        ActivityOptions options = ActivityOptions
-                                                .makeSceneTransitionAnimation(fragment.getActivity(), matchView, "match");
-                                        matchView.setTransitionName("match");
-                                        fragment.getContext().startActivity(launchInfoActivity, options.toBundle());
-                                    } else {
-                                        fragment.getContext().startActivity(launchInfoActivity);
-                                    }
-                                }
-                            }
-                        });
-
-                        matchView.setOnLongClickListener(new View.OnLongClickListener() {
-                            @Override
-                            public boolean onLongClick(View v) {
+                        matchView.setOnClickListener(v -> {
+                            if (fragment.isInSelectionMode()) {
                                 if (selectedItems.contains(wrapper.getData(station))) { //if selected
                                     deselect(wrapper.getData(station));
                                     matchView.setBackgroundColor(mInflator.getContext()
@@ -321,8 +285,32 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                                     matchView.setBackgroundColor(mInflator.getContext()
                                             .getResources().getColor(R.color.accent));
                                 }
-                                return true;
+                            } else {
+                                Intent launchInfoActivity = new Intent(fragment.getContext(), MatchInfoActivity.class);
+                                launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", wrapper.getData(station));
+
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                                    ActivityOptions options = ActivityOptions
+                                            .makeSceneTransitionAnimation(fragment.getActivity(), matchView, "match");
+                                    matchView.setTransitionName("match");
+                                    fragment.getContext().startActivity(launchInfoActivity, options.toBundle());
+                                } else {
+                                    fragment.getContext().startActivity(launchInfoActivity);
+                                }
                             }
+                        });
+
+                        matchView.setOnLongClickListener(v -> {
+                            if (selectedItems.contains(wrapper.getData(station))) { //if selected
+                                deselect(wrapper.getData(station));
+                                matchView.setBackgroundColor(mInflator.getContext()
+                                        .getResources().getColor(station.getColorStratified()));
+                            } else {
+                                select(wrapper.getData(station));
+                                matchView.setBackgroundColor(mInflator.getContext()
+                                        .getResources().getColor(R.color.accent));
+                            }
+                            return true;
                         });
 
                     } else { //MULTIPLE matches in this slot - display error!
@@ -334,29 +322,26 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                                 .getResources().getColor(R.color.accent_dark));
 
 
-                        matchView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (fragment.isInSelectionMode()) {
-                                    return;
-                                }
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getContext());
-                                View dialogView = mInflator.inflate(R.layout.dialog_match_conflict, null);
-
-                                builder.setView(dialogView)
-                                        .setTitle("Resolve conflict...")
-                                        .setNegativeButton("Cancel", null);
-
-                                Dialog dialog = builder.create();
-
-                                RecyclerView conflictView = dialogView.findViewById(R.id.dialog_matchConflictAdapter);
-                                conflictView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
-                                conflictView.setAdapter(new MatchConflictAdapter(wrapper.getDataList(station),
-                                        MatchesAdapter.this, dialog, fragment.getContext()));
-
-                                dialog.show();
+                        matchView.setOnClickListener(v -> {
+                            if (fragment.isInSelectionMode()) {
+                                return;
                             }
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getContext());
+                            View dialogView = mInflator.inflate(R.layout.dialog_match_conflict, null);
+
+                            builder.setView(dialogView)
+                                    .setTitle("Resolve conflict...")
+                                    .setNegativeButton("Cancel", null);
+
+                            Dialog dialog = builder.create();
+
+                            RecyclerView conflictView = dialogView.findViewById(R.id.dialog_matchConflictAdapter);
+                            conflictView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
+                            conflictView.setAdapter(new MatchConflictAdapter(wrapper.getDataList(station),
+                                    MatchesAdapter.this, dialog, fragment.getContext()));
+
+                            dialog.show();
                         });
                     }
                 } else {

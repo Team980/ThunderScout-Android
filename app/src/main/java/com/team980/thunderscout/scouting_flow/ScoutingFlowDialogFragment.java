@@ -26,7 +26,6 @@ package com.team980.thunderscout.scouting_flow;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -106,46 +105,25 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
             }
         }
 
-        allianceStationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu menu = new PopupMenu(getContext(), v);
-                menu.inflate(R.menu.menu_alliance_stations);
-                menu.setOnMenuItemClickListener(ScoutingFlowDialogFragment.this); //this works ;)
-                menu.show();
-            }
+        allianceStationButton.setOnClickListener(v -> {
+            PopupMenu menu = new PopupMenu(getContext(), v);
+            menu.inflate(R.menu.menu_alliance_stations);
+            menu.setOnMenuItemClickListener(ScoutingFlowDialogFragment.this); //this works ;)
+            menu.show();
         });
 
         builder.setView(dialogView)
                 // Add action buttons
-                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        mListener.onDialogPositiveClick(ScoutingFlowDialogFragment.this);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        mListener.onDialogNegativeClick(ScoutingFlowDialogFragment.this);
-                    }
-                });
+                .setPositiveButton("Confirm", (dialog, id) -> mListener.onDialogPositiveClick(ScoutingFlowDialogFragment.this))
+                .setNegativeButton("Cancel", (dialog, id) -> mListener.onDialogNegativeClick(ScoutingFlowDialogFragment.this));
 
         final Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() { //Complex code to override auto dismiss
+        //Complex code to override auto dismiss
+        dialog.setOnShowListener(d -> {
 
-            @Override
-            public void onShow(DialogInterface d) {
-
-                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-                button.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        mListener.onDialogPositiveClick(ScoutingFlowDialogFragment.this);
-                    }
-                });
-            }
+            Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(view -> mListener.onDialogPositiveClick(ScoutingFlowDialogFragment.this));
         });
 
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);

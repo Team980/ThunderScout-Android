@@ -182,20 +182,17 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
             //rank.setText(formatter.format(wrapper.getExpectedPointContribution()) + " points");
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(fragment.getContext(), TeamInfoActivity.class);
-                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT", new AverageScoutData(wrapper.getDataList()));
+            itemView.setOnClickListener(v -> {
+                Intent launchInfoActivity = new Intent(fragment.getContext(), TeamInfoActivity.class);
+                launchInfoActivity.putExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT", new AverageScoutData(wrapper.getDataList()));
 
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        ActivityOptions options = ActivityOptions
-                                .makeSceneTransitionAnimation(fragment.getActivity(), itemView, "team");
-                        itemView.setTransitionName("team");
-                        fragment.getContext().startActivity(launchInfoActivity, options.toBundle());
-                    } else {
-                        fragment.getContext().startActivity(launchInfoActivity);
-                    }
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options = ActivityOptions
+                            .makeSceneTransitionAnimation(fragment.getActivity(), itemView, "team");
+                    itemView.setTransitionName("team");
+                    fragment.getContext().startActivity(launchInfoActivity, options.toBundle());
+                } else {
+                    fragment.getContext().startActivity(launchInfoActivity);
                 }
             });
         }

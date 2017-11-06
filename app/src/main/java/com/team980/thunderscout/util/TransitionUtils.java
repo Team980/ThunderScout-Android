@@ -58,25 +58,22 @@ public class TransitionUtils {
 
     public static void toolbarFadeTransition(final int toolbarColor, final int statusBarColor, final int toolbarToColor, final int statusBarToColor, final AppCompatActivity activity) {
         ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                // Use animation position to blend colors.
-                float position = animation.getAnimatedFraction();
+        anim.addUpdateListener(animation -> {
+            // Use animation position to blend colors.
+            float position = animation.getAnimatedFraction();
 
-                // Apply blended color to the status bar.
-                int blended = blendColors(statusBarColor, statusBarToColor, position);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    activity.getWindow().setStatusBarColor(blended);
-                }
+            // Apply blended color to the status bar.
+            int blended = blendColors(statusBarColor, statusBarToColor, position);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                activity.getWindow().setStatusBarColor(blended);
+            }
 
-                // Apply blended color to the ActionBar.
-                blended = blendColors(toolbarColor, toolbarToColor, position);
-                activity.findViewById(R.id.toolbar).setBackgroundColor(blended);
+            // Apply blended color to the ActionBar.
+            blended = blendColors(toolbarColor, toolbarToColor, position);
+            activity.findViewById(R.id.toolbar).setBackgroundColor(blended);
 
-                if (activity.findViewById(R.id.tab_layout) != null) { //we don't want a random NPE
-                    activity.findViewById(R.id.tab_layout).setBackgroundColor(blended);
-                }
+            if (activity.findViewById(R.id.tab_layout) != null) { //we don't want a random NPE
+                activity.findViewById(R.id.tab_layout).setBackgroundColor(blended);
             }
         });
         anim.setDuration(350).start();

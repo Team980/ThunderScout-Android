@@ -36,18 +36,15 @@ public class MasterSwitchPreference extends TwoTargetPreference {
 
         final View widgetView = view.findViewById(android.R.id.widget_frame);
         if (widgetView != null) {
-            widgetView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mSwitch != null && !mSwitch.isEnabled()) {
-                        return;
-                    }
+            widgetView.setOnClickListener(v -> {
+                if (mSwitch != null && !mSwitch.isEnabled()) {
+                    return;
+                }
+                setChecked(!mChecked);
+                if (!callChangeListener(mChecked)) {
                     setChecked(!mChecked);
-                    if (!callChangeListener(mChecked)) {
-                        setChecked(!mChecked);
-                    } else {
-                        persistBoolean(mChecked);
-                    }
+                } else {
+                    persistBoolean(mChecked);
                 }
             });
         }
