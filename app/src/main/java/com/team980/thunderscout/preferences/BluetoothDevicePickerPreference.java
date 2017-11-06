@@ -30,7 +30,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.Preference;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.team980.thunderscout.bluetooth.BluetoothDeviceManager;
 
@@ -47,10 +46,6 @@ public class BluetoothDevicePickerPreference extends Preference {
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        Log.d("PREFTEST-A", getKey());
-        Log.d("PREFTEST-A", getKey() + "_cached_name");
-        Log.d("PREFTEST-A", getSharedPreferences().getString(getKey(), "null"));
-        Log.d("PREFTEST-A", getSharedPreferences().getString(getKey() + "_cached_name", "null"));
 
         address = getSharedPreferences().getString(getKey(), null);
         name = getSharedPreferences().getString(getKey() + "_cached_name", "Not selected");
@@ -64,17 +59,17 @@ public class BluetoothDevicePickerPreference extends Preference {
         bdm.pickDevice(new BluetoothDeviceManager.BluetoothDevicePickResultHandler() {
             @Override
             public void onDevicePicked(BluetoothDevice device) {
-                getEditor().putString(getKey(), device.getAddress())
-                        .putString(getKey() + "_cached_name", device.getName())
+                if (device != null) {
+                    address = device.getAddress();
+                    name = device.getName();
+                } else {
+                    address = null;
+                    name = "Not selected";
+                }
+
+                getEditor().putString(getKey(), address)
+                        .putString(getKey() + "_cached_name", name)
                         .commit();
-
-                Log.d("PREFTEST-B", getKey());
-                Log.d("PREFTEST-B", getKey() + "_cached_name");
-                Log.d("PREFTEST-B", device.getAddress());
-                Log.d("PREFTEST-B", device.getName());
-
-                address = device.getAddress();
-                name = device.getName();
 
                 setSummary(name);
             }
