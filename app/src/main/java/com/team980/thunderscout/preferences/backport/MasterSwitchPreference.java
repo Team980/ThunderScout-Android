@@ -1,8 +1,9 @@
 package com.team980.thunderscout.preferences.backport;
 
 import android.content.Context;
+import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
-import android.widget.Switch;
+import android.view.View;
 
 import com.team980.thunderscout.R;
 
@@ -12,29 +13,16 @@ import com.team980.thunderscout.R;
  * A custom preference that provides inline switch toggle. It has a mandatory field for title, and
  * optional fields for icon and sub-text.
  * <p>
- * TODO will require AppCompat - Preference v7 to work...
+ * TODO Doesn't work well... does it need AppCompatPreference?
  */
 public class MasterSwitchPreference extends TwoTargetPreference {
 
-    private Switch mSwitch;
+    private SwitchCompat mSwitch;
     private boolean mChecked;
     private boolean mEnableSwitch = true;
 
-    public MasterSwitchPreference(Context context, AttributeSet attrs,
-                                  int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    public MasterSwitchPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
     public MasterSwitchPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public MasterSwitchPreference(Context context) {
-        super(context);
     }
 
     @Override
@@ -42,12 +30,13 @@ public class MasterSwitchPreference extends TwoTargetPreference {
         return R.layout.preference_widget_master_switch;
     }
 
-    /*@Override
-    public void onBindViewHolder(PreferenceViewHolder holder) {
-        super.onBindViewHolder(holder);
-        final View widgetView = holder.findViewById(android.R.id.widget_frame);
+    @Override
+    public void onBindView(View view) {
+        super.onBindView(view);
+
+        final View widgetView = view.findViewById(android.R.id.widget_frame);
         if (widgetView != null) {
-            widgetView.setOnClickListener(new OnClickListener() {
+            widgetView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mSwitch != null && !mSwitch.isEnabled()) {
@@ -63,13 +52,15 @@ public class MasterSwitchPreference extends TwoTargetPreference {
             });
         }
 
-        mSwitch = (Switch) holder.findViewById(R.id.switchWidget);
+        mChecked = getPersistedBoolean(false);
+
+        mSwitch = view.findViewById(R.id.switchWidget);
         if (mSwitch != null) {
             mSwitch.setContentDescription(getTitle());
             mSwitch.setChecked(mChecked);
             mSwitch.setEnabled(mEnableSwitch);
         }
-    }*/
+    }
 
     public boolean isChecked() {
         return mSwitch != null && mSwitch.isEnabled() && mChecked;
@@ -89,7 +80,7 @@ public class MasterSwitchPreference extends TwoTargetPreference {
         }
     }
 
-    public Switch getSwitch() {
+    public SwitchCompat getSwitch() {
         return mSwitch;
     }
 }

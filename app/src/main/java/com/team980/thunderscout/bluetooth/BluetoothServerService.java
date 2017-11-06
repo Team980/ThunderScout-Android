@@ -35,6 +35,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.preference.PreferenceActivity;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -147,7 +148,7 @@ public class BluetoothServerService extends Service {
         running = new NotificationCompat.Builder(this, "bluetooth_server")
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp)
                 .setContentTitle("Bluetooth Server")
-                .setContentText("Now accepting incoming transfers") //todo new icon?
+                .setContentText("Click to open settings") //todo new icon?
                 .setOngoing(true)
                 .setPriority(Notification.PRIORITY_LOW)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -181,7 +182,8 @@ public class BluetoothServerService extends Service {
                 .setGroup("BT_SERVER");
 
         PendingIntent serverSettingsIntent = PendingIntent.getActivity(this, 1,
-                new Intent(this, SettingsActivity.class),
+                new Intent(this, SettingsActivity.class).putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+                        SettingsActivity.BluetoothServerPreferenceFragment.class.getName()),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         running.setContentIntent(serverSettingsIntent);

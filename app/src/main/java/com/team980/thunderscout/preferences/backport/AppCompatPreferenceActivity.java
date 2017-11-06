@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.util;
+package com.team980.thunderscout.preferences.backport;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

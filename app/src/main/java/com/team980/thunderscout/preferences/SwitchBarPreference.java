@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 
 // Amalgam of Android source, Stack Overflow, and the other custom one
-// TODO add to settings as part of visual refresh
-// TODO also pin it to the top of the UI
 public class SwitchBarPreference extends TwoStatePreference {
 
     public SwitchBarPreference(Context context, AttributeSet attrs) {
@@ -24,6 +22,7 @@ public class SwitchBarPreference extends TwoStatePreference {
     @Override
     protected View onCreateView(ViewGroup parent) {
         super.onCreateView(parent);
+
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return inflater.inflate(R.layout.preference_switch_bar, parent, false);
     }

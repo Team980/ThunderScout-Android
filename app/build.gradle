@@ -51,6 +51,8 @@ android {
         }
 
         debug {
+            ext.enableCrashlytics = false //Disable Crashlytics mapping on debug builds
+
             //ONLY FOR TESTING - SLOWS DOWN BUILD TIME
             //minifyEnabled false
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

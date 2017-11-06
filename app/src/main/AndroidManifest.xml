@@ -132,6 +132,10 @@
             android:name=".firebase_debug.FirebaseDebugActivity"
             android:label="Storm Debug"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar" />-->
+
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
     </application>
 
 </manifest>

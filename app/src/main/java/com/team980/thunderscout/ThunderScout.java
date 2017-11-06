@@ -33,6 +33,7 @@ import android.service.quicksettings.TileService;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.team980.thunderscout.bluetooth.BluetoothQuickTileService;
 import com.team980.thunderscout.bluetooth.BluetoothServerService;
 
@@ -42,6 +43,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+
+import io.fabric.sdk.android.Fabric;
 
 public class ThunderScout extends MultiDexApplication implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -115,6 +118,14 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
         }
 
         sharedPref.registerOnSharedPreferenceChangeListener(this);
+
+        //Manually init Crashlytics
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
+
+        // Initialize Fabric with the debug-disabled crashlytics.
+        Fabric.with(this, crashlyticsKit);
     }
 
     @Override

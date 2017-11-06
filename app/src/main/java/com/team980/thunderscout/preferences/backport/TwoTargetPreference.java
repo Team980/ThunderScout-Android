@@ -1,9 +1,12 @@
 package com.team980.thunderscout.preferences.backport;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.preference.Preference;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.team980.thunderscout.R;
 
@@ -13,43 +16,40 @@ import com.team980.thunderscout.R;
  * Implemented by MasterSwitchPreference.java
  */
 
-public class TwoTargetPreference extends Preference {
-
-    @TargetApi(value = 21)
-    public TwoTargetPreference(Context context, AttributeSet attrs,
-                               int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
-    public TwoTargetPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
+public abstract class TwoTargetPreference extends Preference {
 
     public TwoTargetPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
-    public TwoTargetPreference(Context context) {
-        super(context);
-        init();
-    }
+    @Override
+    protected View onCreateView(ViewGroup parent) {
+        super.onCreateView(parent);
 
-    private void init() {
         setLayoutResource(R.layout.preference_two_target);
         final int secondTargetResId = getSecondTargetResId();
         if (secondTargetResId != 0) {
             setWidgetLayoutResource(secondTargetResId);
         }
+
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View created = inflater.inflate(R.layout.preference_two_target, parent, false);
+
+        if (getSecondTargetResId() != 0) {
+            final LinearLayout widgetFrame = created.findViewById(android.R.id.widget_frame);
+            inflater.inflate(getSecondTargetResId(), widgetFrame, true);
+        }
+
+        return created;
     }
 
-    /*@Override
-    public void onBindViewHolder(PreferenceViewHolder holder) {
-        super.onBindViewHolder(holder);
-        final View divider = holder.findViewById(R.id.two_target_divider);
-        final View widgetFrame = holder.findViewById(android.R.id.widget_frame);
+    @Override
+    public void onBindView(View view) {
+        super.onBindView(view);
+
+        final View divider = view.findViewById(R.id.two_target_divider);
+        final View widgetFrame = view.findViewById(android.R.id.widget_frame);
+
         final boolean shouldHideSecondTarget = shouldHideSecondTarget();
         if (divider != null) {
             divider.setVisibility(shouldHideSecondTarget ? View.GONE : View.VISIBLE);
@@ -57,7 +57,7 @@ public class TwoTargetPreference extends Preference {
         if (widgetFrame != null) {
             widgetFrame.setVisibility(shouldHideSecondTarget ? View.GONE : View.VISIBLE);
         }
-    }*/
+    }
 
     protected boolean shouldHideSecondTarget() {
         return getSecondTargetResId() == 0;

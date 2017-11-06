@@ -24,29 +24,29 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
+    <com.team980.thunderscout.preferences.SwitchBarPreference
         android:defaultValue="false"
-        android:key="@string/pref_enable_bluetooth_server"
-        android:summary="Enable receiving scouting data from other devices via Bluetooth"
-        android:title="Enable Bluetooth Server" />
+        android:key="@string/pref_enable_bluetooth_server" />
 
     <PreferenceCategory
         android:dependency="@string/pref_enable_bluetooth_server"
-        android:title="Storage options">
+        android:title="This device">
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/pref_bt_save_to_local_device"
             android:title="Save to this device" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:dependency="@string/pref_enable_bluetooth_server"
+        android:title="Bluetooth server">
+
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="@string/pref_bt_send_to_bluetooth_server"
             android:title="Send to Bluetooth server" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Bluetooth">
 
         <com.team980.thunderscout.preferences.BluetoothDevicePickerPreference
             android:dependency="@string/pref_bt_send_to_bluetooth_server"

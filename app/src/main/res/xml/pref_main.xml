@@ -22,27 +22,24 @@
   ~ SOFTWARE.
   -->
 
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- TODO figure out how to NOT USE HEADERS for the top level -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:divider="@android:color/transparent">
 
-    <!--<header
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$GeneralPreferenceFragment"
+    <!--<PreferenceScreen
+        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$AppearancePreferenceFragment"
         android:icon="@drawable/ic_settings_white_24dp"
-        android:title="General" />-->
+        android:title="Appearance" />-->
 
-    <header
+    <PreferenceScreen
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$MatchScoutPreferenceFragment"
         android:icon="@drawable/ic_send_white_24dp"
+        android:summary="Scout matches and transmit them to other devices"
         android:title="Match scouting" />
 
-    <header
+    <PreferenceScreen
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$BluetoothServerPreferenceFragment"
         android:icon="@drawable/ic_settings_bluetooth_white_24dp"
+        android:summary="Receive data from other devices"
         android:title="Bluetooth server" />
 
-    <!--<header
-    android:fragment="com.team980.thunderscout.preferences.SettingsActivity$LocalStoragePreferenceFragment"
-    android:icon="@drawable/ic_settings_bluetooth_white_24dp"
-    android:title="Local storage" />-->
-
-</preference-headers>
+</PreferenceScreen>

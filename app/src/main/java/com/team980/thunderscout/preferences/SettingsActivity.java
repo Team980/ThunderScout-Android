@@ -24,37 +24,18 @@
 
 package com.team980.thunderscout.preferences;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.util.AppCompatPreferenceActivity;
+import com.team980.thunderscout.preferences.backport.AppCompatPreferenceActivity;
 
-import java.util.List;
-
-/**
- * A {@link PreferenceActivity} that presents a set of application settings. On
- * handset devices, settings are presented as a single list. On tablets,
- * settings are split by category, with category headers shown to the left of
- * the list of settings.
- * <p>
- * See <a href="http://developer.android.com/design/patterns/settings.html">
- * Android Design: Settings</a> for design guidelines and the <a
- * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
- * API Guide</a> for more information on developing a Settings UI.
- */
 public class SettingsActivity extends AppCompatPreferenceActivity {
-
-    //PreferenceChange listener now in ThunderScout.java
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -82,15 +63,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     };
 
-    /**
-     * Binds a preference's summary to its value. More specifically, when the
-     * preference's value is changed, its summary (line of text below the
-     * preference title) is updated to reflect the value. The summary is also
-     * immediately updated upon calling this method. The exact display format is
-     * dependent on the type of preference.
-     *
-     * @see #sBindPreferenceSummaryToValueListener
-     */
     private static void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
@@ -106,25 +78,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupActionBar();
 
-        if (hasHeaders()) {
-            //Button button = new Button(this);
-            //button.setText("Some action");
-            //setListFooter(button);
-        }
-    }
-
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            // Show the Up button in the action bar.
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -144,12 +100,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             //If the last fragment was removed then reset the title of main
             // fragment (if so the previous popBackStack made entries = 0).
             if (getFragmentManager().getBackStackEntryCount() == 0) {
-                getSupportActionBar()
-                        .setTitle("Settings");
+                getSupportActionBar().setTitle("Settings");
             }
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean hasHeaders() {
+        return false;
     }
 
     @Override
@@ -164,49 +124,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return super.onMenuItemSelected(featureId, item);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean onIsMultiPane() {
-        return getResources().getBoolean(R.bool.preferences_prefer_dual_pane);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void onBuildHeaders(List<PreferenceActivity.Header> target) {
-        loadHeadersFromResource(R.xml.pref_headers, target);
-    }
-
-    /**
-     * This method stops fragment injection in malicious applications.
-     * Make sure to deny any unknown fragments here.
-     */
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
-                || GeneralPreferenceFragment.class.getName().equals(fragmentName)
+                || MainPreferenceFragment.class.getName().equals(fragmentName)
                 || MatchScoutPreferenceFragment.class.getName().equals(fragmentName)
                 || BluetoothServerPreferenceFragment.class.getName().equals(fragmentName);
     }
 
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
+    public static class MainPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_general);
+            addPreferencesFromResource(R.xml.pref_main);
             //setHasOptionsMenu(true);
-
-            if (!getResources().getBoolean(R.bool.preferences_prefer_dual_pane)) {
-                SettingsActivity activity = (SettingsActivity) getActivity();
-
-                activity.getSupportActionBar().setTitle("General");
-            }
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
@@ -225,53 +156,26 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }*/
     }
 
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+
     public static class MatchScoutPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_match_scout);
 
-            if (!getResources().getBoolean(R.bool.preferences_prefer_dual_pane)) {
-                SettingsActivity activity = (SettingsActivity) getActivity();
-
-                activity.getSupportActionBar().setTitle("Match scouting");
-            }
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("ms_bt_server_device"));
+            SettingsActivity activity = (SettingsActivity) getActivity();
+            activity.getSupportActionBar().setTitle("Match scouting");
         }
     }
 
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class BluetoothServerPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_bt_server);
 
-            if (!getResources().getBoolean(R.bool.preferences_prefer_dual_pane)) {
-                SettingsActivity activity = (SettingsActivity) getActivity();
-
-                activity.getSupportActionBar().setTitle("Bluetooth server");
-            }
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("bt_bt_server_device"));
+            SettingsActivity activity = (SettingsActivity) getActivity();
+            activity.getSupportActionBar().setTitle("Bluetooth server");
         }
     }
 }

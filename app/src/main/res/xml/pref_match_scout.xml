@@ -24,29 +24,29 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
+    <com.team980.thunderscout.preferences.SwitchBarPreference
         android:defaultValue="true"
-        android:key="@string/pref_enable_match_scouting"
-        android:summary="Enable scouting matches from this device"
-        android:title="Enable match scouting" />
+        android:key="@string/pref_enable_match_scouting" />
 
     <PreferenceCategory
         android:dependency="@string/pref_enable_match_scouting"
-        android:title="Output options">
+        android:title="This device">
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/pref_ms_save_to_local_device"
             android:title="Save to this device" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:dependency="@string/pref_enable_match_scouting"
+        android:title="Bluetooth server">
+
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="@string/pref_ms_send_to_bluetooth_server"
             android:title="Send to Bluetooth server" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Bluetooth">
 
         <com.team980.thunderscout.preferences.BluetoothDevicePickerPreference
             android:dependency="@string/pref_ms_send_to_bluetooth_server"
