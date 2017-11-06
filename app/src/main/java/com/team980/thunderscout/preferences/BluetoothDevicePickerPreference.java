@@ -42,6 +42,8 @@ public class BluetoothDevicePickerPreference extends Preference {
 
     public BluetoothDevicePickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        setSummary("Not selected");
     }
 
     @Override
@@ -62,16 +64,18 @@ public class BluetoothDevicePickerPreference extends Preference {
                 if (device != null) {
                     address = device.getAddress();
                     name = device.getName();
+
+                    setSummary(name);
                 } else {
                     address = null;
-                    name = "Not selected";
+                    name = null;
+
+                    setSummary("Not selected");
                 }
 
                 getEditor().putString(getKey(), address)
                         .putString(getKey() + "_cached_name", name)
                         .commit();
-
-                setSummary(name);
             }
         });
     }
