@@ -22,24 +22,15 @@
   ~ SOFTWARE.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:divider="@android:color/transparent">
+<PreferenceScreen>
 
-    <!--<PreferenceScreen
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$AppearancePreferenceFragment"
-        android:icon="@drawable/ic_brush_white_24dp"
-        android:title="Appearance" />-->
+    <!--<ListPreference
+        android:title="Theme"
+        android:key="@string/pref_app_theme"/>-->
 
-    <PreferenceScreen
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$MatchScoutPreferenceFragment"
-        android:icon="@drawable/ic_send_white_24dp"
-        android:summary="Scout matches and transmit them to other devices"
-        android:title="Match scouting" />
-
-    <PreferenceScreen
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$BluetoothServerPreferenceFragment"
-        android:icon="@drawable/ic_settings_bluetooth_white_24dp"
-        android:summary="Receive data from other devices"
-        android:title="Bluetooth server" />
+    <!---<SwitchPreference
+        android:title="Tint navigation bar"
+        android:summary="May help prevent burn in on OLED devices"
+        android:key="@string/pref_tint_navigation_bar"/>-->
 
 </PreferenceScreen>

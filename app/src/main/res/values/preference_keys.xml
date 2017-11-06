@@ -2,12 +2,16 @@
 <resources>
 
     <!-- System -->
-    <string name="pref_current_account_scope">current_acount_scope</string>
+    <string name="pref_current_account_scope">current_account_scope</string>
 
     <string name="pref_last_used_match_number">last_used_match_number</string>
     <string name="pref_last_used_alliance_station">last_used_alliance_station</string>
 
     <string name="pref_last_presented_update_dialog">last_update_notified</string>
+
+    <!-- Appearance -->
+    <string name="pref_app_theme">app_theme</string>
+    <string name="pref_tint_navigation_bar">tint_nav_bar</string>
 
     <!-- Match scouting -->
     <string name="pref_enable_match_scouting">enable_match_scout</string>
