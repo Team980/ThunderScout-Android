@@ -27,6 +27,7 @@ package com.team980.thunderscout.preferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
@@ -74,6 +75,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Launch the main preference fragment unless otherwise directed
+        if (getIntent().getStringExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT) == null) {
+            getIntent().putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, MainPreferenceFragment.class.getName());
+        }
+
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setHomeButtonEnabled(true);

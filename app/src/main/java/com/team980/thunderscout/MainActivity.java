@@ -28,7 +28,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -213,7 +212,6 @@ public class MainActivity extends AppCompatActivity
         //Secondary navigation menu
         else if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
-            intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.MainPreferenceFragment.class.getName());
             startActivity(intent);
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(this, AboutActivity.class);

@@ -36,7 +36,7 @@ import android.support.annotation.RequiresApi;
 import com.team980.thunderscout.R;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
-public class BluetoothQuickTileService extends TileService {
+public class BluetoothQuickTileService extends TileService { //TODO new icon that screams ThunderScout AND Bluetooth
     @Override
     public void onTileAdded() {
         TileService.requestListeningState(getApplicationContext(), new ComponentName(this, this.getClass()));
@@ -58,6 +58,8 @@ public class BluetoothQuickTileService extends TileService {
 
         if (prefs.getBoolean(getResources().getString(R.string.pref_enable_bluetooth_server), false)) { //TODO this isn't data from the server itself... it's just of the preference
             //TODO this should reflect error states better...
+            //TODO use STATE_UNAVAILABLE when no Bluetooth adapter is present
+            //TODO Should I disable Active Mode for server responsiveness?
             tile.setIcon(Icon.createWithResource(this,
                     R.drawable.ic_bluetooth_searching_white_24dp));
             tile.setState(Tile.STATE_ACTIVE);
