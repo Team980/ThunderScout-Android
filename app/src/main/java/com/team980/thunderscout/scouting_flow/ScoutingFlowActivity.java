@@ -452,11 +452,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
     }
 
     @Override
-    public void onDataQuery(List<ScoutData> dataList) {
-        //do nothing
-    }
-
-    @Override
     public void onDataWrite(List<ScoutData> dataWritten) {
         if (dataWritten != null) {
             dataOutputCallbackSuccess(OPERATION_SAVE_THIS_DEVICE);
@@ -467,15 +462,5 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         //TODO figure out how to send a refresh intent to both fragments
         //Intent intent = new Intent(HomeFragment.ACTION_REFRESH_VIEW_PAGER);
         //localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
-    }
-
-    @Override
-    public void onDataRemove(List<ScoutData> dataRemoved) {
-        //do nothing
-    }
-
-    @Override
-    public void onDataClear(boolean success) {
-        //do nothing
     }
 }

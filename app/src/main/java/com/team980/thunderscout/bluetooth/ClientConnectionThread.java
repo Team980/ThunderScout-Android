@@ -36,6 +36,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.team980.thunderscout.bluetooth.util.BluetoothInfo;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 import com.team980.thunderscout.util.TSNotificationBuilder;

@@ -22,86 +22,73 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.csv;
+package com.team980.thunderscout.iexport.task;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.opencsv.CSVReader;
 import com.team980.thunderscout.ThunderScout;
-import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.iexport.ImportActivity;
 import com.team980.thunderscout.schema.ScoutData;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
-public class CSVImportTask extends AsyncTask<Void, ScoutData, Void> {
+public class CSVImportTask extends AsyncTask<Uri, Integer, List<ScoutData>> {
 
-    private Activity activity;
+    private ImportActivity activity;
 
-    private Uri fileUri;
-
-    public CSVImportTask(Activity activity, Uri uri) {
+    public CSVImportTask(ImportActivity activity) {
         this.activity = activity;
-        fileUri = uri;
     }
 
     @Override
-    public Void doInBackground(Void... params) {
+    public List<ScoutData> doInBackground(Uri... fileUri) {
 
         CSVReader reader;
         try {
-            reader = new CSVReader(new InputStreamReader(activity.getContentResolver().openInputStream(fileUri)));
+            reader = new CSVReader(new InputStreamReader(activity.getContentResolver().openInputStream(fileUri[0])));
         } catch (FileNotFoundException e) {
             Crashlytics.logException(e);
             return null;
         }
 
-        List<String[]> rows;
+        ArrayList<ScoutData> dataList = new ArrayList<>();
+
+        String[] nextLine;
         try {
-            rows = reader.readAll();
+            while ((nextLine = reader.readNext()) != null) { // :)
+                if (!ThunderScout.isInteger(nextLine[0])) {
+                    continue;
+                }
+
+                dataList.add(ScoutData.fromStringArray(nextLine));
+                publishProgress(dataList.size());
+            }
         } catch (IOException e) {
             Crashlytics.logException(e);
             return null;
         }
 
-        for (String[] row : rows) {
-
-            if (!ThunderScout.isInteger(row[0])) {
-                continue;
-            }
-
-            publishProgress(ScoutData.fromStringArray(row));
-        }
-
-        return null;
+        return dataList;
     }
 
     @Override
-    protected void onProgressUpdate(ScoutData[] values) {
-        //Runs on UI thread when publishProgress() is called
+    protected void onProgressUpdate(Integer... entriesRead) {
+        super.onProgressUpdate(entriesRead);
 
-        Crashlytics.log(Log.INFO, this.getClass().getName(), "Posting ScoutData from CSV " + fileUri.getLastPathSegment() + " to database");
-
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, activity).writeData(values[0], null); //TODO assumes LOCAL, no callback
-
-        super.onProgressUpdate(values);
+        activity.onImportProgressUpdate(entriesRead[0]);
     }
 
     @Override
-    protected void onPostExecute(Void v) {
-        //Runs on UI thread after execution
-        super.onPostExecute(v);
+    protected void onPostExecute(List<ScoutData> dataList) {
+        super.onPostExecute(dataList);
 
-        Crashlytics.log(Log.INFO, this.getClass().getName(), "CSV import complete");
-        Toast.makeText(activity, "CSV import complete", Toast.LENGTH_SHORT).show();
-        activity.finish();
+        activity.onImportCompletion(dataList);
     }
-
 }

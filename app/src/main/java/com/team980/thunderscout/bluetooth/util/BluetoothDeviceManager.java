@@ -1,4 +1,4 @@
-package com.team980.thunderscout.bluetooth;
+package com.team980.thunderscout.bluetooth.util;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothDevicePicker;

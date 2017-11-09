@@ -19,7 +19,9 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class TeamInfoActivity extends AppCompatActivity { //TODO finish this
+public class TeamInfoActivity extends AppCompatActivity {
+
+    public static final String EXTRA_AVERAGE_SCOUT_DATA = "com.team980.thunderscout.AVERAGE_SCOUT_DATA";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class TeamInfoActivity extends AppCompatActivity { //TODO finish this
         setContentView(R.layout.activity_info_team);
 
         Intent launchIntent = getIntent();
-        AverageScoutData data = (AverageScoutData) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT");
+        AverageScoutData data = (AverageScoutData) launchIntent.getSerializableExtra(EXTRA_AVERAGE_SCOUT_DATA);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

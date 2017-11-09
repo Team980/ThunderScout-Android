@@ -41,6 +41,7 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.bluetooth.util.BluetoothServerToggleActivity;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class BluetoothServerService extends Service {

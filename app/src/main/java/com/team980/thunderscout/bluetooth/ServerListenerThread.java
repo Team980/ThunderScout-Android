@@ -31,6 +31,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.team980.thunderscout.bluetooth.util.BluetoothInfo;
 
 import java.io.IOException;
 import java.util.UUID;

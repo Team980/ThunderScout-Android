@@ -107,7 +107,7 @@ public class MatchConflictAdapter extends RecyclerView.Adapter<MatchConflictAdap
 
             infoButton.setOnClickListener(v -> {
                 Intent launchInfoActivity = new Intent(context, MatchInfoActivity.class);
-                launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", data);
+                launchInfoActivity.putExtra(MatchInfoActivity.EXTRA_SCOUT_DATA, data);
                 context.startActivity(launchInfoActivity);
             });
 

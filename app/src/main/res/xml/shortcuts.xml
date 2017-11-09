@@ -31,7 +31,7 @@
         android:shortcutShortLabel="@string/shortcut_toggle_bluetooth_server_short">
         <intent
             android:action="android.intent.action.MAIN"
-            android:targetClass="com.team980.thunderscout.bluetooth.BluetoothServerToggleActivity"
+            android:targetClass="com.team980.thunderscout.bluetooth.util.BluetoothServerToggleActivity"
             android:targetPackage="com.team980.thunderscout" />
     </shortcut>
     <shortcut

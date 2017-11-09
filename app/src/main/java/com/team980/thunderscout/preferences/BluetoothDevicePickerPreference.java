@@ -30,7 +30,7 @@ import android.os.Parcelable;
 import android.preference.Preference;
 import android.util.AttributeSet;
 
-import com.team980.thunderscout.bluetooth.BluetoothDeviceManager;
+import com.team980.thunderscout.bluetooth.util.BluetoothDeviceManager;
 
 // An improved BluetoothDevicePreference that opens a system dialog and caches the device name
 // ...not to mention it does the hard work of updating the summary itself

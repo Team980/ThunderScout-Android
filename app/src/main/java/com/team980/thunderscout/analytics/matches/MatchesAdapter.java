@@ -161,11 +161,6 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     }
 
     @Override
-    public void onDataWrite(List<ScoutData> dataWritten) {
-        //do nothing for now
-    }
-
-    @Override
     public void onDataRemove(List<ScoutData> dataRemoved) {
         for (ScoutData data : dataRemoved) {
             matchArray.get(data.getMatchNumber()).removeData(data.getAllianceStation(), data);
@@ -287,7 +282,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                                 }
                             } else {
                                 Intent launchInfoActivity = new Intent(fragment.getContext(), MatchInfoActivity.class);
-                                launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", wrapper.getData(station));
+                                launchInfoActivity.putExtra(MatchInfoActivity.EXTRA_SCOUT_DATA, wrapper.getData(station));
 
                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                                     ActivityOptions options = ActivityOptions

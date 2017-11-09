@@ -53,10 +53,9 @@
         <item>Pressed touchpad</item>
     </string-array>
 
-    <string-array name="export_actions_array">
-        <item>Open file</item>
-        <item>Share to system</item>
-        <item>Export only</item>
+    <string-array name="iexport_file_types">
+        <item>CSV</item>
+        <!--<item>JSON</item>-->
     </string-array>
 
     <string name="shortcut_match_scout_short">Match scout</string>

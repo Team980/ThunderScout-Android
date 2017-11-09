@@ -1,4 +1,4 @@
-package com.team980.thunderscout.bluetooth;
+package com.team980.thunderscout.bluetooth.util;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

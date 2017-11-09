@@ -38,6 +38,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,9 +51,11 @@ import android.widget.SearchView;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
-import com.team980.thunderscout.csv.ExportActivity;
-import com.team980.thunderscout.csv.ImportActivity;
+import com.team980.thunderscout.iexport.ExportActivity;
+import com.team980.thunderscout.iexport.ImportActivity;
 import com.team980.thunderscout.util.TransitionUtils;
+
+import java.util.ArrayList;
 
 public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, View.OnClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
@@ -134,6 +137,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Log.d("testid", item.getTitle().toString());
 
         //Default mode
         if (id == R.id.action_refresh) {
@@ -163,6 +167,13 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
         //Selection mode
+        if (id == R.id.action_export_selection) {
+            Intent exportIntent = new Intent(getContext(), ExportActivity.class);
+            exportIntent.putExtra(ExportActivity.EXTRA_SELECTED_DATA, (ArrayList) adapter.getSelectedItems()); //TODO maybe it should just return ArrayList
+            startActivity(exportIntent);
+            return true;
+        }
+
         if (id == R.id.action_delete_selection) {
             new AlertDialog.Builder(getContext())
                     .setTitle("Delete selected data from this account?")
@@ -175,13 +186,9 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == android.R.id.home && selectionMode) {
-            adapter.clearSelections();
-            setSelectionMode(false);
-        }
-
         //if (view.getId() == R.id.action_search) {
         //swipeContainer.setEnabled(false);
+        //return;
         //}
     }
 
@@ -208,7 +215,12 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
 
-            toolbar.setNavigationOnClickListener(this);
+            toolbar.setNavigationOnClickListener(v -> {
+                if (selectionMode) {
+                    adapter.clearSelections();
+                    setSelectionMode(false);
+                }
+            });
 
             swipeContainer.setEnabled(false);
         } else {

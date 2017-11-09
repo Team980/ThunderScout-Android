@@ -34,8 +34,8 @@ import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.team980.thunderscout.bluetooth.BluetoothQuickTileService;
 import com.team980.thunderscout.bluetooth.BluetoothServerService;
+import com.team980.thunderscout.bluetooth.util.BluetoothQuickTileService;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

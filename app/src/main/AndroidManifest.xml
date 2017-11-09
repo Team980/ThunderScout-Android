@@ -81,17 +81,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".csv.ImportActivity"
-            android:label="Import from CSV"
+            android:name=".iexport.ImportActivity"
+            android:label="Import..."
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
         <activity
-            android:name=".csv.ExportActivity"
-            android:label="Export to CSV"
+            android:name=".iexport.ExportActivity"
+            android:label="Export..."
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
         <activity
-            android:name=".bluetooth.BluetoothServerToggleActivity"
+            android:name=".bluetooth.util.BluetoothServerToggleActivity"
             android:theme="@style/ThunderScout.Transparent" />
         <activity
             android:name=".AboutActivity"
@@ -101,7 +101,7 @@
 
         <service android:name=".bluetooth.BluetoothServerService" />
         <service
-            android:name=".bluetooth.BluetoothQuickTileService"
+            android:name=".bluetooth.util.BluetoothQuickTileService"
             android:icon="@drawable/ic_bluetooth_searching_white_24dp"
             android:label="Bluetooth Server"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">

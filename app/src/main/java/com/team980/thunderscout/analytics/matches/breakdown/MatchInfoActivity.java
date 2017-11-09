@@ -19,13 +19,15 @@ import java.text.SimpleDateFormat;
 
 public class MatchInfoActivity extends AppCompatActivity {
 
+    public static final String EXTRA_SCOUT_DATA = "com.team980.thunderscout.SCOUT_DATA";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_match);
 
         Intent launchIntent = getIntent();
-        ScoutData data = (ScoutData) launchIntent.getSerializableExtra("com.team980.thunderscout.INFO_SCOUT");
+        ScoutData data = (ScoutData) launchIntent.getSerializableExtra(EXTRA_SCOUT_DATA);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

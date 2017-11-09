@@ -52,13 +52,18 @@ public interface StorageWrapper { //TODO refine this
 
     void clearAllData(@Nullable StorageListener listener);
 
-    interface StorageListener {
-        void onDataQuery(List<ScoutData> dataList);
+    //TODO support progress callbacks
+    interface StorageListener { //Now you don't have to stub the methods you're not using - thanks Java 8!
+        default void onDataQuery(List<ScoutData> dataList) {
+        }
 
-        void onDataWrite(@Nullable List<ScoutData> dataWritten);
+        default void onDataWrite(@Nullable List<ScoutData> dataWritten) {
+        }
 
-        void onDataRemove(@Nullable List<ScoutData> dataRemoved);
+        default void onDataRemove(@Nullable List<ScoutData> dataRemoved) {
+        }
 
-        void onDataClear(boolean success);
+        default void onDataClear(boolean success) {
+        }
     }
 }

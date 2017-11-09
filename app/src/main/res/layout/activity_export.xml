@@ -24,43 +24,92 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_export"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.team980.thunderscout.csv.ExportActivity">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
-    <Spinner
-        android:id="@+id/spinnnerExportAction"
+    <TextView
+        android:id="@+id/selectionInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:entries="@array/export_actions_array" />
+        android:text="Loading..."
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <!--List of data to export (or "All")
+    With checkboxes? Expandable? Sorted by match? Team? Configurable?-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/dataView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:text="Export as"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/iexport_file_types" /> <!-- TODO implement -->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonExport"
+            android:id="@+id/button_export"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_weight="1"
+            android:enabled="false"
             android:text="Export" />
 
         <Button
-            android:id="@+id/buttonOpenFolder"
+            android:id="@+id/button_share"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="Share" />
+
+        <Button
+            android:id="@+id/button_open_folder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:text="Open folder" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/exportProgress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 </LinearLayout>

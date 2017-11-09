@@ -26,7 +26,6 @@ package com.team980.thunderscout.analytics.rankings;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -142,16 +141,6 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
     }
 
     @Override
-    public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
-        //do nothing for now
-    }
-
-    @Override
-    public void onDataRemove(@Nullable List<ScoutData> dataRemoved) {
-        //do nothing for now
-    }
-
-    @Override
     public void onDataClear(boolean success) {
         int listSize = teamList.size();
         teamList.clear();
@@ -184,7 +173,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
             itemView.setOnClickListener(v -> {
                 Intent launchInfoActivity = new Intent(fragment.getContext(), TeamInfoActivity.class);
-                launchInfoActivity.putExtra("com.team980.thunderscout.INFO_AVERAGE_SCOUT", new AverageScoutData(wrapper.getDataList()));
+                launchInfoActivity.putExtra(TeamInfoActivity.EXTRA_AVERAGE_SCOUT_DATA, new AverageScoutData(wrapper.getDataList()));
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     ActivityOptions options = ActivityOptions

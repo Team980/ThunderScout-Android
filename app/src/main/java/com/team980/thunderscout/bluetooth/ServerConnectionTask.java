@@ -131,27 +131,11 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ScoutData> {
             if (prefs.getBoolean(context.getResources().getString(R.string.pref_bt_save_to_local_device), true)) {
                 //Put the fetched ScoutData in the local database
                 AccountScope.getStorageWrapper(AccountScope.LOCAL, context).writeData(o, new StorageWrapper.StorageListener() {
-
-                    @Override
-                    public void onDataQuery(List<ScoutData> dataList) {
-                        //stub
-                    }
-
                     @Override
                     public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
                         //TODO figure out how to send a refresh intent to both fragments
                         //Intent intent = new Intent(HomeFragment.ACTION_REFRESH_VIEW_PAGER);
                         //localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
-                    }
-
-                    @Override
-                    public void onDataRemove(@Nullable List<ScoutData> dataRemoved) {
-                        //stub
-                    }
-
-                    @Override
-                    public void onDataClear(boolean success) {
-                        //stub
                     }
                 }); //TODO assumes LOCAL, no callback
             }

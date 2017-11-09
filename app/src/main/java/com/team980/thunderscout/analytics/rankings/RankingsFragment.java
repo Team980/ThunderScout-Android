@@ -49,8 +49,8 @@ import android.widget.SearchView;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
-import com.team980.thunderscout.csv.ExportActivity;
-import com.team980.thunderscout.csv.ImportActivity;
+import com.team980.thunderscout.iexport.ExportActivity;
+import com.team980.thunderscout.iexport.ImportActivity;
 
 public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, SearchView.OnQueryTextListener, View.OnClickListener, SearchView.OnCloseListener {
 

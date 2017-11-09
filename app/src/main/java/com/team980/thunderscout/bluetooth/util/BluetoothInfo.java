@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.bluetooth;
+package com.team980.thunderscout.bluetooth.util;
 
 public class BluetoothInfo {
 
