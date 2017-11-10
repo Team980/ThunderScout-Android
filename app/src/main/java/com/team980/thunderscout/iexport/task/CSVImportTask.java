@@ -79,10 +79,10 @@ public class CSVImportTask extends AsyncTask<Uri, Integer, List<ScoutData>> {
     }
 
     @Override
-    protected void onProgressUpdate(Integer... entriesRead) {
-        super.onProgressUpdate(entriesRead);
+    protected void onProgressUpdate(Integer... matchesRead) {
+        super.onProgressUpdate(matchesRead);
 
-        activity.onImportProgressUpdate(entriesRead[0]);
+        activity.onImportProgressUpdate(matchesRead[0]);
     }
 
     @Override

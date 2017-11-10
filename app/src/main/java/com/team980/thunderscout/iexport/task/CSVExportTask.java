@@ -88,10 +88,10 @@ public class CSVExportTask extends AsyncTask<ScoutData, Integer, File> {
     }
 
     @Override
-    protected void onProgressUpdate(Integer... entriesWritten) {
-        super.onProgressUpdate(entriesWritten);
+    protected void onProgressUpdate(Integer... matchesWritten) {
+        super.onProgressUpdate(matchesWritten);
 
-        activity.onExportProgressUpdate(entriesWritten[0]);
+        activity.onExportProgressUpdate(matchesWritten[0]);
     }
 
     @Override

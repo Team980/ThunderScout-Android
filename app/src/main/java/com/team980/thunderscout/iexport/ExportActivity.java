@@ -119,8 +119,7 @@ public class ExportActivity extends AppCompatActivity {
             if (intent.resolveActivityInfo(getPackageManager(), 0) != null) {
                 startActivity(intent);
             } else {
-                // if you reach this place, it means there is no any file
-                // explorer app installed on your device - TODO handle?
+                Toast.makeText(this, "No activities found to handle request", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -165,15 +164,15 @@ public class ExportActivity extends AppCompatActivity {
     private void populateExportOptions() {
         exportButton.setEnabled(true);
         if (dataToExport.size() == 1) {
-            selectionInfo.setText("1 entry available to export");
+            selectionInfo.setText("1 match available to export");
         } else {
-            selectionInfo.setText(dataToExport.size() + " entries available to export");
+            selectionInfo.setText(dataToExport.size() + " matches available to export");
         }
         //TODO RecyclerView population
     }
 
-    public void onExportProgressUpdate(int entriesWritten) {
-        exportProgress.setProgress(entriesWritten);
+    public void onExportProgressUpdate(int matchesWritten) {
+        exportProgress.setProgress(matchesWritten);
     }
 
     public void onExportCompletion(File exportedFile) {

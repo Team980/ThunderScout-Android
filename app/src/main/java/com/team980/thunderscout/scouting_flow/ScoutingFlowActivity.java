@@ -242,7 +242,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             operationStates.putBoolean(OPERATION_SAVE_THIS_DEVICE, saveToThisDevice);
             operationStates.putBoolean(OPERATION_SEND_BLUETOOTH, sendToBluetoothServer);
 
-            operationStateDialog = new ProgressDialog(this);
+            operationStateDialog = new ProgressDialog(this); //TODO this is deprecated
             operationStateDialog.setIndeterminate(true); //TODO can we use values too?
             operationStateDialog.setCancelable(false);
             operationStateDialog.setCanceledOnTouchOutside(false);
@@ -368,7 +368,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         operationStateDialog.hide();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.ThemeOverlay_AppCompat_Dialog_Alert);
         builder.setTitle("Error: " + ex.getClass().getName())
                 .setIcon(R.drawable.ic_warning_white_24dp)
                 .setMessage(ex.getLocalizedMessage() + "\n" + "\n" + "Would you like to reattempt the operation?")

@@ -100,7 +100,7 @@ public class ImportActivity extends AppCompatActivity {
                 @Override
                 public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
                     importProgress.setVisibility(View.GONE);
-                    Toast.makeText(ImportActivity.this, "CSV import complete: " + dataWritten.size() + " entries added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ImportActivity.this, "CSV import complete: " + dataWritten.size() + " matches added", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });
@@ -167,8 +167,8 @@ public class ImportActivity extends AppCompatActivity {
         }
     }
 
-    public void onImportProgressUpdate(int entriesRead) {
-        importProgress.setProgress(entriesRead);
+    public void onImportProgressUpdate(int matchesRead) {
+        importProgress.setProgress(matchesRead);
     }
 
     public void onImportCompletion(List<ScoutData> dataList) {
@@ -180,9 +180,9 @@ public class ImportActivity extends AppCompatActivity {
 
         selectionInfo.setVisibility(View.VISIBLE);
         if (dataToImport.size() == 1) {
-            selectionInfo.setText("1 entry available to export");
+            selectionInfo.setText("1 match available to export");
         } else {
-            selectionInfo.setText(dataToImport.size() + " entries available to import");
+            selectionInfo.setText(dataToImport.size() + " matches available to import");
         }
 
         importProgress.setVisibility(View.GONE);
