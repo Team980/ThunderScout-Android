@@ -34,7 +34,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.pm.ShortcutInfoCompat;
@@ -397,7 +396,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         // Init
         scoutData.setDate(new Date(System.currentTimeMillis()));
 
-        scoutData.setSource(Settings.Secure.getString(getContentResolver(), "bluetooth_name"));
+        scoutData.setSource(Build.MODEL); //TODO user configurable device name?
 
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();

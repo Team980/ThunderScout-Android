@@ -25,8 +25,8 @@
 package com.team980.thunderscout.iexport.task;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -57,7 +57,7 @@ public class CSVExportTask extends AsyncTask<ScoutData, Integer, File> {
         dir.mkdir();
         dir.setReadable(true, false);
 
-        String deviceName = Settings.Secure.getString(activity.getContentResolver(), "bluetooth_name").replace(' ', '_');
+        String deviceName = Build.MODEL.replace(' ', '_'); //TODO user configurable device name?
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 
         File csv = new File(dir, deviceName + "_exported_" + formatter.format(System.currentTimeMillis()) + ".csv");
