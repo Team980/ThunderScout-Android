@@ -41,10 +41,11 @@
         android:label="ThunderScout"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/ThunderScout.BaseTheme">
+
         <activity
             android:name=".MainActivity"
             android:label="Thunder Scout"
-            android:theme="@style/ThunderScout.BaseTheme.NavigationPane">
+            android:theme="@style/ThunderScout.BaseTheme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,7 +60,8 @@
             android:name=".scouting_flow.ScoutingFlowActivity"
             android:label="Scout a match..."
             android:parentActivityName=".MainActivity"
-            android:theme="@style/ThunderScout.BaseTheme" />
+            android:theme="@style/ThunderScout.BaseTheme.SplashScreen" />
+
         <activity
             android:name=".analytics.matches.breakdown.MatchInfoActivity"
             android:label="Match Info"
@@ -70,6 +72,7 @@
             android:label="Team Info"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme" />
+
         <activity
             android:name=".preferences.SettingsActivity"
             android:exported="false"
@@ -80,6 +83,7 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".iexport.ImportActivity"
             android:label="Import..."
@@ -90,9 +94,11 @@
             android:label="Export..."
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.BaseTheme.DialogWhenLarge" />
+
         <activity
             android:name=".bluetooth.util.BluetoothServerToggleActivity"
             android:theme="@style/ThunderScout.Transparent" />
+
         <activity
             android:name=".AboutActivity"
             android:label="About"
@@ -100,6 +106,7 @@
             android:theme="@style/ThunderScout.MaterialAboutActivity" />
 
         <service android:name=".bluetooth.BluetoothServerService" />
+
         <service
             android:name=".bluetooth.util.BluetoothQuickTileService"
             android:icon="@drawable/ic_bluetooth_searching_white_24dp"

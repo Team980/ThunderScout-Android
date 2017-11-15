@@ -48,7 +48,13 @@
     </style>
 
     <style name="ThunderScout.BaseTheme.NavigationPane" parent="ThunderScout.BaseTheme">
-        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">false</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">false
+        </item> <!-- TODO fix -->
+    </style>
+
+    <style name="ThunderScout.BaseTheme.SplashScreen" parent="ThunderScout.BaseTheme">
+        <item name="colorPrimaryDark">@color/background</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
     <style name="ThunderScout.BaseTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

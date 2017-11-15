@@ -76,6 +76,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.ThunderScout_BaseTheme);
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
