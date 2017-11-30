@@ -107,8 +107,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         swipeContainer = view.findViewById(R.id.swipeContainer);
 
         swipeContainer.setOnRefreshListener(this);
-        swipeContainer.setEnabled(false);
-
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
@@ -132,11 +130,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         int id = item.getItemId();
 
         //Default mode
-        if (id == R.id.action_refresh) {
-            swipeContainer.setRefreshing(true);
-            onRefresh();
-        }
-
         if (id == R.id.action_sort) {
             AlertDialog sortDialog;
 
@@ -181,9 +174,9 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onClick(View view) {
-        //if (view.getId() == R.id.action_search) {
-        //swipeContainer.setEnabled(false);
-        //}
+        if (view.getId() == R.id.action_search) {
+            swipeContainer.setEnabled(false);
+        }
     }
 
     @Override
@@ -216,7 +209,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public boolean onClose() { //SearchView
         adapter.filterByTeam("");
 
-        //swipeContainer.setEnabled(true);
+        swipeContainer.setEnabled(true);
         return false;
     }
 }

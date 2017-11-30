@@ -38,7 +38,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -114,8 +113,6 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         swipeContainer = view.findViewById(R.id.swipeContainer);
 
         swipeContainer.setOnRefreshListener(this);
-        swipeContainer.setEnabled(false);
-
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
@@ -137,14 +134,8 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Log.d("testid", item.getTitle().toString());
 
         //Default mode
-        if (id == R.id.action_refresh) {
-            swipeContainer.setRefreshing(true);
-            onRefresh();
-        }
-
         if (id == R.id.action_import) {
             Intent importIntent = new Intent(getContext(), ImportActivity.class);
             startActivity(importIntent);
@@ -186,10 +177,9 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onClick(View view) {
-        //if (view.getId() == R.id.action_search) {
-        //swipeContainer.setEnabled(false);
-        //return;
-        //}
+        if (view.getId() == R.id.action_search) {
+            swipeContainer.setEnabled(false);
+        }
     }
 
     public boolean isInSelectionMode() {
@@ -236,7 +226,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
             drawer.addDrawerListener(toggle);
             toggle.syncState();
 
-            //swipeContainer.setEnabled(true);
+            swipeContainer.setEnabled(true);
         }
     }
 
@@ -289,7 +279,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public boolean onClose() { //SearchView
         adapter.filterByTeam("");
 
-        //swipeContainer.setEnabled(true);
+        swipeContainer.setEnabled(true);
         return false;
     }
 }
