@@ -141,14 +141,14 @@ public class BluetoothServerService extends Service {
     public void initNotifications() {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel serverChannel = new NotificationChannel("bluetooth_server", "Bluetooth Server", NotificationManager.IMPORTANCE_LOW);
-            serverChannel.setDescription("The Bluetooth Server shows a persistent notification when enabled");
+            NotificationChannel serverChannel = new NotificationChannel("bluetooth_server", "Bluetooth server", NotificationManager.IMPORTANCE_LOW);
+            serverChannel.setDescription("Persistent notification for the Bluetooth server");
             notificationManager.createNotificationChannel(serverChannel);
         }
 
         running = new NotificationCompat.Builder(this, "bluetooth_server")
                 .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp)
-                .setContentTitle("Bluetooth Server")
+                .setContentTitle("Bluetooth server")
                 .setContentText("Click to open settings") //todo new icon?
                 .setOngoing(true)
                 .setPriority(Notification.PRIORITY_LOW)

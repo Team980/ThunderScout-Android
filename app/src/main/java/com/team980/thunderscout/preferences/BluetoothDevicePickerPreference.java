@@ -63,11 +63,6 @@ public class BluetoothDevicePickerPreference extends Preference {
                 name = device.getName();
 
                 setSummary(name);
-            } else {
-                address = null;
-                name = null;
-
-                setSummary("Not selected");
             }
 
             getEditor().putString(getKey(), address)

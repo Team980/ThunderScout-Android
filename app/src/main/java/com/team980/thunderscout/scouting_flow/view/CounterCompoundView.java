@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.util;
+package com.team980.thunderscout.scouting_flow.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;

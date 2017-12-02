@@ -25,7 +25,6 @@
 package com.team980.thunderscout.scouting_flow;
 
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -43,36 +42,29 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
-import com.team980.thunderscout.bluetooth.ClientConnectionThread;
+import com.team980.thunderscout.bluetooth.ClientConnectionTask;
 import com.team980.thunderscout.schema.ScoutData;
-import com.team980.thunderscout.util.CounterCompoundView;
+import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.Date;
-import java.util.List;
 
 public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener, StorageWrapper.StorageListener {
 
-    // IDs for callback
-    public static final String OPERATION_SAVE_THIS_DEVICE = "SAVE_THIS_DEVICE";
-    public static final String OPERATION_SEND_BLUETOOTH = "SEND_BLUETOOTH";
+    public static final String EXTRA_SCOUT_DATA = "EXTRA_SCOUT_DATA";
+
     private ScoutingFlowViewPagerAdapter viewPagerAdapter;
     private ScoutData scoutData;
     private FloatingActionButton fab;
-    private Bundle operationStates; //used for task loop
-
-    private ProgressDialog operationStateDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,11 +74,15 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         if (savedInstanceState != null) {
             scoutData = (ScoutData) savedInstanceState.getSerializable("ScoutData");
         } else {
-            scoutData = new ScoutData();
+            if (getIntent().hasExtra(EXTRA_SCOUT_DATA)) {
+                scoutData = (ScoutData) getIntent().getSerializableExtra(EXTRA_SCOUT_DATA); //TODO repopulate view - this will take a good amount of code
+            } else {
+                scoutData = new ScoutData();
 
-            ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
-            dialogFragment.setCancelable(false);
-            dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
+                ScoutingFlowDialogFragment dialogFragment = new ScoutingFlowDialogFragment();
+                dialogFragment.setCancelable(false);
+                dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
+            }
         }
 
         setContentView(R.layout.activity_scouting_flow);
@@ -229,35 +225,41 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fab) {
+        if (v.getId() == R.id.fab) { //Send button - the only button that matters
             initScoutData();
-
-            Crashlytics.log(Log.INFO, this.getClass().getName(), "Starting scouting loop");
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-            boolean saveToThisDevice = prefs.getBoolean(getResources().getString(R.string.pref_ms_save_to_local_device), true);
-            boolean sendToBluetoothServer = prefs.getBoolean(getResources().getString(R.string.pref_ms_send_to_bluetooth_server), false);
+            // Local device
+            if (prefs.getBoolean(getResources().getString(R.string.pref_ms_save_to_local_device), true)) {
+                AccountScope.getStorageWrapper(AccountScope.LOCAL, this).writeData(getData(), null);
+                //If this errors, we'll catch it internally
+            }
 
-            operationStates = new Bundle();
-            operationStates.putBoolean(OPERATION_SAVE_THIS_DEVICE, saveToThisDevice);
-            operationStates.putBoolean(OPERATION_SEND_BLUETOOTH, sendToBluetoothServer);
+            // Bluetooth server
+            if (prefs.getBoolean(getResources().getString(R.string.pref_ms_send_to_bluetooth_server), false)) {
+                String address = prefs.getString(getResources().getString(R.string.pref_ms_bluetooth_server_device), null);
 
-            operationStateDialog = new ProgressDialog(this); //TODO this is deprecated
-            operationStateDialog.setIndeterminate(true); //TODO can we use values too?
-            operationStateDialog.setCancelable(false);
-            operationStateDialog.setCanceledOnTouchOutside(false);
-            operationStateDialog.setTitle("Storing data...");
+                try {
+                    if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                        throw new NullPointerException("Bluetooth is disabled"); //todo better way to notify
+                    }
 
-            dataOutputLoop();
+                    BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
 
-            /*if (prefs.getBoolean("ms_send_to_linked_sheet", false)) { //Saving to Sheets
-                SheetsUpdateTask task = new SheetsUpdateTask(getApplicationContext()); //MEMORY LEAK PREVENTION
-                task.execute(scoutData);
+                    ClientConnectionTask connectTask = new ClientConnectionTask(device, scoutData, getApplicationContext());
+                    connectTask.execute();
+                } catch (IllegalArgumentException e) {
+                    throw e; //TODO better way to notify!
+                }
+            }
 
-                Toast info = Toast.makeText(this, "Sending to Google Sheets...", Toast.LENGTH_LONG);
-                info.show();
-            }*/
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .putInt(getResources().getString(R.string.pref_last_used_match_number), scoutData.getMatchNumber())
+                    .putString(getResources().getString(R.string.pref_last_used_alliance_station), scoutData.getAllianceStation().name())
+                    .apply();
+
+            finish();
         }
 
     }
@@ -300,97 +302,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
     public ScoutData getData() {
         return scoutData;
-    }
-
-    private void dataOutputLoop() { //TODO Due to changes in backend this no longer works the same
-        //TODO I would advocate running this in the background again and posting notifications
-        //TODO because this method doesn't work great with the current data structure
-        //TODO it also assumes LOCAL mode
-        Crashlytics.log(Log.INFO, this.getClass().getName(), "Looping through data output loop");
-        if (!operationStateDialog.isShowing()) {
-            operationStateDialog.show(); //Show it if it isn't already visible
-        }
-
-        if (operationStates.getBoolean(OPERATION_SAVE_THIS_DEVICE)) {
-            operationStateDialog.setMessage("Saving scout data to this device");
-
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, this).writeData(getData(), this);
-
-
-        } else if (operationStates.getBoolean(OPERATION_SEND_BLUETOOTH)) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-            String address = prefs.getString(getResources().getString(R.string.pref_ms_bluetooth_server_device), null);
-
-            BluetoothDevice device;
-            try {
-                device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
-            } catch (IllegalArgumentException e) {
-                dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, e);
-                return;
-            }
-
-            operationStateDialog.setMessage("Sending scout data to " + device.getName());
-
-            if (device.getName() == null) { //This should catch the bluetooth off error
-                dataOutputCallbackFail(ScoutingFlowActivity.OPERATION_SEND_BLUETOOTH, new NullPointerException("Error initializing Bluetooth!"));
-                return;
-            }
-
-            ClientConnectionThread connectThread = new ClientConnectionThread(device, scoutData, getApplicationContext(), this);
-            connectThread.start();
-
-        } else {
-            operationStateDialog.dismiss();
-            operationStateDialog = null;
-
-            finish();
-
-            PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .putInt(getResources().getString(R.string.pref_last_used_match_number), scoutData.getMatchNumber())
-                    .putString(getResources().getString(R.string.pref_last_used_alliance_station), scoutData.getAllianceStation().name())
-                    .apply();
-        }
-    }
-
-    public void dataOutputCallbackSuccess(final String operationId) {
-        operationStates.putBoolean(operationId, false); //we're done with that!
-
-        operationStateDialog.setMessage("");
-
-        Crashlytics.log(Log.INFO, this.getClass().getName(), "Operation " +
-                operationId + " SUCCESSFUL");
-
-        dataOutputLoop();
-    }
-
-    //TODO broadcast receiver?
-    public void dataOutputCallbackFail(final String operationId, Exception ex) {
-
-        operationStateDialog.hide();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.ThemeOverlay_AppCompat_Dialog_Alert);
-        builder.setTitle("Error: " + ex.getClass().getName())
-                .setIcon(R.drawable.ic_warning_white_24dp)
-                .setMessage(ex.getLocalizedMessage() + "\n" + "\n" + "Would you like to reattempt the operation?")
-                .setCancelable(false)
-                .setPositiveButton("Retry", (dialog, id) -> {
-                    operationStates.putBoolean(operationId, true); //retry
-
-                    dataOutputLoop();
-                })
-                .setNegativeButton("Cancel", (dialog, id) -> {
-                    operationStates.putBoolean(operationId, false); //do not retry
-
-                    dataOutputLoop();
-                });
-
-        Crashlytics.log(Log.INFO, this.getClass().getName(), "Operation " +
-                operationId + " FAILED");
-        //Crashlytics.logException(ex); This would create duplicate reports.
-
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 
     private void initScoutData() {
@@ -449,18 +360,5 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         EditText comments = summaryView.findViewById(R.id.summary_edittextComments);
 
         scoutData.setComments(comments.getText().toString());
-    }
-
-    @Override
-    public void onDataWrite(List<ScoutData> dataWritten) {
-        if (dataWritten != null) {
-            dataOutputCallbackSuccess(OPERATION_SAVE_THIS_DEVICE);
-        } else {
-            dataOutputCallbackFail(OPERATION_SAVE_THIS_DEVICE, null);
-        }
-
-        //TODO figure out how to send a refresh intent to both fragments
-        //Intent intent = new Intent(HomeFragment.ACTION_REFRESH_VIEW_PAGER);
-        //localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
     }
 }

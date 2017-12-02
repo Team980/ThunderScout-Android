@@ -26,33 +26,35 @@ package com.team980.thunderscout.bluetooth;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.backend.AccountScope;
-import com.team980.thunderscout.backend.StorageWrapper;
+import com.team980.thunderscout.bluetooth.util.BluetoothInfo;
 import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.List;
+import java.io.ObjectOutputStream;
+import java.util.UUID;
 
-public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnectionTask.TaskResult> {
+public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnectionTask.TaskResult> {
 
-    private final BluetoothSocket mmSocket;
     private Context context;
+    private BluetoothDevice device;
+    private ScoutData scoutData;
+
     private NotificationManager notificationManager;
     private NotificationCompat.Builder btTransferInProgress;
     private NotificationCompat.Builder btTransferSuccess;
@@ -61,20 +63,22 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
 
     private LocalBroadcastManager localBroadcastManager;
 
-    public ServerConnectionTask(BluetoothSocket socket, Context context) {
+    public ClientConnectionTask(BluetoothDevice device, ScoutData data, Context context) {
         this.context = context;
 
-        mmSocket = socket;
+        this.device = device;
+
+        scoutData = data;
 
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel transferChannel = new NotificationChannel("bt_transfer", "Bluetooth transfers", NotificationManager.IMPORTANCE_LOW);
-            transferChannel.setDescription("Ongoing Bluetooth data transfers between devices");
+            NotificationChannel transferChannel = new NotificationChannel("bt_transfer", "Bluetooth Transfers", NotificationManager.IMPORTANCE_LOW);
+            transferChannel.setDescription("Ongoing and erroneous Bluetooth transfers");
             notificationManager.createNotificationChannel(transferChannel);
         }
 
-        //TODO these should be a different group from the client notifications
+        //TODO these should be a different group from the server notifications
         btTransferInProgress = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_bluetooth_transfer_white_24dp) //TODO animated icon?
                 .setOngoing(true)
@@ -102,59 +106,99 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
 
     @Override
     protected void onPreExecute() {
-        //Runs on UI thread before execution
         super.onPreExecute();
 
         id = (int) System.currentTimeMillis(); //TODO implement unique ID creator
 
-        btTransferInProgress.setContentTitle("Receiving data from " + mmSocket.getRemoteDevice().getName());
+        btTransferInProgress.setContentTitle("Sending data to " + device.getName());
         btTransferInProgress.setWhen(System.currentTimeMillis());
         btTransferInProgress.setProgress(1, 0, true);
 
         notificationManager.notify(id, btTransferInProgress.build());
     }
 
-    @Override
     @NonNull
-    protected TaskResult doInBackground(Void[] params) {
-        publishProgress(0);
-
-        ObjectInputStream inputStream;
+    public TaskResult doInBackground(Void... params) {
         try {
-            inputStream = new ObjectInputStream(mmSocket.getInputStream()); //TODO fix the IOException caused by the missing socket...
-        } catch (IOException e) {
+            Thread.sleep(scoutData.getAllianceStation().getDelay()); //Variable delay based on AllianceStation
+        } catch (InterruptedException e) {
             Crashlytics.logException(e);
-            return new TaskResult(null, e);
         }
 
-        //TODO version check?
-        ScoutData data = null;
+        publishProgress(0);
+
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        // Cancel discovery because it will slow down the connection
+        mBluetoothAdapter.cancelDiscovery();
+
+        BluetoothSocket mmSocket;
         try {
-            data = (ScoutData) inputStream.readObject();
+            // MY_UUID is the app's UUID string, also used by the server code
+            mmSocket = device.createRfcommSocketToServiceRecord(UUID.fromString(BluetoothInfo.UUID));
+        } catch (IOException e) {
+            Crashlytics.logException(e);
+            return new TaskResult(scoutData, e);
+        }
+
+        publishProgress(25);
+
+        try {
+            // Connect the device through the socket. This will block
+            // until it succeeds or throws an exception
+            mmSocket.connect();
+        } catch (IOException connectException) {
+            // Unable to connect; close the socket and get out TODO retry?
+            try {
+                mmSocket.close();
+            } catch (IOException closeException) {
+                Crashlytics.logException(closeException);
+            }
+            return new TaskResult(scoutData, connectException);
+        }
+
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Connection to server device successful");
+        publishProgress(50);
+
+        ObjectOutputStream outputStream;
+        try {
+            outputStream = new ObjectOutputStream(mmSocket.getOutputStream());
+            outputStream.flush();
+        } catch (IOException e) {
+            Crashlytics.logException(e);
+            return new TaskResult(scoutData, e);
+        }
+
+        publishProgress(75);
+
+        //TODO add version check?
+
+        Crashlytics.log(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
+        try {
+            outputStream.writeObject(scoutData);
+            outputStream.flush();
         } catch (Exception e) {
             Crashlytics.logException(e);
-            e.printStackTrace();
-            return new TaskResult(null, e);
+            return new TaskResult(scoutData, e);
         }
 
         publishProgress(100);
 
         try {
-            inputStream.close();
-        } catch (IOException e) {
+            outputStream.close();
+        } catch (Exception e) {
             Crashlytics.logException(e);
         }
 
         publishProgress(-1);
-        return new TaskResult(data, null);
+        return new TaskResult(scoutData, null);
     }
 
     @Override
-    protected void onProgressUpdate(Integer[] values) {
-        //Runs on UI thread when publishProgress() is called
+    protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
 
-        btTransferInProgress.setContentTitle("Receiving data from " + mmSocket.getRemoteDevice().getName());
+        btTransferInProgress.setContentTitle("Sending data to " + device.getName());
         btTransferInProgress.setWhen(System.currentTimeMillis());
 
         if (values[0] == -1) { //Indeterminate
@@ -176,7 +220,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             //intent.putExtra(HomeFragment.TaskUpdateReceiver.KEY_UPDATE_TYPE,
             //HomeFragment.TaskUpdateReceiver.UpdateType.FINISHED);
 
-            btTransferSuccess.setContentTitle("Successfully received data from " + mmSocket.getRemoteDevice().getName());
+            btTransferSuccess.setContentTitle("Successfully sent data to " + device.getName());
             btTransferSuccess.setContentText("Team " + result.getData().getTeam()
                     + " - Qualification Match " + result.getData().getMatchNumber());
             btTransferSuccess.setWhen(System.currentTimeMillis());
@@ -188,48 +232,39 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             //intent.putExtra(HomeFragment.TaskUpdateReceiver.KEY_UPDATE_TYPE,
             //HomeFragment.TaskUpdateReceiver.UpdateType.ERROR);
 
-            btTransferError.setContentTitle("Failed to receive data from " + mmSocket.getRemoteDevice().getName());
-            btTransferError.setContentText("Expand to see the full error message");
-            btTransferError.setStyle(new NotificationCompat.BigTextStyle().bigText("Error: " + result.getException().getMessage()));
+            btTransferError.setContentTitle("Failed to send data to " + device.getName());
+            btTransferError.setContentText("Team " + result.getData().getTeam()
+                    + " - Qualification Match " + result.getData().getMatchNumber());
+            btTransferError.setStyle(new NotificationCompat.BigTextStyle().bigText("Team " + result.getData().getTeam()
+                    + " - Qualification Match " + result.getData().getMatchNumber()
+                    + "\nError: " + result.getException().getMessage()));
             btTransferError.setWhen(System.currentTimeMillis());
+
+            //TODO Needs two Intents: RETRY that starts the Task again, and EDIT / MODIFY that opens the scouting flow
+            //TODO Clicking the notification should issue RETRY
+            //TODO This is actually much harder than it sounds
+
+            //TODO a third VIEW STACK TRACE / VIEW ERROR / MORE INFO / INFO intent that shows a dialog of the stack trace would be EXTRA nice
+
+            PendingIntent retryIntent = PendingIntent.getActivity(context, 1,
+                    new Intent(context, ScoutingFlowActivity.class).putExtra(ScoutingFlowActivity.EXTRA_SCOUT_DATA,
+                            result.getData()),
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            btTransferError.setContentIntent(retryIntent);
+
+            NotificationCompat.Action retryAction = new NotificationCompat.Action(
+                    R.drawable.ic_refresh_white_24dp,
+                    "Retry",
+                    retryIntent
+            );
+
+            btTransferError.addAction(retryAction); //TODO this doesn't dismiss the notification
 
             notificationManager.notify(id, btTransferError.build());
         }
 
         //localBroadcastManager.sendBroadcast(intent);
-
-        if (result.getData() != null) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-            if (prefs.getBoolean(context.getResources().getString(R.string.pref_bt_save_to_local_device), true)) {
-                //Put the fetched ScoutData in the local database
-                AccountScope.getStorageWrapper(AccountScope.LOCAL, context).writeData(result.getData(), new StorageWrapper.StorageListener() {
-                    @Override
-                    public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
-                        //TODO figure out how to send a refresh intent to both fragments
-                        //Intent intent = new Intent(HomeFragment.ACTION_REFRESH_VIEW_PAGER);
-                        //localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
-                    }
-                }); //TODO assumes LOCAL, no callback
-            }
-
-            if (prefs.getBoolean(context.getResources().getString(R.string.pref_bt_send_to_bluetooth_server), false)) {
-                String address = prefs.getString(context.getResources().getString(R.string.pref_bt_bluetooth_server_device), null);
-
-                try {
-                    if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-                        throw new NullPointerException("Bluetooth is disabled"); //todo better way to notify
-                    }
-
-                    BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
-
-                    ClientConnectionTask connectTask = new ClientConnectionTask(device, result.getData(), context);
-                    connectTask.execute();
-                } catch (IllegalArgumentException e) {
-                    throw e; //todo better way to notify
-                }
-            }
-        }
     }
 
     class TaskResult {

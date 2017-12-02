@@ -28,7 +28,8 @@
     <!--- TODO These must be updated for every public release!-->
     <!--- TODO Last update: v14 -->
     <string name="update_notes">
-        Hotfix release: Fixed the bug that was causing all CSV imports to fail and crash the app.
+        V15 has no release notes as of yet. Everything has changed.
+        \nV14: Hotfix release: Fixed the bug that was causing all CSV imports to fail and crash the app.
         \n
         \nKnown issues:
         \n&#8226; The Bluetooth server may fail to receive matches logged as successfully sent by the client device.

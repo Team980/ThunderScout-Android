@@ -84,7 +84,7 @@
                     android:text="Gears Delivered"
                     android:textSize="24sp" />
 
-                <com.team980.thunderscout.util.CounterCompoundView
+                <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
                     android:id="@+id/auto_counterGearsDelivered"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                     android:text="Gears Dropped"
                     android:textSize="24sp" />
 
-                <com.team980.thunderscout.util.CounterCompoundView
+                <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
                     android:id="@+id/auto_counterGearsDropped"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -207,7 +207,7 @@
                     android:text="High Goals"
                     android:textSize="24sp" />
 
-                <com.team980.thunderscout.util.CounterCompoundView
+                <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
                     android:id="@+id/auto_counterHighGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
                     android:text="Missed High Goals"
                     android:textSize="24sp" />
 
-                <com.team980.thunderscout.util.CounterCompoundView
+                <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
                     android:id="@+id/auto_counterMissedHighGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -42,20 +42,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.team980.thunderscout.analytics.alliances.AlliancesFragment;
 import com.team980.thunderscout.analytics.matches.MatchesFragment;
 import com.team980.thunderscout.analytics.rankings.RankingsFragment;
 import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.home.HomeFragment;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-    public static String INTENT_FLAG_SHOWN_FRAGMENT = "SHOWN_FRAGMENT";
-    public static int INTENT_FLAGS_HOME = 0;
-    public static int INTENT_FLAGS_MATCHES = 1;
-    public static int INTENT_FLAGS_RANKINGS = 2;
-    public static int INTENT_FLAGS_ALLIANCES = 3;
+    public static final String INTENT_FLAG_SHOWN_FRAGMENT = "SHOWN_FRAGMENT";
+    public static final int INTENT_FLAGS_HOME = 0;
+    public static final int INTENT_FLAGS_MATCHES = 1;
+    public static final int INTENT_FLAGS_RANKINGS = 2;
+    public static final int INTENT_FLAGS_ALLIANCES = 3;
+
+    public static final String ACTION_REFRESH_DATA_VIEW = "com.team80.thunderscout.ACTION_REFRESH_DATA_VIEW"; //TODO
 
     boolean accountMenuExpanded = false; //runtime state
 
@@ -116,10 +118,10 @@ public class MainActivity extends AppCompatActivity
                     navigationView.setCheckedItem(R.id.nav_rankings);
                     fragment = new RankingsFragment();
                     break;
-                case 3: //INTENT_FLAGS_ALLIANCES
-                    navigationView.setCheckedItem(R.id.nav_alliances);
-                    fragment = new AlliancesFragment();
-                    break;
+                //case 3: //INTENT_FLAGS_ALLIANCES
+                //navigationView.setCheckedItem(R.id.nav_alliances);
+                //fragment = new AlliancesFragment();
+                //break;
                 default: //default to INTENT_FLAGS_HOME
                     navigationView.setCheckedItem(R.id.nav_home);
                     fragment = new HomeFragment();
@@ -204,11 +206,11 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment, new RankingsFragment());
             ft.commit();
-        } else if (id == R.id.nav_alliances) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment, new AlliancesFragment());
-            ft.commit();
-        }
+        } //else if (id == R.id.nav_alliances) {
+        //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //ft.replace(R.id.fragment, new AlliancesFragment());
+        //ft.commit();
+        //}
 
         //Secondary navigation menu
         else if (id == R.id.nav_settings) {
