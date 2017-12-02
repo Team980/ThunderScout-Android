@@ -23,6 +23,7 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@color/primary"
@@ -42,7 +43,8 @@
             android:id="@+id/account_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="12dp"
+            android:layout_marginLeft="-6dp"
+            android:paddingTop="24dp"
             android:src="@drawable/ic_account_circle_white_72dp" />
 
         <TextView
@@ -50,14 +52,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
-            android:text="Team 980"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            tools:text="Team 980" />
 
         <TextView
             android:id="@+id/account_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="account@team980.com" />
+            tools:text="account@team980.com" />
 
     </LinearLayout>
 
