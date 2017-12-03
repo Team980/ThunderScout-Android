@@ -1,6 +1,8 @@
 package com.team980.thunderscout.analytics.rankings.breakdown;
 
+import android.app.ActivityManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +38,15 @@ public class TeamInfoActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Team Info: Team " + data.getTeam());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            ActivityManager.TaskDescription current = activityManager.getAppTasks().get(0).getTaskInfo().taskDescription;
+            ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription("Team Info: Team " + data.getTeam(),
+                    current.getIcon());
+
+            setTaskDescription(taskDesc);
+        }
 
         NumberFormat formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(0);

@@ -1,5 +1,6 @@
 package com.team980.thunderscout.analytics.matches.breakdown;
 
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -35,6 +36,14 @@ public class MatchInfoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Match Info: Team " + data.getTeam());
         getSupportActionBar().setSubtitle("Qualification Match " + data.getMatchNumber());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            ActivityManager.TaskDescription current = activityManager.getAppTasks().get(0).getTaskInfo().taskDescription;
+            ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription("Match Info: Team " + data.getTeam(),
+                    current.getIcon(), getResources().getColor(data.getAllianceStation().getColor().getColorPrimary()));
+            setTaskDescription(taskDesc);
+        }
 
         toolbar.setBackground(new ColorDrawable(getResources().getColor(data.getAllianceStation().getColor().getColorPrimary())));
         findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(data.getAllianceStation().getColor().getColorPrimary())));

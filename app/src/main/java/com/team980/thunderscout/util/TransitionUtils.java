@@ -25,26 +25,33 @@
 package com.team980.thunderscout.util;
 
 import android.animation.ValueAnimator;
+import android.app.ActivityManager;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
 
 import com.team980.thunderscout.R;
 
+import static android.content.Context.ACTIVITY_SERVICE;
+
 public class TransitionUtils {
 
 
-    public static void toolbarAndStatusBarTransition(int toolbarColor, int statusBarColor, int toolbarToColor, int statusBarToColor, AppCompatActivity activity) {
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        //tint in Overview
-        //ActivityManager.TaskDescription tDesc = new ActivityManager.TaskDescription(null, null, toolbarToColor);
-        //activity.setTaskDescription(tDesc);
-        //}
+    public static void toolbarAndStatusBarTransition(@ColorInt int toolbarColor, @ColorInt int statusBarColor, @ColorInt int toolbarToColor, @ColorInt int statusBarToColor, AppCompatActivity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityManager activityManager = (ActivityManager) activity.getSystemService(ACTIVITY_SERVICE);
+            ActivityManager.TaskDescription current = activityManager.getAppTasks().get(0).getTaskInfo().taskDescription;
+            ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription(current.getLabel(),
+                    current.getIcon(), toolbarToColor);
+            activity.setTaskDescription(taskDesc);
+        }
 
         toolbarFadeTransition(toolbarColor, statusBarColor, toolbarToColor, statusBarToColor, activity);
     }
 
-    public static void toolbarAndStatusBarTransitionFromResources(int colorFrom, int colorFromDark, int colorTo, int colorToDark, AppCompatActivity activity) {
+    public static void toolbarAndStatusBarTransitionFromResources(@ColorRes int colorFrom, @ColorRes int colorFromDark, @ColorRes int colorTo, @ColorRes int colorToDark, AppCompatActivity activity) {
         // Initial colors of each system bar.
         final int statusBarColor = activity.getResources().getColor(colorFromDark);
         final int toolbarColor = activity.getResources().getColor(colorFrom);
@@ -56,7 +63,7 @@ public class TransitionUtils {
         toolbarAndStatusBarTransition(toolbarColor, statusBarColor, toolbarToColor, statusBarToColor, activity);
     }
 
-    public static void toolbarFadeTransition(final int toolbarColor, final int statusBarColor, final int toolbarToColor, final int statusBarToColor, final AppCompatActivity activity) {
+    private static void toolbarFadeTransition(@ColorInt final int toolbarColor, @ColorInt final int statusBarColor, @ColorInt final int toolbarToColor, @ColorInt final int statusBarToColor, final AppCompatActivity activity) {
         ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
         anim.addUpdateListener(animation -> {
             // Use animation position to blend colors.
@@ -79,7 +86,7 @@ public class TransitionUtils {
         anim.setDuration(350).start();
     }
 
-    private static int blendColors(int from, int to, float ratio) {
+    private static int blendColors(@ColorInt int from, @ColorInt int to, float ratio) {
         final float inverseRatio = 1f - ratio;
 
         final float r = Color.red(to) * ratio + Color.red(from) * inverseRatio;

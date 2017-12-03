@@ -24,6 +24,7 @@
 
 package com.team980.thunderscout.scouting_flow;
 
+import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -116,9 +117,23 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setStatusBarColor(getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimaryDark()));
+
+                ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                ActivityManager.TaskDescription current = activityManager.getAppTasks().get(0).getTaskInfo().taskDescription;
+                ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription("Scout: Team " + scoutData.getTeam(),
+                        current.getIcon(), scoutData.getAllianceStation().getColor().getColorPrimary());
+                setTaskDescription(taskDesc);
             }
         } else {
             getSupportActionBar().setTitle("Scout a match...");
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                ActivityManager.TaskDescription current = activityManager.getAppTasks().get(0).getTaskInfo().taskDescription;
+                ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription("Scout a match...",
+                        current.getIcon());
+                setTaskDescription(taskDesc);
+            }
         }
     }
 
@@ -284,6 +299,14 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             TransitionUtils.toolbarAndStatusBarTransition(toolbarColor, statusBarColor,
                     getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary()),
                     getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimaryDark()), this);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                ActivityManager.TaskDescription current = activityManager.getAppTasks().get(0).getTaskInfo().taskDescription;
+                ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription("Scout: Team " + scoutData.getTeam(),
+                        current.getIcon(), getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary()));
+                setTaskDescription(taskDesc);
+            }
 
             dialog.dismiss();
         } else {
