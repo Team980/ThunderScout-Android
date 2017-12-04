@@ -34,6 +34,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.team980.thunderscout.bluetooth.BluetoothServerService;
 import com.team980.thunderscout.bluetooth.util.BluetoothQuickTileService;
 
@@ -119,13 +120,19 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
 
         sharedPref.registerOnSharedPreferenceChangeListener(this);
 
-        //Manually init Crashlytics
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
+        //Firebase Analytics
+        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(sharedPref.getBoolean(getResources().getString(R.string.pref_enable_analytics), true));
 
-        // Initialize Fabric with the debug-disabled crashlytics.
-        Fabric.with(this, crashlyticsKit);
+
+        //Manually init Crashlytics
+        if (sharedPref.getBoolean(getResources().getString(R.string.pref_enable_crashlytics), true)) {
+            Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                    .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                    .build();
+
+            // Initialize Fabric with the debug-disabled crashlytics.
+            Fabric.with(this, crashlyticsKit);
+        }
     }
 
     @Override
@@ -142,6 +149,8 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 TileService.requestListeningState(this, new ComponentName(this, BluetoothQuickTileService.class));
             }
+        } else if (key.equals(getResources().getString(R.string.pref_enable_analytics))) {
+            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(sharedPreferences.getBoolean(getResources().getString(R.string.pref_enable_analytics), true));
         }
     }
 }

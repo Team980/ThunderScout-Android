@@ -9,6 +9,11 @@
 
     <string name="pref_last_presented_update_dialog">last_update_notified</string>
 
+    <!-- General -->
+    <string name="pref_enable_analytics">enable_analytics</string>
+    <string name="pref_enable_crashlytics">enable_crashlytics</string>
+    <string name="pref_enable_performance_monitoring">enable_performance_monitoring</string>
+
     <!-- Appearance -->
     <string name="pref_app_theme">app_theme</string>
     <string name="pref_tint_navigation_bar">tint_nav_bar</string>

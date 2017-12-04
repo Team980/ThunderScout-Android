@@ -132,6 +132,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || MainPreferenceFragment.class.getName().equals(fragmentName)
+                || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || MatchScoutPreferenceFragment.class.getName().equals(fragmentName)
                 || BluetoothServerPreferenceFragment.class.getName().equals(fragmentName);
     }
@@ -160,6 +161,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }*/
     }
 
+    public static class GeneralPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_general_settings);
+
+            SettingsActivity activity = (SettingsActivity) getActivity();
+            activity.getSupportActionBar().setTitle("General settings");
+        }
+    }
 
     public static class MatchScoutPreferenceFragment extends PreferenceFragment {
         @Override

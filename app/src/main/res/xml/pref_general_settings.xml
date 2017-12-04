@@ -24,27 +24,31 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Preference
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$GeneralPreferenceFragment"
-        android:icon="@drawable/ic_settings_white_24dp"
-        android:summary="Telemetry settings, etc."
-        android:title="General settings" />
+    <PreferenceCategory android:title="Telemetry">
 
-    <!--<PreferenceScreen
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$AppearancePreferenceFragment"
-        android:icon="@drawable/ic_brush_white_24dp"
-        android:title="Appearance" />-->
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_enable_analytics"
+            android:summary="Sharing usage statistics helps the development of new features and improvments"
+            android:title="Send usage statistics" />
 
-    <Preference
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$MatchScoutPreferenceFragment"
-        android:icon="@drawable/ic_send_white_24dp"
-        android:summary="Scout matches and transmit them to other devices"
-        android:title="Match scouting" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_enable_crashlytics"
+            android:summary="Sharing crash reports helps fix bugs and increase the stability of the app"
+            android:title="Send crash reports" />
 
-    <Preference
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$BluetoothServerPreferenceFragment"
-        android:icon="@drawable/ic_bluetooth_transfer_white_24dp"
-        android:summary="Receive data from other devices"
-        android:title="Bluetooth server" />
+        <!--<SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_enable_performance_monitoring"
+            android:title="Send performance reports"
+            android:summary=""/>-->
+
+        <Preference
+            android:icon="@drawable/ic_info_white_24dp"
+            android:selectable="false"
+            android:summary="A restart is required for changes to take effect." />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
