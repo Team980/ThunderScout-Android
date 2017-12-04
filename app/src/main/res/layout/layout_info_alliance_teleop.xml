@@ -40,7 +40,7 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_team_teleopLowGoalCount"
+            android:id="@+id/info_alliance_teleopLowGoalCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -56,23 +56,7 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_team_teleopHighGoalCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Missed High Goals"
-            android:textSize="22sp"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_team_teleopMissedGoalCount"
+            android:id="@+id/info_alliance_teleopHighGoalCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -90,7 +74,7 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_team_teleopFuelPoints"
+            android:id="@+id/info_alliance_teleopFuelPoints"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -107,23 +91,7 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_team_teleopGearDeliveryCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Gears Dropped"
-            android:textSize="22sp"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_team_teleopGearDropCount"
+            android:id="@+id/info_alliance_teleopGearDeliveryCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -141,7 +109,7 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_team_teleopRotorPoints"
+            android:id="@+id/info_alliance_teleopRotorPoints"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -153,22 +121,6 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Climbing Success"
-            android:textSize="22sp"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_team_teleopClimbPercentage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0%" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:text="Avg. Climbing Points"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="22sp"
@@ -176,7 +128,7 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_team_teleopClimbPoints"
+            android:id="@+id/info_alliance_teleopClimbPoints"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"

@@ -42,6 +42,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.team980.thunderscout.analytics.alliances.AlliancesFragment;
 import com.team980.thunderscout.analytics.matches.MatchesFragment;
 import com.team980.thunderscout.analytics.rankings.RankingsFragment;
 import com.team980.thunderscout.backend.AccountScope;
@@ -118,10 +119,10 @@ public class MainActivity extends AppCompatActivity
                     navigationView.setCheckedItem(R.id.nav_rankings);
                     fragment = new RankingsFragment();
                     break;
-                //case 3: //INTENT_FLAGS_ALLIANCES
-                //navigationView.setCheckedItem(R.id.nav_alliances);
-                //fragment = new AlliancesFragment();
-                //break;
+                case 3: //INTENT_FLAGS_ALLIANCES
+                    navigationView.setCheckedItem(R.id.nav_alliances);
+                    fragment = new AlliancesFragment();
+                    break;
                 default: //default to INTENT_FLAGS_HOME
                     navigationView.setCheckedItem(R.id.nav_home);
                     fragment = new HomeFragment();
@@ -206,11 +207,11 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment, new RankingsFragment());
             ft.commit();
-        } //else if (id == R.id.nav_alliances) {
-        //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //ft.replace(R.id.fragment, new AlliancesFragment());
-        //ft.commit();
-        //}
+        } else if (id == R.id.nav_alliances) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment, new AlliancesFragment());
+            ft.commit();
+        }
 
         //Secondary navigation menu
         else if (id == R.id.nav_settings) {

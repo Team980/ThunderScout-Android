@@ -22,8 +22,9 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.analytics.rankings;
+package com.team980.thunderscout.analytics;
 
+import com.team980.thunderscout.analytics.rankings.TeamPointEstimator;
 import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
@@ -64,7 +65,7 @@ public class TeamWrapper { //TODO We shouldn't be creating this many AverageScou
             case SORT_POINT_CONTRIBUTION:
                 return formatter.format(TeamPointEstimator.getPointContribution(new AverageScoutData(dataList))) + " points";
             case SORT_TEAM_NUMBER:
-                return dataList.size() + " matches";
+                return "Last updated " + SimpleDateFormat.getDateTimeInstance().format(new AverageScoutData(dataList).getLastUpdated());
             case SORT_LAST_UPDATED:
                 return "Last updated " + SimpleDateFormat.getDateTimeInstance().format(new AverageScoutData(dataList).getLastUpdated());
             case SORT_AUTO_GEARS_DELIVERED:

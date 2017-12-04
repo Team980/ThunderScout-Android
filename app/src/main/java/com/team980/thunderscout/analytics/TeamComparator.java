@@ -1,7 +1,8 @@
-package com.team980.thunderscout.analytics.rankings;
+package com.team980.thunderscout.analytics;
 
 import android.util.Log;
 
+import com.team980.thunderscout.analytics.rankings.TeamPointEstimator;
 import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 

@@ -49,7 +49,7 @@ public class TeamPointEstimator {
         return 5 * (data.getCrossedBaselinePercentage() / 100);
     }
 
-    public static double getAutoFuelPoints(AverageScoutData data) { //NO FRACTIONS
+    public static double getAutoFuelPoints(AverageScoutData data) {
         double pts = 0;
 
         for (ScoutData match : data.getDataList()) {
@@ -93,7 +93,7 @@ public class TeamPointEstimator {
         return 50 * (data.getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD) / 100);
     }
 
-    public static double getRankingPoints(AverageScoutData data) { //Points awarded are based on ELIMINATION values, not qf ranking points themselves
+    public static double getRankingPoints(AverageScoutData data) {
         double pts = 0;
 
         for (ScoutData match : data.getDataList()) {

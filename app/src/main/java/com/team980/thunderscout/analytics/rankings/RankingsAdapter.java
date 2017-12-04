@@ -33,6 +33,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.analytics.TeamComparator;
+import com.team980.thunderscout.analytics.TeamWrapper;
 import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
 import com.team980.thunderscout.analytics.rankings.breakdown.TeamInfoActivity;
 import com.team980.thunderscout.backend.AccountScope;
