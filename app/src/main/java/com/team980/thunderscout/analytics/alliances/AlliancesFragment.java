@@ -43,8 +43,11 @@ import android.widget.TextView;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.TeamWrapper;
+import com.team980.thunderscout.analytics.rankings.TeamPointEstimator;
+import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
 import com.team980.thunderscout.analytics.rankings.breakdown.CommentsAdapter;
 import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -133,61 +136,176 @@ public class AlliancesFragment extends Fragment implements AdapterView.OnItemSel
     }
 
     public void generateSummary() {
-        AverageAllianceData data = new AverageAllianceData(alliance[0], alliance[1], alliance[2]);
+        AverageScoutData station1 = new AverageScoutData(alliance[0].getDataList());
+        AverageScoutData station2 = new AverageScoutData(alliance[1].getDataList());
+        AverageScoutData station3 = new AverageScoutData(alliance[2].getDataList());
 
         NumberFormat formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(1);
 
         // Auto
-        TextView mobility = getView().findViewById(R.id.info_alliance_autoMobilityPoints);
-        mobility.setText(formatter.format(AlliancePointEstimator.getBaselinePoints(data)) + " pts");
+        TextView crossPercent = getView().findViewById(R.id.info_alliance_station1_autoCrossPercentage);
+        crossPercent.setText(formatter.format(station1.getCrossedBaselinePercentage()) + "%");
+        TextView crossPercent2 = getView().findViewById(R.id.info_alliance_station2_autoCrossPercentage);
+        crossPercent2.setText(formatter.format(station2.getCrossedBaselinePercentage()) + "%");
+        TextView crossPercent3 = getView().findViewById(R.id.info_alliance_station3_autoCrossPercentage);
+        crossPercent3.setText(formatter.format(station3.getCrossedBaselinePercentage()) + "%");
 
-        TextView autoLowGoalCount = getView().findViewById(R.id.info_alliance_autoLowGoalCount);
-        autoLowGoalCount.setText(formatter.format((data.getAverageAutoLowGoals())));
+        TextView mobility = getView().findViewById(R.id.info_alliance_station1_autoMobilityPoints);
+        mobility.setText(formatter.format(TeamPointEstimator.getBaselinePoints(station1)) + " pts");
+        TextView mobility2 = getView().findViewById(R.id.info_alliance_station2_autoMobilityPoints);
+        mobility2.setText(formatter.format(TeamPointEstimator.getBaselinePoints(station2)) + " pts");
+        TextView mobility3 = getView().findViewById(R.id.info_alliance_station3_autoMobilityPoints);
+        mobility3.setText(formatter.format(TeamPointEstimator.getBaselinePoints(station3)) + " pts");
 
-        TextView autoHighGoalCount = getView().findViewById(R.id.info_alliance_autoHighGoalCount);
-        autoHighGoalCount.setText(formatter.format(data.getAverageAutoHighGoals()));
+        TextView autoLowGoalCount = getView().findViewById(R.id.info_alliance_station1_autoLowGoalCount);
+        autoLowGoalCount.setText(formatter.format((station1.getAverageAutoLowGoalDumpAmount().getMinimumAmount()
+                + station1.getAverageAutoLowGoalDumpAmount().getMaximumAmount()) / 2));
+        TextView autoLowGoalCount2 = getView().findViewById(R.id.info_alliance_station2_autoLowGoalCount);
+        autoLowGoalCount2.setText(formatter.format((station2.getAverageAutoLowGoalDumpAmount().getMinimumAmount()
+                + station2.getAverageAutoLowGoalDumpAmount().getMaximumAmount()) / 2));
+        TextView autoLowGoalCount3 = getView().findViewById(R.id.info_alliance_station3_autoLowGoalCount);
+        autoLowGoalCount3.setText(formatter.format((station3.getAverageAutoLowGoalDumpAmount().getMinimumAmount()
+                + station3.getAverageAutoLowGoalDumpAmount().getMaximumAmount()) / 2));
 
-        TextView autoFuelPoints = getView().findViewById(R.id.info_alliance_autoFuelPoints);
-        autoFuelPoints.setText(formatter.format(AlliancePointEstimator.getAutoFuelPoints(data)) + " pts");
+        TextView autoHighGoalCount = getView().findViewById(R.id.info_alliance_station1_autoHighGoalCount);
+        autoHighGoalCount.setText(formatter.format(station1.getAverageAutoHighGoals()));
+        TextView autoHighGoalCount2 = getView().findViewById(R.id.info_alliance_station2_autoHighGoalCount);
+        autoHighGoalCount2.setText(formatter.format(station2.getAverageAutoHighGoals()));
+        TextView autoHighGoalCount3 = getView().findViewById(R.id.info_alliance_station3_autoHighGoalCount);
+        autoHighGoalCount3.setText(formatter.format(station3.getAverageAutoHighGoals()));
 
-        TextView autoGearDeliveryCount = getView().findViewById(R.id.info_alliance_autoGearDeliveryCount);
-        autoGearDeliveryCount.setText(formatter.format(data.getAverageAutoGearsDelivered()));
+        TextView autoMissedGoalCount = getView().findViewById(R.id.info_alliance_station1_autoMissedGoalCount);
+        autoMissedGoalCount.setText(formatter.format(station1.getAverageAutoMissedHighGoals()));
+        TextView autoMissedGoalCount2 = getView().findViewById(R.id.info_alliance_station2_autoMissedGoalCount);
+        autoMissedGoalCount2.setText(formatter.format(station2.getAverageAutoMissedHighGoals()));
+        TextView autoMissedGoalCount3 = getView().findViewById(R.id.info_alliance_station3_autoMissedGoalCount);
+        autoMissedGoalCount3.setText(formatter.format(station3.getAverageAutoMissedHighGoals()));
 
-        TextView autoRotorPoints = getView().findViewById(R.id.info_alliance_autoRotorPoints);
-        autoRotorPoints.setText(formatter.format(AlliancePointEstimator.getAutoRotorPoints(data)) + " pts");
+        TextView autoFuelPoints = getView().findViewById(R.id.info_alliance_station1_autoFuelPoints);
+        autoFuelPoints.setText(formatter.format(TeamPointEstimator.getAutoFuelPoints(station1)) + " pts");
+        TextView autoFuelPoints2 = getView().findViewById(R.id.info_alliance_station2_autoFuelPoints);
+        autoFuelPoints2.setText(formatter.format(TeamPointEstimator.getAutoFuelPoints(station2)) + " pts");
+        TextView autoFuelPoints3 = getView().findViewById(R.id.info_alliance_station3_autoFuelPoints);
+        autoFuelPoints3.setText(formatter.format(TeamPointEstimator.getAutoFuelPoints(station3)) + " pts");
+
+        TextView autoGearDeliveryCount = getView().findViewById(R.id.info_alliance_station1_autoGearDeliveryCount);
+        autoGearDeliveryCount.setText(formatter.format(station1.getAverageAutoGearsDelivered()));
+        TextView autoGearDeliveryCount2 = getView().findViewById(R.id.info_alliance_station2_autoGearDeliveryCount);
+        autoGearDeliveryCount2.setText(formatter.format(station2.getAverageAutoGearsDelivered()));
+        TextView autoGearDeliveryCount3 = getView().findViewById(R.id.info_alliance_station3_autoGearDeliveryCount);
+        autoGearDeliveryCount3.setText(formatter.format(station3.getAverageAutoGearsDelivered()));
+
+        TextView autoGearDropCount = getView().findViewById(R.id.info_alliance_station1_autoGearDropCount);
+        autoGearDropCount.setText(formatter.format(station1.getAverageAutoGearsDropped()));
+        TextView autoGearDropCount2 = getView().findViewById(R.id.info_alliance_station2_autoGearDropCount);
+        autoGearDropCount2.setText(formatter.format(station2.getAverageAutoGearsDropped()));
+        TextView autoGearDropCount3 = getView().findViewById(R.id.info_alliance_station3_autoGearDropCount);
+        autoGearDropCount3.setText(formatter.format(station3.getAverageAutoGearsDropped()));
+
+        TextView autoRotorPoints = getView().findViewById(R.id.info_alliance_station1_autoRotorPoints);
+        autoRotorPoints.setText(formatter.format(TeamPointEstimator.getAutoRotorPoints(station1)) + " pts");
+        TextView autoRotorPoints2 = getView().findViewById(R.id.info_alliance_station2_autoRotorPoints);
+        autoRotorPoints2.setText(formatter.format(TeamPointEstimator.getAutoRotorPoints(station2)) + " pts");
+        TextView autoRotorPoints3 = getView().findViewById(R.id.info_alliance_station3_autoRotorPoints);
+        autoRotorPoints3.setText(formatter.format(TeamPointEstimator.getAutoRotorPoints(station3)) + " pts");
 
         // Teleop
-        TextView teleopLowGoalCount = getView().findViewById(R.id.info_alliance_teleopLowGoalCount);
-        teleopLowGoalCount.setText(formatter.format(data.getAverageTeleopLowGoals()));
+        TextView teleopLowGoalCount = getView().findViewById(R.id.info_alliance_station1_teleopLowGoalCount);
+        // ugh I hate FuelDumpAmount soooo much
+        float low = (station1.getAverageTeleopLowGoalDumpAmount().getMinimumAmount()
+                + station1.getAverageTeleopLowGoalDumpAmount().getMaximumAmount()) / 2; //average dump size
+        low *= station1.getAverageTeleopDumpFrequency(); /// times average dump amount
+        teleopLowGoalCount.setText(formatter.format(low));
+        TextView teleopLowGoalCount2 = getView().findViewById(R.id.info_alliance_station2_teleopLowGoalCount);
+        // ugh I hate FuelDumpAmount soooo much
+        float low2 = (station2.getAverageTeleopLowGoalDumpAmount().getMinimumAmount()
+                + station2.getAverageTeleopLowGoalDumpAmount().getMaximumAmount()) / 2; //average dump size
+        low2 *= station2.getAverageTeleopDumpFrequency(); /// times average dump amount
+        teleopLowGoalCount2.setText(formatter.format(low2));
+        TextView teleopLowGoalCount3 = getView().findViewById(R.id.info_alliance_station3_teleopLowGoalCount);
+        // ugh I hate FuelDumpAmount soooo much
+        float low3 = (station3.getAverageTeleopLowGoalDumpAmount().getMinimumAmount()
+                + station3.getAverageTeleopLowGoalDumpAmount().getMaximumAmount()) / 2; //average dump size
+        low3 *= station3.getAverageTeleopDumpFrequency(); /// times average dump amount
+        teleopLowGoalCount3.setText(formatter.format(low3));
 
-        TextView teleopHighGoalCount = getView().findViewById(R.id.info_alliance_teleopHighGoalCount);
-        teleopHighGoalCount.setText(formatter.format(data.getAverageTeleopHighGoals()));
+        TextView teleopHighGoalCount = getView().findViewById(R.id.info_alliance_station1_teleopHighGoalCount);
+        teleopHighGoalCount.setText(formatter.format(station1.getAverageTeleopHighGoals()));
+        TextView teleopHighGoalCount2 = getView().findViewById(R.id.info_alliance_station2_teleopHighGoalCount);
+        teleopHighGoalCount2.setText(formatter.format(station2.getAverageTeleopHighGoals()));
+        TextView teleopHighGoalCount3 = getView().findViewById(R.id.info_alliance_station3_teleopHighGoalCount);
+        teleopHighGoalCount3.setText(formatter.format(station3.getAverageTeleopHighGoals()));
 
-        TextView teleopFuelPoints = getView().findViewById(R.id.info_alliance_teleopFuelPoints);
-        teleopFuelPoints.setText(formatter.format(AlliancePointEstimator.getTeleopFuelPoints(data)) + " pts");
+        TextView teleopMissedGoalCount = getView().findViewById(R.id.info_alliance_station1_teleopMissedGoalCount);
+        teleopMissedGoalCount.setText(formatter.format(station1.getAverageTeleopMissedHighGoals()));
+        TextView teleopMissedGoalCount2 = getView().findViewById(R.id.info_alliance_station2_teleopMissedGoalCount);
+        teleopMissedGoalCount2.setText(formatter.format(station2.getAverageTeleopMissedHighGoals()));
+        TextView teleopMissedGoalCount3 = getView().findViewById(R.id.info_alliance_station3_teleopMissedGoalCount);
+        teleopMissedGoalCount3.setText(formatter.format(station3.getAverageTeleopMissedHighGoals()));
 
-        TextView teleopGearDeliveryCount = getView().findViewById(R.id.info_alliance_teleopGearDeliveryCount);
-        teleopGearDeliveryCount.setText(formatter.format(data.getAverageTeleopGearsDelivered()));
+        TextView teleopFuelPoints = getView().findViewById(R.id.info_alliance_station1_teleopFuelPoints);
+        teleopFuelPoints.setText(formatter.format(TeamPointEstimator.getTeleopFuelPoints(station1)) + " pts");
+        TextView teleopFuelPoints2 = getView().findViewById(R.id.info_alliance_station2_teleopFuelPoints);
+        teleopFuelPoints2.setText(formatter.format(TeamPointEstimator.getTeleopFuelPoints(station2)) + " pts");
+        TextView teleopFuelPoints3 = getView().findViewById(R.id.info_alliance_station3_teleopFuelPoints);
+        teleopFuelPoints3.setText(formatter.format(TeamPointEstimator.getTeleopFuelPoints(station3)) + " pts");
 
-        TextView teleopRotorPoints = getView().findViewById(R.id.info_alliance_teleopRotorPoints);
-        teleopRotorPoints.setText(formatter.format(AlliancePointEstimator.getTeleopRotorPoints(data)) + " pts");
+        TextView teleopGearDeliveryCount = getView().findViewById(R.id.info_alliance_station1_teleopGearDeliveryCount);
+        teleopGearDeliveryCount.setText(formatter.format(station1.getAverageTeleopGearsDelivered()));
+        TextView teleopGearDeliveryCount2 = getView().findViewById(R.id.info_alliance_station2_teleopGearDeliveryCount);
+        teleopGearDeliveryCount2.setText(formatter.format(station2.getAverageTeleopGearsDelivered()));
+        TextView teleopGearDeliveryCount3 = getView().findViewById(R.id.info_alliance_station3_teleopGearDeliveryCount);
+        teleopGearDeliveryCount3.setText(formatter.format(station3.getAverageTeleopGearsDelivered()));
 
-        TextView climbPts = getView().findViewById(R.id.info_alliance_teleopClimbPoints);
-        climbPts.setText(formatter.format(AlliancePointEstimator.getClimbingPoints(data)) + " pts");
+        TextView teleopGearDropCount = getView().findViewById(R.id.info_alliance_station1_teleopGearDropCount);
+        teleopGearDropCount.setText(formatter.format(station1.getAverageTeleopGearsDropped()));
+        TextView teleopGearDropCount2 = getView().findViewById(R.id.info_alliance_station2_teleopGearDropCount);
+        teleopGearDropCount2.setText(formatter.format(station2.getAverageTeleopGearsDropped()));
+        TextView teleopGearDropCount3 = getView().findViewById(R.id.info_alliance_station3_teleopGearDropCount);
+        teleopGearDropCount3.setText(formatter.format(station3.getAverageTeleopGearsDropped()));
+
+        TextView teleopRotorPoints = getView().findViewById(R.id.info_alliance_station1_teleopRotorPoints);
+        teleopRotorPoints.setText(formatter.format(TeamPointEstimator.getTeleopRotorPoints(station1)) + " pts");
+        TextView teleopRotorPoints2 = getView().findViewById(R.id.info_alliance_station2_teleopRotorPoints);
+        teleopRotorPoints2.setText(formatter.format(TeamPointEstimator.getTeleopRotorPoints(station2)) + " pts");
+        TextView teleopRotorPoints3 = getView().findViewById(R.id.info_alliance_station3_teleopRotorPoints);
+        teleopRotorPoints3.setText(formatter.format(TeamPointEstimator.getTeleopRotorPoints(station3)) + " pts");
+
+        TextView climbPercent = getView().findViewById(R.id.info_alliance_station1_teleopClimbPercentage);
+        climbPercent.setText(formatter.format(station1.getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "%");
+        TextView climbPercent2 = getView().findViewById(R.id.info_alliance_station2_teleopClimbPercentage);
+        climbPercent2.setText(formatter.format(station2.getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "%");
+        TextView climbPercent3 = getView().findViewById(R.id.info_alliance_station3_teleopClimbPercentage);
+        climbPercent3.setText(formatter.format(station3.getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "%");
+
+        TextView climbPts = getView().findViewById(R.id.info_alliance_station1_teleopClimbPoints);
+        climbPts.setText(formatter.format(TeamPointEstimator.getClimbingPoints(station1)) + " pts");
+        TextView climbPts2 = getView().findViewById(R.id.info_alliance_station2_teleopClimbPoints);
+        climbPts2.setText(formatter.format(TeamPointEstimator.getClimbingPoints(station2)) + " pts");
+        TextView climbPts3 = getView().findViewById(R.id.info_alliance_station3_teleopClimbPoints);
+        climbPts3.setText(formatter.format(TeamPointEstimator.getClimbingPoints(station3)) + " pts");
 
         // Summary
-        TextView rankingPoints = getView().findViewById(R.id.info_alliance_rankingPoints);
-        rankingPoints.setText(formatter.format(AlliancePointEstimator.getAverageRankingPoints(data)) + " pts");
+        TextView rankingPoints = getView().findViewById(R.id.info_alliance_station1_rankingPoints);
+        rankingPoints.setText(formatter.format(TeamPointEstimator.getRankingPoints(station1)) + " pts");
+        TextView rankingPoints2 = getView().findViewById(R.id.info_alliance_station2_rankingPoints);
+        rankingPoints2.setText(formatter.format(TeamPointEstimator.getRankingPoints(station2)) + " pts");
+        TextView rankingPoints3 = getView().findViewById(R.id.info_alliance_station3_rankingPoints);
+        rankingPoints3.setText(formatter.format(TeamPointEstimator.getRankingPoints(station3)) + " pts");
 
-        TextView total = getView().findViewById(R.id.info_alliance_totalPoints);
-        total.setText(formatter.format(AlliancePointEstimator.getPointContribution(data)) + " pts");
+        TextView total = getView().findViewById(R.id.info_alliance_station1_totalPoints);
+        total.setText(formatter.format(TeamPointEstimator.getPointContribution(station1)) + " pts");
+        TextView total2 = getView().findViewById(R.id.info_alliance_station2_totalPoints);
+        total2.setText(formatter.format(TeamPointEstimator.getPointContribution(station2)) + " pts");
+        TextView total3 = getView().findViewById(R.id.info_alliance_station3_totalPoints);
+        total3.setText(formatter.format(TeamPointEstimator.getPointContribution(station3)) + " pts");
 
         RecyclerView troubleWith = getView().findViewById(R.id.info_alliance_troubleWith);
         TextView troubleWithPlaceholder = getView().findViewById(R.id.info_alliance_troubleWithPlaceholder);
 
-        if (data.getTroublesList() == null || data.getTroublesList().isEmpty() || listIsEmpty(data.getTroublesList())) {
+        if (station1.getTroublesList() == null || station1.getTroublesList().isEmpty() || listIsEmpty(station1.getTroublesList())) {
             troubleWith.setVisibility(View.GONE);
             troubleWithPlaceholder.setVisibility(View.VISIBLE);
         } else {
@@ -195,13 +313,13 @@ public class AlliancesFragment extends Fragment implements AdapterView.OnItemSel
             troubleWithPlaceholder.setVisibility(View.GONE);
 
             troubleWith.setLayoutManager(new LinearLayoutManager(getContext()));
-            troubleWith.setAdapter(new CommentsAdapter(data.getTroublesList()));
+            troubleWith.setAdapter(new CommentsAdapter(station1.getTroublesList()));
         }
 
         RecyclerView comments = getView().findViewById(R.id.info_alliance_comments);
         TextView commentsPlaceholder = getView().findViewById(R.id.info_alliance_commentsPlaceholder);
 
-        if (data.getCommentsList() == null || data.getCommentsList().isEmpty() || listIsEmpty(data.getCommentsList())) {
+        if (station1.getCommentsList() == null || station1.getCommentsList().isEmpty() || listIsEmpty(station1.getCommentsList())) {
             comments.setVisibility(View.GONE);
             commentsPlaceholder.setVisibility(View.VISIBLE);
         } else {
@@ -209,7 +327,7 @@ public class AlliancesFragment extends Fragment implements AdapterView.OnItemSel
             commentsPlaceholder.setVisibility(View.GONE);
 
             comments.setLayoutManager(new LinearLayoutManager(getContext()));
-            comments.setAdapter(new CommentsAdapter(data.getCommentsList()));
+            comments.setAdapter(new CommentsAdapter(station1.getCommentsList()));
         }
     }
 

@@ -140,7 +140,7 @@ public class AverageScoutData implements Serializable {
     public float getAverageTeleopGearsDropped() {
         float i = 0;
         for (ScoutData data : dataList) {
-            i += data.getTeleop().getGearsDelivered();
+            i += data.getTeleop().getGearsDropped();
         }
 
         return i / dataList.size();

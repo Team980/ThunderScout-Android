@@ -1,59 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <FrameLayout
+    <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background_floating_light"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:columnCount="4">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Avg. Ranking Points"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_rankingPoints"
-            android:layout_width="match_parent"
+            android:id="@+id/info_alliance_station1_rankingPoints"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textColor="@android:color/white"
             android:textSize="22sp"
+            app:layout_columnWeight="1"
             tools:text="0 pts" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/info_alliance_station2_rankingPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
 
-    <FrameLayout
+        <TextView
+            android:id="@+id/info_alliance_station3_rankingPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+    </android.support.v7.widget.GridLayout>
+
+    <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background_floating"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:columnCount="4">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Expected Total"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_totalPoints"
-            android:layout_width="match_parent"
+            android:id="@+id/info_alliance_station1_totalPoints"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textColor="@android:color/white"
             android:textSize="25sp"
+            app:layout_columnWeight="1"
             tools:text="0 pts" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/info_alliance_station2_totalPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+        <TextView
+            android:id="@+id/info_alliance_station3_totalPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+    </android.support.v7.widget.GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

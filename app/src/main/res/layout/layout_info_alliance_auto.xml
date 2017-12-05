@@ -28,9 +28,43 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
-        app:columnCount="2"
+        app:columnCount="4"
         app:orientation="horizontal"
         app:rowCount="2">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Baseline Cross Success"
+            android:textSize="22sp"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_alliance_station1_autoCrossPercentage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0%" />
+
+        <TextView
+            android:id="@+id/info_alliance_station2_autoCrossPercentage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0%" />
+
+        <TextView
+            android:id="@+id/info_alliance_station3_autoCrossPercentage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0%" />
 
         <TextView
             android:layout_width="0dp"
@@ -42,7 +76,27 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_autoMobilityPoints"
+            android:id="@+id/info_alliance_station1_autoMobilityPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+        <TextView
+            android:id="@+id/info_alliance_station2_autoMobilityPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+        <TextView
+            android:id="@+id/info_alliance_station3_autoMobilityPoints"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -59,7 +113,25 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_autoLowGoalCount"
+            android:id="@+id/info_alliance_station1_autoLowGoalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/info_alliance_station2_autoLowGoalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/info_alliance_station3_autoLowGoalCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -75,7 +147,59 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_autoHighGoalCount"
+            android:id="@+id/info_alliance_station1_autoHighGoalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/info_alliance_station2_autoHighGoalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/info_alliance_station3_autoHighGoalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Avg. Missed High Goals"
+            android:textSize="22sp"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_alliance_station1_autoMissedGoalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/info_alliance_station2_autoMissedGoalCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/info_alliance_station3_autoMissedGoalCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -93,7 +217,27 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_autoFuelPoints"
+            android:id="@+id/info_alliance_station1_autoFuelPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+        <TextView
+            android:id="@+id/info_alliance_station2_autoFuelPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+        <TextView
+            android:id="@+id/info_alliance_station3_autoFuelPoints"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -110,7 +254,59 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_autoGearDeliveryCount"
+            android:id="@+id/info_alliance_station1_autoGearDeliveryCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/info_alliance_station2_autoGearDeliveryCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/info_alliance_station3_autoGearDeliveryCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Avg. Gears Dropped"
+            android:textSize="22sp"
+            app:layout_columnWeight="2" />
+
+        <TextView
+            android:id="@+id/info_alliance_station1_autoGearDropCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/info_alliance_station2_autoGearDropCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/info_alliance_station3_autoGearDropCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -128,7 +324,27 @@
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_autoRotorPoints"
+            android:id="@+id/info_alliance_station1_autoRotorPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+        <TextView
+            android:id="@+id/info_alliance_station2_autoRotorPoints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0 pts" />
+
+        <TextView
+            android:id="@+id/info_alliance_station3_autoRotorPoints"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
