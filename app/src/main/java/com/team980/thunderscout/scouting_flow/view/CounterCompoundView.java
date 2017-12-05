@@ -40,11 +40,11 @@ import com.team980.thunderscout.R;
 public class CounterCompoundView extends FrameLayout implements View.OnClickListener, View.OnLongClickListener {
 
     protected LayoutInflater inflater;
-    protected float max;
-    protected float min;
-    protected float count;
+    protected float maxValue;
+    protected float minValue;
+    protected float increment;
     protected boolean longPressEnabled;
-    protected float longPressCount;
+    protected float longPressIncrement;
     float value;
 
     public CounterCompoundView(Context context, AttributeSet attrs) {
@@ -60,12 +60,12 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.CounterCompoundView, 0, 0);
-        max = a.getFloat(R.styleable.CounterCompoundView_max, 1337); //This impossibly high number should never be reached
-        min = a.getFloat(R.styleable.CounterCompoundView_min, 0);
-        count = a.getFloat(R.styleable.CounterCompoundView_count, 1);
+        maxValue = a.getFloat(R.styleable.CounterCompoundView_maxValue, 1337); //This impossibly high number should never be reached
+        minValue = a.getFloat(R.styleable.CounterCompoundView_minValue, 0);
+        increment = a.getFloat(R.styleable.CounterCompoundView_increment, 1);
 
         longPressEnabled = a.getBoolean(R.styleable.CounterCompoundView_longPress, false); //no long press by default
-        longPressCount = a.getFloat(R.styleable.CounterCompoundView_longPressCount, 5); //default long press count: 5
+        longPressIncrement = a.getFloat(R.styleable.CounterCompoundView_longPressIncrement, 5); //default long press increment: 5
 
         a.recycle();
 
@@ -93,17 +93,17 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
 
         if (v.getId() == R.id.plus) {
 
-            value += count;
+            value += increment;
 
-            if (value > max)
-                value = max;
+            if (value > maxValue)
+                value = maxValue;
 
         } else if (v.getId() == R.id.minus) {
 
-            value -= count;
+            value -= increment;
 
-            if (value < min)
-                value = min;
+            if (value < minValue)
+                value = minValue;
         }
 
         String text;
@@ -122,16 +122,16 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
 
         if (v.getId() == R.id.plus) {
 
-            value += longPressCount;
-            if (value > max)
-                value = max;
+            value += longPressIncrement;
+            if (value > maxValue)
+                value = maxValue;
 
         } else if (v.getId() == R.id.minus) {
 
-            value -= longPressCount;
+            value -= longPressIncrement;
 
-            if (value < min)
-                value = min;
+            if (value < minValue)
+                value = minValue;
         }
 
         String text;
@@ -163,9 +163,9 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
         SavedState ss = new SavedState(superState);
         //end
 
-        ss.max = this.max;
-        ss.min = this.min;
-        ss.count = this.count;
+        ss.maxValue = this.maxValue;
+        ss.minValue = this.minValue;
+        ss.increment = this.increment;
         ss.value = this.value;
 
         return ss;
@@ -183,9 +183,9 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
         super.onRestoreInstanceState(ss.getSuperState());
         //end
 
-        this.max = ss.max;
-        this.min = ss.min;
-        this.count = ss.count;
+        this.maxValue = ss.maxValue;
+        this.minValue = ss.minValue;
+        this.increment = ss.increment;
         this.value = ss.value;
 
         String text;
@@ -211,9 +211,9 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
                         return new SavedState[size];
                     }
                 };
-        float max;
-        float min;
-        float count;
+        float maxValue;
+        float minValue;
+        float increment;
         float value;
 
         SavedState(Parcelable superState) {
@@ -222,18 +222,18 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
 
         private SavedState(Parcel in) {
             super(in);
-            this.max = in.readFloat();
-            this.min = in.readFloat();
-            this.count = in.readFloat();
+            this.maxValue = in.readFloat();
+            this.minValue = in.readFloat();
+            this.increment = in.readFloat();
             this.value = in.readFloat();
         }
 
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
-            out.writeFloat(this.max);
-            out.writeFloat(this.min);
-            out.writeFloat(this.count);
+            out.writeFloat(this.maxValue);
+            out.writeFloat(this.minValue);
+            out.writeFloat(this.increment);
             out.writeFloat(this.value);
         }
     }

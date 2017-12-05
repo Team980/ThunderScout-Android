@@ -24,11 +24,11 @@
 
 <resources>
     <declare-styleable name="CounterCompoundView">
-        <attr name="min" format="float" />
-        <attr name="max" format="float" />
-        <attr name="count" format="float" />
+        <attr name="minValue" format="float" />
+        <attr name="maxValue" format="float" />
+        <attr name="increment" format="float" />
 
         <attr name="longPress" format="boolean" />
-        <attr name="longPressCount" format="float" />
+        <attr name="longPressIncrement" format="float" />
     </declare-styleable>
 </resources>
