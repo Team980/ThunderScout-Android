@@ -150,7 +150,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         if (id == R.id.action_delete_all && adapter.getItemCount() > 0) {
             new AlertDialog.Builder(getContext())
-                    .setTitle("Delete all data from this account?")
+                    .setTitle("Delete all data?")
                     .setPositiveButton("Delete", this)
                     .setNegativeButton("Cancel", null).show();
             return true;
@@ -167,7 +167,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         if (id == R.id.action_delete_selection) {
             new AlertDialog.Builder(getContext())
-                    .setTitle("Delete selected data from this account?")
+                    .setTitle("Delete selected matches?")
                     .setPositiveButton("Delete", this)
                     .setNegativeButton("Cancel", null).show();
         }
@@ -216,7 +216,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         } else {
             toolbar.setTitle("Matches");
             toolbar.getMenu().clear();
-            toolbar.inflateMenu(R.menu.menu_rank_tools);
+            toolbar.inflateMenu(R.menu.menu_match_tools);
             TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.secondary, R.color.secondary_dark,
                     R.color.primary, R.color.primary_dark, (AppCompatActivity) getActivity());
 

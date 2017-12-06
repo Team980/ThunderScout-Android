@@ -57,6 +57,8 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
     private TeamComparator sortMode = TeamComparator.SORT_POINT_CONTRIBUTION;
     private String teamFilter = "";
 
+    private ArrayList<TeamWrapper> selectedItems;
+
     private NumberFormat formatter;
 
     public RankingsAdapter(RankingsFragment fragment) {
@@ -65,6 +67,8 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
         this.fragment = fragment;
 
         teamList = new ArrayList<>();
+
+        selectedItems = new ArrayList<>();
 
         formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(0);
@@ -105,6 +109,47 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
         AccountScope.getStorageWrapper(AccountScope.LOCAL, fragment.getContext()).queryData(this);
         notifyDataSetChanged();
+    }
+
+    public void select(TeamWrapper team) {
+        selectedItems.add(team);
+
+        if (!fragment.isInSelectionMode()) {
+            //enter selection mode
+            fragment.setSelectionMode(true);
+        } else {
+            fragment.updateSelectionModeTitle(getSelectedItemCount());
+        }
+    }
+
+    public void deselect(TeamWrapper team) {
+        selectedItems.remove(team);
+
+        if (getSelectedItemCount() == 0 && fragment.isInSelectionMode()) {
+            //exit selection mode
+            fragment.setSelectionMode(false);
+        } else {
+            fragment.updateSelectionModeTitle(getSelectedItemCount());
+        }
+    }
+
+    public void clearSelections() {
+        selectedItems.clear();
+
+        if (fragment.isInSelectionMode()) {
+            //exit selection mode
+            fragment.setSelectionMode(false);
+        }
+
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public List<TeamWrapper> getSelectedItems() {
+        return selectedItems;
     }
 
     @Override
@@ -173,18 +218,63 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
 
             //rank.setText(formatter.format(wrapper.getExpectedPointContribution()) + " points");
 
-            itemView.setOnClickListener(v -> {
-                Intent launchInfoActivity = new Intent(fragment.getContext(), TeamInfoActivity.class);
-                launchInfoActivity.putExtra(TeamInfoActivity.EXTRA_AVERAGE_SCOUT_DATA, new AverageScoutData(wrapper.getDataList()));
+            if (selectedItems.contains(wrapper)) { //if selected
+                itemView.setBackgroundColor(mInflator.getContext()
+                        .getResources().getColor(R.color.background_floating));
+                itemView.setSelected(true);
+                itemView.setActivated(true);
+            } else {
+                itemView.setBackgroundColor(mInflator.getContext()
+                        .getResources().getColor(android.R.color.transparent));
+                itemView.setSelected(false);
+                itemView.setActivated(false);
+            }
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptions options = ActivityOptions
-                            .makeSceneTransitionAnimation(fragment.getActivity(), itemView, "team");
-                    itemView.setTransitionName("team");
-                    fragment.getContext().startActivity(launchInfoActivity, options.toBundle());
+            itemView.setOnClickListener(v -> {
+                if (fragment.isInSelectionMode()) {
+                    if (selectedItems.contains(wrapper)) { //if selected
+                        deselect(wrapper);
+                        itemView.setBackgroundColor(mInflator.getContext()
+                                .getResources().getColor(android.R.color.transparent));
+                        itemView.setSelected(false);
+                        itemView.setActivated(false);
+                    } else {
+                        select(wrapper);
+                        itemView.setBackgroundColor(mInflator.getContext()
+                                .getResources().getColor(R.color.background_floating));
+                        itemView.setSelected(true);
+                        itemView.setActivated(true);
+                    }
                 } else {
-                    fragment.getContext().startActivity(launchInfoActivity);
+                    Intent launchInfoActivity = new Intent(fragment.getContext(), TeamInfoActivity.class);
+                    launchInfoActivity.putExtra(TeamInfoActivity.EXTRA_AVERAGE_SCOUT_DATA, new AverageScoutData(wrapper.getDataList()));
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        ActivityOptions options = ActivityOptions
+                                .makeSceneTransitionAnimation(fragment.getActivity(), itemView, "team");
+                        itemView.setTransitionName("team");
+                        fragment.getContext().startActivity(launchInfoActivity, options.toBundle());
+                    } else {
+                        fragment.getContext().startActivity(launchInfoActivity);
+                    }
                 }
+            });
+
+            itemView.setOnLongClickListener(v -> {
+                if (selectedItems.contains(wrapper)) { //if selected
+                    deselect(wrapper);
+                    itemView.setBackgroundColor(mInflator.getContext()
+                            .getResources().getColor(android.R.color.transparent));
+                    itemView.setSelected(false);
+                    itemView.setActivated(false);
+                } else {
+                    select(wrapper);
+                    itemView.setBackgroundColor(mInflator.getContext()
+                            .getResources().getColor(R.color.background_floating));
+                    itemView.setSelected(true);
+                    itemView.setActivated(true);
+                }
+                return true;
             });
         }
     }

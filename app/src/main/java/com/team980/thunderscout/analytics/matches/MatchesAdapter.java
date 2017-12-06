@@ -273,10 +273,14 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                             if (fragment.isInSelectionMode()) {
                                 if (selectedItems.contains(wrapper.getData(station))) { //if selected
                                     deselect(wrapper.getData(station));
+                                    matchView.setSelected(false);
+                                    matchView.setActivated(false);
                                     matchView.setBackgroundColor(mInflator.getContext()
                                             .getResources().getColor(station.getColorStratified()));
                                 } else {
                                     select(wrapper.getData(station));
+                                    matchView.setSelected(false);
+                                    matchView.setActivated(false);
                                     matchView.setBackgroundColor(mInflator.getContext()
                                             .getResources().getColor(R.color.accent));
                                 }
@@ -298,10 +302,14 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
                         matchView.setOnLongClickListener(v -> {
                             if (selectedItems.contains(wrapper.getData(station))) { //if selected
                                 deselect(wrapper.getData(station));
+                                matchView.setSelected(false);
+                                matchView.setActivated(false);
                                 matchView.setBackgroundColor(mInflator.getContext()
                                         .getResources().getColor(station.getColorStratified()));
                             } else {
                                 select(wrapper.getData(station));
+                                matchView.setSelected(false);
+                                matchView.setActivated(false);
                                 matchView.setBackgroundColor(mInflator.getContext()
                                         .getResources().getColor(R.color.accent));
                             }

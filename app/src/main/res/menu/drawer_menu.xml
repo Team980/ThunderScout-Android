@@ -41,16 +41,6 @@
             android:title="Rankings" />
     </group>
 
-    <group
-        android:id="@+id/group_middle"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_alliances"
-            android:icon="@drawable/ic_flag_white_24dp"
-            android:title="Alliances" />
-    </group>
-
-
     <group android:id="@+id/group_bottom">
         <item
             android:id="@+id/nav_settings"

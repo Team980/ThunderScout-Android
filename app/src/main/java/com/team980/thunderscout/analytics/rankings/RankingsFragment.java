@@ -32,6 +32,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,9 +50,15 @@ import android.widget.SearchView;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.TeamComparator;
+import com.team980.thunderscout.analytics.TeamWrapper;
+import com.team980.thunderscout.analytics.rankings.compare.CompareBottomSheetFragment;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.iexport.ExportActivity;
 import com.team980.thunderscout.iexport.ImportActivity;
+import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.util.TransitionUtils;
+
+import java.util.ArrayList;
 
 public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, SearchView.OnQueryTextListener, View.OnClickListener, SearchView.OnCloseListener {
 
@@ -62,6 +69,8 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     private RecyclerView dataView;
     private RankingsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
+
+    private boolean selectionMode = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -164,10 +173,28 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         if (id == R.id.action_delete_all && adapter.getItemCount() > 0) {
             new AlertDialog.Builder(getContext())
-                    .setTitle("Delete all data from this account?")
+                    .setTitle("Delete all data?")
                     .setPositiveButton("Delete", this)
                     .setNegativeButton("Cancel", null).show();
             return true;
+        }
+
+
+        //Selection mode
+        if (id == R.id.action_compare_selection) {
+            TeamWrapper t1 = adapter.getSelectedItems().get(0);
+            TeamWrapper t2 = adapter.getSelectedItems().get(0); //TODO this is not final
+            TeamWrapper t3 = adapter.getSelectedItems().get(0);
+
+            CompareBottomSheetFragment compareSheetFragment = CompareBottomSheetFragment.newInstance(t1, t2, t3);
+            compareSheetFragment.show(getChildFragmentManager(), "CompareBottomSheetFragment");
+        }
+
+        if (id == R.id.action_delete_selection) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Delete selected teams?")
+                    .setPositiveButton("Delete", this)
+                    .setNegativeButton("Cancel", null).show();
         }
 
         return false;
@@ -177,6 +204,64 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onClick(View view) {
         if (view.getId() == R.id.action_search) {
             swipeContainer.setEnabled(false);
+        }
+    }
+
+    public boolean isInSelectionMode() {
+        return selectionMode;
+    }
+
+    public void setSelectionMode(boolean value) {
+        selectionMode = value;
+
+        if (selectionMode) {
+            toolbar.setTitle("1 team selected");
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_rank_selection);
+            TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.primary, R.color.primary_dark,
+                    R.color.secondary, R.color.secondary_dark, (AppCompatActivity) getActivity());
+
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            toggle.onDrawerStateChanged(DrawerLayout.STATE_IDLE);
+            toggle.setDrawerIndicatorEnabled(false);
+            toggle.syncState();
+
+            MainActivity activity = (MainActivity) getActivity();
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+
+            toolbar.setNavigationOnClickListener(v -> {
+                if (selectionMode) {
+                    adapter.clearSelections();
+                    setSelectionMode(false);
+                }
+            });
+
+            swipeContainer.setEnabled(false);
+        } else {
+            toolbar.setTitle("Rankings");
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_rank_tools);
+            TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.secondary, R.color.secondary_dark,
+                    R.color.primary, R.color.primary_dark, (AppCompatActivity) getActivity());
+
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            toggle = new ActionBarDrawerToggle(
+                    getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+
+            swipeContainer.setEnabled(true);
+        }
+    }
+
+    public void updateSelectionModeTitle(int numItems) {
+        if (selectionMode) {
+            if (numItems == 1) {
+                toolbar.setTitle("1 team selected");
+            } else {
+                toolbar.setTitle(numItems + " teams selected");
+            }
         }
     }
 
@@ -191,7 +276,16 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override //Deletion dialog
     public void onClick(DialogInterface dialog, int which) { //TODO modular account scopes - CLOUD should prompt for password
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
+        if (selectionMode) {
+            ArrayList<ScoutData> dataToRemove = new ArrayList<>();
+            for (TeamWrapper wrapper : adapter.getSelectedItems()) {
+                dataToRemove.addAll(wrapper.getDataList());
+            }
+            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).removeData(dataToRemove, adapter);
+            adapter.clearSelections();
+        } else {
+            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
+        }
     }
 
     @Override

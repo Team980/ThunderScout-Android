@@ -1,4 +1,4 @@
-package com.team980.thunderscout.analytics.alliances;
+package com.team980.thunderscout.analytics.rankings.compare;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
