@@ -22,13 +22,9 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.analytics.rankings.compare;
+package com.team980.thunderscout.analytics.rankings;
 
-import android.app.Dialog;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -37,51 +33,55 @@ import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.TeamWrapper;
-import com.team980.thunderscout.analytics.rankings.TeamPointEstimator;
 import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
 import com.team980.thunderscout.analytics.rankings.breakdown.CommentsAdapter;
-import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.text.NumberFormat;
 import java.util.List;
 
-public class CompareBottomSheetFragment extends BottomSheetDialogFragment {
+@Deprecated
+//TODO replace with Data Binding - I really didn't want to shove this into RankingsFragment.java
+//TODO ...except there's actually more going on in here than I CAN replace with Data Binding...
+public class CompareBottomSheetBinding {
 
-    private AverageScoutData[] alliance = new AverageScoutData[3];
+    public static void bindBottomSheet(View dialogView, BottomSheetBehavior behavior, List<TeamWrapper> teams) {
 
-    private TeamListAdapter adapter;
-
-    public static CompareBottomSheetFragment newInstance(TeamWrapper t1, TeamWrapper t2, TeamWrapper t3) {
-        CompareBottomSheetFragment f = new CompareBottomSheetFragment();
-
-        Bundle args = new Bundle();
-        args.putSerializable("station1", t1.getDataList());
-        args.putSerializable("station2", t2.getDataList());
-        args.putSerializable("station3", t3.getDataList());
-        f.setArguments(args);
-
-        return f;
-    }
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), R.style.Theme_Design_BottomSheetDialog);
-
-        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.bottom_sheet_compare, null);
-        dialog.setContentView(dialogView);
-
-        Toolbar toolbar = dialogView.findViewById(R.id.toolbar);
-        toolbar.setTitle("Compare teams...");
-
-        AverageScoutData station1 = new AverageScoutData((List<ScoutData>) getArguments().getSerializable("station1"));
-        AverageScoutData station2 = new AverageScoutData((List<ScoutData>) getArguments().getSerializable("station2"));
-        AverageScoutData station3 = new AverageScoutData((List<ScoutData>) getArguments().getSerializable("station3"));
+        AverageScoutData station1 = new AverageScoutData(teams.get(0).getDataList());
+        AverageScoutData station2 = new AverageScoutData(teams.get(1).getDataList()); //TODO obviously not final
+        AverageScoutData station3 = new AverageScoutData(teams.get(2).getDataList());
 
         NumberFormat formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(1);
+
+        Toolbar toolbar = dialogView.findViewById(R.id.toolbar);
+        toolbar.setTitle("Comparison: " + station1.getTeam() + " / " + station2.getTeam() + " / " + station3.getTeam());
+
+        toolbar.setOnClickListener(v -> {
+            if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            } else {
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+
+        toolbar.setNavigationIcon(R.drawable.ic_expand_less_white_24dp);
+        toolbar.setNavigationOnClickListener(v -> {
+            if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            } else {
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
+
+        //Init
+        TextView team = dialogView.findViewById(R.id.info_alliance_station1_team);
+        team.setText(station1.getTeam());
+        TextView team2 = dialogView.findViewById(R.id.info_alliance_station2_team);
+        team2.setText(station2.getTeam());
+        TextView team3 = dialogView.findViewById(R.id.info_alliance_station3_team);
+        team3.setText(station3.getTeam());
 
         // Auto
         TextView crossPercent = dialogView.findViewById(R.id.info_alliance_station1_autoCrossPercentage);
@@ -251,7 +251,7 @@ public class CompareBottomSheetFragment extends BottomSheetDialogFragment {
             troubleWith.setVisibility(View.VISIBLE);
             troubleWithPlaceholder.setVisibility(View.GONE);
 
-            troubleWith.setLayoutManager(new LinearLayoutManager(getContext()));
+            troubleWith.setLayoutManager(new LinearLayoutManager(dialogView.getContext()));
             troubleWith.setAdapter(new CommentsAdapter(station1.getTroublesList()));
         }
 
@@ -265,14 +265,12 @@ public class CompareBottomSheetFragment extends BottomSheetDialogFragment {
             comments.setVisibility(View.VISIBLE);
             commentsPlaceholder.setVisibility(View.GONE);
 
-            comments.setLayoutManager(new LinearLayoutManager(getContext()));
+            comments.setLayoutManager(new LinearLayoutManager(dialogView.getContext()));
             comments.setAdapter(new CommentsAdapter(station1.getCommentsList()));
         }
-
-        return dialog;
     }
 
-    private boolean listIsEmpty(List<String> list) {
+    private static boolean listIsEmpty(List<String> list) {
         for (String s : list) {
             if (s != null && !s.isEmpty()) {
                 return false;

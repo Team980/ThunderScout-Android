@@ -26,8 +26,10 @@ package com.team980.thunderscout.analytics.rankings;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -47,12 +49,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.TeamComparator;
 import com.team980.thunderscout.analytics.TeamWrapper;
-import com.team980.thunderscout.analytics.rankings.compare.CompareBottomSheetFragment;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.iexport.ExportActivity;
 import com.team980.thunderscout.iexport.ImportActivity;
@@ -71,7 +73,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     private RankingsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
 
-    private FloatingActionButton compareFab;
+    private BottomSheetBehavior compareSheetBehavior;
 
     private boolean selectionMode = false;
 
@@ -123,10 +125,61 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
-        compareFab = view.findViewById(R.id.fab_compare);
-        compareFab.setOnClickListener(this);
+        compareSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottom_sheet_compare));
+        compareSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        compareSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) { //Tint status bar when fully expanded
+                if (newState == BottomSheetBehavior.STATE_HIDDEN && adapter.getSelectedItemCount() == 3) { //I wish there was a better way to check for a user initiated hide, but there isn't
+                    //Explicitly hiding the sheet should cause selection mode to close
+                    adapter.clearSelections();
+                    setSelectionMode(false);
+                } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+                    }
+                    Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
+                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_more_white_24dp);
+
+                    //Clicks actually pass through the bottom sheet, so I need to remove the offending buttons
+                    toolbar.getMenu().clear();
+                    toolbar.setNavigationIcon(null);
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.secondary_dark));
+                    }
+                    Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
+                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_less_white_24dp);
+                    toolbar.getMenu().clear();
+                    toolbar.inflateMenu(R.menu.menu_rank_selection);
+                    toolbar.setNavigationIcon(R.drawable.ic_clear_white_24dp);
+
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                //do nothing
+            }
+        });
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("BOTTOM_SHEET_CONTENTS")) { //TODO find a less hacky solution
+            CompareBottomSheetBinding.bindBottomSheet(getView().findViewById(R.id.bottom_sheet_compare),
+                    compareSheetBehavior, (ArrayList<TeamWrapper>) savedInstanceState.getSerializable("BOTTOM_SHEET_CONTENTS"));
+        }
 
         AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (compareSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED && adapter.getSelectedItemCount() > 0) {
+            outState.putSerializable("BOTTOM_SHEET_CONTENTS", (ArrayList<TeamWrapper>) adapter.getSelectedItems());
+            //TODO I should be persisting MORE than just the bottom sheet contents (i.e. selection mode)
+            //TODO I should also be doing it in a less hacky way (i.e. not inline, more formal)
+        }
     }
 
     @Override
@@ -168,6 +221,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         if (id == R.id.action_compare) {
             setSelectionMode(true);
             toolbar.setTitle("Select teams to compare");
+            Toast.makeText(getContext(), "You can also long press a team to select it", Toast.LENGTH_LONG).show();
         }
 
         if (id == R.id.action_import) {
@@ -192,6 +246,17 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
 
         //Selection mode
+        if (id == R.id.action_export_selection) {
+            Intent exportIntent = new Intent(getContext(), ExportActivity.class);
+            ArrayList<ScoutData> dataList = new ArrayList<>();
+            for (TeamWrapper wrapper : adapter.getSelectedItems()) {
+                dataList.addAll(wrapper.getDataList());
+            }
+            exportIntent.putExtra(ExportActivity.EXTRA_SELECTED_DATA, dataList);
+            startActivity(exportIntent);
+            return true;
+        }
+
         if (id == R.id.action_delete_selection) {
             new AlertDialog.Builder(getContext())
                     .setTitle("Delete selected teams?")
@@ -206,13 +271,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onClick(View view) {
         if (view.getId() == R.id.action_search) {
             swipeContainer.setEnabled(false);
-        } else if (view.getId() == R.id.fab_compare) {
-            TeamWrapper t1 = adapter.getSelectedItems().get(0);
-            TeamWrapper t2 = adapter.getSelectedItems().get(1); //TODO this is not final!!!
-            TeamWrapper t3 = adapter.getSelectedItems().get(2);
-
-            CompareBottomSheetFragment compareSheetFragment = CompareBottomSheetFragment.newInstance(t1, t2, t3);
-            compareSheetFragment.show(getChildFragmentManager(), "CompareBottomSheetFragment");
         }
     }
 
@@ -261,6 +319,9 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
             toggle.syncState();
 
             swipeContainer.setEnabled(true);
+
+            compareSheetBehavior.setHideable(true);
+            compareSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         }
     }
 
@@ -273,9 +334,12 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
 
             if (numItems == 3) {
-                compareFab.show();
+                CompareBottomSheetBinding.bindBottomSheet(getView().findViewById(R.id.bottom_sheet_compare),
+                        compareSheetBehavior, adapter.getSelectedItems()); //TODO this is VERY bad
+
+                compareSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             } else {
-                compareFab.hide();
+                compareSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
         }
     }

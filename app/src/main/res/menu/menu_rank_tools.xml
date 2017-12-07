@@ -36,12 +36,12 @@
         android:icon="@drawable/ic_sort_white_24dp"
         android:title="Sort"
         app:showAsAction="always" />
+
     <item
         android:id="@+id/action_compare"
-        android:orderInCategory="1"
-        android:title="Compare"
-        app:showAsAction="always" />
-
+        android:icon="@drawable/ic_assignment_white_24dp"
+        android:title="Compare teams..."
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_import"
         android:orderInCategory="1"
@@ -50,7 +50,7 @@
     <item
         android:id="@+id/action_export"
         android:orderInCategory="2"
-        android:title="Export All..."
+        android:title="Export All"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_delete_all"

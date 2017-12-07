@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment); //and we do what here, exactly?
     }
 
     @Override
