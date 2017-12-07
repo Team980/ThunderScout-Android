@@ -67,7 +67,7 @@ public class CompareBottomSheetFragment extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()); //TODO theme not working
+        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), R.style.Theme_Design_BottomSheetDialog);
 
         View dialogView = getActivity().getLayoutInflater().inflate(R.layout.bottom_sheet_compare, null);
         dialog.setContentView(dialogView);
