@@ -230,7 +230,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }
     }
 
-    public void updateSelectionModeTitle(int numItems) {
+    public void updateSelectionModeContext(int numItems) {
         if (selectionMode) {
             if (numItems == 1) {
                 toolbar.setTitle("1 match selected");

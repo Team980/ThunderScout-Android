@@ -25,11 +25,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_compare_selection"
-        android:orderInCategory="1"
-        android:title="Compare"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/action_delete_selection"
         android:icon="@drawable/ic_delete_white_24dp"
         android:orderInCategory="2"

@@ -36,6 +36,11 @@
         android:icon="@drawable/ic_sort_white_24dp"
         android:title="Sort"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_compare"
+        android:orderInCategory="1"
+        android:title="Compare"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_import"

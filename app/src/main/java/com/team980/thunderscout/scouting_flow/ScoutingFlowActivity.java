@@ -104,7 +104,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
 
-        fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab_finish);
         fab.setOnClickListener(this);
 
         if (scoutData.getTeam() != null) { //Generate header based on presence of team number
@@ -240,7 +240,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fab) { //Send button - the only button that matters
+        if (v.getId() == R.id.fab_finish) { //Send button - the only button that matters
             initScoutData();
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

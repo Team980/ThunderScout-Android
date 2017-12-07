@@ -102,7 +102,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
             //enter selection mode
             fragment.setSelectionMode(true);
         } else {
-            fragment.updateSelectionModeTitle(getSelectedItemCount());
+            fragment.updateSelectionModeContext(getSelectedItemCount());
         }
     }
 
@@ -113,7 +113,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
             //exit selection mode
             fragment.setSelectionMode(false);
         } else {
-            fragment.updateSelectionModeTitle(getSelectedItemCount());
+            fragment.updateSelectionModeContext(getSelectedItemCount());
         }
     }
 

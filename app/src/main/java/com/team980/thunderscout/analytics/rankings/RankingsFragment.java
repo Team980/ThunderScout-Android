@@ -27,6 +27,7 @@ package com.team980.thunderscout.analytics.rankings;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -69,6 +70,8 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     private RecyclerView dataView;
     private RankingsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
+
+    private FloatingActionButton compareFab;
 
     private boolean selectionMode = false;
 
@@ -120,6 +123,9 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
+        compareFab = view.findViewById(R.id.fab_compare);
+        compareFab.setOnClickListener(this);
+
         AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
     }
 
@@ -159,6 +165,11 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
             sortDialog.show();
         }
 
+        if (id == R.id.action_compare) {
+            setSelectionMode(true);
+            toolbar.setTitle("Select teams to compare");
+        }
+
         if (id == R.id.action_import) {
             Intent importIntent = new Intent(getContext(), ImportActivity.class);
             startActivity(importIntent);
@@ -181,15 +192,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
 
         //Selection mode
-        if (id == R.id.action_compare_selection) {
-            TeamWrapper t1 = adapter.getSelectedItems().get(0);
-            TeamWrapper t2 = adapter.getSelectedItems().get(0); //TODO this is not final
-            TeamWrapper t3 = adapter.getSelectedItems().get(0);
-
-            CompareBottomSheetFragment compareSheetFragment = CompareBottomSheetFragment.newInstance(t1, t2, t3);
-            compareSheetFragment.show(getChildFragmentManager(), "CompareBottomSheetFragment");
-        }
-
         if (id == R.id.action_delete_selection) {
             new AlertDialog.Builder(getContext())
                     .setTitle("Delete selected teams?")
@@ -204,6 +206,13 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onClick(View view) {
         if (view.getId() == R.id.action_search) {
             swipeContainer.setEnabled(false);
+        } else if (view.getId() == R.id.fab_compare) {
+            TeamWrapper t1 = adapter.getSelectedItems().get(0);
+            TeamWrapper t2 = adapter.getSelectedItems().get(1); //TODO this is not final!!!
+            TeamWrapper t3 = adapter.getSelectedItems().get(2);
+
+            CompareBottomSheetFragment compareSheetFragment = CompareBottomSheetFragment.newInstance(t1, t2, t3);
+            compareSheetFragment.show(getChildFragmentManager(), "CompareBottomSheetFragment");
         }
     }
 
@@ -255,12 +264,18 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
     }
 
-    public void updateSelectionModeTitle(int numItems) {
+    public void updateSelectionModeContext(int numItems) {
         if (selectionMode) {
             if (numItems == 1) {
                 toolbar.setTitle("1 team selected");
             } else {
                 toolbar.setTitle(numItems + " teams selected");
+            }
+
+            if (numItems == 3) {
+                compareFab.show();
+            } else {
+                compareFab.hide();
             }
         }
     }

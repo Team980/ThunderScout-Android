@@ -118,7 +118,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
             //enter selection mode
             fragment.setSelectionMode(true);
         } else {
-            fragment.updateSelectionModeTitle(getSelectedItemCount());
+            fragment.updateSelectionModeContext(getSelectedItemCount());
         }
     }
 
@@ -129,7 +129,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
             //exit selection mode
             fragment.setSelectionMode(false);
         } else {
-            fragment.updateSelectionModeTitle(getSelectedItemCount());
+            fragment.updateSelectionModeContext(getSelectedItemCount());
         }
     }
 
