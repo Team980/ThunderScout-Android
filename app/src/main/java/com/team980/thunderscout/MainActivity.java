@@ -164,7 +164,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment);
+            if (fragment instanceof BackPressListener) { //Custom interface that supporting fragments use to intercept the back button
+                if (!((BackPressListener) fragment).onBackPressed()) {
+                    super.onBackPressed(); //If they return false, continue normal back behavior
+                }
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -294,6 +301,14 @@ public class MainActivity extends AppCompatActivity
 
         dropdown.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_drop_down_white_24dp));
         accountMenuExpanded = false;
+    }
+
+    public interface BackPressListener {
+
+        /**
+         * @return whether to stop processing the input further
+         */
+        boolean onBackPressed();
     }
 
 }

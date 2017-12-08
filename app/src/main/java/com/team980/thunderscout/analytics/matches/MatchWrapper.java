@@ -29,6 +29,7 @@ import android.support.annotation.Nullable;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -36,7 +37,7 @@ import java.util.List;
 /**
  * Represents data for one match, for all of the teams involved.
  */
-public class MatchWrapper { //TODO needs a way to handle overlapping data (same matchNumber and AllianceStation)
+public class MatchWrapper implements Serializable {
 
     private int matchNumber;
 

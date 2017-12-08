@@ -27,6 +27,7 @@ package com.team980.thunderscout.analytics.matches;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -58,14 +59,14 @@ import java.util.ArrayList;
 
 public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, View.OnClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
+    //Instance state parameters
+    private static final String KEY_SELECTION_MODE = "selection_mode";
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
-
     private RecyclerView dataView;
     private MatchesAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
-
     private boolean selectionMode = false;
 
     @Override
@@ -116,19 +117,36 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+        if (savedInstanceState != null) {
+            setSelectionMode(savedInstanceState.getBoolean(KEY_SELECTION_MODE, false));
+            adapter.onRestoreInstanceState(savedInstanceState);
+        } else {
+            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putBoolean(KEY_SELECTION_MODE, selectionMode);
+        adapter.onSaveInstanceState(outState);
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_match_tools, menu);
+        if (selectionMode) {
+            inflater.inflate(R.menu.menu_match_selection, menu);
+        } else {
+            inflater.inflate(R.menu.menu_match_tools, menu);
 
-        SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
-        searchView.setOnSearchClickListener(this);
-        searchView.setOnQueryTextListener(this);
-        searchView.setOnCloseListener(this);
-        searchView.setQueryHint("Search for team...");
-        searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
+            SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+            searchView.setOnSearchClickListener(this);
+            searchView.setOnQueryTextListener(this);
+            searchView.setOnCloseListener(this);
+            searchView.setQueryHint("Search for team...");
+            searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
     }
 
     @Override
@@ -217,6 +235,14 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
             toolbar.setTitle("Matches");
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_match_tools);
+
+            SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+            searchView.setOnSearchClickListener(this);
+            searchView.setOnQueryTextListener(this);
+            searchView.setOnCloseListener(this);
+            searchView.setQueryHint("Search for team...");
+            searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
+
             TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.secondary, R.color.secondary_dark,
                     R.color.primary, R.color.primary_dark, (AppCompatActivity) getActivity());
 

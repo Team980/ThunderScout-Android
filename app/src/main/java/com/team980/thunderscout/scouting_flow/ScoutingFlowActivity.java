@@ -76,7 +76,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             scoutData = (ScoutData) savedInstanceState.getSerializable("ScoutData");
         } else {
             if (getIntent().hasExtra(EXTRA_SCOUT_DATA)) {
-                scoutData = (ScoutData) getIntent().getSerializableExtra(EXTRA_SCOUT_DATA); //TODO repopulate view - this will take a good amount of code
+                scoutData = (ScoutData) getIntent().getSerializableExtra(EXTRA_SCOUT_DATA); //TODO repopulate view - not a good idea without Data Binding / Instance State handling
             } else {
                 scoutData = new ScoutData();
 

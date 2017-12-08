@@ -29,6 +29,7 @@ import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,12 +37,12 @@ import java.util.ArrayList;
 /**
  * Represents data for one team, for all the matches they played in.
  */
-public class TeamWrapper { //TODO We shouldn't be creating this many AverageScoutData instances
+public class TeamWrapper implements Serializable { //TODO We shouldn't be creating this many AverageScoutData instances
 
     private String team;
     private ArrayList<ScoutData> dataList;
 
-    private NumberFormat formatter;
+    private NumberFormat formatter; //TODO not Serializable?
 
     public TeamWrapper(String team) {
         this.team = team;

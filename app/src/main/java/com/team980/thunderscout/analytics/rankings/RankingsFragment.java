@@ -41,6 +41,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -63,18 +64,18 @@ import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.ArrayList;
 
-public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, SearchView.OnQueryTextListener, View.OnClickListener, SearchView.OnCloseListener {
+public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, SearchView.OnQueryTextListener, View.OnClickListener, SearchView.OnCloseListener, MainActivity.BackPressListener {
 
+    //Instance state parameters
+    private static final String KEY_SELECTION_MODE = "selection_mode";
+    private static final String KEY_BOTTOM_SHEET_STATE = "bottom_sheet_state";
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
-
     private RecyclerView dataView;
     private RankingsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
-
     private BottomSheetBehavior compareSheetBehavior;
-
     private boolean selectionMode = false;
 
     @Override
@@ -146,6 +147,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
                     toolbar.setNavigationIcon(null);
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        Log.d("TAG", "Title bar Test2");
                         getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.secondary_dark));
                     }
                     Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
@@ -163,35 +165,53 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         });
 
-        if (savedInstanceState != null && savedInstanceState.containsKey("BOTTOM_SHEET_CONTENTS")) { //TODO find a less hacky solution
-            CompareBottomSheetBinding.bindBottomSheet(getView().findViewById(R.id.bottom_sheet_compare),
-                    compareSheetBehavior, (ArrayList<TeamWrapper>) savedInstanceState.getSerializable("BOTTOM_SHEET_CONTENTS"));
-        }
+        if (savedInstanceState != null) {
+            setSelectionMode(savedInstanceState.getBoolean(KEY_SELECTION_MODE, false));
+            compareSheetBehavior.setState(savedInstanceState.getInt(KEY_BOTTOM_SHEET_STATE, BottomSheetBehavior.STATE_HIDDEN));
+            adapter.onRestoreInstanceState(savedInstanceState);
 
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+            if (adapter.getSelectedItemCount() == 3) { //Three selected items? The bottom sheet should be bound and showing
+                CompareBottomSheetBinding.bindBottomSheet(getView().findViewById(R.id.bottom_sheet_compare),
+                        compareSheetBehavior, adapter.getSelectedItems()); //TODO this is VERY bad
+            }
+        } else {
+            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+        }
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        if (compareSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED && adapter.getSelectedItemCount() > 0) {
-            outState.putSerializable("BOTTOM_SHEET_CONTENTS", (ArrayList<TeamWrapper>) adapter.getSelectedItems());
-            //TODO I should be persisting MORE than just the bottom sheet contents (i.e. selection mode)
-            //TODO I should also be doing it in a less hacky way (i.e. not inline, more formal)
+    public boolean onBackPressed() {
+        if (compareSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            compareSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            return true;
+        } else {
+            return false;
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putBoolean(KEY_SELECTION_MODE, selectionMode);
+        outState.putInt(KEY_BOTTOM_SHEET_STATE, compareSheetBehavior.getState());
+        adapter.onSaveInstanceState(outState);
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_rank_tools, menu);
+        if (selectionMode) {
+            inflater.inflate(R.menu.menu_rank_selection, menu);
+        } else {
+            inflater.inflate(R.menu.menu_rank_tools, menu);
 
-        SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
-        searchView.setOnSearchClickListener(this);
-        searchView.setOnQueryTextListener(this);
-        searchView.setOnCloseListener(this);
-        searchView.setQueryHint("Search for team...");
-        searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
+            SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+            searchView.setOnSearchClickListener(this);
+            searchView.setOnQueryTextListener(this);
+            searchView.setOnCloseListener(this);
+            searchView.setQueryHint("Search for team...");
+            searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
     }
 
     @Override
@@ -309,6 +329,14 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
             toolbar.setTitle("Rankings");
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_rank_tools);
+
+            SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+            searchView.setOnSearchClickListener(this);
+            searchView.setOnQueryTextListener(this);
+            searchView.setOnCloseListener(this);
+            searchView.setQueryHint("Search for team...");
+            searchView.setInputType(InputType.TYPE_CLASS_NUMBER);
+
             TransitionUtils.toolbarAndStatusBarTransitionFromResources(R.color.secondary, R.color.secondary_dark,
                     R.color.primary, R.color.primary_dark, (AppCompatActivity) getActivity());
 

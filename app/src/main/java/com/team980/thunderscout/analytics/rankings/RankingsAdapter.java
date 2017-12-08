@@ -26,6 +26,8 @@ package com.team980.thunderscout.analytics.rankings;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,17 +50,16 @@ import java.util.List;
 
 class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolder> implements StorageWrapper.StorageListener {
 
+    //Instance state parameters
+    private static final String KEY_CONTENTS = "adapter_contents";
+    private static final String KEY_TEAM_FILTER = "adapter_team_filter";
+    private static final String KEY_SELECTED_ITEMS = "adapter_selected_items";
     private LayoutInflater mInflator;
-
     private RankingsFragment fragment;
-
-    private List<TeamWrapper> teamList; //The list that represents all the loaded data
-
+    private ArrayList<TeamWrapper> teamList; //The list that represents all the loaded data
     private TeamComparator sortMode = TeamComparator.SORT_POINT_CONTRIBUTION;
     private String teamFilter = "";
-
     private ArrayList<TeamWrapper> selectedItems;
-
     private NumberFormat formatter;
 
     public RankingsAdapter(RankingsFragment fragment) {
@@ -90,6 +91,25 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
     @Override
     public int getItemCount() {
         return teamList.size();
+    }
+
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putSerializable(KEY_CONTENTS, teamList);
+        outState.putString(KEY_TEAM_FILTER, teamFilter);
+        outState.putSerializable(KEY_SELECTED_ITEMS, selectedItems);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        teamList = (ArrayList<TeamWrapper>) savedInstanceState.getSerializable(KEY_CONTENTS);
+        teamFilter = savedInstanceState.getString(KEY_TEAM_FILTER);
+        selectedItems = ((ArrayList<TeamWrapper>) savedInstanceState.getSerializable(KEY_SELECTED_ITEMS));
+
+        if (fragment.isInSelectionMode()) {
+            //update UI with selections
+            fragment.updateSelectionModeContext(selectedItems.size());
+        }
+
+        notifyDataSetChanged();
     }
 
     public TeamComparator getCurrentSortMode() {

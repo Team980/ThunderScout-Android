@@ -28,6 +28,8 @@ import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,14 +53,14 @@ import java.util.List;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchViewHolder> implements StorageWrapper.StorageListener {
 
+    //Instance state parameters
+    private static final String KEY_CONTENTS = "adapter_contents";
+    private static final String KEY_TEAM_FILTER = "adapter_team_filter";
+    private static final String KEY_SELECTED_ITEMS = "adapter_selected_items";
     private LayoutInflater mInflator;
-
     private MatchesFragment fragment;
-
-    private SparseArray<MatchWrapper> matchArray;
-
+    private SparseArray<MatchWrapper> matchArray; //More efficient than a List, but harder to save state
     private String teamFilter = "";
-
     private ArrayList<ScoutData> selectedItems;
 
     public MatchesAdapter(MatchesFragment fragment) {
@@ -86,6 +88,34 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     @Override
     public int getItemCount() {
         return matchArray.size();
+    }
+
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        ArrayList<MatchWrapper> contents = new ArrayList<>(); //Easier than subclassing SparseArray
+        for (int i = 0; i < matchArray.size(); i++) {
+            contents.add(matchArray.valueAt(i));
+        }
+
+        outState.putSerializable(KEY_CONTENTS, contents);
+        outState.putString(KEY_TEAM_FILTER, teamFilter);
+        outState.putSerializable(KEY_SELECTED_ITEMS, selectedItems);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        ArrayList<MatchWrapper> contents = (ArrayList<MatchWrapper>) savedInstanceState.getSerializable(KEY_CONTENTS);
+        for (MatchWrapper wrapper : contents) {
+            matchArray.append(wrapper.getMatchNumber(), wrapper);
+        }
+
+        teamFilter = savedInstanceState.getString(KEY_TEAM_FILTER);
+        selectedItems = ((ArrayList<ScoutData>) savedInstanceState.getSerializable(KEY_SELECTED_ITEMS));
+
+        if (fragment.isInSelectionMode()) {
+            //update UI with selections
+            fragment.updateSelectionModeContext(selectedItems.size());
+        }
+
+        notifyDataSetChanged();
     }
 
     public void filterByTeam(String query) {
@@ -143,7 +173,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
         notifyItemRangeRemoved(0, arraySize);
 
         for (ScoutData data : dataList) {
-            if (data.getTeam().toLowerCase().startsWith(teamFilter.toLowerCase())) { //Inline filtering in query - TODO add a setting to use contains?
+            if (data.getTeam().toLowerCase().startsWith(teamFilter.toLowerCase())) { //Inline filtering in query
                 MatchWrapper wrapper = matchArray.get(data.getMatchNumber());
 
                 if (wrapper == null) {
@@ -183,8 +213,6 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     }
 
     public class MatchViewHolder extends RecyclerView.ViewHolder {
-        //TODO needs a way to handle overlapping data (same matchNumber and AllianceStation)
-
         private LinearLayout itemView;
 
         private TextView matchNumber;
