@@ -34,6 +34,8 @@ import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutTitleItem;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 
 public class AboutActivity extends MaterialAboutActivity {
 
@@ -94,7 +96,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 })
                 .build());
 
-        titleCard.addItem(new MaterialAboutActionItem.Builder()
+        /*titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("View on Chief Delphi")
                 .icon(R.drawable.ic_forum_white)
                 .setOnClickAction(() -> {
@@ -102,6 +104,17 @@ public class AboutActivity extends MaterialAboutActivity {
                     i.setData(Uri.parse("https://www.chiefdelphi.com/forums/showthread.php?t=151953"));
                     startActivity(i);
                 })
+                .build());*/ //TODO no 2018 thread
+
+        titleCard.addItem(new MaterialAboutActionItem.Builder()
+                .text("Open source licenses")
+                .icon(R.drawable.ic_code_white_24dp)
+                .setOnClickAction(() -> new LibsBuilder()
+                        .withActivityStyle(Libs.ActivityStyle.DARK)
+                        .withActivityTheme(R.style.ThunderScout_LibraryInfo)
+                        .withActivityTitle("Open source licenses")
+                        .withFields(R.string.class.getFields())
+                        .start(this))
                 .build());
 
         MaterialAboutCard.Builder authorCard = new MaterialAboutCard.Builder();
@@ -127,7 +140,7 @@ public class AboutActivity extends MaterialAboutActivity {
         MaterialAboutCard.Builder teamCard = new MaterialAboutCard.Builder();
         teamCard.addItem(new MaterialAboutTitleItem.Builder()
                 .text("FRC Team 980 ThunderBots")
-                .icon(R.mipmap.team980_logo)
+                .icon(R.mipmap.team980_logo) //TODO standard team icon?
                 .build());
 
         teamCard.addItem(new MaterialAboutActionItem.Builder()

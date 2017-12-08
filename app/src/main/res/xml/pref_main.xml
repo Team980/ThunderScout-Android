@@ -43,7 +43,7 @@
 
     <Preference
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$BluetoothServerPreferenceFragment"
-        android:icon="@drawable/ic_bluetooth_transfer_white_24dp"
+        android:icon="@drawable/ic_bluetooth_searching_white_24dp"
         android:summary="Receive data from other devices"
         android:title="Bluetooth server" />
 

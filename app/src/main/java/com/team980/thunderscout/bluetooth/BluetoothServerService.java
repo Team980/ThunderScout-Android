@@ -156,6 +156,7 @@ public class BluetoothServerService extends Service {
                 .setColorized(true)
                 .setColor(getResources().getColor(R.color.primary))
                 .setShowWhen(false)
+                .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setGroup("BT_SERVER");
 
         adapterDisabled = new NotificationCompat.Builder(this, "bluetooth_server")
@@ -168,6 +169,7 @@ public class BluetoothServerService extends Service {
                 .setColorized(true)
                 .setColor(getResources().getColor(R.color.error))
                 .setShowWhen(false)
+                .setCategory(NotificationCompat.CATEGORY_ERROR)
                 .setGroup("BT_SERVER");
 
         adapterMissing = new NotificationCompat.Builder(this, "bluetooth_server")
@@ -180,6 +182,7 @@ public class BluetoothServerService extends Service {
                 .setColorized(true)
                 .setColor(getResources().getColor(R.color.error))
                 .setShowWhen(false)
+                .setCategory(NotificationCompat.CATEGORY_ERROR)
                 .setGroup("BT_SERVER");
 
         PendingIntent serverSettingsIntent = PendingIntent.getActivity(this, 1,

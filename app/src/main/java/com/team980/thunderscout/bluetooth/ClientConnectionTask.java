@@ -85,6 +85,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.accent))
                 .setProgress(1, 0, true)
+                .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 .setGroup("BT_TRANSFER_ONGOING");
 
         btTransferSuccess = new NotificationCompat.Builder(context, "bt_transfer")
@@ -92,6 +93,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.success))
                 .setAutoCancel(true)
+                .setCategory(NotificationCompat.CATEGORY_STATUS)
                 .setGroup("BT_TRANSFER_SUCCESS");
 
         btTransferError = new NotificationCompat.Builder(context, "bt_transfer")
@@ -99,6 +101,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.error))
                 .setAutoCancel(true)
+                .setCategory(NotificationCompat.CATEGORY_ERROR)
                 .setGroup("BT_TRANSFER_ERROR");
 
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
