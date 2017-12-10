@@ -7,8 +7,8 @@ android:
   # Build Tools + Android
   - tools
   - platform-tools
-  - build-tools-25.0.2
-  - android-25
+  - build-tools-27.0.2
+  - android-27
   # Support Libraries + Play Services
   - extra-google-google_play_services
   - extra-google-m2repository
