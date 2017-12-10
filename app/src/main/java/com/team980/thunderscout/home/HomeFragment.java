@@ -37,6 +37,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -205,7 +206,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
             if (intent.getAction() == ACTION_UPDATE_ONGOING_TASK) {
                 UpdateType updateType = (UpdateType) intent.getSerializableExtra(KEY_UPDATE_TYPE);
 
-                Toast.makeText(context, "Task is" + updateType.name(), Toast.LENGTH_LONG).show();
+                Log.d("Receiver", "Task is" + updateType.name());
             }
         }
 

@@ -119,7 +119,7 @@ public class ExportActivity extends AppCompatActivity {
             if (intent.resolveActivityInfo(getPackageManager(), 0) != null) {
                 startActivity(intent);
             } else {
-                Toast.makeText(this, "No activities found to handle request", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No activities found to handle request", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -152,7 +152,7 @@ public class ExportActivity extends AppCompatActivity {
                 exportTask.execute(dataToExport.toArray(new ScoutData[dataToExport.size()]));
             } else {
                 //Why would you ever deny the permission?
-                Toast.makeText(this, "Please manually grant the permission", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please manually grant the permission", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                 intent.setData(uri);

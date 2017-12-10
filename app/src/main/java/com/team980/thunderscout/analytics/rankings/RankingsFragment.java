@@ -41,7 +41,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -143,7 +142,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
                     sheetToolbar.setNavigationIcon(R.drawable.ic_expand_more_white_24dp);
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        Log.d("TAG", "Title bar Test2");
                         getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.secondary_dark));
                     }
                     Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
