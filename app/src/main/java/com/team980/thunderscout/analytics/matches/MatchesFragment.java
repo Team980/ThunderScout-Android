@@ -24,11 +24,15 @@
 
 package com.team980.thunderscout.analytics.matches;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -61,12 +65,16 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     //Instance state parameters
     private static final String KEY_SELECTION_MODE = "selection_mode";
+
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private RecyclerView dataView;
     private MatchesAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
+
+    private BroadcastReceiver receiver;
+
     private boolean selectionMode = false;
 
     @Override
@@ -117,12 +125,33 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+            }
+        };
+
         if (savedInstanceState != null) {
             setSelectionMode(savedInstanceState.getBoolean(KEY_SELECTION_MODE, false));
             adapter.onRestoreInstanceState(savedInstanceState);
         } else {
             AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(MainActivity.ACTION_REFRESH_DATA_VIEW));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
     }
 
     @Override

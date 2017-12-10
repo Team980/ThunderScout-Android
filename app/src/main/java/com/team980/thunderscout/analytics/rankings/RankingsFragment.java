@@ -24,13 +24,17 @@
 
 package com.team980.thunderscout.analytics.rankings;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -68,6 +72,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     //Instance state parameters
     private static final String KEY_SELECTION_MODE = "selection_mode";
     private static final String KEY_BOTTOM_SHEET_STATE = "bottom_sheet_state";
+
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -75,6 +80,9 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     private RankingsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
     private BottomSheetBehavior compareSheetBehavior;
+
+    private BroadcastReceiver receiver;
+
     private boolean selectionMode = false;
 
     @Override
@@ -155,6 +163,13 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         });
 
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+            }
+        };
+
         if (savedInstanceState != null) {
             setSelectionMode(savedInstanceState.getBoolean(KEY_SELECTION_MODE, false));
             compareSheetBehavior.setState(savedInstanceState.getInt(KEY_BOTTOM_SHEET_STATE, BottomSheetBehavior.STATE_HIDDEN));
@@ -167,6 +182,20 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         } else {
             AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(MainActivity.ACTION_REFRESH_DATA_VIEW));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
     }
 
     @Override

@@ -34,8 +34,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.content.pm.ShortcutInfoCompat;
 import android.support.v4.content.pm.ShortcutManagerCompat;
 import android.support.v4.graphics.drawable.IconCompat;
@@ -49,6 +51,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
@@ -58,6 +61,7 @@ import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.Date;
+import java.util.List;
 
 public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener, StorageWrapper.StorageListener {
 
@@ -247,7 +251,13 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             // Local device
             if (prefs.getBoolean(getResources().getString(R.string.pref_ms_save_to_local_device), true)) {
-                AccountScope.getStorageWrapper(AccountScope.LOCAL, this).writeData(getData(), null);
+                AccountScope.getStorageWrapper(AccountScope.LOCAL, this).writeData(getData(), new StorageWrapper.StorageListener() {
+                    @Override
+                    public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
+                        Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
+                        LocalBroadcastManager.getInstance(ScoutingFlowActivity.this).sendBroadcast(refreshIntent);
+                    }
+                });
                 //If this errors, we'll catch it internally
             }
 

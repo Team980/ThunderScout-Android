@@ -30,6 +30,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -40,6 +41,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
@@ -58,8 +60,6 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
     private NotificationCompat.Builder btTransferSuccess;
     private NotificationCompat.Builder btTransferError;
     private int id;
-
-    private LocalBroadcastManager localBroadcastManager;
 
     public ServerConnectionTask(BluetoothSocket socket, Context context) {
         this.context = context;
@@ -99,8 +99,6 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                 .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_ERROR)
                 .setGroup("BT_TRANSFER_ERROR");
-
-        localBroadcastManager = LocalBroadcastManager.getInstance(context);
     }
 
     @Override
@@ -199,7 +197,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             notificationManager.notify(id, btTransferError.build());
         }
 
-        //localBroadcastManager.sendBroadcast(intent);
+        //TODO send Home update intent
 
         if (result.getData() != null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -209,11 +207,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                 AccountScope.getStorageWrapper(AccountScope.LOCAL, context).writeData(result.getData(), new StorageWrapper.StorageListener() {
                     @Override
                     public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
-                        //TODO figure out how to send a refresh intent to both fragments
-                        //Intent intent = new Intent(HomeFragment.ACTION_REFRESH_VIEW_PAGER);
-                        //localBroadcastManager.sendBroadcast(intent); //notify the UI thread so we can refresh the ViewPager automatically :D
+                        Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
                     }
-                }); //TODO assumes LOCAL, no callback
+                }); //TODO assumes LOCAL
             }
 
             if (prefs.getBoolean(context.getResources().getString(R.string.pref_bt_send_to_bluetooth_server), false)) {

@@ -36,7 +36,6 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
@@ -60,8 +59,6 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
     private NotificationCompat.Builder btTransferSuccess;
     private NotificationCompat.Builder btTransferError;
     private int id;
-
-    private LocalBroadcastManager localBroadcastManager;
 
     public ClientConnectionTask(BluetoothDevice device, ScoutData data, Context context) {
         this.context = context;
@@ -103,8 +100,6 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                 .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_ERROR)
                 .setGroup("BT_TRANSFER_ERROR");
-
-        localBroadcastManager = LocalBroadcastManager.getInstance(context);
     }
 
     @Override
@@ -267,7 +262,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             notificationManager.notify(id, btTransferError.build());
         }
 
-        //localBroadcastManager.sendBroadcast(intent);
+        //TODO send Home update Intent
     }
 
     class TaskResult {

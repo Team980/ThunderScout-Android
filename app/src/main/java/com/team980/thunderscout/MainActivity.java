@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     public static final int INTENT_FLAGS_MATCHES = 1;
     public static final int INTENT_FLAGS_RANKINGS = 2;
 
-    public static final String ACTION_REFRESH_DATA_VIEW = "com.team80.thunderscout.ACTION_REFRESH_DATA_VIEW"; //TODO
+    public static final String ACTION_REFRESH_DATA_VIEW = "com.team80.thunderscout.ACTION_REFRESH_DATA_VIEW";
 
     boolean accountMenuExpanded = false; //runtime state
 
