@@ -141,10 +141,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
                     }
                     Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
                     sheetToolbar.setNavigationIcon(R.drawable.ic_expand_more_white_24dp);
-
-                    //Clicks actually pass through the bottom sheet, so I need to remove the offending buttons
-                    toolbar.getMenu().clear();
-                    toolbar.setNavigationIcon(null);
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         Log.d("TAG", "Title bar Test2");
@@ -152,10 +148,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
                     }
                     Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
                     sheetToolbar.setNavigationIcon(R.drawable.ic_expand_less_white_24dp);
-                    toolbar.getMenu().clear();
-                    toolbar.inflateMenu(R.menu.menu_rank_selection);
-                    toolbar.setNavigationIcon(R.drawable.ic_clear_white_24dp);
-
                 }
             }
 
