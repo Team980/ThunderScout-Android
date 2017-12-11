@@ -50,6 +50,7 @@ android {
         }
 
         debug {
+            versionNameSuffix ' DEBUG'
             ext.enableCrashlytics = false //Disable Crashlytics mapping on debug builds
 
             //ONLY FOR TESTING - SLOWS DOWN BUILD TIME
