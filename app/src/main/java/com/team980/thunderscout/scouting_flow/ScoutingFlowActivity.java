@@ -125,7 +125,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                 ActivityManager.TaskDescription current = activityManager.getAppTasks().get(0).getTaskInfo().taskDescription;
                 ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription("Scout: Team " + scoutData.getTeam(),
-                        current.getIcon(), scoutData.getAllianceStation().getColor().getColorPrimary());
+                        current.getIcon(), getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary()));
                 setTaskDescription(taskDesc);
             }
         } else {
@@ -249,6 +249,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+            AlertDialog suspendDialog = null;
+
             // Local device
             if (prefs.getBoolean(getResources().getString(R.string.pref_ms_save_to_local_device), true)) {
                 AccountScope.getStorageWrapper(AccountScope.LOCAL, this).writeData(getData(), new StorageWrapper.StorageListener() {
@@ -267,7 +269,13 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
                 try {
                     if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-                        throw new NullPointerException("Bluetooth is disabled"); //todo better way to notify
+                        suspendDialog = new AlertDialog.Builder(this)
+                                .setTitle("Bluetooth is disabled")
+                                .setIcon(R.drawable.ic_warning_white_24dp)
+                                .setMessage("Please enable Bluetooth and try again")
+                                .setPositiveButton("OK", (dialog, which) -> finish())
+                                .setOnDismissListener((dialog) -> finish())
+                                .create();
                     }
 
                     BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
@@ -275,7 +283,13 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     ClientConnectionTask connectTask = new ClientConnectionTask(device, scoutData, getApplicationContext());
                     connectTask.execute();
                 } catch (IllegalArgumentException e) {
-                    throw e; //TODO better way to notify!
+                    suspendDialog = new AlertDialog.Builder(this)
+                            .setTitle("Bluetooth server device not set")
+                            .setIcon(R.drawable.ic_warning_white_24dp)
+                            .setMessage("Please configure your scouting settings and try again")
+                            .setPositiveButton("OK", (dialog, which) -> finish())
+                            .setOnDismissListener((dialog) -> finish())
+                            .create();
                 }
             }
 
@@ -284,7 +298,11 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     .putString(getResources().getString(R.string.pref_last_used_alliance_station), scoutData.getAllianceStation().name())
                     .apply();
 
-            finish();
+            if (suspendDialog == null) {
+                finish();
+            } else {
+                suspendDialog.show();
+            }
         }
 
     }

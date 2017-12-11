@@ -217,16 +217,17 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                 String address = prefs.getString(context.getResources().getString(R.string.pref_bt_bluetooth_server_device), null);
 
                 try {
-                    if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-                        throw new NullPointerException("Bluetooth is disabled"); //todo better way to notify
-                    }
-
+                    //This is the Bluetooth server, so Bluetooth is probably enabled
                     BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
 
                     ClientConnectionTask connectTask = new ClientConnectionTask(device, result.getData(), context);
                     connectTask.execute();
                 } catch (IllegalArgumentException e) {
-                    throw e; //todo better way to notify
+                    btTransferError.setContentTitle("ERROR: Bluetooth server device not set");
+                    btTransferError.setContentText("Please configure your server settings and try again");
+                    btTransferError.setWhen(System.currentTimeMillis());
+
+                    notificationManager.notify(id, btTransferError.build());
                 }
             }
         }
