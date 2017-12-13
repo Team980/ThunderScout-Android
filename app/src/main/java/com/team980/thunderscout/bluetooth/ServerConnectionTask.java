@@ -33,11 +33,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.crashlytics.android.Crashlytics;
@@ -53,6 +55,8 @@ import java.util.List;
 
 public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnectionTask.TaskResult> {
 
+    private static final int SUCCESS_SUMMARY_ID = 4;
+    private static final int ERROR_SUMMARY_ID = 5;
     private final BluetoothSocket mmSocket;
     private Context context;
     private NotificationManager notificationManager;
@@ -77,12 +81,13 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
         //TODO these should be a different group from the client notifications
         btTransferInProgress = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_bluetooth_transfer_white_24dp) //TODO animated icon?
+                .setUsesChronometer(true)
                 .setOngoing(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.accent))
                 .setProgress(1, 0, true)
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
-                .setGroup("BT_TRANSFER_ONGOING");
+                .setGroup("BT_SERVER_TRANSFER_ONGOING");
 
         btTransferSuccess = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_check_circle_white_24dp)
@@ -90,7 +95,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                 .setColor(context.getResources().getColor(R.color.success))
                 .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_STATUS)
-                .setGroup("BT_TRANSFER_SUCCESS");
+                .setGroup("BT_SERVER_TRANSFER_SUCCESS");
 
         btTransferError = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_warning_white_24dp)
@@ -98,7 +103,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                 .setColor(context.getResources().getColor(R.color.error))
                 .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_ERROR)
-                .setGroup("BT_TRANSFER_ERROR");
+                .setGroup("BT_SERVER_TRANSFER_ERROR");
     }
 
     @Override
@@ -112,7 +117,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
         btTransferInProgress.setWhen(System.currentTimeMillis());
         btTransferInProgress.setProgress(1, 0, true);
 
-        notificationManager.notify(id, btTransferInProgress.build());
+        NotificationManagerCompat.from(context).notify(id, btTransferInProgress.build());
     }
 
     @Override
@@ -164,7 +169,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             btTransferInProgress.setProgress(100, values[0], false);
         }
 
-        notificationManager.notify(id, btTransferInProgress.build());
+        NotificationManagerCompat.from(context).notify(id, btTransferInProgress.build());
     }
 
     @Override
@@ -182,7 +187,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                     + " - Qualification Match " + result.getData().getMatchNumber());
             btTransferSuccess.setWhen(System.currentTimeMillis());
 
-            notificationManager.notify(id, btTransferSuccess.build());
+            NotificationManagerCompat.from(context).notify(id, btTransferSuccess.build());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                NotificationManagerCompat.from(context).notify(SUCCESS_SUMMARY_ID, btTransferSuccess.setGroupSummary(true).build());
+            }
 
             new Handler().postDelayed(() -> notificationManager.cancel(id), 10000); //10 seconds
         } else {
@@ -194,7 +202,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             btTransferError.setStyle(new NotificationCompat.BigTextStyle().bigText("Error: " + result.getException().getMessage()));
             btTransferError.setWhen(System.currentTimeMillis());
 
-            notificationManager.notify(id, btTransferError.build());
+            NotificationManagerCompat.from(context).notify(id, btTransferError.build());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
+            }
         }
 
         //TODO send Home update intent
@@ -227,7 +238,10 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                     btTransferError.setContentText("Please configure your server settings and try again");
                     btTransferError.setWhen(System.currentTimeMillis());
 
-                    notificationManager.notify(id, btTransferError.build());
+                    NotificationManagerCompat.from(context).notify(id, btTransferError.build());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
+                    }
                 }
             }
         }

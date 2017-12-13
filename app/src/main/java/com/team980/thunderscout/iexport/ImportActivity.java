@@ -33,6 +33,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +41,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
@@ -82,7 +84,7 @@ public class ImportActivity extends AppCompatActivity {
         selectButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("*/*"); //I wish this wasn't necessary
-            Intent i = Intent.createChooser(intent, "Select a .csv file containing ThunderScout data");
+            Intent i = Intent.createChooser(intent, "Select a .csv file to import");
             startActivityForResult(i, 2);
         });
 
@@ -101,7 +103,11 @@ public class ImportActivity extends AppCompatActivity {
                 public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
                     importProgress.setVisibility(View.GONE);
                     Toast.makeText(ImportActivity.this, "CSV import complete: " + dataWritten.size() + " matches added", Toast.LENGTH_SHORT).show();
+
                     finish();
+
+                    Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
+                    LocalBroadcastManager.getInstance(ImportActivity.this).sendBroadcast(refreshIntent);
                 }
             });
         });
@@ -180,7 +186,7 @@ public class ImportActivity extends AppCompatActivity {
 
         selectionInfo.setVisibility(View.VISIBLE);
         if (dataToImport.size() == 1) {
-            selectionInfo.setText("1 match available to export");
+            selectionInfo.setText("1 match available to import");
         } else {
             selectionInfo.setText(dataToImport.size() + " matches available to import");
         }

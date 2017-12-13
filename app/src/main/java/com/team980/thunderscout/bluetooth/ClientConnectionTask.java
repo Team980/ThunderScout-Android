@@ -33,9 +33,11 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
@@ -50,10 +52,11 @@ import java.util.UUID;
 
 public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnectionTask.TaskResult> {
 
+    private static final int SUCCESS_SUMMARY_ID = 2;
+    private static final int ERROR_SUMMARY_ID = 3;
     private Context context;
     private BluetoothDevice device;
     private ScoutData scoutData;
-
     private NotificationManager notificationManager;
     private NotificationCompat.Builder btTransferInProgress;
     private NotificationCompat.Builder btTransferSuccess;
@@ -79,11 +82,12 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
         btTransferInProgress = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_bluetooth_transfer_white_24dp) //TODO animated icon?
                 .setOngoing(true)
+                .setUsesChronometer(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.accent))
                 .setProgress(1, 0, true)
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
-                .setGroup("BT_TRANSFER_ONGOING");
+                .setGroup("BT_CLIENT_TRANSFER_ONGOING");
 
         btTransferSuccess = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_check_circle_white_24dp)
@@ -91,7 +95,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                 .setColor(context.getResources().getColor(R.color.success))
                 .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_STATUS)
-                .setGroup("BT_TRANSFER_SUCCESS");
+                .setGroup("BT_CLIENT_TRANSFER_SUCCESS");
 
         btTransferError = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_warning_white_24dp)
@@ -99,7 +103,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                 .setColor(context.getResources().getColor(R.color.error))
                 .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_ERROR)
-                .setGroup("BT_TRANSFER_ERROR");
+                .setGroup("BT_CLIENT_TRANSFER_ERROR");
     }
 
     @Override
@@ -112,7 +116,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
         btTransferInProgress.setWhen(System.currentTimeMillis());
         btTransferInProgress.setProgress(1, 0, true);
 
-        notificationManager.notify(id, btTransferInProgress.build());
+        NotificationManagerCompat.from(context).notify(id, btTransferInProgress.build());
     }
 
     @NonNull
@@ -205,7 +209,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             btTransferInProgress.setProgress(100, values[0], false);
         }
 
-        notificationManager.notify(id, btTransferInProgress.build());
+        NotificationManagerCompat.from(context).notify(id, btTransferInProgress.build());
     }
 
     @Override
@@ -223,9 +227,14 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                     + " - Qualification Match " + result.getData().getMatchNumber());
             btTransferSuccess.setWhen(System.currentTimeMillis());
 
-            notificationManager.notify(id, btTransferSuccess.build());
+            NotificationManagerCompat.from(context).notify(id, btTransferSuccess.build());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                NotificationManagerCompat.from(context).notify(SUCCESS_SUMMARY_ID, btTransferSuccess.setGroupSummary(true).build());
+            }
 
-            new Handler().postDelayed(() -> notificationManager.cancel(id), 10000); //10 seconds
+            new Handler().postDelayed(() -> {
+                notificationManager.cancel(id);
+            }, 7000); //7 seconds
         } else {
             //intent.putExtra(HomeFragment.TaskUpdateReceiver.KEY_UPDATE_TYPE,
             //HomeFragment.TaskUpdateReceiver.UpdateType.ERROR);
@@ -259,7 +268,11 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
 
             btTransferError.addAction(retryAction); //TODO this doesn't dismiss the notification
 
-            notificationManager.notify(id, btTransferError.build());
+            NotificationManagerCompat.from(context).notify(id, btTransferError.build());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
+            }
+
         }
 
         //TODO send Home update Intent

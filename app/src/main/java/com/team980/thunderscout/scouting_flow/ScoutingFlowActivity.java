@@ -359,7 +359,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         // Init
         scoutData.setDate(new Date(System.currentTimeMillis()));
 
-        scoutData.setSource(Build.MODEL); //TODO user configurable device name?
+        scoutData.setSource(PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
 
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();

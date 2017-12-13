@@ -24,6 +24,10 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <EditTextPreference
+        android:key="@string/pref_device_name"
+        android:title="Device name" />
+
     <PreferenceCategory android:title="Telemetry">
 
         <SwitchPreference
@@ -47,7 +51,7 @@
         <Preference
             android:icon="@drawable/ic_info_white_24dp"
             android:selectable="false"
-            android:summary="A restart is required for changes to take effect." />
+            android:summary="A restart is required for changes to telemetry settings to take effect." />
 
     </PreferenceCategory>
 

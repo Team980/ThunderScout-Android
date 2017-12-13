@@ -37,6 +37,7 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.preference.PreferenceActivity;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
@@ -72,14 +73,14 @@ public class BluetoothServerService extends Service {
                     Crashlytics.log(Log.INFO, this.getClass().getName(), "Bluetooth adapter state: " + state);
                     switch (state) {
                         case BluetoothAdapter.STATE_TURNING_OFF:
-                            notificationManager.notify(SERVER_NOTIFICATION_ID, adapterDisabled.build());
+                            NotificationManagerCompat.from(context).notify(SERVER_NOTIFICATION_ID, adapterDisabled.build());
 
                             if (acceptThread != null) {
                                 acceptThread.cancel();
                             }
                             break;
                         case BluetoothAdapter.STATE_ON:
-                            notificationManager.notify(SERVER_NOTIFICATION_ID, running.build());
+                            NotificationManagerCompat.from(context).notify(SERVER_NOTIFICATION_ID, running.build());
 
                             acceptThread = new ServerListenerThread(getApplicationContext());
                             acceptThread.start();
@@ -101,12 +102,12 @@ public class BluetoothServerService extends Service {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
 
-            notificationManager.notify(SERVER_NOTIFICATION_ID, adapterMissing.build());
+            NotificationManagerCompat.from(this).notify(SERVER_NOTIFICATION_ID, adapterMissing.build());
             Crashlytics.log(Log.ERROR, this.getClass().getName(), "NULL Bluetooth adapter");
         } else if (!mBluetoothAdapter.isEnabled()) {
 
             //mBluetoothAdapter.enable(); //Applications should NEVER call this directly
-            notificationManager.notify(SERVER_NOTIFICATION_ID, adapterDisabled.build());
+            NotificationManagerCompat.from(this).notify(SERVER_NOTIFICATION_ID, adapterDisabled.build());
             Crashlytics.log(Log.INFO, this.getClass().getName(), "Requesting Bluetooth to be enabled");
         } else {
 

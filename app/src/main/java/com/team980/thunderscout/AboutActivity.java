@@ -51,7 +51,7 @@ public class AboutActivity extends MaterialAboutActivity {
         titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Version " + BuildConfig.VERSION_NAME)
                 .subText("Click for patch notes")
-                .icon(R.drawable.ic_info_outline_white)
+                .icon(R.drawable.ic_info_outline_white_24dp)
                 .setOnClickAction(() -> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AboutActivity.this);
                     builder.setTitle("New in version " + BuildConfig.VERSION_NAME);

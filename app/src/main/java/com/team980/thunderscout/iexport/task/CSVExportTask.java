@@ -27,11 +27,13 @@ package com.team980.thunderscout.iexport.task;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.opencsv.CSVWriter;
+import com.team980.thunderscout.R;
 import com.team980.thunderscout.iexport.ExportActivity;
 import com.team980.thunderscout.schema.ScoutData;
 
@@ -57,7 +59,8 @@ public class CSVExportTask extends AsyncTask<ScoutData, Integer, File> {
         dir.mkdir();
         dir.setReadable(true, false);
 
-        String deviceName = Build.MODEL.replace(' ', '_'); //TODO user configurable device name?
+        String deviceName = PreferenceManager.getDefaultSharedPreferences(activity)
+                .getString(activity.getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 
         File csv = new File(dir, deviceName + "_exported_" + formatter.format(System.currentTimeMillis()) + ".csv");

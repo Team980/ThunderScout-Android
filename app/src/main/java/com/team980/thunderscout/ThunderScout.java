@@ -112,6 +112,11 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
         super.onCreate();
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (!sharedPref.contains(getResources().getString(R.string.pref_device_name))) {
+            sharedPref.edit().putString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL).apply();
+        }
+
         boolean runServer = sharedPref.getBoolean(getResources().getString(R.string.pref_enable_bluetooth_server), false);
 
         if (runServer) { //I must be launching multiple instances?

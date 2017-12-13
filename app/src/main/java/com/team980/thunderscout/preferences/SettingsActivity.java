@@ -24,12 +24,17 @@
 
 package com.team980.thunderscout.preferences;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
@@ -44,6 +49,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = (preference, value) -> {
         String stringValue = value.toString();
+
+        if (preference instanceof EditTextPreference) {
+            preference.setSummary(stringValue);
+        }
 
         if (preference instanceof ListPreference) {
             // For list preferences, look up the correct display value in
@@ -144,10 +153,35 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_main);
             //setHasOptionsMenu(true);
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
+            Preference notificationSettings = findPreference(getResources().getString(R.string.pref_notification_settings));
+            notificationSettings.setOnPreferenceClickListener(preference1 -> {
+                Intent intent = new Intent();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
+                } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+                    intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                    intent.putExtra("app_package", getActivity().getPackageName());
+                    intent.putExtra("app_uid", getActivity().getApplicationInfo().uid);
+                } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                    intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+                }
+                startActivity(intent);
+                return true;
+            });
+
+            Preference appInfo = findPreference(getResources().getString(R.string.pref_app_info));
+            appInfo.setOnPreferenceClickListener(preference1 -> {
+                Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+                startActivity(intent);
+                return true;
+            });
         }
 
         /*@Override
@@ -169,6 +203,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             SettingsActivity activity = (SettingsActivity) getActivity();
             activity.getSupportActionBar().setTitle("General settings");
+
+            bindPreferenceSummaryToValue(findPreference(getResources().getString(R.string.pref_device_name)));
         }
     }
 

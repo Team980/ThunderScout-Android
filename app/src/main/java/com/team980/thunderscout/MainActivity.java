@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity
             case LOCAL:
                 image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
 
-                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("My " + Build.MODEL);
+                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(sharedPrefs
+                        .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
                 ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("Local storage");
 
                 //TODO populate
@@ -229,7 +230,8 @@ public class MainActivity extends AppCompatActivity
             ImageView image = view.getHeaderView(0).findViewById(R.id.account_image);
             image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
 
-            ((TextView) view.findViewById(R.id.account_name)).setText("My " + Build.MODEL);
+            ((TextView) view.findViewById(R.id.account_name)).setText(PreferenceManager.getDefaultSharedPreferences(this)
+                    .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
 
             ((TextView) view.findViewById(R.id.account_id)).setText("Local storage");
 
@@ -281,7 +283,8 @@ public class MainActivity extends AppCompatActivity
         view.getMenu().clear();
         view.inflateMenu(R.menu.drawer_account_menu);
 
-        view.getMenu().findItem(R.id.nav_account_local).setTitle("My " + Build.MODEL);
+        view.getMenu().findItem(R.id.nav_account_local).setTitle(PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
 
         //TODO do some UI tweaks depending on account values
         //view.getMenu().findItem(R.id.nav_account_cloud).setIcon(R.drawable.ic_account_circle_white_72dp);

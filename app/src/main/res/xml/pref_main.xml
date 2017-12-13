@@ -27,7 +27,7 @@
     <Preference
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_settings_white_24dp"
-        android:summary="Telemetry settings, etc."
+        android:summary="Device name, telemetry settings, etc."
         android:title="General settings" />
 
     <!--<PreferenceScreen
@@ -46,5 +46,15 @@
         android:icon="@drawable/ic_bluetooth_searching_white_24dp"
         android:summary="Receive data from other devices"
         android:title="Bluetooth server" />
+
+    <Preference
+        android:icon="@drawable/ic_notification_white_24dp"
+        android:key="@string/pref_notification_settings"
+        android:title="Notifications" />
+
+    <Preference
+        android:icon="@drawable/ic_info_outline_white_24dp"
+        android:key="@string/pref_app_info"
+        android:title="App info" />
 
 </PreferenceScreen>

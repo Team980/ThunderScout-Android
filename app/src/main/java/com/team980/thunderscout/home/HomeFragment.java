@@ -177,7 +177,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
                 ScoutData data = new ScoutData();
                 data.setTeam(String.valueOf(random.nextInt(70)));
                 data.setMatchNumber(i);
-                data.setSource(Build.MANUFACTURER + " " + Build.MODEL);
+                data.setSource(PreferenceManager.getDefaultSharedPreferences(getContext())
+                        .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
 
                 data.setAllianceStation(AllianceStation.values()[j]);
 
