@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 /*
  * MIT License
  *
@@ -50,7 +52,8 @@ android {
         }
 
         debug {
-            versionNameSuffix ' DEBUG'
+            versionNameSuffix '-b' + getDate() //Append build timestamp to version for debug builds
+
             ext.enableCrashlytics = false //Disable Crashlytics mapping on debug builds
 
             //ONLY FOR TESTING - SLOWS DOWN BUILD TIME
@@ -101,8 +104,9 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.2'
 
     //Material About, Library Info
-    implementation 'com.github.daniel-stoneuk:material-about-library:2.2.3-support26.1.0' //Weird version system
-    implementation ('com.mikepenz:aboutlibraries:6.0.1@aar') {
+    implementation 'com.github.daniel-stoneuk:material-about-library:2.2.3-support26.1.0'
+    //Weird version system
+    implementation('com.mikepenz:aboutlibraries:6.0.1@aar') {
         transitive = true
     }
 
@@ -119,9 +123,10 @@ dependencies {
     //androidTestImplementation 'junit:junit:4.12'
 }
 
-
-
-
-
+static def getDate() {
+    def df = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss")
+    df.setTimeZone(TimeZone.getTimeZone("UTC"))
+    return df.format(new Date())
+}
 
 apply plugin: 'com.google.gms.google-services'
