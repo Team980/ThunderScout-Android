@@ -89,6 +89,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         if (getIntent().getStringExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT) == null) {
             getIntent().putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, MainPreferenceFragment.class.getName());
         }
+        getIntent().putExtra(EXTRA_NO_HEADERS, true);
 
         super.onCreate(savedInstanceState);
 

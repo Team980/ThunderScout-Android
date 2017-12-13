@@ -41,7 +41,7 @@
         android:id="@+id/action_compare"
         android:icon="@drawable/ic_assignment_white_24dp"
         android:title="Compare teams..."
-        app:showAsAction="never" />
+        app:showAsAction="never" /> <!-- TODO remove this once onboarding is added -->
     <item
         android:id="@+id/action_import"
         android:orderInCategory="1"

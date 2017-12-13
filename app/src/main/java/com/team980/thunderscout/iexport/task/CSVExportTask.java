@@ -63,7 +63,7 @@ public class CSVExportTask extends AsyncTask<ScoutData, Integer, File> {
                 .getString(activity.getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 
-        File csv = new File(dir, deviceName + "_exported_" + formatter.format(System.currentTimeMillis()) + ".csv");
+        File csv = new File(dir, deviceName.replace(' ', '_') + "_exported_" + formatter.format(System.currentTimeMillis()) + ".csv");
         csv.setReadable(true, false);
 
         try {

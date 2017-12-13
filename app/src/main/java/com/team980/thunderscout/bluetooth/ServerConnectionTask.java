@@ -78,11 +78,12 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             notificationManager.createNotificationChannel(transferChannel);
         }
 
-        //TODO these should be a different group from the client notifications
         btTransferInProgress = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_bluetooth_transfer_white_24dp) //TODO animated icon?
                 .setUsesChronometer(true)
                 .setOngoing(true)
+                .setTicker("Bluetooth transfer in progress")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.accent))
                 .setProgress(1, 0, true)
@@ -91,6 +92,8 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
 
         btTransferSuccess = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_check_circle_white_24dp)
+                .setTicker("Bluetooth transfer succeeded")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.success))
                 .setAutoCancel(true)
@@ -99,6 +102,8 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
 
         btTransferError = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_warning_white_24dp)
+                .setTicker("Bluetooth transfer failed")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.error))
                 .setAutoCancel(true)
@@ -161,6 +166,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
         super.onProgressUpdate(values);
 
         btTransferInProgress.setContentTitle("Receiving data from " + mmSocket.getRemoteDevice().getName());
+        btTransferInProgress.setContentText("Test data");
         btTransferInProgress.setWhen(System.currentTimeMillis());
 
         if (values[0] == -1) { //Indeterminate
@@ -188,7 +194,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             btTransferSuccess.setWhen(System.currentTimeMillis());
 
             NotificationManagerCompat.from(context).notify(id, btTransferSuccess.build());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 NotificationManagerCompat.from(context).notify(SUCCESS_SUMMARY_ID, btTransferSuccess.setGroupSummary(true).build());
             }
 
@@ -203,7 +209,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             btTransferError.setWhen(System.currentTimeMillis());
 
             NotificationManagerCompat.from(context).notify(id, btTransferError.build());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
             }
         }
@@ -239,7 +245,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                     btTransferError.setWhen(System.currentTimeMillis());
 
                     NotificationManagerCompat.from(context).notify(id, btTransferError.build());
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
                     }
                 }

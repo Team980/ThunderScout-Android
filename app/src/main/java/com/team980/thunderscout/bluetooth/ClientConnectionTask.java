@@ -78,11 +78,12 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             notificationManager.createNotificationChannel(transferChannel);
         }
 
-        //TODO these should be a different group from the server notifications
         btTransferInProgress = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_bluetooth_transfer_white_24dp) //TODO animated icon?
                 .setOngoing(true)
                 .setUsesChronometer(true)
+                .setTicker("Bluetooth transfer in progress")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.accent))
                 .setProgress(1, 0, true)
@@ -91,6 +92,8 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
 
         btTransferSuccess = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_check_circle_white_24dp)
+                .setTicker("Bluetooth transfer succeeded")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.success))
                 .setAutoCancel(true)
@@ -99,6 +102,8 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
 
         btTransferError = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_warning_white_24dp)
+                .setTicker("Bluetooth transfer failed")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.error))
                 .setAutoCancel(true)
@@ -228,7 +233,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             btTransferSuccess.setWhen(System.currentTimeMillis());
 
             NotificationManagerCompat.from(context).notify(id, btTransferSuccess.build());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 NotificationManagerCompat.from(context).notify(SUCCESS_SUMMARY_ID, btTransferSuccess.setGroupSummary(true).build());
             }
 
@@ -269,7 +274,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             btTransferError.addAction(retryAction); //TODO this doesn't dismiss the notification
 
             NotificationManagerCompat.from(context).notify(id, btTransferError.build());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
             }
 

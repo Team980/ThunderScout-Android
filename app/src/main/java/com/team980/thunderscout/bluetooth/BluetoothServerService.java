@@ -24,7 +24,6 @@
 
 package com.team980.thunderscout.bluetooth;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -152,7 +151,7 @@ public class BluetoothServerService extends Service {
                 .setContentTitle("Bluetooth server")
                 .setContentText("Click to open settings") //todo new icon?
                 .setOngoing(true)
-                .setPriority(Notification.PRIORITY_LOW)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColorized(true)
                 .setColor(getResources().getColor(R.color.primary))
@@ -165,7 +164,7 @@ public class BluetoothServerService extends Service {
                 .setContentTitle("Bluetooth is disabled")
                 .setContentText("Please enable Bluetooth before using the Bluetooth Server")
                 .setOngoing(true)
-                .setPriority(Notification.PRIORITY_LOW)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColorized(true)
                 .setColor(getResources().getColor(R.color.error))
@@ -178,7 +177,7 @@ public class BluetoothServerService extends Service {
                 .setContentTitle("This device doesn't support Bluetooth")
                 .setContentText("Please disable the Bluetooth Server")
                 .setOngoing(true)
-                .setPriority(Notification.PRIORITY_LOW)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColorized(true)
                 .setColor(getResources().getColor(R.color.error))
