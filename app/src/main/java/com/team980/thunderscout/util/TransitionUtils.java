@@ -24,6 +24,7 @@
 
 package com.team980.thunderscout.util;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.app.ActivityManager;
 import android.graphics.Color;
@@ -32,6 +33,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
 
+import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 
 import static android.content.Context.ACTIVITY_SERVICE;
@@ -81,6 +83,40 @@ public class TransitionUtils {
 
             if (activity.findViewById(R.id.tab_layout) != null) { //we don't want a random NPE
                 activity.findViewById(R.id.tab_layout).setBackgroundColor(blended);
+            }
+        });
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                //nil
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (statusBarToColor == activity.getResources().getColor(R.color.primary_dark)
+                            && activity instanceof MainActivity) { //Check for transparent primary
+                        activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+                    } else {
+                        activity.getWindow().setStatusBarColor(statusBarToColor);
+                    }
+                }
+
+                activity.findViewById(R.id.toolbar).setBackgroundColor(toolbarToColor);
+
+                if (activity.findViewById(R.id.tab_layout) != null) { //we don't want a random NPE
+                    activity.findViewById(R.id.tab_layout).setBackgroundColor(toolbarToColor);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                //nada
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                //nope
             }
         });
         anim.setDuration(350).start();
