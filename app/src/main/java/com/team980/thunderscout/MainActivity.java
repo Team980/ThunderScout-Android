@@ -71,31 +71,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.getHeaderView(0).setOnClickListener(this);
 
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        AccountScope currentScope = AccountScope.valueOf(sharedPrefs.getString(getResources().getString(R.string.pref_current_account_scope),
-                AccountScope.LOCAL.name()));
-
-        ImageView image = navigationView.getHeaderView(0).findViewById(R.id.account_image);
-        switch (currentScope) {
-            case LOCAL:
-                image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
-
-                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(sharedPrefs
-                        .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
-                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("Local storage");
-
-                //TODO populate
-                break;
-            /*case CLOUD:
-                image.setImageDrawable(getResources().getDrawable(R.drawable.ic_cloud_circle_white_72dp));
-
-                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("Team 980 (ThunderCloud)"); //TODO tweak based on account data
-                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("account@team980.com");
-
-                //TODO populate
-                break;*/
-        }
+        updateAccountHeader();
 
         int shownFragment = getIntent().getIntExtra(INTENT_FLAG_SHOWN_FRAGMENT, INTENT_FLAGS_HOME);
 
@@ -129,6 +105,8 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.fragment, fragment);
         ft.commit();
 
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         if (sharedPrefs.getInt(getResources().getString(R.string.pref_last_presented_update_dialog), 1) < BuildConfig.VERSION_CODE) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -155,8 +133,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+    }
 
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment); //and we do what here, exactly?
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateAccountHeader();
     }
 
     @Override
@@ -225,34 +207,18 @@ public class MainActivity extends AppCompatActivity
 
         //AccountScope navigation menu
         else if (id == R.id.nav_account_local) {
-            NavigationView view = findViewById(R.id.nav_view);
-
-            ImageView image = view.getHeaderView(0).findViewById(R.id.account_image);
-            image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
-
-            ((TextView) view.findViewById(R.id.account_name)).setText(PreferenceManager.getDefaultSharedPreferences(this)
-                    .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
-
-            ((TextView) view.findViewById(R.id.account_id)).setText("Local storage");
-
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
 
+            updateAccountHeader();
             contractAccountMenu();
 
             //TODO repopulate current fragment
         } /*else if (id == R.id.nav_account_cloud) {
-            NavigationView view = findViewById(R.id.nav_view);
-
-            ImageView image = view.getHeaderView(0).findViewById(R.id.account_image);
-            image.setImageDrawable(getResources().getDrawable(R.drawable.ic_cloud_circle_white_72dp));
-
-            ((TextView) view.findViewById(R.id.account_name)).setText("Team 980 (ThunderCloud)"); //TODO tweak based on account data
-            ((TextView) view.findViewById(R.id.account_id)).setText("account@team980.com");
-
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.CLOUD.name()).apply();
 
+            updateAccountHeader();
             contractAccountMenu();
 
             //TODO repopulate current fragment
@@ -273,6 +239,36 @@ public class MainActivity extends AppCompatActivity
             contractAccountMenu();
         } else {
             //expandAccountMenu(); TODO reenable
+        }
+    }
+
+    private void updateAccountHeader() {
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        AccountScope currentScope = AccountScope.valueOf(sharedPrefs.getString(getResources().getString(R.string.pref_current_account_scope),
+                AccountScope.LOCAL.name()));
+
+        ImageView image = navigationView.getHeaderView(0).findViewById(R.id.account_image);
+        switch (currentScope) {
+            case LOCAL:
+                image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
+
+                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(sharedPrefs
+                        .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
+                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("Local storage");
+
+                //TODO populate
+                break;
+            /*case CLOUD:
+                image.setImageDrawable(getResources().getDrawable(R.drawable.ic_cloud_circle_white_72dp));
+
+                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("Team 980 (ThunderCloud)"); //TODO tweak based on account data
+                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("account@team980.com");
+
+                //TODO populate
+                break;*/
         }
     }
 

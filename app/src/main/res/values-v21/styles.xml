@@ -52,11 +52,6 @@
         </item>
     </style>
 
-    <style name="ThunderScout.BaseTheme.Translucent" parent="ThunderScout.BaseTheme">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
     <style name="ThunderScout.BaseTheme.NavigationPane" parent="ThunderScout.BaseTheme">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>

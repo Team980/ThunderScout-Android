@@ -126,7 +126,9 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
         sharedPref.registerOnSharedPreferenceChangeListener(this);
 
         //Firebase Analytics
-        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(sharedPref.getBoolean(getResources().getString(R.string.pref_enable_analytics), true));
+        if (!BuildConfig.DEBUG) { //Disabled on debug builds
+            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(sharedPref.getBoolean(getResources().getString(R.string.pref_enable_analytics), true));
+        }
 
 
         //Manually init Crashlytics

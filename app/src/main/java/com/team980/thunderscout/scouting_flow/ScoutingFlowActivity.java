@@ -25,7 +25,6 @@
 package com.team980.thunderscout.scouting_flow;
 
 import android.app.ActivityManager;
-import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -38,9 +37,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.content.pm.ShortcutInfoCompat;
-import android.support.v4.content.pm.ShortcutManagerCompat;
-import android.support.v4.graphics.drawable.IconCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -49,7 +45,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
@@ -166,7 +161,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             dialogFragment.show(getSupportFragmentManager(), "ScoutingFlowDialogFragment");
         }
 
-        if (id == R.id.action_add_to_home_screen) {
+        /*if (id == R.id.action_add_to_home_screen) {
             if (ShortcutManagerCompat.isRequestPinShortcutSupported(this)) {
 
                 ShortcutInfoCompat pinShortcutInfo =
@@ -196,7 +191,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             } else {
                 Toast.makeText(this, "Not supported by your launcher or OS", Toast.LENGTH_SHORT).show();
             }
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

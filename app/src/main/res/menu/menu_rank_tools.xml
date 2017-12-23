@@ -29,8 +29,8 @@
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white_24dp"
         android:title="Search"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
     <item
         android:id="@+id/action_sort"
         android:icon="@drawable/ic_sort_white_24dp"
@@ -40,12 +40,12 @@
     <item
         android:id="@+id/action_compare"
         android:icon="@drawable/ic_assignment_white_24dp"
-        android:title="Compare teams..."
+        android:title="Compare teams"
         app:showAsAction="never" /> <!-- TODO remove this once onboarding is added -->
     <item
         android:id="@+id/action_import"
         android:orderInCategory="1"
-        android:title="Import..."
+        android:title="Import"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_export"
