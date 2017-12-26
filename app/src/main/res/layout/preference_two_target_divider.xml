@@ -11,5 +11,5 @@
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="?attr/dividerVertical" />
+        android:background="@drawable/list_divider_backport_material" />
 </LinearLayout>

@@ -125,21 +125,27 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
 
         sharedPref.registerOnSharedPreferenceChangeListener(this);
 
-        //Firebase Analytics
-        if (!BuildConfig.DEBUG) { //Disabled on debug builds
-            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(sharedPref.getBoolean(getResources().getString(R.string.pref_enable_analytics), true));
-        }
+        if (BuildConfig.DEBUG) {
+            //Disable Firebase Analytics on debug builds
 
-
-        //Manually init Crashlytics
-        if (sharedPref.getBoolean(getResources().getString(R.string.pref_enable_crashlytics), true)) {
+            //Init, but disable, Crashlytics on debug builds
             Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                    .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                    .core(new CrashlyticsCore.Builder()
+                            .disabled(BuildConfig.DEBUG).build())
                     .build();
+            Fabric.with(this, crashlyticsKit);
+        } else {
+            //Firebase Analytics is based on user preference
+            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(sharedPref.getBoolean(getResources().getString(R.string.pref_enable_analytics), true));
 
-            // Initialize Fabric with the debug-disabled crashlytics.
+            //Manually init Crashlytics based on user preference
+            Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                    .core(new CrashlyticsCore.Builder()
+                            .disabled(sharedPref.getBoolean(getResources().getString(R.string.pref_enable_crashlytics), false)).build())
+                    .build();
             Fabric.with(this, crashlyticsKit);
         }
+
     }
 
     @Override

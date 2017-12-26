@@ -55,12 +55,12 @@
                 android:layout_alignLeft="@android:id/title"
                 android:layout_below="@android:id/title"
                 android:maxLines="10"
+                android:paddingRight="8dp"
                 android:textAppearance="?attr/textAppearanceListItemSecondary"
                 android:textColor="?android:attr/textColorSecondary" />
         </RelativeLayout>
     </LinearLayout>
 
-    <include layout="@layout/preference_two_target_divider" />
     <!-- Preference should place its actual preference widget here. -->
     <LinearLayout
         android:id="@android:id/widget_frame"

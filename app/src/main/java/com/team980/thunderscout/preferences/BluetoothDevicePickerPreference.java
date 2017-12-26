@@ -27,7 +27,7 @@ package com.team980.thunderscout.preferences;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.preference.Preference;
+import android.support.v7.preference.Preference;
 import android.util.AttributeSet;
 
 import com.team980.thunderscout.bluetooth.util.BluetoothDeviceManager;
@@ -65,9 +65,10 @@ public class BluetoothDevicePickerPreference extends Preference {
                 setSummary(name);
             }
 
-            getEditor().putString(getKey(), address)
+            getSharedPreferences().edit()
+                    .putString(getKey(), address)
                     .putString(getKey() + "_cached_name", name)
-                    .commit();
+                    .apply();
         });
     }
 

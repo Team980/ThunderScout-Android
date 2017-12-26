@@ -1,47 +1,25 @@
-/*
- * MIT License
- *
- * Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 package com.team980.thunderscout.preferences;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.v4.app.NavUtils;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.EditTextPreference;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.preferences.backport.AppCompatPreferenceActivity;
 
-public class SettingsActivity extends AppCompatPreferenceActivity {
+public class SettingsActivity extends AppCompatActivity {
+
+    public static final String EXTRA_SHOW_FRAGMENT = "show_fragment";
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -83,37 +61,34 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        //Launch the main preference fragment unless otherwise directed
-        if (getIntent().getStringExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT) == null) {
-            getIntent().putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, MainPreferenceFragment.class.getName());
-        }
-        getIntent().putExtra(EXTRA_NO_HEADERS, true);
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+        if (savedInstanceState == null) {
+            PreferenceFragmentCompat fragment = null;
+            if (getIntent().hasExtra(EXTRA_SHOW_FRAGMENT)) {
+                try {
+                    //TODO catch fragment injection
+                    fragment = (PreferenceFragmentCompat) Class.forName(getIntent().getStringExtra(EXTRA_SHOW_FRAGMENT)).newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                fragment = new HeaderPreferenceFragment();
+            }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+            getSupportFragmentManager().beginTransaction()
+                    .replace(android.R.id.content, fragment)
+                    .commit();
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStackImmediate();
-            //If the last fragment was removed then reset the title of main
-            // fragment (if so the previous popBackStack made entries = 0).
-            if (getFragmentManager().getBackStackEntryCount() == 0) {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStackImmediate();
+
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
                 getSupportActionBar().setTitle("Settings");
             }
         } else {
@@ -122,38 +97,49 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
     @Override
-    public boolean hasHeaders() {
-        return false;
-    }
-
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            if (!super.onMenuItemSelected(featureId, item)) {
-                NavUtils.navigateUpFromSameTask(this);
-            }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
             return true;
         }
-        return super.onMenuItemSelected(featureId, item);
+
+        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected boolean isValidFragment(String fragmentName) {
-        return PreferenceFragment.class.getName().equals(fragmentName)
-                || MainPreferenceFragment.class.getName().equals(fragmentName)
-                || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || MatchScoutPreferenceFragment.class.getName().equals(fragmentName)
-                || BluetoothServerPreferenceFragment.class.getName().equals(fragmentName);
-    }
+    public static class HeaderPreferenceFragment extends PreferenceFragmentCompat {
 
-    public static class MainPreferenceFragment extends PreferenceFragment {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             addPreferencesFromResource(R.xml.pref_main);
-            //setHasOptionsMenu(true);
 
+            //Handle header clicks (not elegant)
+            for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
+                getPreferenceScreen().getPreference(i).setOnPreferenceClickListener(preference -> {
+                    if (preference.getFragment() == null) {
+                        return false;
+                    }
+
+                    PreferenceFragmentCompat fragment;
+                    try {
+                        fragment = (PreferenceFragmentCompat) Class.forName(preference.getFragment()).newInstance();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return true;
+                    }
+
+                    //TODO check against fragment injection
+
+                    HeaderPreferenceFragment.this.getFragmentManager().beginTransaction()
+                            .replace(android.R.id.content, fragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE) //this mimics how some Google apps do it
+                            .addToBackStack(preference.getFragment())
+                            .commit();
+
+                    return true;
+                });
+            }
+
+            //Direct listeners - overrides default header listener
             Preference notificationSettings = findPreference(getResources().getString(R.string.pref_notification_settings));
             notificationSettings.setOnPreferenceClickListener(preference1 -> {
                 Intent intent = new Intent();
@@ -184,22 +170,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 return true;
             });
         }
-
-        /*@Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }*/
     }
 
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
+    public static class GeneralPreferenceFragment extends PreferenceFragmentCompat {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             addPreferencesFromResource(R.xml.pref_general_settings);
 
             SettingsActivity activity = (SettingsActivity) getActivity();
@@ -209,10 +184,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    public static class MatchScoutPreferenceFragment extends PreferenceFragment {
+    public static class MatchScoutPreferenceFragment extends PreferenceFragmentCompat {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             addPreferencesFromResource(R.xml.pref_match_scout);
 
             SettingsActivity activity = (SettingsActivity) getActivity();
@@ -220,10 +194,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    public static class BluetoothServerPreferenceFragment extends PreferenceFragment {
+    public static class BluetoothServerPreferenceFragment extends PreferenceFragmentCompat {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             addPreferencesFromResource(R.xml.pref_bt_server);
 
             SettingsActivity activity = (SettingsActivity) getActivity();

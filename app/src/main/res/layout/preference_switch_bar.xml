@@ -8,7 +8,7 @@
     android:paddingRight="14dp">
 
     <TextView
-        android:id="@+id/switch_text"
+        android:id="@android:id/summary"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="center_vertical"
@@ -20,10 +20,12 @@
         android:textColor="?android:attr/textColorPrimary"
         tools:text="Status" />
 
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/switch_widget"
+    <LinearLayout
+        android:id="@android:id/widget_frame"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:minWidth="64dp"
+        android:orientation="vertical" />
 
 </LinearLayout>

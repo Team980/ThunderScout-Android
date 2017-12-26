@@ -1,55 +1,57 @@
 package com.team980.thunderscout.preferences.backport;
 
 import android.content.Context;
-import android.preference.Preference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceViewHolder;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.team980.thunderscout.R;
 
 /**
- * Ported from Android Oreo's Settings.apk source code - TODO add license?
+ * Original source:
+ * https://github.com/aosp-mirror/platform_frameworks_base/blob/master/packages/SettingsLib/src/com/android/settingslib/TwoTargetPreference.java
+ * TODO add license?
  * <p>
  * Implemented by MasterSwitchPreference.java
  */
 
-public abstract class TwoTargetPreference extends Preference {
+public class TwoTargetPreference extends Preference {
+
+    public TwoTargetPreference(Context context, AttributeSet attrs,
+                               int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
+
+    public TwoTargetPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
 
     public TwoTargetPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
-    @Override
-    protected View onCreateView(ViewGroup parent) {
-        super.onCreateView(parent);
+    public TwoTargetPreference(Context context) {
+        super(context);
+        init();
+    }
 
+    private void init() {
         setLayoutResource(R.layout.preference_two_target);
         final int secondTargetResId = getSecondTargetResId();
         if (secondTargetResId != 0) {
             setWidgetLayoutResource(secondTargetResId);
         }
-
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View created = inflater.inflate(R.layout.preference_two_target, parent, false);
-
-        if (getSecondTargetResId() != 0) {
-            final LinearLayout widgetFrame = created.findViewById(android.R.id.widget_frame);
-            inflater.inflate(getSecondTargetResId(), widgetFrame, true);
-        }
-
-        return created;
     }
 
     @Override
-    public void onBindView(View view) {
-        super.onBindView(view);
-
-        final View divider = view.findViewById(R.id.two_target_divider);
-        final View widgetFrame = view.findViewById(android.R.id.widget_frame);
-
+    public void onBindViewHolder(PreferenceViewHolder holder) {
+        super.onBindViewHolder(holder);
+        final View divider = holder.findViewById(R.id.two_target_divider);
+        final View widgetFrame = holder.findViewById(android.R.id.widget_frame);
         final boolean shouldHideSecondTarget = shouldHideSecondTarget();
         if (divider != null) {
             divider.setVisibility(shouldHideSecondTarget ? View.GONE : View.VISIBLE);

@@ -22,37 +22,39 @@
   ~ SOFTWARE.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditTextPreference
+    <android.support.v7.preference.EditTextPreference
         android:key="@string/pref_device_name"
         android:title="Device name" />
 
-    <PreferenceCategory android:title="Telemetry">
+    <android.support.v7.preference.PreferenceCategory android:title="Telemetry">
 
-        <SwitchPreference
+        <android.support.v7.preference.SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_enable_analytics"
             android:summary="Sharing usage statistics helps the development of new features and improvments"
             android:title="Send usage statistics" />
 
-        <SwitchPreference
+        <android.support.v7.preference.SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_enable_crashlytics"
             android:summary="Sharing crash reports helps fix bugs and increase the stability of the app"
             android:title="Send crash reports" />
 
-        <!--<SwitchPreference
+        <!--<android.support.v7.preference.android.support.v7.preference.SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/pref_enable_performance_monitoring"
             android:title="Send performance reports"
+            android:layout="@layout/preference_backport_material"
             android:summary=""/>-->
 
-        <Preference
+        <android.support.v7.preference.Preference
             android:icon="@drawable/ic_info_white_24dp"
+            android:layout="@layout/preference_backport_material"
             android:selectable="false"
             android:summary="A restart is required for changes to telemetry settings to take effect." />
 
-    </PreferenceCategory>
+    </android.support.v7.preference.PreferenceCategory>
 
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>

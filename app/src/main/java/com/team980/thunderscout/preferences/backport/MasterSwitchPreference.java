@@ -1,6 +1,7 @@
 package com.team980.thunderscout.preferences.backport;
 
 import android.content.Context;
+import android.support.v7.preference.PreferenceViewHolder;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -13,7 +14,6 @@ import com.team980.thunderscout.R;
  * A custom preference that provides inline switch toggle. It has a mandatory field for title, and
  * optional fields for icon and sub-text.
  * <p>
- * TODO Doesn't work well... does it need AppCompatPreference?
  */
 public class MasterSwitchPreference extends TwoTargetPreference {
 
@@ -31,10 +31,10 @@ public class MasterSwitchPreference extends TwoTargetPreference {
     }
 
     @Override
-    public void onBindView(View view) {
-        super.onBindView(view);
+    public void onBindViewHolder(PreferenceViewHolder viewHolder) {
+        super.onBindViewHolder(viewHolder);
 
-        final View widgetView = view.findViewById(android.R.id.widget_frame);
+        final View widgetView = viewHolder.findViewById(android.R.id.widget_frame);
         if (widgetView != null) {
             widgetView.setOnClickListener(v -> {
                 if (mSwitch != null && !mSwitch.isEnabled()) {
@@ -51,7 +51,7 @@ public class MasterSwitchPreference extends TwoTargetPreference {
 
         mChecked = getPersistedBoolean(false);
 
-        mSwitch = view.findViewById(R.id.switchWidget);
+        mSwitch = (SwitchCompat) viewHolder.findViewById(R.id.switchWidget);
         if (mSwitch != null) {
             mSwitch.setContentDescription(getTitle());
             mSwitch.setChecked(mChecked);

@@ -24,11 +24,11 @@
 
 <PreferenceScreen>
 
-    <!--<ListPreference
+    <!--<android.support.v7.preference.ListPreference
         android:title="Theme"
         android:key="@string/pref_app_theme"/>-->
 
-    <!---<SwitchPreference
+    <!---<android.support.v7.preference.SwitchPreferenceCompat
         android:title="Tint navigation bar"
         android:summary="May help prevent burn in on OLED devices"
         android:key="@string/pref_tint_navigation_bar"/>-->

@@ -22,28 +22,28 @@
   ~ SOFTWARE.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.team980.thunderscout.preferences.SwitchBarPreference
         android:defaultValue="false"
         android:key="@string/pref_enable_bluetooth_server" />
 
-    <PreferenceCategory
+    <android.support.v7.preference.PreferenceCategory
         android:dependency="@string/pref_enable_bluetooth_server"
         android:title="This device">
 
-        <CheckBoxPreference
+        <android.support.v7.preference.CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/pref_bt_save_to_local_device"
             android:title="Save to this device" />
 
-    </PreferenceCategory>
+    </android.support.v7.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <android.support.v7.preference.PreferenceCategory
         android:dependency="@string/pref_enable_bluetooth_server"
         android:title="Bluetooth server">
 
-        <CheckBoxPreference
+        <android.support.v7.preference.CheckBoxPreference
             android:defaultValue="false"
             android:key="@string/pref_bt_send_to_bluetooth_server"
             android:title="Send to Bluetooth server" />
@@ -53,6 +53,6 @@
             android:key="@string/pref_bt_bluetooth_server_device"
             android:title="Bluetooth server device" />
 
-    </PreferenceCategory>
+    </android.support.v7.preference.PreferenceCategory>
 
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>

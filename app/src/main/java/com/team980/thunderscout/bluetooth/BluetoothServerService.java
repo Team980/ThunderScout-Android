@@ -34,7 +34,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
-import android.preference.PreferenceActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -186,7 +185,7 @@ public class BluetoothServerService extends Service {
                 .setGroup("BT_SERVER");
 
         PendingIntent serverSettingsIntent = PendingIntent.getActivity(this, 1,
-                new Intent(this, SettingsActivity.class).putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT,
+                new Intent(this, SettingsActivity.class).putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT,
                         SettingsActivity.BluetoothServerPreferenceFragment.class.getName()),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
