@@ -204,7 +204,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction() == ACTION_UPDATE_ONGOING_TASK) {
+            if (intent.getAction().equals(ACTION_UPDATE_ONGOING_TASK)) {
                 UpdateType updateType = (UpdateType) intent.getSerializableExtra(KEY_UPDATE_TYPE);
 
                 Log.d("Receiver", "Task is" + updateType.name());

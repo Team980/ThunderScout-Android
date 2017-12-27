@@ -33,7 +33,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -48,6 +47,7 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.util.NotificationFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -55,8 +55,8 @@ import java.util.List;
 
 public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnectionTask.TaskResult> {
 
-    private static final int SUCCESS_SUMMARY_ID = 4;
-    private static final int ERROR_SUMMARY_ID = 5;
+    private static final int SUCCESS_SUMMARY_ID = NotificationFactory.getNewId();
+    private static final int ERROR_SUMMARY_ID = NotificationFactory.getNewId();
     private final BluetoothSocket mmSocket;
     private Context context;
     private NotificationManager notificationManager;
@@ -82,13 +82,11 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                 .setSmallIcon(R.drawable.ic_bluetooth_transfer_white_24dp) //TODO animated icon?
                 .setUsesChronometer(true)
                 .setOngoing(true)
-                .setTicker("Bluetooth transfer in progress")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColor(context.getResources().getColor(R.color.accent))
                 .setProgress(1, 0, true)
-                .setCategory(NotificationCompat.CATEGORY_PROGRESS)
-                .setGroup("BT_SERVER_TRANSFER_ONGOING");
+                .setCategory(NotificationCompat.CATEGORY_PROGRESS);
 
         btTransferSuccess = new NotificationCompat.Builder(context, "bt_transfer")
                 .setSmallIcon(R.drawable.ic_check_circle_white_24dp)
@@ -116,7 +114,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
         //Runs on UI thread before execution
         super.onPreExecute();
 
-        id = (int) System.currentTimeMillis(); //TODO implement unique ID creator
+        id = NotificationFactory.getNewId();
 
         btTransferInProgress.setContentTitle("Receiving data from " + mmSocket.getRemoteDevice().getName());
         btTransferInProgress.setWhen(System.currentTimeMillis());
@@ -194,9 +192,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             btTransferSuccess.setWhen(System.currentTimeMillis());
 
             NotificationManagerCompat.from(context).notify(id, btTransferSuccess.build());
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                NotificationManagerCompat.from(context).notify(SUCCESS_SUMMARY_ID, btTransferSuccess.setGroupSummary(true).build());
-            }
+            NotificationManagerCompat.from(context).notify(SUCCESS_SUMMARY_ID, btTransferSuccess.setGroupSummary(true).build());
 
             new Handler().postDelayed(() -> notificationManager.cancel(id), 10000); //10 seconds
         } else {
@@ -209,9 +205,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             btTransferError.setWhen(System.currentTimeMillis());
 
             NotificationManagerCompat.from(context).notify(id, btTransferError.build());
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
-            }
+            NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
         }
 
         //TODO send Home update intent
@@ -245,9 +239,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                     btTransferError.setWhen(System.currentTimeMillis());
 
                     NotificationManagerCompat.from(context).notify(id, btTransferError.build());
-                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
-                    }
+                    NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
                 }
             }
         }
