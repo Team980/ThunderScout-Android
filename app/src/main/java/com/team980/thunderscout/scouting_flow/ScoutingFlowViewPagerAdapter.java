@@ -30,7 +30,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class ScoutingFlowViewPagerAdapter extends FragmentPagerAdapter {
 
-
     private String tabTitles[] = new String[]{"Auto", "Teleop", "Summary"};
     private Fragment tabs[];
 

@@ -37,6 +37,7 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DumpCounterAdapter extends RecyclerView.Adapter<DumpCounterAdapter.FuelDumpViewHolder> {
 
@@ -68,6 +69,12 @@ public class DumpCounterAdapter extends RecyclerView.Adapter<DumpCounterAdapter.
     public void add(FuelDumpAmount s) {
         fuelDumps.add(s);
         notifyItemInserted(fuelDumps.size() - 1);
+    }
+
+    public void addAll(List<FuelDumpAmount> l) {
+        int s = fuelDumps.size();
+        fuelDumps.addAll(l);
+        notifyItemRangeInserted(s, l.size());
     }
 
     public ArrayList<FuelDumpAmount> get() {

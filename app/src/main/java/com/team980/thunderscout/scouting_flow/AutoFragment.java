@@ -60,8 +60,11 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
 
         TextView textValue = getView().findViewById(R.id.auto_textViewFuelValue);
         TextView numericalValue = getView().findViewById(R.id.auto_textViewFuelNumericalValue);
-        textValue.setText(FuelDumpAmount.NONE.toString());
-        numericalValue.setText(FuelDumpAmount.NONE.getMinimumAmount() + " - " + FuelDumpAmount.NONE.getMaximumAmount());
+
+        FuelDumpAmount value = scoutingFlowActivity.getData().getAutonomous().getLowGoalDumpAmount();
+
+        textValue.setText(value.toString());
+        numericalValue.setText(value.getMinimumAmount() + " - " + value.getMaximumAmount());
     }
 
     @Override
