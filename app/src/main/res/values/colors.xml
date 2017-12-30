@@ -46,7 +46,7 @@
 
     <color name="background">#303030</color>
     <color name="background_floating">#424242</color>
-    <color name="background_floating_light">#616161</color>
+    <color name="background_floating_light">#515151</color>
     <!-- TODO replace all Android color resources with custom white/black -->
 
     <color name="black_a60">#96000000</color>

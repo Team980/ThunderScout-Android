@@ -27,6 +27,7 @@ package com.team980.thunderscout.home;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,8 +36,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -59,7 +64,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class HomeFragment extends Fragment implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener, View.OnLongClickListener {
+public class HomeFragment extends Fragment implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener, View.OnLongClickListener, SwipeRefreshLayout.OnRefreshListener {
+
+    private RecyclerView dataView;
+    private FeedAdapter adapter;
+    private SwipeRefreshLayout swipeContainer;
 
     private FloatingActionButton scoutButton;
 
@@ -68,8 +77,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
-
-        //TODO implement ongoing tasks cards IN view XML
     }
 
     @Override
@@ -90,6 +97,43 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        dataView = view.findViewById(R.id.dataView);
+        dataView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        adapter = new FeedAdapter(getContext());
+        dataView.setAdapter(adapter);
+
+        ItemTouchHelper.Callback callback =
+                new ItemTouchHelper.SimpleCallback(0, 0) { //TODO move to own class?
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                        adapter.dismissCard(viewHolder.getAdapterPosition());
+                    }
+
+                    @Override
+                    public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                        if (((FeedAdapter.CardViewHolder) viewHolder).getCard().isDismissable()) {
+                            return ItemTouchHelper.RIGHT;
+                        } else {
+                            return 0;
+                        }
+                    }
+                };
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(dataView);
+
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(this);
+
+        swipeContainer.setColorSchemeResources(R.color.accent);
+        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
+
         scoutButton = view.findViewById(R.id.fab_scout);
         scoutButton.setOnClickListener(this);
         if (BuildConfig.DEBUG) {
@@ -104,8 +148,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         } else {
             scoutButton.setVisibility(View.GONE);
         }
-
-        //receiver = new TaskUpdateReceiver();
     }
 
     @Override
@@ -114,7 +156,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
         PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(this);
 
-        //context.registerReceiver(receiver, new IntentFilter(TaskUpdateReceiver.ACTION_UPDATE_ONGOING_TASK));
+        receiver = new TaskUpdateReceiver();
+        getContext().registerReceiver(receiver, new IntentFilter(TaskUpdateReceiver.ACTION_UPDATE_ONGOING_TASK));
     }
 
     @Override
@@ -123,7 +166,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
         PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(this);
 
-        //getContext().unregisterReceiver(receiver);
+        getContext().unregisterReceiver(receiver);
     }
 
     @Override
@@ -153,6 +196,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
     }
 
     @Override
+    public void onRefresh() {
+        //TODO refresh from DB
+        swipeContainer.setRefreshing(false);
+    }
+
+    @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getResources().getString(R.string.pref_enable_match_scouting))) {
             Boolean matchScout = sharedPreferences.getBoolean(getResources().getString(R.string.pref_enable_match_scouting), false);
@@ -165,6 +214,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         }
     }
 
+    @Override
     public boolean onLongClick(View view) {
         if (!BuildConfig.DEBUG) {
             return true;
