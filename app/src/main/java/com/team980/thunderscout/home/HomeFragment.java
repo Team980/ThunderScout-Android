@@ -209,6 +209,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         refreshFixedCards();
         //TODO refresh static data cards
 
+        //if (adapter.getItemCount() == 0) { TODO the UI is less than optimal
+        //adapter.addCard(new Card("Nothing here, check back soon"));
+        //}
+
         swipeContainer.setRefreshing(false);
     }
 
