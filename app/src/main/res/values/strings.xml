@@ -25,18 +25,34 @@
 <resources>
     <string name="app_name">ThunderScout</string>
 
+    <string name="welcome_message">
+        ThunderScout is designed by FRC Team 980 ThunderBots to help you scout matches quickly and powerfully.
+        With a intuitively designed scouting flow, robust configuration framework, and qualitative data analysis,
+        ThunderScout can adapt to fit any team\'s needs.
+        \n
+        \nTo get started, configure your device in the app settings, or dive in and scout your first match!
+    </string>
+
+    <string name="telemetry_prompt">
+        ThunderScout uses Firebase Analytics to collect information such as usage statistics and crash reports.
+        \n
+        \nThis information is used to provide insight on app performance as well as fix bugs in for future releases.
+        \n
+        \nYou can opt out of telemetry in the app settings.
+    </string>
+
     <!--- TODO These must be updated for every public release!-->
-    <!--- TODO Last update: v14 -->
+    <!--- TODO Last update: v14 and a half -->
     <string name="update_notes">
-        V15 has no release notes as of yet. Everything has changed.
-        \nV14: Hotfix release: Fixed the bug that was causing all CSV imports to fail and crash the app.
+        ThunderScout 2.0 (v15) has no release notes as of yet. EVERYTHING has changed.
         \n
         \nKnown issues:
-        \n&#8226; The Bluetooth server may fail to receive matches logged as successfully sent by the client device.
-        \n&#8226; The match schedule currently does not show when multiple matches occupy the same slot.
-        \n&#8226; The Alliances menu is unimplemented.
-        \n&#8226; The Feed has been removed and will be replaced with a similar feature in a future release.
-        \n&#8226; The point calculations are untested. Please report any errors if you find them!
+        \n• The Bluetooth server may fail to receive matches logged as successfully sent by the client device.
+        A solution for this is still being investigated.
+        \n• The notification UI may not work as expected. Notably, pressing Retry won\'t actually dismiss the notification.
+        \n• The scouting form that appears after pressing Retry won\'t populate with your changes.
+        They haven\'t actually reset, but changing any value in the form will override that previously set value.
+        \n• The point calculations are deprecated and may be removed in a future release.
     </string>
 
     <string-array name="alliance_stations_array">

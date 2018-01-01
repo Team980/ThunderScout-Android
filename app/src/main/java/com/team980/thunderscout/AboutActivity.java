@@ -44,7 +44,7 @@ public class AboutActivity extends MaterialAboutActivity {
         MaterialAboutCard.Builder titleCard = new MaterialAboutCard.Builder();
 
         titleCard.addItem(new MaterialAboutTitleItem.Builder()
-                .text("ThunderScout")
+                .text(R.string.app_name)
                 .icon(R.mipmap.ic_launcher)
                 .build());
 

@@ -39,7 +39,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+            app:title="Rankings" />
 
     </android.support.design.widget.AppBarLayout>
 

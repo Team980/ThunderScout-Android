@@ -1,7 +1,6 @@
 package com.team980.thunderscout.home;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.home.schema.Card;
@@ -33,44 +31,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CardViewHolder
         mInflator = LayoutInflater.from(context);
 
         cards = new ArrayList<>();
-
-        cards.add(new Card("Card 1")
-                .setIcon(context.getResources().getDrawable(R.drawable.ic_info_white_24dp))
-                .setText("Hello, world! This is a card, and it can show up to provide you useful information. " +
-                        "Perhaps there's a setting you forgot to configure, or a new feature introduced in the latest app version.")
-                .addAction(new CardAction("View", (card, action) -> Toast.makeText(context, "View", Toast.LENGTH_LONG).show()))
-                .addAction(new CardAction("Delete", (card, action) -> Toast.makeText(context, "Delete", Toast.LENGTH_LONG).show())));
-
-        cards.add(new Card("Card 2")
-                .setIcon(context.getResources().getDrawable(R.drawable.ic_bluetooth_transfer_white_24dp))
-                .setText("In the future, cards will also be able to notify you of currently running processes, such as the Bluetooth server." +
-                        "\nThese persistent cards will display recently scouted matches with quick entry points to view them in full, while also keeping track of statistics such as the success rate of Bluetooth transmissions."));
-
-        cards.add(new Card("Card 3")
-                .setIcon(context.getResources().getDrawable(R.drawable.ic_delete_white_24dp))
-                .setText("Many contextual cards will appear as you use the app. Once acted upon, you can dismiss one of these cards by swiping to the right or clicking the Dismiss button.")
-                .setDismissable(true)
-                .addAction(new CardAction("Dismiss", (card, action) -> dismissCard(card))));
-
-        cards.add(new Card("Card 4")
-                .setIcon(context.getResources().getDrawable(R.drawable.ic_assignment_white_24dp))
-                .setText("Some cards will even present custom layouts with special information, like shown above.")
-                .addSection(new CardSection(R.layout.match_view, sectionView -> {
-                    sectionView.setBackground(new ColorDrawable(context.getResources().getColor(R.color.background_floating_light)));
-
-                    TextView matchNumber = sectionView.findViewById(R.id.match_number);
-                    matchNumber.setText("13");
-                })));
-
-        cards.add(new Card("Card 5")
-                .setIcon(context.getResources().getDrawable(R.drawable.ic_flag_white_24dp))
-                .setText("Here's an example of how multiple custom views can be added to a card.")
-                .setDismissable(true)
-                .addSection(new CardSection(R.layout.match_view, sectionView -> sectionView.setBackground(new ColorDrawable(context.getResources().getColor(R.color.background_floating_light)))))
-                .addSection(new CardSection(R.layout.match_view, sectionView -> sectionView.setBackground(new ColorDrawable(context.getResources().getColor(R.color.background_floating_light)))))
-                .addAction(new CardAction("Dismiss", (card, action) -> dismissCard(card))));
-
-        notifyItemRangeInserted(0, 5);
     }
 
     @Override
@@ -88,9 +48,18 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CardViewHolder
         return cards.size();
     }
 
+    public int indexOf(Card card) {
+        return cards.indexOf(card);
+    }
+
     public void addCard(Card card) {
         cards.add(card);
         notifyItemInserted(cards.size() - 1);
+    }
+
+    public void addCard(Card card, int position) {
+        cards.add(position, card);
+        notifyItemInserted(position);
     }
 
     public void dismissCard(int index) {

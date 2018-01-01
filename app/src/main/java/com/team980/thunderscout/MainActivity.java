@@ -34,7 +34,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,20 +103,6 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment, fragment);
         ft.commit();
-
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        if (sharedPrefs.getInt(getResources().getString(R.string.pref_last_presented_update_dialog), 1) < BuildConfig.VERSION_CODE) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-            builder.setTitle("New in version " + BuildConfig.VERSION_NAME);
-            builder.setMessage(R.string.update_notes);
-            builder.setPositiveButton("OK", null);
-
-            builder.create().show();
-
-            sharedPrefs.edit().putInt(getResources().getString(R.string.pref_last_presented_update_dialog), BuildConfig.VERSION_CODE).apply();
-        }
     }
 
     @Override

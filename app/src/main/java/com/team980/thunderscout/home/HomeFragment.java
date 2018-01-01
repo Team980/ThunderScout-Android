@@ -34,6 +34,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -56,6 +57,9 @@ import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
+import com.team980.thunderscout.home.schema.Card;
+import com.team980.thunderscout.home.schema.CardAction;
+import com.team980.thunderscout.preferences.SettingsActivity;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
 import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
@@ -86,7 +90,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         MainActivity activity = (MainActivity) getActivity();
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("ThunderScout");
         activity.setSupportActionBar(toolbar);
 
         setHasOptionsMenu(true);
@@ -104,7 +107,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         dataView.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback =
-                new ItemTouchHelper.SimpleCallback(0, 0) { //TODO move to own class?
+                new ItemTouchHelper.SimpleCallback(0, 0) {
                     @Override
                     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                         return false;
@@ -112,7 +115,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                        adapter.dismissCard(viewHolder.getAdapterPosition());
+                        if (((FeedAdapter.CardViewHolder) viewHolder).getCard().isDismissable()) {
+                            List<CardAction> actions = ((FeedAdapter.CardViewHolder) viewHolder).getCard().getActions();
+                            //Call the dismiss (always last) action's onClick() method
+                            actions.get(actions.size() - 1).onClick(((FeedAdapter.CardViewHolder) viewHolder).getCard());
+                        }
                     }
 
                     @Override
@@ -147,6 +154,71 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
             scoutButton.setVisibility(View.VISIBLE);
         } else {
             scoutButton.setVisibility(View.GONE);
+        }
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        if (!sharedPrefs.getBoolean(getResources().getString(R.string.pref_shown_welcome_card), false)) {
+            Card welcomeCard = new Card("Welcome to ThunderScout!");
+
+            welcomeCard.setIcon(getResources().getDrawable(R.drawable.ic_app_badge_white_48dp));
+            welcomeCard.setText(getResources().getString(R.string.welcome_message));
+            welcomeCard.setDismissable(true);
+            welcomeCard.addAction(new CardAction("Dismiss", (card, action) -> {
+                int index = adapter.indexOf(card);
+                adapter.dismissCard(card);
+                sharedPrefs.edit().putBoolean(getResources().getString(R.string.pref_shown_welcome_card), true).apply();
+                Snackbar.make(dataView, "Card dismissed", Snackbar.LENGTH_LONG).setAction("Undo", v -> {
+                    adapter.addCard(card, index);
+                    sharedPrefs.edit().putBoolean(getResources().getString(R.string.pref_shown_welcome_card), false).apply();
+                }).show();
+            }));
+
+            adapter.addCard(welcomeCard);
+        }
+
+        if (!sharedPrefs.getBoolean(getResources().getString(R.string.pref_shown_telemetry_card), false)) {
+            Card telemetryCard = new Card("Telemetry");
+
+            telemetryCard.setIcon(getResources().getDrawable(R.drawable.ic_forum_white));
+            telemetryCard.setText(getResources().getString(R.string.telemetry_prompt));
+            telemetryCard.setDismissable(true);
+            telemetryCard.addAction(new CardAction("Configure", (card, action) -> {
+                Intent intent = new Intent(getContext(), SettingsActivity.class);
+                intent.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GeneralPreferenceFragment.class.getName());
+                startActivity(intent);
+                adapter.dismissCard(card);
+            }));
+            telemetryCard.addAction(new CardAction("Dismiss", (card, action) -> {
+                int index = adapter.indexOf(card);
+                adapter.dismissCard(card);
+                sharedPrefs.edit().putBoolean(getResources().getString(R.string.pref_shown_telemetry_card), true).apply();
+                Snackbar.make(dataView, "Card dismissed", Snackbar.LENGTH_LONG).setAction("Undo", v -> {
+                    adapter.addCard(card, index);
+                    sharedPrefs.edit().putBoolean(getResources().getString(R.string.pref_shown_telemetry_card), false).apply();
+                }).show();
+            }));
+
+            adapter.addCard(telemetryCard);
+        }
+
+        if (sharedPrefs.getInt(getResources().getString(R.string.pref_last_shown_update_card), 0) != BuildConfig.VERSION_CODE) {
+            Card updateCard = new Card("New in version " + BuildConfig.VERSION_NAME);
+
+            updateCard.setIcon(getResources().getDrawable(R.drawable.ic_whats_new_white_24dp));
+            updateCard.setText(getResources().getString(R.string.update_notes));
+            updateCard.setDismissable(true);
+            updateCard.addAction(new CardAction("Dismiss", (card, action) -> {
+                int index = adapter.indexOf(card);
+                adapter.dismissCard(card);
+                sharedPrefs.edit().putInt(getResources().getString(R.string.pref_last_shown_update_card), BuildConfig.VERSION_CODE).apply();
+                Snackbar.make(dataView, "Card dismissed", Snackbar.LENGTH_LONG).setAction("Undo", v -> {
+                    adapter.addCard(card, index);
+                    sharedPrefs.edit().putInt(getResources().getString(R.string.pref_last_shown_update_card), 0).apply();
+                }).show();
+            }));
+
+            adapter.addCard(updateCard);
         }
     }
 

@@ -102,7 +102,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         MainActivity activity = (MainActivity) getActivity();
 
         toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("Rankings");
         activity.setSupportActionBar(toolbar);
 
         drawer = getActivity().findViewById(R.id.drawer_layout);
