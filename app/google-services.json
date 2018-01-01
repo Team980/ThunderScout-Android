@@ -1,0 +1,79 @@
+{
+  "project_info": {
+    "project_number": "228200318883",
+    "firebase_url": "https://thunderscout-142321.firebaseio.com",
+    "project_id": "thunderscout-142321",
+    "storage_bucket": "thunderscout-142321.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228200318883:android:0e0cb94114371525",
+        "android_client_info": {
+          "package_name": "com.team980.thunderscout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228200318883-vc0462bv4qknpplc54uhunuaalcs8j5o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team980.thunderscout",
+            "certificate_hash": "f216e3d6565dc4763efd5b2c970cb1f9d61ddbda"
+          }
+        },
+        {
+          "client_id": "228200318883-5kaahg279v3j53fpn0uha8idq82k2mtu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team980.thunderscout",
+            "certificate_hash": "440c4cb55c9335f0d28f7bde83b913bd2561acbe"
+          }
+        },
+        {
+          "client_id": "228200318883-1g8gu6t2imfro6ica0nlu0uf3nj7vprt.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "228200318883-vqqfrs0u1k59b6lfsne8d3p77hln7se0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team980.thunderscout",
+            "certificate_hash": "d79487a9083556e8c799258220df94bf2054e58d"
+          }
+        },
+        {
+          "client_id": "228200318883-bh7kc8ntt9kvk08un8p090aurp9iugnf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team980.thunderscout",
+            "certificate_hash": "ff567ca053949986c3b50badfd601f64407970e7"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM08kCviFe98sdr2CAfm5yOM4nHBUrGLA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228200318883-1g8gu6t2imfro6ica0nlu0uf3nj7vprt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
