@@ -156,6 +156,63 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
             scoutButton.setVisibility(View.GONE);
         }
 
+        onRefresh();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(this);
+
+        receiver = new TaskUpdateReceiver();
+        getContext().registerReceiver(receiver, new IntentFilter(TaskUpdateReceiver.ACTION_UPDATE_ONGOING_TASK));
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(this);
+
+        getContext().unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.fab_scout) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+            if (!prefs.getBoolean(getResources().getString(R.string.pref_enable_match_scouting), true)) {
+                return;
+            }
+
+            Intent scoutIntent = new Intent(getContext(), ScoutingFlowActivity.class);
+            startActivity(scoutIntent);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_home, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRefresh() {
+        refreshFixedCards();
+        //TODO refresh static data cards
+
+        swipeContainer.setRefreshing(false);
+    }
+
+    public void refreshFixedCards() {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         if (!sharedPrefs.getBoolean(getResources().getString(R.string.pref_shown_welcome_card), false)) {
@@ -220,57 +277,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
             adapter.addCard(updateCard);
         }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(this);
-
-        receiver = new TaskUpdateReceiver();
-        getContext().registerReceiver(receiver, new IntentFilter(TaskUpdateReceiver.ACTION_UPDATE_ONGOING_TASK));
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(this);
-
-        getContext().unregisterReceiver(receiver);
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.fab_scout) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-            if (!prefs.getBoolean(getResources().getString(R.string.pref_enable_match_scouting), true)) {
-                return;
-            }
-
-            Intent scoutIntent = new Intent(getContext(), ScoutingFlowActivity.class);
-            startActivity(scoutIntent);
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_home, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onRefresh() {
-        //TODO refresh from DB
-        swipeContainer.setRefreshing(false);
     }
 
     @Override
