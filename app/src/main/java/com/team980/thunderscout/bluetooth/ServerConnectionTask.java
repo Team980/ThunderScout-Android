@@ -192,7 +192,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             btTransferSuccess.setWhen(System.currentTimeMillis());
 
             NotificationManagerCompat.from(context).notify(id, btTransferSuccess.build());
-            NotificationManagerCompat.from(context).notify(SUCCESS_SUMMARY_ID, btTransferSuccess.setGroupSummary(true).build());
+            //NotificationManagerCompat.from(context).notify(SUCCESS_SUMMARY_ID, btTransferSuccess.setGroupSummary(true).build());
 
             new Handler().postDelayed(() -> notificationManager.cancel(id), 10000); //10 seconds
         } else {
@@ -205,7 +205,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             btTransferError.setWhen(System.currentTimeMillis());
 
             NotificationManagerCompat.from(context).notify(id, btTransferError.build());
-            NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
+            //NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
         }
 
         //TODO send Home update intent
@@ -239,7 +239,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                     btTransferError.setWhen(System.currentTimeMillis());
 
                     NotificationManagerCompat.from(context).notify(id, btTransferError.build());
-                    NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
+                    //NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
                 }
             }
         }
