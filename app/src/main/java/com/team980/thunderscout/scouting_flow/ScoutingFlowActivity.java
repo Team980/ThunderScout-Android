@@ -44,9 +44,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
@@ -73,14 +71,12 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         setTheme(R.style.ThunderScout_BaseTheme);
         super.onCreate(savedInstanceState);
 
-        viewPagerAdapter = new ScoutingFlowViewPagerAdapter(getSupportFragmentManager());
-
         if (savedInstanceState != null) {
             scoutData = (ScoutData) savedInstanceState.getSerializable("ScoutData");
         } else {
             if (getIntent().hasExtra(EXTRA_SCOUT_DATA)) {
                 scoutData = (ScoutData) getIntent().getSerializableExtra(EXTRA_SCOUT_DATA);
-                //initViews(); TODO broken - needs to be in the FRAGMENTS!
+                //Fields are filled in by the fragments
             } else {
                 scoutData = new ScoutData();
 
@@ -100,7 +96,9 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         ViewPager viewPager = findViewById(R.id.view_pager);
 
+        viewPagerAdapter = new ScoutingFlowViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
+
         viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(this);
 
@@ -400,57 +398,5 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
 
         EditText comments = summaryView.findViewById(R.id.summary_edittextComments);
         scoutData.setComments(comments.getText().toString());
-    }
-
-    private void initViews() { //TODO this SHOULD NOT BE IN THE ACTIVITY CODE
-        // Auto
-        View autoView = viewPagerAdapter.getItem(0).getView();
-
-        CheckBox autoCrossedBaseline = autoView.findViewById(R.id.auto_checkBoxCrossedBaseline);
-        autoCrossedBaseline.setChecked(scoutData.getAutonomous().getCrossedBaseline());
-
-        CounterCompoundView autoGearsDelivered = autoView.findViewById(R.id.auto_counterGearsDelivered);
-        autoGearsDelivered.setValue(scoutData.getAutonomous().getGearsDelivered());
-
-        CounterCompoundView autoGearsDropped = autoView.findViewById(R.id.auto_counterGearsDropped);
-        autoGearsDropped.setValue(scoutData.getAutonomous().getGearsDropped());
-
-        TextView autoTextViewFuelValue = autoView.findViewById(R.id.auto_textViewFuelValue);
-        TextView autoTextViewFuelNumericalValue = autoView.findViewById(R.id.auto_textViewFuelNumericalValue);
-        autoTextViewFuelValue.setText(scoutData.getAutonomous().getLowGoalDumpAmount().toString());
-        autoTextViewFuelNumericalValue.setText(scoutData.getAutonomous().getLowGoalDumpAmount().getMinimumAmount() + " - " + scoutData.getAutonomous().getLowGoalDumpAmount().getMaximumAmount());
-
-        CounterCompoundView autoHighGoals = autoView.findViewById(R.id.auto_counterHighGoals);
-        autoHighGoals.setValue(scoutData.getAutonomous().getHighGoals());
-
-        CounterCompoundView autoMissedHighGoals = autoView.findViewById(R.id.auto_counterMissedHighGoals);
-        autoMissedHighGoals.setValue(scoutData.getAutonomous().getMissedHighGoals());
-
-        // Teleop
-        View teleopView = viewPagerAdapter.getItem(1).getView();
-
-        CounterCompoundView teleopGearsDelivered = teleopView.findViewById(R.id.teleop_counterGearsDelivered);
-        teleopGearsDelivered.setValue(scoutData.getTeleop().getGearsDelivered());
-
-        CounterCompoundView teleopGearsDropped = teleopView.findViewById(R.id.teleop_counterGearsDropped);
-        teleopGearsDropped.setValue(scoutData.getTeleop().getGearsDropped());
-
-        DumpCounterAdapter teleopDumpAdapter = ((TeleopFragment) viewPagerAdapter.getItem(1)).getFuelDumpAdapter();
-        teleopDumpAdapter.addAll(scoutData.getTeleop().getLowGoalDumps());
-
-        CounterCompoundView teleopHighGoals = teleopView.findViewById(R.id.teleop_counterHighGoals);
-        teleopHighGoals.setValue(scoutData.getTeleop().getHighGoals());
-
-        CounterCompoundView teleopMissedHighGoals = teleopView.findViewById(R.id.teleop_counterMissedHighGoals);
-        teleopMissedHighGoals.setValue(scoutData.getTeleop().getMissedHighGoals());
-
-        // Summary
-        View summaryView = viewPagerAdapter.getItem(2).getView();
-
-        EditText troubleWith = summaryView.findViewById(R.id.summary_edittextTroubleWith);
-        troubleWith.setText(scoutData.getTroubleWith());
-
-        EditText comments = summaryView.findViewById(R.id.summary_edittextComments);
-        comments.setText(scoutData.getComments());
     }
 }

@@ -31,6 +31,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.team980.thunderscout.R;
 
@@ -46,6 +47,12 @@ public class SummaryFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        EditText troubleWith = getView().findViewById(R.id.summary_edittextTroubleWith);
+        troubleWith.setText(scoutingFlowActivity.getData().getTroubleWith());
+
+        EditText comments = getView().findViewById(R.id.summary_edittextComments);
+        comments.setText(scoutingFlowActivity.getData().getComments());
     }
 
     @Override

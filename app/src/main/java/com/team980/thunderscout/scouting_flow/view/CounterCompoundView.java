@@ -153,6 +153,16 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
 
     public void setValue(float v) {
         value = v;
+
+        String text;
+
+        if (Float.compare(value, Math.round(value)) != 0) {
+            text = Float.toString(value);
+        } else {
+            text = Integer.toString((int) value);
+        }
+
+        ((TextView) findViewById(R.id.value)).setText(text);
     }
 
     @Override

@@ -32,10 +32,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
+import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 
 public class AutoFragment extends Fragment implements View.OnClickListener {
 
@@ -58,13 +60,25 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
         minus.setOnClickListener(this);
         plus.setOnClickListener(this);
 
-        TextView textValue = getView().findViewById(R.id.auto_textViewFuelValue);
-        TextView numericalValue = getView().findViewById(R.id.auto_textViewFuelNumericalValue);
+        CheckBox autoCrossedBaseline = getView().findViewById(R.id.auto_checkBoxCrossedBaseline);
+        autoCrossedBaseline.setChecked(scoutingFlowActivity.getData().getAutonomous().getCrossedBaseline());
 
-        FuelDumpAmount value = scoutingFlowActivity.getData().getAutonomous().getLowGoalDumpAmount();
+        CounterCompoundView autoGearsDelivered = getView().findViewById(R.id.auto_counterGearsDelivered);
+        autoGearsDelivered.setValue(scoutingFlowActivity.getData().getAutonomous().getGearsDelivered());
 
-        textValue.setText(value.toString());
-        numericalValue.setText(value.getMinimumAmount() + " - " + value.getMaximumAmount());
+        CounterCompoundView autoGearsDropped = getView().findViewById(R.id.auto_counterGearsDropped);
+        autoGearsDropped.setValue(scoutingFlowActivity.getData().getAutonomous().getGearsDropped());
+
+        TextView autoTextViewFuelValue = getView().findViewById(R.id.auto_textViewFuelValue);
+        TextView autoTextViewFuelNumericalValue = getView().findViewById(R.id.auto_textViewFuelNumericalValue);
+        autoTextViewFuelValue.setText(scoutingFlowActivity.getData().getAutonomous().getLowGoalDumpAmount().toString());
+        autoTextViewFuelNumericalValue.setText(scoutingFlowActivity.getData().getAutonomous().getLowGoalDumpAmount().getMinimumAmount() + " - " + scoutingFlowActivity.getData().getAutonomous().getLowGoalDumpAmount().getMaximumAmount());
+
+        CounterCompoundView autoHighGoals = getView().findViewById(R.id.auto_counterHighGoals);
+        autoHighGoals.setValue(scoutingFlowActivity.getData().getAutonomous().getHighGoals());
+
+        CounterCompoundView autoMissedHighGoals = getView().findViewById(R.id.auto_counterMissedHighGoals);
+        autoMissedHighGoals.setValue(scoutingFlowActivity.getData().getAutonomous().getMissedHighGoals());
     }
 
     @Override

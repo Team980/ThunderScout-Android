@@ -41,6 +41,7 @@ import android.widget.Spinner;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
+import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 
 public class TeleopFragment extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 
@@ -81,6 +82,23 @@ public class TeleopFragment extends Fragment implements View.OnClickListener, Sp
                 R.array.climbing_stats_array, R.layout.spinner_climbing_stats);
         adapter.setDropDownViewResource(R.layout.spinner_climbing_stats_dropdown);
         climbingStats.setAdapter(adapter);
+
+        climbingStats.setSelection(scoutingFlowActivity.getData().getTeleop().getClimbingStats().ordinal());
+
+        CounterCompoundView teleopGearsDelivered = getView().findViewById(R.id.teleop_counterGearsDelivered);
+        teleopGearsDelivered.setValue(scoutingFlowActivity.getData().getTeleop().getGearsDelivered());
+
+        CounterCompoundView teleopGearsDropped = getView().findViewById(R.id.teleop_counterGearsDropped);
+        teleopGearsDropped.setValue(scoutingFlowActivity.getData().getTeleop().getGearsDropped());
+
+        DumpCounterAdapter teleopDumpAdapter = getFuelDumpAdapter();
+        teleopDumpAdapter.addAll(scoutingFlowActivity.getData().getTeleop().getLowGoalDumps());
+
+        CounterCompoundView teleopHighGoals = getView().findViewById(R.id.teleop_counterHighGoals);
+        teleopHighGoals.setValue(scoutingFlowActivity.getData().getTeleop().getHighGoals());
+
+        CounterCompoundView teleopMissedHighGoals = getView().findViewById(R.id.teleop_counterMissedHighGoals);
+        teleopMissedHighGoals.setValue(scoutingFlowActivity.getData().getTeleop().getMissedHighGoals());
     }
 
     @Override

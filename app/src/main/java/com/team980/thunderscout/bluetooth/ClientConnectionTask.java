@@ -282,7 +282,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             btTransferError.setContentIntent(viewPendingIntent);
 
             NotificationManagerCompat.from(context).notify(id, btTransferError.build());
-            //NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
+            NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
         }
 
         //TODO send Home update Intent

@@ -300,6 +300,7 @@ public class ScoutData implements Serializable {
 
         public Autonomous() {
             lowGoalDumpAmount = FuelDumpAmount.NONE;
+            crossedBaseline = false;
         }
 
         public int getGearsDelivered() {
