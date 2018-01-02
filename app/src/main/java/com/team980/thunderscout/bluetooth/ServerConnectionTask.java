@@ -47,7 +47,7 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.schema.ScoutData;
-import com.team980.thunderscout.util.NotificationFactory;
+import com.team980.thunderscout.util.NotificationIdFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -55,8 +55,8 @@ import java.util.List;
 
 public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnectionTask.TaskResult> {
 
-    private static final int SUCCESS_SUMMARY_ID = NotificationFactory.getNewId();
-    private static final int ERROR_SUMMARY_ID = NotificationFactory.getNewId();
+    private static final int SUCCESS_SUMMARY_ID = NotificationIdFactory.getNewNotificationId();
+    private static final int ERROR_SUMMARY_ID = NotificationIdFactory.getNewNotificationId();
     private final BluetoothSocket mmSocket;
     private Context context;
     private NotificationManager notificationManager;
@@ -114,7 +114,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
         //Runs on UI thread before execution
         super.onPreExecute();
 
-        id = NotificationFactory.getNewId();
+        id = NotificationIdFactory.getNewNotificationId();
 
         btTransferInProgress.setContentTitle("Receiving data from " + mmSocket.getRemoteDevice().getName());
         btTransferInProgress.setWhen(System.currentTimeMillis());

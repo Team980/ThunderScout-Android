@@ -42,11 +42,11 @@ import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.bluetooth.util.BluetoothServerToggleActivity;
 import com.team980.thunderscout.preferences.SettingsActivity;
-import com.team980.thunderscout.util.NotificationFactory;
+import com.team980.thunderscout.util.NotificationIdFactory;
 
 public class BluetoothServerService extends Service {
 
-    private static int SERVER_NOTIFICATION_ID = NotificationFactory.getNewId();
+    private static int SERVER_NOTIFICATION_ID = NotificationIdFactory.getNewNotificationId();
     private ServerListenerThread acceptThread;
     private NotificationManager notificationManager;
     private NotificationCompat.Builder running;

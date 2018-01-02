@@ -42,9 +42,9 @@ import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.bluetooth.util.BluetoothInfo;
+import com.team980.thunderscout.bluetooth.util.BluetoothTransferNotificationReceiver;
 import com.team980.thunderscout.schema.ScoutData;
-import com.team980.thunderscout.scouting_flow.ScoutingFlowActivity;
-import com.team980.thunderscout.util.NotificationFactory;
+import com.team980.thunderscout.util.NotificationIdFactory;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -52,8 +52,8 @@ import java.util.UUID;
 
 public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnectionTask.TaskResult> {
 
-    private static final int SUCCESS_SUMMARY_ID = NotificationFactory.getNewId();
-    private static final int ERROR_SUMMARY_ID = NotificationFactory.getNewId();
+    private static final int SUCCESS_SUMMARY_ID = NotificationIdFactory.getNewNotificationId();
+    private static final int ERROR_SUMMARY_ID = NotificationIdFactory.getNewNotificationId();
     private Context context;
     private BluetoothDevice device;
     private ScoutData scoutData;
@@ -73,7 +73,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel transferChannel = new NotificationChannel("bt_transfer", "Bluetooth Transfers", NotificationManager.IMPORTANCE_LOW);
+            NotificationChannel transferChannel = new NotificationChannel("bt_transfer", "Bluetooth transfers", NotificationManager.IMPORTANCE_LOW);
             transferChannel.setDescription("Ongoing and erroneous Bluetooth transfers");
             notificationManager.createNotificationChannel(transferChannel);
         }
@@ -113,7 +113,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
     protected void onPreExecute() {
         super.onPreExecute();
 
-        id = NotificationFactory.getNewId();
+        id = NotificationIdFactory.getNewNotificationId();
 
         btTransferInProgress.setContentTitle("Sending data to " + device.getName());
         btTransferInProgress.setWhen(System.currentTimeMillis());
@@ -248,29 +248,41 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                     + "\nError: " + result.getException().getMessage()));
             btTransferError.setWhen(System.currentTimeMillis());
 
-            //TODO Needs two Intents: RETRY that starts the Task again, and EDIT / MODIFY that opens the scouting flow
-            //TODO Clicking the notification should issue RETRY
-            //TODO This is actually much harder than it sounds
+            //TODO intent to display stack trace?
 
-            //TODO a third VIEW STACK TRACE / VIEW ERROR / MORE INFO / INFO intent that shows a dialog of the stack trace would be EXTRA nice
+            Intent viewIntent = new Intent(context, BluetoothTransferNotificationReceiver.class);
+            viewIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_NOTIFICATION_ID, id);
+            viewIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_SCOUT_DATA, scoutData);
+            viewIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_NOTIFICATION_TASK,
+                    BluetoothTransferNotificationReceiver.TASK_VIEW_SCOUTING_FLOW);
 
-            PendingIntent retryIntent = PendingIntent.getActivity(context, 1,
-                    new Intent(context, ScoutingFlowActivity.class).putExtra(ScoutingFlowActivity.EXTRA_SCOUT_DATA,
-                            result.getData()),
-                    PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent viewPendingIntent = PendingIntent.getBroadcast(context, NotificationIdFactory.getNewRequestCode(), viewIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            btTransferError.setContentIntent(retryIntent);
+            btTransferError.addAction(new NotificationCompat.Action(
+                    R.drawable.ic_info_white_24dp,
+                    "View",
+                    viewPendingIntent
+            ));
 
-            NotificationCompat.Action retryAction = new NotificationCompat.Action(
+            Intent retryIntent = new Intent(context, BluetoothTransferNotificationReceiver.class);
+            retryIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_NOTIFICATION_ID, id);
+            retryIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_SCOUT_DATA, scoutData);
+            retryIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_TARGET_DEVICE_ADDRESS, device.getAddress());
+            retryIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_NOTIFICATION_TASK,
+                    BluetoothTransferNotificationReceiver.TASK_RETRY_BLUETOOTH_TRANSFER);
+
+            PendingIntent retryPendingIntent = PendingIntent.getBroadcast(context, NotificationIdFactory.getNewRequestCode(), retryIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            btTransferError.addAction(new NotificationCompat.Action(
                     R.drawable.ic_refresh_white_24dp,
                     "Retry",
-                    retryIntent
-            );
+                    retryPendingIntent
+            ));
 
-            btTransferError.addAction(retryAction); //TODO this doesn't dismiss the notification
+            btTransferError.setContentIntent(viewPendingIntent);
 
             NotificationManagerCompat.from(context).notify(id, btTransferError.build());
-            NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
+            //NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
         }
 
         //TODO send Home update Intent
