@@ -1,9 +1,7 @@
-import java.text.SimpleDateFormat
-
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +22,8 @@ import java.text.SimpleDateFormat
  * SOFTWARE.
  */
 
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
@@ -41,14 +41,16 @@ android {
         targetSdkVersion 27
         multiDexEnabled true
         versionCode 15 //Next public release: 15
-        versionName "2.0-beta4" //2018 will be when I make the semantic change
+        versionName "2.0-pre" //2018 will be when I make the semantic change
         resConfigs "en"
     }
 
     buildTypes {
         release {
             minifyEnabled false //TODO Should I enable this?
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            useProguard false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
@@ -57,8 +59,10 @@ android {
             ext.enableCrashlytics = false //Disable Crashlytics mapping on debug builds
 
             //ONLY FOR TESTING - SLOWS DOWN BUILD TIME
-            //minifyEnabled false
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //minifyEnabled true
+            //useProguard true
+            //shrinkResources true
+            //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 

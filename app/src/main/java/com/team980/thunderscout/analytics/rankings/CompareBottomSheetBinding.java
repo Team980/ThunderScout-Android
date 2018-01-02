@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2017 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ public class CompareBottomSheetBinding {
     public static void bindBottomSheet(View dialogView, BottomSheetBehavior behavior, List<TeamWrapper> teams) {
 
         AverageScoutData station1 = new AverageScoutData(teams.get(0).getDataList());
-        AverageScoutData station2 = new AverageScoutData(teams.get(1).getDataList()); //TODO obviously not final
+        AverageScoutData station2 = new AverageScoutData(teams.get(1).getDataList());
         AverageScoutData station3 = new AverageScoutData(teams.get(2).getDataList());
 
         NumberFormat formatter = NumberFormat.getNumberInstance();
