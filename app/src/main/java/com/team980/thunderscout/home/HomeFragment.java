@@ -39,6 +39,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -206,6 +207,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
     @Override
     public void onRefresh() {
+        adapter.clearCards();
         refreshFixedCards();
         //TODO refresh static data cards
 
@@ -222,7 +224,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         if (!sharedPrefs.getBoolean(getResources().getString(R.string.pref_shown_welcome_card), false)) {
             Card welcomeCard = new Card("Welcome to ThunderScout!");
 
-            welcomeCard.setIcon(getResources().getDrawable(R.drawable.ic_app_badge_white_48dp));
+            welcomeCard.setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.ic_app_badge_white_48dp));
             welcomeCard.setText(getResources().getString(R.string.welcome_message));
             welcomeCard.setDismissable(true);
             welcomeCard.addAction(new CardAction("Dismiss", (card, action) -> {
@@ -241,7 +243,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         if (!sharedPrefs.getBoolean(getResources().getString(R.string.pref_shown_telemetry_card), false)) {
             Card telemetryCard = new Card("Telemetry");
 
-            telemetryCard.setIcon(getResources().getDrawable(R.drawable.ic_forum_white));
+            telemetryCard.setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.ic_forum_white));
             telemetryCard.setText(getResources().getString(R.string.telemetry_prompt));
             telemetryCard.setDismissable(true);
             telemetryCard.addAction(new CardAction("Configure", (card, action) -> {
@@ -266,7 +268,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         if (sharedPrefs.getInt(getResources().getString(R.string.pref_last_shown_update_card), 0) != BuildConfig.VERSION_CODE) {
             Card updateCard = new Card("New in version " + BuildConfig.VERSION_NAME);
 
-            updateCard.setIcon(getResources().getDrawable(R.drawable.ic_whats_new_white_24dp));
+            updateCard.setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.ic_whats_new_white_24dp));
             updateCard.setText(getResources().getString(R.string.update_notes));
             updateCard.setDismissable(true);
             updateCard.addAction(new CardAction("Dismiss", (card, action) -> {

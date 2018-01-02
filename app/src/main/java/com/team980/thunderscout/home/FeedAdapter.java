@@ -95,6 +95,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.CardViewHolder
         dismissCard(cards.indexOf(card));
     }
 
+    public void clearCards() {
+        cards.clear();
+        notifyDataSetChanged();
+    }
+
     public class CardViewHolder extends RecyclerView.ViewHolder {
 
         private Card card;

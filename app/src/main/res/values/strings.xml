@@ -36,7 +36,7 @@
     <string name="telemetry_prompt">
         ThunderScout uses Firebase Analytics to collect information such as usage statistics and crash reports.
         \n
-        \nThis information is used to provide insight on app performance as well as fix bugs in for future releases.
+        \nThis information is used to provide insight on app performance as well as fix bugs for future releases.
         \n
         \nYou can opt out of telemetry in the app settings.
     </string>
@@ -49,9 +49,6 @@
         \nKnown issues:
         \n• The Bluetooth server may fail to receive matches logged as successfully sent by the client device.
         A solution for this is still being investigated.
-        \n• The notification UI may not work as expected. Notably, pressing Retry won\'t actually dismiss the notification.
-        \n• The scouting form that appears after pressing Retry won\'t populate with your changes.
-        They haven\'t actually reset, but changing any value in the form will override that previously set value.
         \n• The point calculations are deprecated and may be removed in a future release.
     </string>
 

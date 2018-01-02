@@ -70,7 +70,8 @@ public class BluetoothTransferNotificationReceiver extends BroadcastReceiver {
         switch (intent.getIntExtra(EXTRA_NOTIFICATION_TASK, -1)) {
             case TASK_VIEW_SCOUTING_FLOW:
                 Intent viewIntent = new Intent(context, ScoutingFlowActivity.class)
-                        .putExtra(ScoutingFlowActivity.EXTRA_SCOUT_DATA, data);
+                        .putExtra(ScoutingFlowActivity.EXTRA_SCOUT_DATA, data)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(viewIntent);
                 break;
             case TASK_RETRY_BLUETOOTH_TRANSFER:

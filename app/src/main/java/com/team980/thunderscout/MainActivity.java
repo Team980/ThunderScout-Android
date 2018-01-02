@@ -35,6 +35,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -238,7 +239,7 @@ public class MainActivity extends AppCompatActivity
         ImageView image = navigationView.getHeaderView(0).findViewById(R.id.account_image);
         switch (currentScope) {
             case LOCAL:
-                image.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_white_72dp));
+                image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_account_circle_white_72dp));
 
                 ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(sharedPrefs
                         .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
@@ -270,7 +271,7 @@ public class MainActivity extends AppCompatActivity
         //TODO do some UI tweaks depending on account values
         //view.getMenu().findItem(R.id.nav_account_cloud).setIcon(R.drawable.ic_account_circle_white_72dp);
 
-        dropdown.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_drop_up_white_24dp));
+        dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_up_white_24dp));
         accountMenuExpanded = true;
     }
 
@@ -283,7 +284,7 @@ public class MainActivity extends AppCompatActivity
 
         view.getMenu().findItem(R.id.nav_home).setChecked(true); //TODO set current item instead of HOME
 
-        dropdown.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_drop_down_white_24dp));
+        dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_down_white_24dp));
         accountMenuExpanded = false;
     }
 

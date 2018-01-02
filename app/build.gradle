@@ -54,7 +54,7 @@ android {
         }
 
         debug {
-            versionNameSuffix '-b' + getDate() //Append build timestamp to version for debug builds
+            versionNameSuffix '-' + getDate() //Append build timestamp to version for debug builds
 
             ext.enableCrashlytics = false //Disable Crashlytics mapping on debug builds
 
