@@ -302,18 +302,18 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
 
             //TODO intent to display stack trace?
 
-            Intent viewIntent = new Intent(context, BluetoothTransferNotificationReceiver.class);
-            viewIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_NOTIFICATION_ID, id);
-            viewIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_SCOUT_DATA, scoutData);
-            viewIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_NOTIFICATION_TASK,
-                    BluetoothTransferNotificationReceiver.TASK_VIEW_SCOUTING_FLOW);
+            Intent editIntent = new Intent(context, BluetoothTransferNotificationReceiver.class);
+            editIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_NOTIFICATION_ID, id);
+            editIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_SCOUT_DATA, scoutData);
+            editIntent.putExtra(BluetoothTransferNotificationReceiver.EXTRA_NOTIFICATION_TASK,
+                    BluetoothTransferNotificationReceiver.TASK_EDIT_SCOUTING_FLOW);
 
-            PendingIntent viewPendingIntent = PendingIntent.getBroadcast(context, NotificationIdFactory.getNewRequestCode(), viewIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent editPendingIntent = PendingIntent.getBroadcast(context, NotificationIdFactory.getNewRequestCode(), editIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             btTransferError.addAction(new NotificationCompat.Action(
-                    R.drawable.ic_info_white_24dp,
-                    "View",
-                    viewPendingIntent
+                    R.drawable.ic_create_white_24dp,
+                    "Edit",
+                    editPendingIntent
             ));
 
             Intent retryIntent = new Intent(context, BluetoothTransferNotificationReceiver.class);
@@ -331,7 +331,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                     retryPendingIntent
             ));
 
-            btTransferError.setContentIntent(viewPendingIntent);
+            btTransferError.setContentIntent(editPendingIntent);
 
             NotificationManagerCompat.from(context).notify(id, btTransferError.build());
             //NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());

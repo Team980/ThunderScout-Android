@@ -46,7 +46,7 @@ public class BluetoothTransferNotificationReceiver extends BroadcastReceiver {
     //public static final String EXTRA_CAUSING_STACK_TRACE = "com.team980.thunderscout.CAUSING_STACK_TRACE";
 
     public static final String EXTRA_NOTIFICATION_TASK = "com.team980.thunderscout.NOTIFICATION_TASK";
-    public static final int TASK_VIEW_SCOUTING_FLOW = 1;
+    public static final int TASK_EDIT_SCOUTING_FLOW = 1;
     public static final int TASK_RETRY_BLUETOOTH_TRANSFER = 2;
     //public static final int TASK_VIEW_STACK_TRACE = 3;
 
@@ -66,7 +66,7 @@ public class BluetoothTransferNotificationReceiver extends BroadcastReceiver {
         //String causingStackTrace = intent.getStringExtra(EXTRA_CAUSING_STACK_TRACE);
 
         switch (intent.getIntExtra(EXTRA_NOTIFICATION_TASK, -1)) {
-            case TASK_VIEW_SCOUTING_FLOW:
+            case TASK_EDIT_SCOUTING_FLOW:
                 context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
 
                 Intent viewIntent = new Intent(context, ScoutingFlowActivity.class)
