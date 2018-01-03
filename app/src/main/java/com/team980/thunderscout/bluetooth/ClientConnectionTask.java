@@ -47,20 +47,30 @@ import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.util.NotificationIdFactory;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.UUID;
 
 public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnectionTask.TaskResult> {
 
+    public static final int RESULT_CODE_UNDEFINED_ERROR = -1;
+    public static final int RESULT_CODE_SUCCESSFUL = 1;
+    public static final int RESULT_CODE_VERSION_MISMATCH = 2;
+
     private static final int SUCCESS_SUMMARY_ID = NotificationIdFactory.getNewNotificationId();
     private static final int ERROR_SUMMARY_ID = NotificationIdFactory.getNewNotificationId();
+
     private Context context;
+
     private BluetoothDevice device;
+
     private ScoutData scoutData;
+
     private NotificationManager notificationManager;
     private NotificationCompat.Builder btTransferInProgress;
     private NotificationCompat.Builder btTransferSuccess;
     private NotificationCompat.Builder btTransferError;
+
     private int id;
 
     public ClientConnectionTask(BluetoothDevice device, ScoutData data, Context context) {
@@ -124,13 +134,30 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
 
     @NonNull
     public TaskResult doInBackground(Void... params) {
+        TaskResult result = new TaskResult(scoutData, new NullPointerException("Unreachable statement"));
+        int attempt = 1;
+
+        while (attempt <= 3) { //Maximum of three attempts
+            result = sendScoutData(attempt); //blocking
+
+            if (result.getException() == null) {
+                return result;
+            } else {
+                attempt++;
+            }
+        }
+
+        return result;
+    }
+
+    private TaskResult sendScoutData(int trial) {
         try {
             Thread.sleep(scoutData.getAllianceStation().getDelay()); //Variable delay based on AllianceStation
         } catch (InterruptedException e) {
             Crashlytics.logException(e);
         }
 
-        publishProgress(0);
+        publishProgress(0, trial);
 
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -146,7 +173,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             return new TaskResult(scoutData, e);
         }
 
-        publishProgress(25);
+        publishProgress(20, trial);
 
         try {
             // Connect the device through the socket. This will block
@@ -163,20 +190,20 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
         }
 
         Crashlytics.log(Log.INFO, this.getClass().getName(), "Connection to server device successful");
-        publishProgress(50);
+        publishProgress(40, trial);
 
+        ObjectInputStream inputStream;
         ObjectOutputStream outputStream;
         try {
+            inputStream = new ObjectInputStream(mmSocket.getInputStream());
             outputStream = new ObjectOutputStream(mmSocket.getOutputStream());
-            outputStream.flush();
+            //outputStream.flush();
         } catch (IOException e) {
             Crashlytics.logException(e);
             return new TaskResult(scoutData, e);
         }
 
-        publishProgress(75);
-
-        //TODO add version check?
+        publishProgress(60, trial);
 
         Crashlytics.log(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
         try {
@@ -187,7 +214,17 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             return new TaskResult(scoutData, e);
         }
 
-        publishProgress(100);
+        publishProgress(80, trial);
+
+        int resultCode;
+        try {
+            resultCode = (int) inputStream.readObject();
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+            return new TaskResult(scoutData, e);
+        }
+
+        publishProgress(100, trial);
 
         try {
             outputStream.close();
@@ -195,8 +232,14 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             Crashlytics.logException(e);
         }
 
-        publishProgress(-1);
-        return new TaskResult(scoutData, null);
+        publishProgress(-1, trial);
+        if (resultCode == RESULT_CODE_SUCCESSFUL) { //Server reported that the operation succeeded
+            return new TaskResult(scoutData, null);
+        } else { //No result code or improper value
+            Exception e = new NullPointerException("Result code not received or improper value");
+            Crashlytics.logException(e);
+            return new TaskResult(scoutData, e);
+        }
     }
 
     @Override
@@ -211,6 +254,8 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
         } else {
             btTransferInProgress.setProgress(100, values[0], false);
         }
+
+        btTransferInProgress.setContentText("Attempt " + values[1] + " of 3");
 
         NotificationManagerCompat.from(context).notify(id, btTransferInProgress.build());
     }
@@ -287,6 +332,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
 
         //TODO send Home update Intent
     }
+
 
     class TaskResult {
         private ScoutData data;

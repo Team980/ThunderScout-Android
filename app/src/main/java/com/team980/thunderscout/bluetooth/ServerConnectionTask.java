@@ -51,18 +51,23 @@ import com.team980.thunderscout.util.NotificationIdFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnectionTask.TaskResult> {
 
     private static final int SUCCESS_SUMMARY_ID = NotificationIdFactory.getNewNotificationId();
     private static final int ERROR_SUMMARY_ID = NotificationIdFactory.getNewNotificationId();
+
     private final BluetoothSocket mmSocket;
+
     private Context context;
+
     private NotificationManager notificationManager;
     private NotificationCompat.Builder btTransferInProgress;
     private NotificationCompat.Builder btTransferSuccess;
     private NotificationCompat.Builder btTransferError;
+
     private int id;
 
     public ServerConnectionTask(BluetoothSocket socket, Context context) {
@@ -129,20 +134,33 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
         publishProgress(0);
 
         ObjectInputStream inputStream;
+        ObjectOutputStream outputStream;
         try {
             inputStream = new ObjectInputStream(mmSocket.getInputStream()); //TODO fix the IOException caused by the missing socket...
+            outputStream = new ObjectOutputStream(mmSocket.getOutputStream());
         } catch (IOException e) {
             Crashlytics.logException(e);
             return new TaskResult(null, e);
         }
 
-        //TODO version check?
+        publishProgress(33);
+
         ScoutData data = null;
         try {
             data = (ScoutData) inputStream.readObject();
-        } catch (Exception e) {
+        } catch (Exception e) { //TODO check to see why it failed. Was there no object, or was it the wrong serialVersionUID?
             Crashlytics.logException(e);
             e.printStackTrace();
+            return new TaskResult(null, e);
+        }
+
+        publishProgress(66);
+
+        try {
+            outputStream.writeObject(ClientConnectionTask.RESULT_CODE_SUCCESSFUL);
+            outputStream.flush();
+        } catch (Exception e) {
+            Crashlytics.logException(e);
             return new TaskResult(null, e);
         }
 

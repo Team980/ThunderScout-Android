@@ -50,13 +50,15 @@ public class ScoutData implements Serializable {
      * 2017-2: Serializable ArrayList for dumps in teleop
      * 2017-1: First 2017 spec
      */
-    private static final long serialVersionUID = 6;
+    private static final long serialVersionUID = 6; //TODO increment for 2018-1
 
     /**
      * The unique ID used internally by the chosen storage provider
      * Used ONLY for internal tracking / data deletion
      */
     private int id;
+
+    private int schemaVersion = 6;
 
     // INIT
     private String team; //TODO 2018: Why isn't this an integer?
