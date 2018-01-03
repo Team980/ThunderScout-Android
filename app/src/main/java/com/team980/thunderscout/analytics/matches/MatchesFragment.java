@@ -24,6 +24,7 @@
 
 package com.team980.thunderscout.analytics.matches;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -51,12 +52,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.bluetooth.ClientConnectionTask;
+import com.team980.thunderscout.bluetooth.util.BluetoothDeviceManager;
 import com.team980.thunderscout.iexport.ExportActivity;
 import com.team980.thunderscout.iexport.ImportActivity;
+import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.ArrayList;
@@ -211,6 +216,33 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
             exportIntent.putExtra(ExportActivity.EXTRA_SELECTED_DATA, (ArrayList) adapter.getSelectedItems()); //TODO maybe it should just return ArrayList
             startActivity(exportIntent);
             return true;
+        }
+
+        if (id == R.id.action_bluetooth_transfer) {
+            if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Bluetooth is disabled")
+                        .setIcon(R.drawable.ic_warning_white_24dp)
+                        .setMessage("Please enable Bluetooth and try again")
+                        .setPositiveButton("OK", null)
+                        .create()
+                        .show();
+            }
+
+            BluetoothDeviceManager bdm = new BluetoothDeviceManager(getContext());
+            bdm.pickDevice(device -> {
+                if (device == null) {
+                    Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Toast.makeText(getContext(), "Sending " + adapter.getSelectedItemCount() + " matches to " + device.getName(), Toast.LENGTH_LONG).show();
+
+                for (ScoutData data : adapter.getSelectedItems()) {
+                    ClientConnectionTask connectionTask = new ClientConnectionTask(device, data, getContext());
+                    connectionTask.execute();
+                }
+            });
         }
 
         if (id == R.id.action_delete_selection) {

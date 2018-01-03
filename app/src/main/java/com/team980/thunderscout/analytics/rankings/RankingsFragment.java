@@ -24,6 +24,7 @@
 
 package com.team980.thunderscout.analytics.rankings;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -60,6 +61,8 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.TeamComparator;
 import com.team980.thunderscout.analytics.TeamWrapper;
 import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.bluetooth.ClientConnectionTask;
+import com.team980.thunderscout.bluetooth.util.BluetoothDeviceManager;
 import com.team980.thunderscout.iexport.ExportActivity;
 import com.team980.thunderscout.iexport.ImportActivity;
 import com.team980.thunderscout.schema.ScoutData;
@@ -295,6 +298,40 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
             exportIntent.putExtra(ExportActivity.EXTRA_SELECTED_DATA, dataList);
             startActivity(exportIntent);
             return true;
+        }
+
+        if (id == R.id.action_bluetooth_transfer) {
+            if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Bluetooth is disabled")
+                        .setIcon(R.drawable.ic_warning_white_24dp)
+                        .setMessage("Please enable Bluetooth and try again")
+                        .setPositiveButton("OK", null)
+                        .create()
+                        .show();
+            }
+
+            BluetoothDeviceManager bdm = new BluetoothDeviceManager(getContext());
+            bdm.pickDevice(device -> {
+                if (device == null) {
+                    Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int selectedMatches = 0;
+                for (TeamWrapper team : adapter.getSelectedItems()) {
+                    selectedMatches += team.getDataList().size();
+                }
+
+                Toast.makeText(getContext(), "Sending " + selectedMatches + " matches to " + device.getName(), Toast.LENGTH_LONG).show();
+
+                for (TeamWrapper team : adapter.getSelectedItems()) {
+                    for (ScoutData data : team.getDataList()) {
+                        ClientConnectionTask connectionTask = new ClientConnectionTask(device, data, getContext());
+                        connectionTask.execute();
+                    }
+                }
+            });
         }
 
         if (id == R.id.action_delete_selection) {
