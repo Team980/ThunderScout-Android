@@ -61,14 +61,14 @@ public class BluetoothTransferNotificationReceiver extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         manager.cancel(notificationId);
 
-        context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
-
         ScoutData data = (ScoutData) intent.getSerializableExtra(EXTRA_SCOUT_DATA);
         String targetDeviceAddress = intent.getStringExtra(EXTRA_TARGET_DEVICE_ADDRESS);
         //String causingStackTrace = intent.getStringExtra(EXTRA_CAUSING_STACK_TRACE);
 
         switch (intent.getIntExtra(EXTRA_NOTIFICATION_TASK, -1)) {
             case TASK_VIEW_SCOUTING_FLOW:
+                context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+
                 Intent viewIntent = new Intent(context, ScoutingFlowActivity.class)
                         .putExtra(ScoutingFlowActivity.EXTRA_SCOUT_DATA, data)
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

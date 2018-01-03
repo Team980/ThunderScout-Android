@@ -50,6 +50,7 @@ import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.util.NotificationIdFactory;
 
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
@@ -136,8 +137,9 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
         ObjectInputStream inputStream;
         ObjectOutputStream outputStream;
         try {
-            inputStream = new ObjectInputStream(mmSocket.getInputStream()); //TODO fix the IOException caused by the missing socket...
             outputStream = new ObjectOutputStream(mmSocket.getOutputStream());
+            inputStream = new ObjectInputStream(mmSocket.getInputStream());
+            outputStream.flush();
         } catch (IOException e) {
             Crashlytics.logException(e);
             return new TaskResult(null, e);
@@ -148,16 +150,25 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
         ScoutData data = null;
         try {
             data = (ScoutData) inputStream.readObject();
-        } catch (Exception e) { //TODO check to see why it failed. Was there no object, or was it the wrong serialVersionUID?
-            Crashlytics.logException(e);
-            e.printStackTrace();
-            return new TaskResult(null, e);
+        } catch (InvalidClassException versionError) { //serialVersionUID mismatch - notify client
+            try {
+                Crashlytics.logException(versionError);
+                outputStream.writeInt(ClientConnectionTask.RESULT_CODE_VERSION_MISMATCH);
+                outputStream.flush();
+                return new TaskResult(null, versionError);
+            } catch (Exception another) {
+                Crashlytics.logException(another);
+                return new TaskResult(null, versionError); //return the version mismatch error anyway - that's the one we want to show
+            }
+        } catch (Exception other) {
+            Crashlytics.logException(other);
+            return new TaskResult(null, other);
         }
 
         publishProgress(66);
 
         try {
-            outputStream.writeObject(ClientConnectionTask.RESULT_CODE_SUCCESSFUL);
+            outputStream.writeInt(ClientConnectionTask.RESULT_CODE_SUCCESSFUL);
             outputStream.flush();
         } catch (Exception e) {
             Crashlytics.logException(e);
@@ -168,6 +179,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
 
         try {
             inputStream.close();
+            outputStream.close();
         } catch (IOException e) {
             Crashlytics.logException(e);
         }
@@ -182,7 +194,6 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
         super.onProgressUpdate(values);
 
         btTransferInProgress.setContentTitle("Receiving data from " + mmSocket.getRemoteDevice().getName());
-        btTransferInProgress.setContentText("Test data");
         btTransferInProgress.setWhen(System.currentTimeMillis());
 
         if (values[0] == -1) { //Indeterminate
@@ -218,7 +229,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             //HomeFragment.TaskUpdateReceiver.UpdateType.ERROR);
 
             btTransferError.setContentTitle("Failed to receive data from " + mmSocket.getRemoteDevice().getName());
-            btTransferError.setContentText("Expand to see the full error message");
+            btTransferError.setContentText("Error: " + result.getException().getMessage());
             btTransferError.setStyle(new NotificationCompat.BigTextStyle().bigText("Error: " + result.getException().getMessage()));
             btTransferError.setWhen(System.currentTimeMillis());
 

@@ -58,8 +58,6 @@ public class ScoutData implements Serializable {
      */
     private int id;
 
-    private int schemaVersion = 6;
-
     // INIT
     private String team; //TODO 2018: Why isn't this an integer?
     private int matchNumber;
