@@ -41,14 +41,16 @@
         android:title="Appearance" />-->
 
     <com.team980.thunderscout.preferences.backport.MasterSwitchPreference
+        android:defaultValue="true"
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$MatchScoutPreferenceFragment"
         android:icon="@drawable/ic_send_white_24dp"
         android:key="@string/pref_enable_match_scouting"
-        android:summary="Scout matches and transmit them to other devices"
+        android:summary="Scout matches and send them to other devices"
         android:title="Match scouting"
         app:allowDividerBelow="false" />
 
     <com.team980.thunderscout.preferences.backport.MasterSwitchPreference
+        android:defaultValue="false"
         android:fragment="com.team980.thunderscout.preferences.SettingsActivity$BluetoothServerPreferenceFragment"
         android:icon="@drawable/ic_bluetooth_searching_white_24dp"
         android:key="@string/pref_enable_bluetooth_server"

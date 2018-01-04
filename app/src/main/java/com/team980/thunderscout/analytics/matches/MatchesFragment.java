@@ -24,7 +24,6 @@
 
 package com.team980.thunderscout.analytics.matches;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -219,16 +218,6 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }
 
         if (id == R.id.action_bluetooth_transfer) {
-            if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Bluetooth is disabled")
-                        .setIcon(R.drawable.ic_warning_white_24dp)
-                        .setMessage("Please enable Bluetooth and try again")
-                        .setPositiveButton("OK", null)
-                        .create()
-                        .show();
-            }
-
             BluetoothDeviceManager bdm = new BluetoothDeviceManager(getContext());
             bdm.pickDevice(device -> {
                 if (device == null) {

@@ -127,11 +127,12 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
 
         if (BuildConfig.DEBUG) {
             //Disable Firebase Analytics on debug builds
+            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(false);
 
             //Init, but disable, Crashlytics on debug builds
             Crashlytics crashlyticsKit = new Crashlytics.Builder()
                     .core(new CrashlyticsCore.Builder()
-                            .disabled(BuildConfig.DEBUG).build())
+                            .disabled(true).build())
                     .build();
             Fabric.with(this, crashlyticsKit);
         } else {
@@ -162,7 +163,7 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 TileService.requestListeningState(this, new ComponentName(this, BluetoothQuickTileService.class));
             }
-        } else if (key.equals(getResources().getString(R.string.pref_enable_analytics))) {
+        } else if (key.equals(getResources().getString(R.string.pref_enable_analytics)) && !BuildConfig.DEBUG) {
             FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(sharedPreferences.getBoolean(getResources().getString(R.string.pref_enable_analytics), true));
         }
     }

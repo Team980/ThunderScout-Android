@@ -14,6 +14,9 @@ https://developer.android.com/topic/libraries/support-library/
 ### Material About Library
 https://github.com/daniel-stoneuk/material-about-library
 
+### AboutLibraries
+https://github.com/mikepenz/AboutLibraries
+
 ### OpenCSV
 http://opencsv.sourceforge.net
 

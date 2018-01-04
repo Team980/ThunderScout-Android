@@ -39,6 +39,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import com.team980.thunderscout.BuildConfig;
 import com.team980.thunderscout.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -205,6 +206,12 @@ public class SettingsActivity extends AppCompatActivity {
             activity.getSupportActionBar().setTitle("General settings");
 
             bindPreferenceSummaryToValue(findPreference(getResources().getString(R.string.pref_device_name)));
+
+            if (BuildConfig.DEBUG) { //Disable analytics on debug builds
+                findPreference(getResources().getString(R.string.pref_enable_analytics)).setEnabled(false);
+                findPreference(getResources().getString(R.string.pref_enable_crashlytics)).setEnabled(false);
+                //findPreference(getResources().getString(R.string.pref_enable_performance_monitoring)).setEnabled(false);
+            }
         }
     }
 

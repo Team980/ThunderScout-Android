@@ -251,6 +251,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
                 intent.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GeneralPreferenceFragment.class.getName());
                 startActivity(intent);
                 adapter.dismissCard(card);
+                sharedPrefs.edit().putBoolean(getResources().getString(R.string.pref_shown_telemetry_card), true).apply();
             }));
             telemetryCard.addAction(new CardAction("Dismiss", (card, action) -> {
                 int index = adapter.indexOf(card);
