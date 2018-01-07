@@ -44,13 +44,37 @@
             android:orientation="horizontal">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/summary_tilTroubleWith"
+                android:id="@+id/summary_tilStrategies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Trouble with?">
+                android:hint="Strategies">
 
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/summary_edittextTroubleWith"
+                    android:id="@+id/summary_edittextStrategies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="20"
+                    android:textSize="18sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/summary_tilDifficulties"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Difficulties">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/summary_edittextDifficulties"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="20"

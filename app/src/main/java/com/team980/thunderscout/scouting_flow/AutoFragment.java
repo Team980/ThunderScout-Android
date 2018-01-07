@@ -31,12 +31,9 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 
 public class AutoFragment extends Fragment implements View.OnClickListener {
@@ -52,33 +49,18 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AppCompatCheckBox crossedBaseline = view.findViewById(R.id.auto_checkBoxCrossedBaseline);
-        crossedBaseline.setOnClickListener(this);
+        CheckBox crossedAutoLine = getView().findViewById(R.id.auto_checkBoxCrossedAutoLine);
+        crossedAutoLine.setChecked(scoutingFlowActivity.getData().getAutonomous().crossedAutoLine());
+        crossedAutoLine.setOnClickListener(this);
 
-        Button minus = view.findViewById(R.id.auto_buttonFuelMinus);
-        Button plus = view.findViewById(R.id.auto_buttonFuelPlus);
-        minus.setOnClickListener(this);
-        plus.setOnClickListener(this);
+        CounterCompoundView powerCubeAllianceSwitchCount = getView().findViewById(R.id.auto_counterPowerCubeAllianceSwitchCount);
+        powerCubeAllianceSwitchCount.setValue(scoutingFlowActivity.getData().getAutonomous().getPowerCubeAllianceSwitchCount());
 
-        CheckBox autoCrossedBaseline = getView().findViewById(R.id.auto_checkBoxCrossedBaseline);
-        autoCrossedBaseline.setChecked(scoutingFlowActivity.getData().getAutonomous().getCrossedBaseline());
+        CounterCompoundView powerCubeScaleCount = getView().findViewById(R.id.auto_counterPowerCubeScaleCount);
+        powerCubeScaleCount.setValue(scoutingFlowActivity.getData().getAutonomous().getPowerCubeScaleCount());
 
-        CounterCompoundView autoGearsDelivered = getView().findViewById(R.id.auto_counterGearsDelivered);
-        autoGearsDelivered.setValue(scoutingFlowActivity.getData().getAutonomous().getGearsDelivered());
-
-        CounterCompoundView autoGearsDropped = getView().findViewById(R.id.auto_counterGearsDropped);
-        autoGearsDropped.setValue(scoutingFlowActivity.getData().getAutonomous().getGearsDropped());
-
-        TextView autoTextViewFuelValue = getView().findViewById(R.id.auto_textViewFuelValue);
-        TextView autoTextViewFuelNumericalValue = getView().findViewById(R.id.auto_textViewFuelNumericalValue);
-        autoTextViewFuelValue.setText(scoutingFlowActivity.getData().getAutonomous().getLowGoalDumpAmount().toString());
-        autoTextViewFuelNumericalValue.setText(scoutingFlowActivity.getData().getAutonomous().getLowGoalDumpAmount().getMinimumAmount() + " - " + scoutingFlowActivity.getData().getAutonomous().getLowGoalDumpAmount().getMaximumAmount());
-
-        CounterCompoundView autoHighGoals = getView().findViewById(R.id.auto_counterHighGoals);
-        autoHighGoals.setValue(scoutingFlowActivity.getData().getAutonomous().getHighGoals());
-
-        CounterCompoundView autoMissedHighGoals = getView().findViewById(R.id.auto_counterMissedHighGoals);
-        autoMissedHighGoals.setValue(scoutingFlowActivity.getData().getAutonomous().getMissedHighGoals());
+        CounterCompoundView powerCubePlayerStationCount = getView().findViewById(R.id.auto_counterPowerCubePlayerStationCount);
+        powerCubePlayerStationCount.setValue(scoutingFlowActivity.getData().getAutonomous().getPowerCubePlayerStationCount());
     }
 
     @Override
@@ -95,38 +77,10 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.auto_checkBoxCrossedBaseline) {
+        if (view.getId() == R.id.auto_checkBoxCrossedAutoLine) {
             AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
 
-            scoutingFlowActivity.getData().getAutonomous().setCrossedBaseline(checkBox.isChecked());
-        } else {
-            FuelDumpAmount value = scoutingFlowActivity.getData().getAutonomous().getLowGoalDumpAmount();
-
-            if (view.getId() == R.id.auto_buttonFuelPlus) {
-                int newOrdinal = value.ordinal() + 1;
-
-                if ((FuelDumpAmount.values().length - 1) < newOrdinal) {
-                    value = FuelDumpAmount.values()[FuelDumpAmount.values().length - 1];
-                } else {
-                    value = FuelDumpAmount.values()[newOrdinal];
-                }
-
-            } else if (view.getId() == R.id.auto_buttonFuelMinus) {
-                int newOrdinal = value.ordinal() - 1;
-
-                if (newOrdinal < 0) {
-                    value = FuelDumpAmount.values()[0];
-                } else {
-                    value = FuelDumpAmount.values()[newOrdinal];
-                }
-            }
-
-            scoutingFlowActivity.getData().getAutonomous().setLowGoalDumpAmount(value);
-
-            TextView textValue = getView().findViewById(R.id.auto_textViewFuelValue);
-            TextView numericalValue = getView().findViewById(R.id.auto_textViewFuelNumericalValue);
-            textValue.setText(value.toString());
-            numericalValue.setText(value.getMinimumAmount() + " - " + value.getMaximumAmount());
+            scoutingFlowActivity.getData().getAutonomous().setCrossedAutoLine(checkBox.isChecked());
         }
     }
 }

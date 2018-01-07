@@ -38,50 +38,9 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.team980.thunderscout.bluetooth.BluetoothServerService;
 import com.team980.thunderscout.bluetooth.util.BluetoothQuickTileService;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-
 import io.fabric.sdk.android.Fabric;
 
 public class ThunderScout extends MultiDexApplication implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-    @Deprecated
-    public static byte[] serializeObject(Object o) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-        try {
-            ObjectOutput out = new ObjectOutputStream(bos);
-            out.writeObject(o);
-            out.close();
-
-            // Get the bytes of the serialized object
-            byte[] buf = bos.toByteArray();
-
-            return buf;
-        } catch (IOException e) {
-            Crashlytics.logException(e);
-            return null;
-        }
-    }
-
-    @Deprecated
-    public static Object deserializeObject(byte[] b) {
-        try {
-            ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(b));
-            Object object = in.readObject();
-            in.close();
-
-            return object;
-        } catch (ClassNotFoundException | IOException e) {
-            Crashlytics.logException(e);
-            return null;
-        }
-
-    }
 
     public static boolean isInteger(String str) { //TODO use this for all the int checks
         if (str == null) {

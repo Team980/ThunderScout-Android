@@ -80,7 +80,7 @@
     <string-array name="climbing_stats_array">
         <item>Did not climb</item>
         <item>Attempted climb</item>
-        <item>Pressed touchpad</item>
+        <item>Climbed</item>
     </string-array>
 
     <string-array name="iexport_file_types">

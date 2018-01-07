@@ -37,7 +37,6 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.TeamComparator;
 import com.team980.thunderscout.analytics.TeamWrapper;
-import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
 import com.team980.thunderscout.analytics.rankings.breakdown.TeamInfoActivity;
 import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
@@ -57,7 +56,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
     private LayoutInflater mInflator;
     private RankingsFragment fragment;
     private ArrayList<TeamWrapper> teamList; //The list that represents all the loaded data
-    private TeamComparator sortMode = TeamComparator.SORT_POINT_CONTRIBUTION;
+    private TeamComparator sortMode = TeamComparator.SORT_TEAM_NUMBER;
     private String teamFilter = "";
     private ArrayList<TeamWrapper> selectedItems;
     private NumberFormat formatter;
@@ -267,7 +266,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
                     }
                 } else {
                     Intent launchInfoActivity = new Intent(fragment.getContext(), TeamInfoActivity.class);
-                    launchInfoActivity.putExtra(TeamInfoActivity.EXTRA_AVERAGE_SCOUT_DATA, new AverageScoutData(wrapper.getDataList()));
+                    launchInfoActivity.putExtra(TeamInfoActivity.EXTRA_SCOUT_DATA_LIST, wrapper.getDataList());
 
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                         ActivityOptions options = ActivityOptions

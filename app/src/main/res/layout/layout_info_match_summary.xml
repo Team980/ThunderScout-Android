@@ -36,45 +36,10 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ranking Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/info_match_rankingPoints"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            tools:text="0 pts" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background_floating"
-        android:padding="16dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Total"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/info_match_totalPoints"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            tools:text="0 pts" />
+            android:layout_height="match_parent"
+            android:text="Summary"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="25sp" />
 
     </FrameLayout>
 
@@ -90,13 +55,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trouble With"
+            android:text="Strategies"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="22sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/info_match_troubleWith"
+            android:id="@+id/info_match_strategies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textSize="22sp"
+            tools:text="~~~" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Difficulties"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/info_match_difficulties"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"

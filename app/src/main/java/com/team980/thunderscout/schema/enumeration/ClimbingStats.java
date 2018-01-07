@@ -28,7 +28,7 @@ public enum ClimbingStats {
 
     DID_NOT_CLIMB("Did not climb"),
     ATTEMPTED_CLIMB("Attempted climb"),
-    PRESSED_TOUCHPAD("Pressed touchpad"); //only option that scores
+    CLIMBED("Climbed");
 
     private String displayString;
 

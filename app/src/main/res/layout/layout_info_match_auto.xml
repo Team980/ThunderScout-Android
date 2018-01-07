@@ -56,141 +56,75 @@
         app:rowCount="2">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Mobility"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:text="Crossed Auto Line"
+            android:textColor="@android:color/white"
             android:textSize="22sp"
-            android:textStyle="bold"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_autoMobilityPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/info_match_autoCrossedAutoLine"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="FALSE" />
+
+        <TextView
+            android:text="Power Cubes Delivered To..."
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <android.support.v4.widget.Space app:layout_columnWeight="1" />
+
+        <TextView
+            android:text="Alliance Switch"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_autoPowerCubeAllianceSwitchCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Central Scale"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_autoPowerCubeScaleCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Player Station"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_autoPowerCubePlayerStationCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <!--<TextView
+            android:text="Total Power Cubes Scored"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_autoPowerCubeTotalCount"
             android:gravity="right"
             android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Low Goals"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_autoLowGoalCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="High Goals"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_autoHighGoalCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Missed High Goals"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_autoMissedGoalCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Fuel Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_autoFuelPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Gears Delivered"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_autoGearDeliveryCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Gears Dropped"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_autoGearDropCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Rotor Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_autoRotorPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
+            tools:text="0" />-->
 
     </android.support.v7.widget.GridLayout>
 

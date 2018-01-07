@@ -25,17 +25,12 @@
 package com.team980.thunderscout.analytics.rankings;
 
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.TeamWrapper;
-import com.team980.thunderscout.analytics.rankings.breakdown.AverageScoutData;
-import com.team980.thunderscout.analytics.rankings.breakdown.CommentsAdapter;
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -47,9 +42,9 @@ public class CompareBottomSheetBinding {
 
     public static void bindBottomSheet(View dialogView, BottomSheetBehavior behavior, List<TeamWrapper> teams) {
 
-        AverageScoutData station1 = new AverageScoutData(teams.get(0).getDataList());
-        AverageScoutData station2 = new AverageScoutData(teams.get(1).getDataList());
-        AverageScoutData station3 = new AverageScoutData(teams.get(2).getDataList());
+        TeamWrapper station1 = teams.get(0);
+        TeamWrapper station2 = teams.get(1);
+        TeamWrapper station3 = teams.get(2);
 
         NumberFormat formatter = NumberFormat.getNumberInstance();
         formatter.setMinimumFractionDigits(0);
@@ -84,8 +79,8 @@ public class CompareBottomSheetBinding {
         team3.setText(station3.getTeam());
 
         // Auto
-        TextView crossPercent = dialogView.findViewById(R.id.info_alliance_station1_autoCrossPercentage);
-        crossPercent.setText(formatter.format(station1.getCrossedBaselinePercentage()) + "%");
+        /*TextView crossPercent = dialogView.findViewById(R.id.info_alliance_station1_autoCrossPercentage);
+        crossPercent.setText(formatter.format("todo") + "%");
         TextView crossPercent2 = dialogView.findViewById(R.id.info_alliance_station2_autoCrossPercentage);
         crossPercent2.setText(formatter.format(station2.getCrossedBaselinePercentage()) + "%");
         TextView crossPercent3 = dialogView.findViewById(R.id.info_alliance_station3_autoCrossPercentage);
@@ -132,7 +127,7 @@ public class CompareBottomSheetBinding {
         TextView autoGearDeliveryCount = dialogView.findViewById(R.id.info_alliance_station1_autoGearDeliveryCount);
         autoGearDeliveryCount.setText(formatter.format(station1.getAverageAutoGearsDelivered()));
         TextView autoGearDeliveryCount2 = dialogView.findViewById(R.id.info_alliance_station2_autoGearDeliveryCount);
-        autoGearDeliveryCount2.setText(formatter.format(station2.getAverageAutoGearsDelivered()));
+        autoGearDeliveryCount2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(), data -> data.getAutonomous().getPowerCubeAllianceSwitchCount())));
         TextView autoGearDeliveryCount3 = dialogView.findViewById(R.id.info_alliance_station3_autoGearDeliveryCount);
         autoGearDeliveryCount3.setText(formatter.format(station3.getAverageAutoGearsDelivered()));
 
@@ -213,11 +208,11 @@ public class CompareBottomSheetBinding {
         teleopRotorPoints3.setText(formatter.format(TeamPointEstimator.getTeleopRotorPoints(station3)) + " pts");
 
         TextView climbPercent = dialogView.findViewById(R.id.info_alliance_station1_teleopClimbPercentage);
-        climbPercent.setText(formatter.format(station1.getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "%");
+        climbPercent.setText(formatter.format(station1.getClimbingStatsPercentage(ClimbingStats.CLIMBED)) + "%");
         TextView climbPercent2 = dialogView.findViewById(R.id.info_alliance_station2_teleopClimbPercentage);
-        climbPercent2.setText(formatter.format(station2.getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "%");
+        climbPercent2.setText(formatter.format(station2.getClimbingStatsPercentage(ClimbingStats.CLIMBED)) + "%");
         TextView climbPercent3 = dialogView.findViewById(R.id.info_alliance_station3_teleopClimbPercentage);
-        climbPercent3.setText(formatter.format(station3.getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "%");
+        climbPercent3.setText(formatter.format(station3.getClimbingStatsPercentage(ClimbingStats.CLIMBED)) + "%");
 
         TextView climbPts = dialogView.findViewById(R.id.info_alliance_station1_teleopClimbPoints);
         climbPts.setText(formatter.format(TeamPointEstimator.getClimbingPoints(station1)) + " pts");
@@ -241,18 +236,18 @@ public class CompareBottomSheetBinding {
         TextView total3 = dialogView.findViewById(R.id.info_alliance_station3_totalPoints);
         total3.setText(formatter.format(TeamPointEstimator.getPointContribution(station3)) + " pts");
 
-        RecyclerView troubleWith = dialogView.findViewById(R.id.info_alliance_troubleWith);
-        TextView troubleWithPlaceholder = dialogView.findViewById(R.id.info_alliance_troubleWithPlaceholder);
+        RecyclerView difficulties = dialogView.findViewById(R.id.info_alliance_troubleWith);
+        TextView difficultiesPlaceholder = dialogView.findViewById(R.id.info_alliance_troubleWithPlaceholder);
 
         if (station1.getTroublesList() == null || station1.getTroublesList().isEmpty() || listIsEmpty(station1.getTroublesList())) {
-            troubleWith.setVisibility(View.GONE);
-            troubleWithPlaceholder.setVisibility(View.VISIBLE);
+            difficulties.setVisibility(View.GONE);
+            difficultiesPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            troubleWith.setVisibility(View.VISIBLE);
-            troubleWithPlaceholder.setVisibility(View.GONE);
+            difficulties.setVisibility(View.VISIBLE);
+            difficultiesPlaceholder.setVisibility(View.GONE);
 
-            troubleWith.setLayoutManager(new LinearLayoutManager(dialogView.getContext()));
-            troubleWith.setAdapter(new CommentsAdapter(station1.getTroublesList()));
+            difficulties.setLayoutManager(new LinearLayoutManager(dialogView.getContext()));
+            difficulties.setAdapter(new CommentsAdapter(station1.getTroublesList()));
         }
 
         RecyclerView comments = dialogView.findViewById(R.id.info_alliance_comments);
@@ -267,10 +262,10 @@ public class CompareBottomSheetBinding {
 
             comments.setLayoutManager(new LinearLayoutManager(dialogView.getContext()));
             comments.setAdapter(new CommentsAdapter(station1.getCommentsList()));
-        }
+        }*/
     }
 
-    private static boolean listIsEmpty(List<String> list) {
+    private static boolean listContentsAreEmpty(List<String> list) {
         for (String s : list) {
             if (s != null && !s.isEmpty()) {
                 return false;

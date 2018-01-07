@@ -44,7 +44,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
@@ -52,6 +54,7 @@ import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.bluetooth.ClientConnectionTask;
 import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 import com.team980.thunderscout.util.TransitionUtils;
 
@@ -362,39 +365,47 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         // Auto
         View autoView = viewPagerAdapter.getItem(0).getView();
 
-        CounterCompoundView autoGearsDelivered = autoView.findViewById(R.id.auto_counterGearsDelivered); //TODO sometimes this fails... is it another activity state bug?
-        scoutData.getAutonomous().setGearsDelivered((int) autoGearsDelivered.getValue());
+        CheckBox crossedAutoLine = autoView.findViewById(R.id.auto_checkBoxCrossedAutoLine);
+        scoutData.getAutonomous().setCrossedAutoLine(crossedAutoLine.isChecked());
 
-        CounterCompoundView autoGearsDropped = autoView.findViewById(R.id.auto_counterGearsDropped);
-        scoutData.getAutonomous().setGearsDropped((int) autoGearsDropped.getValue());
+        CounterCompoundView auto_powerCubeAllianceSwitchCount = autoView.findViewById(R.id.auto_counterPowerCubeAllianceSwitchCount);
+        scoutData.getAutonomous().setPowerCubeAllianceSwitchCount((int) auto_powerCubeAllianceSwitchCount.getValue());
 
-        CounterCompoundView autoHighGoals = autoView.findViewById(R.id.auto_counterHighGoals);
-        scoutData.getAutonomous().setHighGoals((int) autoHighGoals.getValue());
+        CounterCompoundView auto_powerCubeScaleCount = autoView.findViewById(R.id.auto_counterPowerCubeScaleCount);
+        scoutData.getAutonomous().setPowerCubeScaleCount((int) auto_powerCubeScaleCount.getValue());
 
-        CounterCompoundView autoMissedHighGoals = autoView.findViewById(R.id.auto_counterMissedHighGoals);
-        scoutData.getAutonomous().setMissedHighGoals((int) autoMissedHighGoals.getValue());
+        CounterCompoundView auto_powerCubePlayerStationCount = autoView.findViewById(R.id.auto_counterPowerCubePlayerStationCount);
+        scoutData.getAutonomous().setPowerCubePlayerStationCount((int) auto_powerCubePlayerStationCount.getValue());
 
         // Teleop
         View teleopView = viewPagerAdapter.getItem(1).getView();
 
-        CounterCompoundView teleopGearsDelivered = teleopView.findViewById(R.id.teleop_counterGearsDelivered);
-        scoutData.getTeleop().setGearsDelivered((int) teleopGearsDelivered.getValue());
+        CounterCompoundView teleop_powerCubeAllianceSwitchCount = teleopView.findViewById(R.id.teleop_counterPowerCubeAllianceSwitch);
+        scoutData.getTeleop().setPowerCubeAllianceSwitchCount((int) teleop_powerCubeAllianceSwitchCount.getValue());
 
-        CounterCompoundView teleopGearsDropped = teleopView.findViewById(R.id.teleop_counterGearsDropped);
-        scoutData.getTeleop().setGearsDropped((int) teleopGearsDropped.getValue());
-        scoutData.getTeleop().getLowGoalDumps().addAll(((TeleopFragment) viewPagerAdapter.getItem(1)).getFuelDumpAdapter().get());
+        CounterCompoundView teleop_powerCubeScaleCount = teleopView.findViewById(R.id.teleop_counterPowerCubeScaleCount);
+        scoutData.getTeleop().setPowerCubeScaleCount((int) teleop_powerCubeScaleCount.getValue());
 
-        CounterCompoundView teleopHighGoals = teleopView.findViewById(R.id.teleop_counterHighGoals);
-        scoutData.getTeleop().setHighGoals((int) teleopHighGoals.getValue());
+        CounterCompoundView teleop_powerCubeOpposingSwitchCount = teleopView.findViewById(R.id.teleop_counterPowerCubeOpposingSwitchCount);
+        scoutData.getTeleop().setPowerCubeOpposingSwitchCount((int) teleop_powerCubeOpposingSwitchCount.getValue());
 
-        CounterCompoundView teleopMissedHighGoals = teleopView.findViewById(R.id.teleop_counterMissedHighGoals);
-        scoutData.getTeleop().setMissedHighGoals((int) teleopMissedHighGoals.getValue());
+        CounterCompoundView teleop_powerCubePlayerStationCount = teleopView.findViewById(R.id.teleop_counterPowerCubePlayerStationCount);
+        scoutData.getTeleop().setPowerCubePlayerStationCount((int) teleop_powerCubePlayerStationCount.getValue());
+
+        Spinner climbingStats = teleopView.findViewById(R.id.teleop_spinnerClimbingStats);
+        scoutData.getTeleop().setClimbingStats(ClimbingStats.values()[climbingStats.getSelectedItemPosition()]);
+
+        CheckBox supportedOtherRobotsWhenClimbing = teleopView.findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
+        scoutData.getTeleop().setSupportedOtherRobotWhenClimbing(supportedOtherRobotsWhenClimbing.isChecked());
 
         // Summary
         View summaryView = viewPagerAdapter.getItem(2).getView();
 
-        EditText troubleWith = summaryView.findViewById(R.id.summary_edittextTroubleWith);
-        scoutData.setTroubleWith(troubleWith.getText().toString());
+        EditText strategies = summaryView.findViewById(R.id.summary_edittextStrategies);
+        scoutData.setStrategies(strategies.getText().toString());
+
+        EditText difficulties = summaryView.findViewById(R.id.summary_edittextDifficulties);
+        scoutData.setDifficulties(difficulties.getText().toString());
 
         EditText comments = summaryView.findViewById(R.id.summary_edittextComments);
         scoutData.setComments(comments.getText().toString());

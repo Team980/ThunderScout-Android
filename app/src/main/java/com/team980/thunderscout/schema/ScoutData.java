@@ -26,31 +26,22 @@ package com.team980.thunderscout.schema;
 
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
-import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
  * Implements data for one team from one match.
  */
 public class ScoutData implements Serializable {
-    //TODO 2018: label all quantities identically
-    //TODO example: gearsDelivered -> gearDeliveryCount
-    //TODO original name can still be in UI ("Gears Delivered")
 
     /**
-     * ScoutData Version 2017-3c
+     * ScoutData Version 2018-1
      * <p>
-     * 2017-3c: Use an internal primary key (ALWAYS use the primary key!)
-     * 2017-3b: More structural tweaks, new AllianceStation field
-     * 2017-3a: Update structure, tweak fields, and prepare for GSON serialization
-     * 2017-2: Serializable ArrayList for dumps in teleop
-     * 2017-1: First 2017 spec
+     * [7] 2018-1: First 2018 spec. Makes a few changes to how the 2017 spec was formatted.
      */
-    private static final long serialVersionUID = 6; //TODO increment for 2018-1
+    private static final long serialVersionUID = 7;
 
     /**
      * The unique ID used internally by the chosen storage provider
@@ -58,22 +49,18 @@ public class ScoutData implements Serializable {
      */
     private int id;
 
-    // INIT
-    private String team; //TODO 2018: Why isn't this an integer?
+    private String team; //trust me, this is better as a string
     private int matchNumber;
     private AllianceStation allianceStation;
 
     private Date date;
     private String source;
 
-    // AUTO
     private Autonomous autonomous;
-
-    // TELEOP
     private Teleop teleop;
 
-    // SUMMARY
-    private String troubleWith;
+    private String strategies;
+    private String difficulties;
     private String comments;
 
     public ScoutData() {
@@ -96,43 +83,6 @@ public class ScoutData implements Serializable {
         teleop = new Teleop();
     }
 
-    /**
-     * Copy constructor
-     */
-    @Deprecated
-    public ScoutData(ScoutData other) { //Does not copy the ID!
-        //Init
-        setTeam(other.getTeam());
-        setMatchNumber(other.getMatchNumber());
-        setAllianceStation(other.getAllianceStation());
-        setDate(other.getDate());
-        setSource(other.getSource());
-
-        //Auto
-        autonomous = new Autonomous();
-        autonomous.setGearsDelivered(other.getAutonomous().getGearsDelivered());
-        autonomous.setGearsDropped(other.getAutonomous().getGearsDropped());
-        autonomous.setLowGoalDumpAmount(other.getAutonomous().getLowGoalDumpAmount());
-        autonomous.setHighGoals(other.getAutonomous().getHighGoals());
-        autonomous.setMissedHighGoals(other.getAutonomous().getMissedHighGoals());
-        autonomous.setCrossedBaseline(other.getAutonomous().getCrossedBaseline());
-
-        //Teleop
-        teleop = new Teleop();
-        teleop.setGearsDelivered(other.getTeleop().getGearsDelivered());
-        teleop.setGearsDropped(other.getTeleop().getGearsDropped());
-        teleop.getLowGoalDumps().addAll(other.getTeleop().getLowGoalDumps());
-        teleop.setHighGoals(other.getTeleop().getHighGoals());
-        teleop.setMissedHighGoals(other.getTeleop().getMissedHighGoals());
-        teleop.setClimbingStats(other.getTeleop().getClimbingStats());
-
-        //Summary
-        setTroubleWith(other.getTroubleWith());
-        setComments(other.getComments());
-    }
-
-    // --- INIT ---
-
     public static ScoutData fromStringArray(String[] array) { //used by CSV
         ScoutData data = new ScoutData();
 
@@ -144,32 +94,28 @@ public class ScoutData implements Serializable {
         data.setSource(array[4]);
 
         //Auto
-        data.getAutonomous().setGearsDelivered(Integer.parseInt(array[5]));
-        data.getAutonomous().setGearsDropped(Integer.parseInt(array[6]));
-        data.getAutonomous().setLowGoalDumpAmount(FuelDumpAmount.valueOf(array[7]));
-        data.getAutonomous().setHighGoals(Integer.parseInt(array[8]));
-        data.getAutonomous().setMissedHighGoals(Integer.parseInt(array[9]));
-        data.getAutonomous().setCrossedBaseline(Boolean.parseBoolean(array[10]));
+        data.getAutonomous().setCrossedAutoLine(Boolean.parseBoolean(array[5]));
+        data.getAutonomous().setPowerCubeAllianceSwitchCount(Integer.parseInt(array[6]));
+        data.getAutonomous().setPowerCubeScaleCount(Integer.parseInt(array[7]));
+        data.getAutonomous().setPowerCubePlayerStationCount(Integer.parseInt(array[8]));
 
         //Teleop
-        data.getTeleop().setGearsDelivered(Integer.parseInt(array[11]));
-        data.getTeleop().setGearsDropped(Integer.parseInt(array[12]));
-        for (String amount : Arrays.asList(array[13].substring(1, array[13].length() - 1).split(", "))) {
-            if (amount.isEmpty()) {
-                break;
-            }
-            data.getTeleop().getLowGoalDumps().add(FuelDumpAmount.valueOf(amount.toUpperCase()));
-        }
-        data.getTeleop().setHighGoals(Integer.parseInt(array[14]));
-        data.getTeleop().setMissedHighGoals(Integer.parseInt(array[15]));
-        data.getTeleop().setClimbingStats(ClimbingStats.valueOf(array[16]));
+        data.getTeleop().setPowerCubeAllianceSwitchCount(Integer.parseInt(array[9]));
+        data.getTeleop().setPowerCubeScaleCount(Integer.parseInt(array[10]));
+        data.getTeleop().setPowerCubeOpposingSwitchCount(Integer.parseInt(array[11]));
+        data.getTeleop().setPowerCubePlayerStationCount(Integer.parseInt(array[12]));
+        data.getTeleop().setClimbingStats(ClimbingStats.valueOf(array[13]));
+        data.getTeleop().setSupportedOtherRobotWhenClimbing(Boolean.parseBoolean(array[14]));
 
         //Summary
-        data.setTroubleWith(array[17]);
-        data.setComments(array[18]);
+        data.setStrategies(array[15]);
+        data.setDifficulties(array[16]);
+        data.setComments(array[17]);
 
         return data;
     }
+
+    // --- INIT ---
 
     /**
      * The unique ID used internally by the chosen storage provider
@@ -227,22 +173,26 @@ public class ScoutData implements Serializable {
         return autonomous;
     }
 
+    // --- SUMMARY ---
+
     public Teleop getTeleop() {
         return teleop;
     }
 
-    // --- SUMMARY ---
-
-    public void setTeleop(Teleop teleop) {
-        this.teleop = teleop;
+    public String getStrategies() {
+        return strategies;
     }
 
-    public String getTroubleWith() {
-        return troubleWith;
+    public void setStrategies(String strategies) {
+        this.strategies = strategies;
     }
 
-    public void setTroubleWith(String troubleWith) {
-        this.troubleWith = troubleWith;
+    public String getDifficulties() {
+        return difficulties;
+    }
+
+    public void setDifficulties(String difficulties) {
+        this.difficulties = difficulties;
     }
 
     public String getComments() {
@@ -266,23 +216,22 @@ public class ScoutData implements Serializable {
         fieldList.add(getSource());
 
         //Auto
-        fieldList.add(String.valueOf(getAutonomous().getGearsDelivered()));
-        fieldList.add(String.valueOf(getAutonomous().getGearsDropped()));
-        fieldList.add(getAutonomous().getLowGoalDumpAmount().name());
-        fieldList.add(String.valueOf(getAutonomous().getHighGoals()));
-        fieldList.add(String.valueOf(getAutonomous().getMissedHighGoals()));
-        fieldList.add(String.valueOf(getAutonomous().getCrossedBaseline()));
+        fieldList.add(String.valueOf(getAutonomous().crossedAutoLine()));
+        fieldList.add(String.valueOf(getAutonomous().getPowerCubeAllianceSwitchCount()));
+        fieldList.add(String.valueOf(getAutonomous().getPowerCubeScaleCount()));
+        fieldList.add(String.valueOf(getAutonomous().getPowerCubePlayerStationCount()));
 
         //Teleop
-        fieldList.add(String.valueOf(getTeleop().getGearsDelivered()));
-        fieldList.add(String.valueOf(getTeleop().getGearsDropped()));
-        fieldList.add(getTeleop().getLowGoalDumps().toString());
-        fieldList.add(String.valueOf(getTeleop().getHighGoals()));
-        fieldList.add(String.valueOf(getTeleop().getMissedHighGoals()));
+        fieldList.add(String.valueOf(getTeleop().getPowerCubeAllianceSwitchCount()));
+        fieldList.add(String.valueOf(getTeleop().getPowerCubeScaleCount()));
+        fieldList.add(String.valueOf(getTeleop().getPowerCubeOpposingSwitchCount()));
+        fieldList.add(String.valueOf(getTeleop().getPowerCubePlayerStationCount()));
         fieldList.add(getTeleop().getClimbingStats().name());
+        fieldList.add(String.valueOf(getTeleop().supportedOtherRobotWhenClimbing()));
 
         //Summary
-        fieldList.add(getTroubleWith());
+        fieldList.add(getStrategies());
+        fieldList.add(getDifficulties());
         fieldList.add(getComments());
 
         return fieldList.toArray(new String[fieldList.size()]);
@@ -290,118 +239,92 @@ public class ScoutData implements Serializable {
 
     public class Autonomous implements Serializable {
 
-        private final static long serialVersionUID = 5;
-        private int gearsDelivered;
-        private int gearsDropped;
-        private FuelDumpAmount lowGoalDumpAmount;
-        private int highGoals;
-        private int missedHighGoals;
-        private Boolean crossedBaseline;
+        private boolean crossedAutoLine;
+        private int powerCubeAllianceSwitchCount;
+        private int powerCubeScaleCount;
+        private int powerCubePlayerStationCount;
 
-        public Autonomous() {
-            lowGoalDumpAmount = FuelDumpAmount.NONE;
-            crossedBaseline = false;
+        private Autonomous() {
+            crossedAutoLine = false;
         }
 
-        public int getGearsDelivered() {
-            return gearsDelivered;
+        public boolean crossedAutoLine() {
+            return crossedAutoLine;
         }
 
-        public void setGearsDelivered(int gearsDelivered) {
-            this.gearsDelivered = gearsDelivered;
+        public void setCrossedAutoLine(boolean crossedAutoLine) {
+            this.crossedAutoLine = crossedAutoLine;
         }
 
-        public int getGearsDropped() {
-            return gearsDropped;
+        public int getPowerCubeAllianceSwitchCount() {
+            return powerCubeAllianceSwitchCount;
         }
 
-        public void setGearsDropped(int gearsDropped) {
-            this.gearsDropped = gearsDropped;
+        public void setPowerCubeAllianceSwitchCount(int powerCubeAllianceSwitchCount) {
+            this.powerCubeAllianceSwitchCount = powerCubeAllianceSwitchCount;
         }
 
-        public FuelDumpAmount getLowGoalDumpAmount() {
-            return lowGoalDumpAmount;
+        public int getPowerCubeScaleCount() {
+            return powerCubeScaleCount;
         }
 
-        public void setLowGoalDumpAmount(FuelDumpAmount lowGoalDumpAmount) {
-            this.lowGoalDumpAmount = lowGoalDumpAmount;
+        public void setPowerCubeScaleCount(int powerCubeScaleCount) {
+            this.powerCubeScaleCount = powerCubeScaleCount;
         }
 
-        public int getHighGoals() {
-            return highGoals;
+        public int getPowerCubePlayerStationCount() {
+            return powerCubePlayerStationCount;
         }
 
-        public void setHighGoals(int highGoals) {
-            this.highGoals = highGoals;
+        public void setPowerCubePlayerStationCount(int powerCubePlayerStationCount) {
+            this.powerCubePlayerStationCount = powerCubePlayerStationCount;
         }
-
-        public int getMissedHighGoals() {
-            return missedHighGoals;
-        }
-
-        public void setMissedHighGoals(int missedHighGoals) {
-            this.missedHighGoals = missedHighGoals;
-        }
-
-        public Boolean getCrossedBaseline() {
-            return crossedBaseline;
-        }
-
-        public void setCrossedBaseline(Boolean crossedBaseline) {
-            this.crossedBaseline = crossedBaseline;
-        }
-
     }
 
     public class Teleop implements Serializable {
 
-        private final static long serialVersionUID = 5;
-        private int gearsDelivered;
-        private int gearsDropped;
-        private ArrayList<FuelDumpAmount> lowGoalDumps;
-        private int highGoals;
-        private int missedHighGoals;
+        private int powerCubeAllianceSwitchCount;
+        private int powerCubeScaleCount;
+        private int powerCubeOpposingSwitchCount;
+        private int powerCubePlayerStationCount;
         private ClimbingStats climbingStats;
+        private boolean supportedOtherRobotWhenClimbing;
 
-        public Teleop() {
-            lowGoalDumps = new ArrayList<>();
+        private Teleop() {
             climbingStats = ClimbingStats.DID_NOT_CLIMB;
+            supportedOtherRobotWhenClimbing = false;
         }
 
-        public int getGearsDelivered() {
-            return gearsDelivered;
+        public int getPowerCubeAllianceSwitchCount() {
+            return powerCubeAllianceSwitchCount;
         }
 
-        public void setGearsDelivered(int gearsDelivered) {
-            this.gearsDelivered = gearsDelivered;
+        public void setPowerCubeAllianceSwitchCount(int powerCubeAllianceSwitchCount) {
+            this.powerCubeAllianceSwitchCount = powerCubeAllianceSwitchCount;
         }
 
-        public int getGearsDropped() {
-            return gearsDropped;
+        public int getPowerCubeScaleCount() {
+            return powerCubeScaleCount;
         }
 
-        public void setGearsDropped(int gearsDropped) {
-            this.gearsDropped = gearsDropped;
+        public void setPowerCubeScaleCount(int powerCubeScaleCount) {
+            this.powerCubeScaleCount = powerCubeScaleCount;
         }
 
-        public ArrayList<FuelDumpAmount> getLowGoalDumps() {
-            return lowGoalDumps;
+        public int getPowerCubeOpposingSwitchCount() {
+            return powerCubeOpposingSwitchCount;
         }
 
-        public int getHighGoals() {
-            return highGoals;
+        public void setPowerCubeOpposingSwitchCount(int powerCubeOpposingSwitchCount) {
+            this.powerCubeOpposingSwitchCount = powerCubeOpposingSwitchCount;
         }
 
-        public void setHighGoals(int highGoals) {
-            this.highGoals = highGoals;
+        public int getPowerCubePlayerStationCount() {
+            return powerCubePlayerStationCount;
         }
 
-        public int getMissedHighGoals() {
-            return missedHighGoals;
-        }
-
-        public void setMissedHighGoals(int missedHighGoals) {
-            this.missedHighGoals = missedHighGoals;
+        public void setPowerCubePlayerStationCount(int powerCubePlayerStationCount) {
+            this.powerCubePlayerStationCount = powerCubePlayerStationCount;
         }
 
         public ClimbingStats getClimbingStats() {
@@ -412,5 +335,12 @@ public class ScoutData implements Serializable {
             this.climbingStats = climbingStats;
         }
 
+        public boolean supportedOtherRobotWhenClimbing() {
+            return supportedOtherRobotWhenClimbing;
+        }
+
+        public void setSupportedOtherRobotWhenClimbing(boolean supportedOtherRobotWhenClimbing) {
+            this.supportedOtherRobotWhenClimbing = supportedOtherRobotWhenClimbing;
+        }
     }
 }

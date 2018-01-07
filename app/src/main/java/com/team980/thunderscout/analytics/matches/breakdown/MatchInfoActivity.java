@@ -36,11 +36,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.analytics.matches.MatchPointEstimator;
 import com.team980.thunderscout.schema.ScoutData;
-import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class MatchInfoActivity extends AppCompatActivity {
 
@@ -84,72 +83,50 @@ public class MatchInfoActivity extends AppCompatActivity {
         source.setText(data.getSource());
 
         // Auto
-        TextView mobility = findViewById(R.id.info_match_autoMobilityPoints);
-        mobility.setText(MatchPointEstimator.getBaselinePoints(data) + " pts");
+        TextView crossedAutoLine = findViewById(R.id.info_match_autoCrossedAutoLine);
+        crossedAutoLine.setText(String.valueOf(data.getAutonomous().crossedAutoLine()).toUpperCase(Locale.ROOT));
 
-        TextView autoLowGoalCount = findViewById(R.id.info_match_autoLowGoalCount);
-        autoLowGoalCount.setText((data.getAutonomous().getLowGoalDumpAmount().getMinimumAmount()
-                + data.getAutonomous().getLowGoalDumpAmount().getMaximumAmount()) / 2 + "");
+        TextView auto_powerCubeAllianceSwitchCount = findViewById(R.id.info_match_autoPowerCubeAllianceSwitchCount);
+        auto_powerCubeAllianceSwitchCount.setText(data.getAutonomous().getPowerCubeAllianceSwitchCount() + "");
 
-        TextView autoHighGoalCount = findViewById(R.id.info_match_autoHighGoalCount);
-        autoHighGoalCount.setText(data.getAutonomous().getHighGoals() + "");
+        TextView auto_powerCubeScaleCount = findViewById(R.id.info_match_autoPowerCubeScaleCount);
+        auto_powerCubeScaleCount.setText(data.getAutonomous().getPowerCubeScaleCount() + "");
 
-        TextView autoMissedGoalCount = findViewById(R.id.info_match_autoMissedGoalCount);
-        autoMissedGoalCount.setText(data.getAutonomous().getMissedHighGoals() + "");
-
-        TextView autoFuelPoints = findViewById(R.id.info_match_autoFuelPoints);
-        autoFuelPoints.setText(MatchPointEstimator.getAutoFuelPoints(data) + " pts");
-
-        TextView autoGearDeliveryCount = findViewById(R.id.info_match_autoGearDeliveryCount);
-        autoGearDeliveryCount.setText(data.getAutonomous().getGearsDelivered() + "");
-
-        TextView autoGearDropCount = findViewById(R.id.info_match_autoGearDropCount);
-        autoGearDropCount.setText(data.getAutonomous().getGearsDropped() + "");
-
-        TextView autoRotorPoints = findViewById(R.id.info_match_autoRotorPoints);
-        autoRotorPoints.setText(MatchPointEstimator.getAutoRotorPoints(data) + " pts");
+        TextView auto_powerCubePlayerStationCount = findViewById(R.id.info_match_autoPowerCubePlayerStationCount);
+        auto_powerCubePlayerStationCount.setText(data.getAutonomous().getPowerCubePlayerStationCount() + "");
 
         // Teleop
-        TextView teleopLowGoalCount = findViewById(R.id.info_match_teleopLowGoalCount);
-        int low = 0; //ugh I hate FuelDumpAmount soooo much
-        for (FuelDumpAmount dumpAmount : data.getTeleop().getLowGoalDumps()) {
-            low += ((dumpAmount.getMinimumAmount() + dumpAmount.getMaximumAmount()) / 2);
-        }
-        teleopLowGoalCount.setText(low + "");
+        TextView teleop_powerCubeAllianceSwitchCount = findViewById(R.id.info_match_teleopPowerCubeAllianceSwitchCount);
+        teleop_powerCubeAllianceSwitchCount.setText(data.getTeleop().getPowerCubeAllianceSwitchCount() + "");
 
-        TextView teleopHighGoalCount = findViewById(R.id.info_match_teleopHighGoalCount);
-        teleopHighGoalCount.setText(data.getTeleop().getHighGoals() + "");
+        TextView teleop_powerCubeScaleCount = findViewById(R.id.info_match_teleopPowerCubeScaleCount);
+        teleop_powerCubeScaleCount.setText(data.getTeleop().getPowerCubeScaleCount() + "");
 
-        TextView teleopMissedGoalCount = findViewById(R.id.info_match_teleopMissedGoalCount);
-        teleopMissedGoalCount.setText(data.getTeleop().getMissedHighGoals() + "");
+        TextView teleop_powerCubeOpposingSwitchCount = findViewById(R.id.info_match_teleopPowerCubeOpposingSwitchCount);
+        teleop_powerCubeOpposingSwitchCount.setText(data.getTeleop().getPowerCubeOpposingSwitchCount() + "");
 
-        TextView teleopFuelPoints = findViewById(R.id.info_match_teleopFuelPoints);
-        teleopFuelPoints.setText(MatchPointEstimator.getTeleopFuelPoints(data) + " pts");
+        TextView teleop_powerCubePlayerStationCount = findViewById(R.id.info_match_teleopPowerCubePlayerStationCount);
+        teleop_powerCubePlayerStationCount.setText(data.getTeleop().getPowerCubePlayerStationCount() + "");
 
-        TextView teleopGearDeliveryCount = findViewById(R.id.info_match_teleopGearDeliveryCount);
-        teleopGearDeliveryCount.setText(data.getTeleop().getGearsDelivered() + "");
+        TextView climbingStats = findViewById(R.id.info_match_teleopClimbingStats);
+        climbingStats.setText(data.getTeleop().getClimbingStats().toString().toUpperCase());
 
-        TextView teleopGearDropCount = findViewById(R.id.info_match_teleopGearDropCount);
-        teleopGearDropCount.setText(data.getTeleop().getGearsDropped() + "");
-
-        TextView teleopRotorPoints = findViewById(R.id.info_match_teleopRotorPoints);
-        teleopRotorPoints.setText(MatchPointEstimator.getTeleopRotorPoints(data) + " pts");
-
-        TextView climb = findViewById(R.id.info_match_teleopClimbPoints);
-        climb.setText(MatchPointEstimator.getClimbingPoints(data) + " pts");
+        TextView supportedOtherRobotsWhenClimbing = findViewById(R.id.info_match_teleopSupportedOtherRobotsWhenClimbing);
+        supportedOtherRobotsWhenClimbing.setText(String.valueOf(data.getTeleop().supportedOtherRobotWhenClimbing()).toUpperCase(Locale.ROOT));
 
         // Summary
-        TextView rankingPoints = findViewById(R.id.info_match_rankingPoints);
-        rankingPoints.setText(MatchPointEstimator.getRankingPoints(data) + " pts");
-
-        TextView total = findViewById(R.id.info_match_totalPoints);
-        total.setText(MatchPointEstimator.getPointContribution(data) + " pts");
-
-        TextView troubleWith = findViewById(R.id.info_match_troubleWith);
-        if (data.getTroubleWith() != null && !data.getTroubleWith().isEmpty()) {
-            troubleWith.setText(data.getTroubleWith());
+        TextView strategies = findViewById(R.id.info_match_strategies);
+        if (data.getStrategies() != null && !data.getStrategies().isEmpty()) {
+            strategies.setText(data.getStrategies());
         } else {
-            troubleWith.setText("N/A");
+            strategies.setText("N/A");
+        }
+
+        TextView difficulties = findViewById(R.id.info_match_difficulties);
+        if (data.getDifficulties() != null && !data.getDifficulties().isEmpty()) {
+            difficulties.setText(data.getDifficulties());
+        } else {
+            difficulties.setText("N/A");
         }
 
         TextView comments = findViewById(R.id.info_match_comments);

@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 
+//TODO add an onUpdate listener, so we can stop initScoutData from existing?
 public class CounterCompoundView extends FrameLayout implements View.OnClickListener, View.OnLongClickListener {
 
     protected LayoutInflater inflater;
@@ -50,8 +51,7 @@ public class CounterCompoundView extends FrameLayout implements View.OnClickList
     public CounterCompoundView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        inflater = (LayoutInflater) context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         inflater.inflate(R.layout.counter_view, this);
 

@@ -56,15 +56,45 @@
         app:rowCount="2">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Low Goals"
+            android:text="Power Cubes Delivered To..."
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <android.support.v4.widget.Space app:layout_columnWeight="1" />
+
+        <TextView
+            android:text="Alliance Switch"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_teleopLowGoalCount"
-            android:layout_width="0dp"
+            android:id="@+id/info_match_teleopPowerCubeAllianceSwitchCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Central Scale"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_teleopPowerCubeScaleCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="Opposing Switch"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_teleopPowerCubeOpposingSwitchCount"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
@@ -72,125 +102,60 @@
             tools:text="0" />
 
         <TextView
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="High Goals"
+            android:text="Player Station"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_teleopHighGoalCount"
-            android:layout_width="0dp"
+            android:id="@+id/info_match_teleopPowerCubePlayerStationCount"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Missed High Goals"
+        <!--<TextView
+            android:text="Total Power Cubes Scored"
+            android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_teleopMissedGoalCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Fuel Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_teleopFuelPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/info_match_teleopPowerCubeTotalCount"
             android:gravity="right"
             android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0 pts" />
+            tools:text="0" />-->
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Gears Delivered"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_teleopGearDeliveryCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Gears Dropped"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_teleopGearDropCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Rotor Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_teleopRotorPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
+            android:text="Climbing Stats"
             android:textColor="@android:color/white"
             android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Climbing Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_teleopClimbPoints"
+            android:id="@+id/info_match_teleopClimbingStats"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:gravity="right"
-            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_columnWeight="3"
+            tools:text="DID NOT CLIMB" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:text="Supported Other Robots When Climbing"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_teleopSupportedOtherRobotsWhenClimbing"
+            android:layout_width="0dp"
+            android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0 pts" />
+            tools:text="FALSE" />
 
     </android.support.v7.widget.GridLayout>
 

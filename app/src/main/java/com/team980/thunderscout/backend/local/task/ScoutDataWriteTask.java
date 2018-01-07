@@ -31,7 +31,6 @@ import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
 import com.crashlytics.android.Crashlytics;
-import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
@@ -79,23 +78,22 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, List<ScoutDat
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getSource());
 
             // Auto
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED, data.getAutonomous().getGearsDelivered());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED, data.getAutonomous().getGearsDropped());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT, data.getAutonomous().getLowGoalDumpAmount().name());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS, data.getAutonomous().getHighGoals());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS, data.getAutonomous().getMissedHighGoals());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE, data.getAutonomous().getCrossedBaseline());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE, data.getAutonomous().crossedAutoLine());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT, data.getAutonomous().getPowerCubeAllianceSwitchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT, data.getAutonomous().getPowerCubeScaleCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT, data.getAutonomous().getPowerCubePlayerStationCount());
 
             // Teleop
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED, data.getTeleop().getGearsDelivered());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED, data.getTeleop().getGearsDropped());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS, ThunderScout.serializeObject(data.getTeleop().getLowGoalDumps()));
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS, data.getTeleop().getHighGoals());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS, data.getTeleop().getMissedHighGoals());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS, data.getTeleop().getClimbingStats().name());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT, data.getTeleop().getPowerCubeAllianceSwitchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT, data.getTeleop().getPowerCubeScaleCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT, data.getTeleop().getPowerCubeOpposingSwitchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT, data.getTeleop().getPowerCubePlayerStationCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS, data.getTeleop().getClimbingStats().name());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING, data.getTeleop().supportedOtherRobotWhenClimbing());
 
             // Summary
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH, data.getTroubleWith());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES, data.getStrategies());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DIFFICULTIES, data.getDifficulties());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
 
             long rowId;

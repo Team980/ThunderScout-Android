@@ -157,9 +157,7 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
 
     public void initScoutData(ScoutData data) {
         data.setTeam(teamNumber.getText().toString());
-
         data.setMatchNumber(Integer.valueOf(matchNumber.getText().toString()));
-
         data.setAllianceStation(allianceStation);
     }
 

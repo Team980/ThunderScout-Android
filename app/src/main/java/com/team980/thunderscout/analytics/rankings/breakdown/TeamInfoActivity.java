@@ -38,16 +38,17 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.analytics.rankings.TeamPointEstimator;
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
+import com.team980.thunderscout.analytics.ScoutDataStatistics;
+import com.team980.thunderscout.schema.ScoutData;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeamInfoActivity extends AppCompatActivity {
 
-    public static final String EXTRA_AVERAGE_SCOUT_DATA = "com.team980.thunderscout.AVERAGE_SCOUT_DATA";
+    public static final String EXTRA_SCOUT_DATA_LIST = "com.team980.thunderscout.SCOUT_DATA_LIST";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,18 +56,18 @@ public class TeamInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info_team);
 
         Intent launchIntent = getIntent();
-        AverageScoutData data = (AverageScoutData) launchIntent.getSerializableExtra(EXTRA_AVERAGE_SCOUT_DATA);
+        ArrayList<ScoutData> dataList = (ArrayList<ScoutData>) launchIntent.getSerializableExtra(EXTRA_SCOUT_DATA_LIST);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Team Info: Team " + data.getTeam());
+        getSupportActionBar().setTitle("Team Info: Team " + dataList.get(0).getTeam());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             ActivityManager.TaskDescription current = activityManager.getAppTasks().get(0).getTaskInfo().taskDescription;
-            ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription("Team Info: Team " + data.getTeam(),
+            ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription("Team Info: Team " + dataList.get(0).getTeam(),
                     current.getIcon());
 
             setTaskDescription(taskDesc);
@@ -78,10 +79,10 @@ public class TeamInfoActivity extends AppCompatActivity {
 
         // Init
         TextView lastUpdated = findViewById(R.id.info_team_lastUpdated);
-        lastUpdated.setText(SimpleDateFormat.getDateTimeInstance().format(data.getLastUpdated()));
+        lastUpdated.setText(SimpleDateFormat.getDateTimeInstance().format(ScoutDataStatistics.getLastUpdated(dataList)));
 
         // Auto
-        TextView crossPercent = findViewById(R.id.info_team_autoCrossPercentage);
+        /*TextView crossPercent = findViewById(R.id.info_team_autoCrossPercentage);
         crossPercent.setText(formatter.format(data.getCrossedBaselinePercentage()) + "%");
 
         TextView mobility = findViewById(R.id.info_team_autoMobilityPoints);
@@ -136,7 +137,7 @@ public class TeamInfoActivity extends AppCompatActivity {
         teleopRotorPoints.setText(formatter.format(TeamPointEstimator.getTeleopRotorPoints(data)) + " pts");
 
         TextView climbPercent = findViewById(R.id.info_team_teleopClimbPercentage);
-        climbPercent.setText(formatter.format(data.getClimbingStatsPercentage(ClimbingStats.PRESSED_TOUCHPAD)) + "%");
+        climbPercent.setText(formatter.format(data.getClimbingStatsPercentage(ClimbingStats.CLIMBED)) + "%");
 
         TextView climbPts = findViewById(R.id.info_team_teleopClimbPoints);
         climbPts.setText(formatter.format(TeamPointEstimator.getClimbingPoints(data)) + " pts");
@@ -146,26 +147,28 @@ public class TeamInfoActivity extends AppCompatActivity {
         rankingPoints.setText(formatter.format(TeamPointEstimator.getRankingPoints(data)) + " pts");
 
         TextView total = findViewById(R.id.info_team_totalPoints);
-        total.setText(formatter.format(TeamPointEstimator.getPointContribution(data)) + " pts");
+        total.setText(formatter.format(TeamPointEstimator.getPointContribution(data)) + " pts");*/
 
-        RecyclerView troubleWith = findViewById(R.id.info_team_troubleWith);
-        TextView troubleWithPlaceholder = findViewById(R.id.info_team_troubleWithPlaceholder);
+        RecyclerView difficulties = findViewById(R.id.info_team_difficulties);
+        TextView difficultiesPlaceholder = findViewById(R.id.info_team_difficultiesPlaceholder);
 
-        if (data.getTroublesList() == null || data.getTroublesList().isEmpty() || listIsEmpty(data.getTroublesList())) {
-            troubleWith.setVisibility(View.GONE);
-            troubleWithPlaceholder.setVisibility(View.VISIBLE);
+        List<String> difficultiesList = ScoutDataStatistics.getStringList(dataList, data -> data.getDifficulties());
+        if (difficultiesList == null || difficultiesList.isEmpty() || listContentsAreEmpty(difficultiesList)) {
+            difficulties.setVisibility(View.GONE);
+            difficultiesPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            troubleWith.setVisibility(View.VISIBLE);
-            troubleWithPlaceholder.setVisibility(View.GONE);
+            difficulties.setVisibility(View.VISIBLE);
+            difficultiesPlaceholder.setVisibility(View.GONE);
 
-            troubleWith.setLayoutManager(new LinearLayoutManager(this));
-            troubleWith.setAdapter(new CommentsAdapter(data.getTroublesList()));
+            difficulties.setLayoutManager(new LinearLayoutManager(this));
+            difficulties.setAdapter(new CommentsAdapter(difficultiesList));
         }
 
         RecyclerView comments = findViewById(R.id.info_team_comments);
         TextView commentsPlaceholder = findViewById(R.id.info_team_commentsPlaceholder);
 
-        if (data.getCommentsList() == null || data.getCommentsList().isEmpty() || listIsEmpty(data.getCommentsList())) {
+        List<String> commentsList = ScoutDataStatistics.getStringList(dataList, data -> data.getComments());
+        if (commentsList == null || commentsList.isEmpty() || listContentsAreEmpty(commentsList)) {
             comments.setVisibility(View.GONE);
             commentsPlaceholder.setVisibility(View.VISIBLE);
         } else {
@@ -173,7 +176,7 @@ public class TeamInfoActivity extends AppCompatActivity {
             commentsPlaceholder.setVisibility(View.GONE);
 
             comments.setLayoutManager(new LinearLayoutManager(this));
-            comments.setAdapter(new CommentsAdapter(data.getCommentsList()));
+            comments.setAdapter(new CommentsAdapter(commentsList));
         }
     }
 
@@ -187,7 +190,7 @@ public class TeamInfoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean listIsEmpty(List<String> list) {
+    private boolean listContentsAreEmpty(List<String> list) {
         for (String s : list) {
             if (s != null && !s.isEmpty()) {
                 return false;

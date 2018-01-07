@@ -48,8 +48,11 @@ public class SummaryFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EditText troubleWith = getView().findViewById(R.id.summary_edittextTroubleWith);
-        troubleWith.setText(scoutingFlowActivity.getData().getTroubleWith());
+        EditText strategies = getView().findViewById(R.id.summary_edittextStrategies);
+        strategies.setText(scoutingFlowActivity.getData().getStrategies());
+
+        EditText difficulties = getView().findViewById(R.id.summary_edittextDifficulties);
+        difficulties.setText(scoutingFlowActivity.getData().getDifficulties());
 
         EditText comments = getView().findViewById(R.id.summary_edittextComments);
         comments.setText(scoutingFlowActivity.getData().getComments());

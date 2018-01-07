@@ -96,14 +96,14 @@
             android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/info_team_troubleWith"
+            android:id="@+id/info_team_difficulties"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             tools:listitem="@layout/comment_view" />
 
         <TextView
-            android:id="@+id/info_team_troubleWithPlaceholder"
+            android:id="@+id/info_team_difficultiesPlaceholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N/A"

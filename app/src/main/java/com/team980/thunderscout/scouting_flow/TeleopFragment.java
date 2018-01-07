@@ -28,27 +28,22 @@ package com.team980.thunderscout.scouting_flow;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
-import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 
-public class TeleopFragment extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
+public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedListener, View.OnClickListener {
 
     private ScoutingFlowActivity scoutingFlowActivity;
-
-    private LinearLayoutManager layoutManager;
-    private DumpCounterAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,21 +54,17 @@ public class TeleopFragment extends Fragment implements View.OnClickListener, Sp
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView fuelDumps = view.findViewById(R.id.teleop_recyclerViewFuelDumps);
+        CounterCompoundView powerCubeAllianceSwitchCount = getView().findViewById(R.id.teleop_counterPowerCubeAllianceSwitch);
+        powerCubeAllianceSwitchCount.setValue(scoutingFlowActivity.getData().getTeleop().getPowerCubeAllianceSwitchCount());
 
-        layoutManager = new LinearLayoutManager(getContext());
-        fuelDumps.setLayoutManager(layoutManager);
+        CounterCompoundView powerCubeScaleCount = getView().findViewById(R.id.teleop_counterPowerCubeScaleCount);
+        powerCubeScaleCount.setValue(scoutingFlowActivity.getData().getTeleop().getPowerCubeScaleCount());
 
-        adapter = new DumpCounterAdapter();
-        fuelDumps.setAdapter(adapter);
+        CounterCompoundView powerCubeOpposingSwitchCount = getView().findViewById(R.id.teleop_counterPowerCubeOpposingSwitchCount);
+        powerCubeOpposingSwitchCount.setValue(scoutingFlowActivity.getData().getTeleop().getPowerCubeOpposingSwitchCount());
 
-        if (savedInstanceState != null) {
-            layoutManager.onRestoreInstanceState(savedInstanceState.getParcelable("LayoutManager"));
-            adapter.onRestoreInstanceState(savedInstanceState);
-        }
-
-        Button addDumpButton = view.findViewById(R.id.teleop_buttonAddFuelDump);
-        addDumpButton.setOnClickListener(this);
+        CounterCompoundView powerCubePlayerStationCount = getView().findViewById(R.id.teleop_counterPowerCubePlayerStationCount);
+        powerCubePlayerStationCount.setValue(scoutingFlowActivity.getData().getTeleop().getPowerCubePlayerStationCount());
 
         Spinner climbingStats = view.findViewById(R.id.teleop_spinnerClimbingStats);
         climbingStats.setOnItemSelectedListener(this);
@@ -85,26 +76,9 @@ public class TeleopFragment extends Fragment implements View.OnClickListener, Sp
 
         climbingStats.setSelection(scoutingFlowActivity.getData().getTeleop().getClimbingStats().ordinal());
 
-        CounterCompoundView teleopGearsDelivered = getView().findViewById(R.id.teleop_counterGearsDelivered);
-        teleopGearsDelivered.setValue(scoutingFlowActivity.getData().getTeleop().getGearsDelivered());
-
-        CounterCompoundView teleopGearsDropped = getView().findViewById(R.id.teleop_counterGearsDropped);
-        teleopGearsDropped.setValue(scoutingFlowActivity.getData().getTeleop().getGearsDropped());
-
-        DumpCounterAdapter teleopDumpAdapter = getFuelDumpAdapter();
-        teleopDumpAdapter.addAll(scoutingFlowActivity.getData().getTeleop().getLowGoalDumps());
-
-        CounterCompoundView teleopHighGoals = getView().findViewById(R.id.teleop_counterHighGoals);
-        teleopHighGoals.setValue(scoutingFlowActivity.getData().getTeleop().getHighGoals());
-
-        CounterCompoundView teleopMissedHighGoals = getView().findViewById(R.id.teleop_counterMissedHighGoals);
-        teleopMissedHighGoals.setValue(scoutingFlowActivity.getData().getTeleop().getMissedHighGoals());
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putParcelable("LayoutManager", layoutManager.onSaveInstanceState());
-        adapter.onSaveInstanceState(savedInstanceState);
+        CheckBox supportedOtherRobotsWhenClimbing = getView().findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
+        supportedOtherRobotsWhenClimbing.setChecked(scoutingFlowActivity.getData().getTeleop().supportedOtherRobotWhenClimbing());
+        supportedOtherRobotsWhenClimbing.setOnClickListener(this);
     }
 
     @Override
@@ -120,21 +94,11 @@ public class TeleopFragment extends Fragment implements View.OnClickListener, Sp
     }
 
     /**
-     * Click listener for RecyclerView button
-     */
-    @Override
-    public void onClick(View v) {
-        adapter.add(FuelDumpAmount.NONE);
-    }
-
-    /**
      * Listener for ClimbingStats spinner
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String itemSelected = (String) parent.getItemAtPosition(position);
-
-        ClimbingStats climbingStats = ClimbingStats.valueOf(itemSelected.toUpperCase().replace(' ', '_'));
+        ClimbingStats climbingStats = ClimbingStats.values()[position];
         scoutingFlowActivity.getData().getTeleop().setClimbingStats(climbingStats);
     }
 
@@ -143,8 +107,12 @@ public class TeleopFragment extends Fragment implements View.OnClickListener, Sp
         //do nothing
     }
 
-    public DumpCounterAdapter getFuelDumpAdapter() {
-        return adapter;
-    }
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing) {
+            AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
 
+            scoutingFlowActivity.getData().getTeleop().setSupportedOtherRobotWhenClimbing(checkBox.isChecked());
+        }
+    }
 }

@@ -58,7 +58,8 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Baseline Cross Success"
+            android:text="Auto Line Cross Success"
+            android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
@@ -75,7 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Avg. Mobility"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@android:color/white"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_columnWeight="2" />
@@ -85,7 +86,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0 pts" />
@@ -137,76 +137,6 @@
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Fuel Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_team_autoFuelPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Gears Delivered"
-            android:textSize="22sp"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_team_autoGearDeliveryCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Gears Dropped"
-            android:textSize="22sp"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_team_autoGearDropCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Rotor Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_team_autoRotorPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
 
     </android.support.v7.widget.GridLayout>
 

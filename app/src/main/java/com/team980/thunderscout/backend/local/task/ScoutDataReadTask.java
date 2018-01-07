@@ -32,14 +32,12 @@ import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
 import com.crashlytics.android.Crashlytics;
-import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
-import com.team980.thunderscout.schema.enumeration.FuelDumpAmount;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,21 +75,20 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
                 ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED,
                 ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE,
 
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT,
 
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING,
 
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES,
+                ScoutDataContract.ScoutDataTable.COLUMN_NAME_DIFFICULTIES,
                 ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS
         };
 
@@ -163,72 +160,67 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
         data.setSource(dataSource);
 
         // Auto
-        int autoGearsDelivered = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED));
+        int crossedAutoLine = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE));
 
-        data.getAutonomous().setGearsDelivered(autoGearsDelivered);
+        data.getAutonomous().setCrossedAutoLine(crossedAutoLine != 0); //I2B conversion
 
-        int autoGearsDropped = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED));
+        int autoPowerCubeNearSwitchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT));
 
-        data.getAutonomous().setGearsDropped(autoGearsDropped);
+        data.getAutonomous().setPowerCubeAllianceSwitchCount(autoPowerCubeNearSwitchCount);
 
-        String autoLowGoalDumpAmount = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT));
+        int autoPowerCubeScaleCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT));
 
-        data.getAutonomous().setLowGoalDumpAmount(FuelDumpAmount.valueOf(autoLowGoalDumpAmount));
+        data.getAutonomous().setPowerCubeScaleCount(autoPowerCubeScaleCount);
 
-        int autoHighGoals = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS));
+        int autoPowerCubeAllianceStationCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT));
 
-        data.getAutonomous().setHighGoals(autoHighGoals);
-
-        int autoMissedHighGoals = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS));
-
-        data.getAutonomous().setMissedHighGoals(autoMissedHighGoals);
-
-        int crossedBaseline = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE));
-
-        data.getAutonomous().setCrossedBaseline(crossedBaseline != 0); //I2B conversion
+        data.getAutonomous().setPowerCubePlayerStationCount(autoPowerCubeAllianceStationCount);
 
         // Teleop
-        int teleopGearsDelivered = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED));
+        int teleopPowerCubeNearSwitchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT));
 
-        data.getTeleop().setGearsDelivered(teleopGearsDelivered);
+        data.getTeleop().setPowerCubeAllianceSwitchCount(teleopPowerCubeNearSwitchCount);
 
-        int teleopGearsDropped = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED));
+        int teleopPowerCubeFarSwitchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT));
 
-        data.getTeleop().setGearsDropped(teleopGearsDropped);
+        data.getTeleop().setPowerCubeOpposingSwitchCount(teleopPowerCubeFarSwitchCount);
 
-        byte[] teleopLowGoalDumps = cursor.getBlob(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS));
+        int teleopPowerCubeScaleCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT));
 
-        data.getTeleop().getLowGoalDumps().addAll((ArrayList<FuelDumpAmount>) ThunderScout.deserializeObject(teleopLowGoalDumps));
+        data.getTeleop().setPowerCubeScaleCount(teleopPowerCubeScaleCount);
 
-        int teleopHighGoals = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS));
+        int teleopPowerCubeAllianceStationCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT));
 
-        data.getTeleop().setHighGoals(teleopHighGoals);
-
-        int teleopMissedHighGoals = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS));
-
-        data.getTeleop().setMissedHighGoals(teleopMissedHighGoals);
+        data.getTeleop().setPowerCubePlayerStationCount(teleopPowerCubeAllianceStationCount);
 
         String climbingStats = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS));
 
         data.getTeleop().setClimbingStats(ClimbingStats.valueOf(climbingStats));
 
-        // Summary
-        String troubleWith = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH));
+        int supportedOtherRobotWhenClimbing = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING));
 
-        data.setTroubleWith(troubleWith);
+        data.getTeleop().setSupportedOtherRobotWhenClimbing(supportedOtherRobotWhenClimbing != 0); //I2B conversion
+
+        // Summary
+        String strategies = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES));
+
+        data.setStrategies(strategies);
+
+        String difficulties = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DIFFICULTIES));
+
+        data.setDifficulties(difficulties);
 
         String comments = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS));

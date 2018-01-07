@@ -30,9 +30,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class ScoutDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 1;
 
-    public static final String DATABASE_NAME = "ThunderScout_SCOUT_DATA_2017.db";
+    public static final String DATABASE_NAME = "ThunderScout_SCOUT_DATA_2018.db";
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String FLOAT_TYPE = " REAL";
@@ -49,21 +49,20 @@ public class ScoutDataDbHelper extends SQLiteOpenHelper {
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE + TEXT_TYPE + COMMA_SEP +
 
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DELIVERED + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_GEARS_DROPPED + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_LOW_GOAL_DUMP_AMOUNT + TEXT_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_HIGH_GOALS + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_MISSED_HIGH_GOALS + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_BASELINE + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT + INTEGER_TYPE + COMMA_SEP +
 
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DELIVERED + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_GEARS_DROPPED + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_GOAL_DUMPS + BLOB_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_GOALS + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MISSED_HIGH_GOALS + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_CLIMBING_STATS + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING + INTEGER_TYPE + COMMA_SEP +
 
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TROUBLE_WITH + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_DIFFICULTIES + TEXT_TYPE + COMMA_SEP +
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS + TEXT_TYPE + ")";
 
     private static final String SQL_DELETE_ENTRIES =
