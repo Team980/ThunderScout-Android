@@ -46,8 +46,7 @@
 
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="8dp"
+        android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
@@ -115,6 +114,18 @@
             app:layout_columnWeight="1"
             tools:text="0" />
 
+    </android.support.v7.widget.GridLayout>
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
+
         <!--<TextView
             android:text="Total Power Cubes Scored"
             android:textColor="@android:color/white"
@@ -140,14 +151,26 @@
             android:layout_width="0dp"
             android:gravity="right"
             android:textSize="22sp"
-            app:layout_columnWeight="3"
-            tools:text="DID NOT CLIMB" />
+            app:layout_columnWeight="7"
+            tools:text="ATTEMPTED CLIMB" />
+
+    </android.support.v7.widget.GridLayout>
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
 
         <TextView
             android:layout_width="0dp"
             android:text="Supported Other Robots When Climbing"
             android:textSize="22sp"
-            app:layout_columnWeight="1" />
+            app:layout_columnWeight="3" />
 
         <TextView
             android:id="@+id/info_match_teleopSupportedOtherRobotsWhenClimbing"
@@ -155,6 +178,7 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical"
             tools:text="FALSE" />
 
     </android.support.v7.widget.GridLayout>

@@ -41,7 +41,7 @@ android {
         targetSdkVersion 27
         multiDexEnabled true
         versionCode 15 //Next public release: 16
-        versionName "2018.1-beta1"
+        versionName "2018.1-beta2"
         resConfigs "en"
     }
 
@@ -75,10 +75,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     def firebaseVersion = '11.8.0'
-    def supportVersion = '27.0.2'
+    def supportVersion = '27.1.0'
 
     //Firebase Crashlytics
-    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }
 
@@ -90,7 +90,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:' + firebaseVersion
 
     //FirebaseUI
-    implementation 'com.firebaseui:firebase-ui-auth:3.1.2'
+    implementation 'com.firebaseui:firebase-ui-auth:3.2.2'
 
     //Android Support
     implementation 'com.android.support:support-v4:' + supportVersion
@@ -109,17 +109,17 @@ dependencies {
     implementation 'com.android.support:customtabs:' + supportVersion
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.android.support:multidex:1.0.3'
 
     //Material About, Library Info
-    implementation 'com.github.daniel-stoneuk:material-about-library:2.2.3-support26.1.0'
+    implementation 'com.github.daniel-stoneuk:material-about-library:2.2.4'
     //Weird version system
-    implementation('com.mikepenz:aboutlibraries:6.0.1@aar') {
+    implementation('com.mikepenz:aboutlibraries:6.0.6@aar') {
         transitive = true
     }
 
     //OpenCSV
-    implementation('com.opencsv:opencsv:4.0') {
+    implementation('com.opencsv:opencsv:4.1') {
         //Transitively requires Apache Commons, which necessitates multidex...
         exclude group: 'commons-beanutils'
     }

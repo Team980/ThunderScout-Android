@@ -71,6 +71,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="16dp"
             android:text="Difficulties"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="22sp"
@@ -88,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:paddingTop="16dp"
             android:text="Comments"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="22sp"

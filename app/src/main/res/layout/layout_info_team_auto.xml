@@ -75,24 +75,6 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Avg. Mobility"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_team_autoMobilityPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:text="Avg. Low Goals"
             android:textSize="22sp"
             app:layout_columnWeight="2" />

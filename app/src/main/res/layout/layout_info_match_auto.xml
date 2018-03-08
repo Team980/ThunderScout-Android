@@ -69,6 +69,7 @@
             tools:text="FALSE" />
 
         <TextView
+            android:paddingTop="16dp"
             android:text="Power Cubes Delivered To..."
             android:textColor="@android:color/white"
             android:textSize="22sp"
