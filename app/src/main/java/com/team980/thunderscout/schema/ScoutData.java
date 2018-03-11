@@ -24,6 +24,8 @@
 
 package com.team980.thunderscout.schema;
 
+import android.support.annotation.NonNull;
+
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
@@ -34,7 +36,7 @@ import java.util.Date;
 /**
  * Implements data for one team from one match.
  */
-public class ScoutData implements Serializable {
+public class ScoutData implements Comparable<ScoutData>, Serializable {
 
     /**
      * ScoutData Version 2018-1
@@ -235,6 +237,15 @@ public class ScoutData implements Serializable {
         fieldList.add(getComments());
 
         return fieldList.toArray(new String[fieldList.size()]);
+    }
+
+    @Override
+    public int compareTo(@NonNull ScoutData other) {
+        if (team.compareTo(other.getTeam()) == 0) {
+            return Integer.compare(matchNumber, other.getMatchNumber());
+        } else {
+            return team.compareTo(other.getTeam());
+        }
     }
 
     public class Autonomous implements Serializable {

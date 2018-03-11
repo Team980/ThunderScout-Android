@@ -78,9 +78,9 @@
     </string-array>
 
     <string-array name="climbing_stats_array">
-        <item>Did not climb</item>
-        <item>Attempted climb</item>
-        <item>Climbed</item>
+        <item>DID NOT CLIMB</item>
+        <item>ATTEMPTED CLIMB</item>
+        <item>CLIMBED</item>
     </string-array>
 
     <string-array name="iexport_file_types">

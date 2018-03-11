@@ -177,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="8dp"
-                android:text="Supported Other Robots When Climbing"
+                android:text="Supported Other Robots"
                 android:textSize="24sp" />
 
             <android.support.v7.widget.AppCompatCheckBox

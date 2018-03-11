@@ -44,23 +44,25 @@
 
     </FrameLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:text="Power Cubes Delivered To..."
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        app:layout_columnWeight="1" />
+
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:paddingTop="8dp"
         app:columnCount="2"
         app:orientation="horizontal"
         app:rowCount="2">
-
-        <TextView
-            android:text="Power Cubes Delivered To..."
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <android.support.v4.widget.Space app:layout_columnWeight="1" />
 
         <TextView
             android:text="Alliance Switch"
@@ -102,6 +104,7 @@
 
         <TextView
             android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
             android:text="Player Station"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
@@ -121,7 +124,6 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:paddingTop="16dp"
         app:columnCount="2"
         app:orientation="horizontal"
         app:rowCount="2">
@@ -158,7 +160,7 @@
 
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -168,7 +170,7 @@
 
         <TextView
             android:layout_width="0dp"
-            android:text="Supported Other Robots When Climbing"
+            android:text="Supported Other Robots"
             android:textSize="22sp"
             app:layout_columnWeight="3" />
 

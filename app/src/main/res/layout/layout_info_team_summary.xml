@@ -31,50 +31,15 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_floating_light"
-        android:padding="16dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Avg. Ranking Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/info_team_rankingPoints"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            tools:text="0 pts" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@color/background_floating"
         android:padding="16dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Expected Total"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/info_team_totalPoints"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            tools:text="0 pts" />
+            android:layout_height="match_parent"
+            android:text="Summary"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="25sp" />
 
     </FrameLayout>
 
@@ -90,10 +55,31 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trouble With"
+            android:text="Strategies"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textSize="22sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/info_team_strategies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            tools:listitem="@layout/comment_view" />
+
+        <TextView
+            android:id="@+id/info_team_strategiesPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N/A"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Difficulties"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textSize="22sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/info_team_difficulties"
@@ -112,11 +98,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:paddingTop="16dp"
             android:text="Comments"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="22sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/info_team_comments"

@@ -135,7 +135,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                 ActivityManager.TaskDescription current = activityManager.getAppTasks().get(0).getTaskInfo().taskDescription;
                 ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription("Scout a match...",
-                        current.getIcon());
+                        current.getIcon(), getResources().getColor(R.color.primary));
                 setTaskDescription(taskDesc);
             }
         }

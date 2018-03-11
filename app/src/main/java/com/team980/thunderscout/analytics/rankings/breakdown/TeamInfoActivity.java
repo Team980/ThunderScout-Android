@@ -40,6 +40,7 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.ScoutDataStatistics;
 import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -82,77 +83,69 @@ public class TeamInfoActivity extends AppCompatActivity {
         lastUpdated.setText(SimpleDateFormat.getDateTimeInstance().format(ScoutDataStatistics.getLastUpdated(dataList)));
 
         // Auto
-        /*TextView crossPercent = findViewById(R.id.info_team_autoCrossPercentage);
-        crossPercent.setText(formatter.format(data.getCrossedBaselinePercentage()) + "%");
+        TextView crossPercent = findViewById(R.id.info_team_autoCrossPercentage);
+        crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                data -> data.getAutonomous().crossedAutoLine())) + "%");
 
-        TextView mobility = findViewById(R.id.info_team_autoMobilityPoints);
-        mobility.setText(formatter.format(TeamPointEstimator.getBaselinePoints(data)) + " pts");
+        TextView auto_powerCubeAllianceSwitchAverage = findViewById(R.id.info_team_autoPowerCubeAllianceSwitchAverage);
+        auto_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
+                data -> data.getAutonomous().getPowerCubeAllianceSwitchCount())));
 
-        TextView autoLowGoalCount = findViewById(R.id.info_team_autoLowGoalCount);
-        autoLowGoalCount.setText(formatter.format((data.getAverageAutoLowGoalDumpAmount().getMinimumAmount()
-                + data.getAverageAutoLowGoalDumpAmount().getMaximumAmount()) / 2));
+        TextView auto_powerCubeScaleAverage = findViewById(R.id.info_team_autoPowerCubeScaleAverage);
+        auto_powerCubeScaleAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
+                data -> data.getAutonomous().getPowerCubeScaleCount())));
 
-        TextView autoHighGoalCount = findViewById(R.id.info_team_autoHighGoalCount);
-        autoHighGoalCount.setText(formatter.format(data.getAverageAutoHighGoals()));
-
-        TextView autoMissedGoalCount = findViewById(R.id.info_team_autoMissedGoalCount);
-        autoMissedGoalCount.setText(formatter.format(data.getAverageAutoMissedHighGoals()));
-
-        TextView autoFuelPoints = findViewById(R.id.info_team_autoFuelPoints);
-        autoFuelPoints.setText(formatter.format(TeamPointEstimator.getAutoFuelPoints(data)) + " pts");
-
-        TextView autoGearDeliveryCount = findViewById(R.id.info_team_autoGearDeliveryCount);
-        autoGearDeliveryCount.setText(formatter.format(data.getAverageAutoGearsDelivered()));
-
-        TextView autoGearDropCount = findViewById(R.id.info_team_autoGearDropCount);
-        autoGearDropCount.setText(formatter.format(data.getAverageAutoGearsDropped()));
-
-        TextView autoRotorPoints = findViewById(R.id.info_team_autoRotorPoints);
-        autoRotorPoints.setText(formatter.format(TeamPointEstimator.getAutoRotorPoints(data)) + " pts");
+        TextView auto_powerCubePlayerStationAverage = findViewById(R.id.info_team_autoPowerCubePlayerStationAverage);
+        auto_powerCubePlayerStationAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
+                data -> data.getAutonomous().getPowerCubePlayerStationCount())));
 
         // Teleop
-        TextView teleopLowGoalCount = findViewById(R.id.info_team_teleopLowGoalCount);
-        // ugh I hate FuelDumpAmount soooo much
-        float low = (data.getAverageTeleopLowGoalDumpAmount().getMinimumAmount()
-                + data.getAverageTeleopLowGoalDumpAmount().getMaximumAmount()) / 2; //average dump size
-        low *= data.getAverageTeleopDumpFrequency(); /// times average dump amount
-        teleopLowGoalCount.setText(formatter.format(low));
+        TextView teleop_powerCubeAllianceSwitchAverage = findViewById(R.id.info_team_teleopPowerCubeAllianceSwitchAverage);
+        teleop_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
+                data -> data.getTeleop().getPowerCubeAllianceSwitchCount())));
 
-        TextView teleopHighGoalCount = findViewById(R.id.info_team_teleopHighGoalCount);
-        teleopHighGoalCount.setText(formatter.format(data.getAverageTeleopHighGoals()));
+        TextView teleop_powerCubeScaleAverage = findViewById(R.id.info_team_teleopPowerCubeScaleAverage);
+        teleop_powerCubeScaleAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
+                data -> data.getTeleop().getPowerCubeScaleCount())));
 
-        TextView teleopMissedGoalCount = findViewById(R.id.info_team_teleopMissedGoalCount);
-        teleopMissedGoalCount.setText(formatter.format(data.getAverageTeleopMissedHighGoals()));
+        TextView teleop_powerCubeOpposingSwitchAverage = findViewById(R.id.info_team_teleopPowerCubeOpposingSwitchAverage);
+        teleop_powerCubeOpposingSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
+                data -> data.getTeleop().getPowerCubeOpposingSwitchCount())));
 
-        TextView teleopFuelPoints = findViewById(R.id.info_team_teleopFuelPoints);
-        teleopFuelPoints.setText(formatter.format(TeamPointEstimator.getTeleopFuelPoints(data)) + " pts");
-
-        TextView teleopGearDeliveryCount = findViewById(R.id.info_team_teleopGearDeliveryCount);
-        teleopGearDeliveryCount.setText(formatter.format(data.getAverageTeleopGearsDelivered()));
-
-        TextView teleopGearDropCount = findViewById(R.id.info_team_teleopGearDropCount);
-        teleopGearDropCount.setText(formatter.format(data.getAverageTeleopGearsDropped()));
-
-        TextView teleopRotorPoints = findViewById(R.id.info_team_teleopRotorPoints);
-        teleopRotorPoints.setText(formatter.format(TeamPointEstimator.getTeleopRotorPoints(data)) + " pts");
+        TextView teleop_powerCubePlayerStationAverage = findViewById(R.id.info_team_teleopPowerCubePlayerStationAverage);
+        teleop_powerCubePlayerStationAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
+                data -> data.getTeleop().getPowerCubePlayerStationCount())));
 
         TextView climbPercent = findViewById(R.id.info_team_teleopClimbPercentage);
-        climbPercent.setText(formatter.format(data.getClimbingStatsPercentage(ClimbingStats.CLIMBED)) + "%");
+        climbPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
 
-        TextView climbPts = findViewById(R.id.info_team_teleopClimbPoints);
-        climbPts.setText(formatter.format(TeamPointEstimator.getClimbingPoints(data)) + " pts");
+        TextView supportedRobotPercent = findViewById(R.id.info_team_teleopSupportedRobotPercent);
+        supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                data -> data.getTeleop().supportedOtherRobotWhenClimbing())) + "%");
 
         // Summary
-        TextView rankingPoints = findViewById(R.id.info_team_rankingPoints);
-        rankingPoints.setText(formatter.format(TeamPointEstimator.getRankingPoints(data)) + " pts");
+        RecyclerView strategies = findViewById(R.id.info_team_strategies);
+        TextView strategiesPlaceholder = findViewById(R.id.info_team_strategiesPlaceholder);
 
-        TextView total = findViewById(R.id.info_team_totalPoints);
-        total.setText(formatter.format(TeamPointEstimator.getPointContribution(data)) + " pts");*/
+        List<String> strategiesList = ScoutDataStatistics.getStringList(dataList,
+                data -> "[" + data.getMatchNumber() + "] " + data.getStrategies());
+        if (strategiesList == null || strategiesList.isEmpty() || listContentsAreEmpty(strategiesList)) {
+            strategies.setVisibility(View.GONE);
+            strategiesPlaceholder.setVisibility(View.VISIBLE);
+        } else {
+            strategies.setVisibility(View.VISIBLE);
+            strategiesPlaceholder.setVisibility(View.GONE);
+
+            strategies.setLayoutManager(new LinearLayoutManager(this));
+            strategies.setAdapter(new CommentsAdapter(strategiesList));
+        }
 
         RecyclerView difficulties = findViewById(R.id.info_team_difficulties);
         TextView difficultiesPlaceholder = findViewById(R.id.info_team_difficultiesPlaceholder);
 
-        List<String> difficultiesList = ScoutDataStatistics.getStringList(dataList, data -> data.getDifficulties());
+        List<String> difficultiesList = ScoutDataStatistics.getStringList(dataList,
+                data -> "[" + data.getMatchNumber() + "] " + data.getDifficulties());
         if (difficultiesList == null || difficultiesList.isEmpty() || listContentsAreEmpty(difficultiesList)) {
             difficulties.setVisibility(View.GONE);
             difficultiesPlaceholder.setVisibility(View.VISIBLE);
@@ -167,7 +160,8 @@ public class TeamInfoActivity extends AppCompatActivity {
         RecyclerView comments = findViewById(R.id.info_team_comments);
         TextView commentsPlaceholder = findViewById(R.id.info_team_commentsPlaceholder);
 
-        List<String> commentsList = ScoutDataStatistics.getStringList(dataList, data -> data.getComments());
+        List<String> commentsList = ScoutDataStatistics.getStringList(dataList,
+                data -> "[" + data.getMatchNumber() + "] " + data.getComments());
         if (commentsList == null || commentsList.isEmpty() || listContentsAreEmpty(commentsList)) {
             comments.setVisibility(View.GONE);
             commentsPlaceholder.setVisibility(View.VISIBLE);
