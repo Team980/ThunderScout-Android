@@ -112,7 +112,7 @@ public class MatchInfoActivity extends AppCompatActivity {
         climbingStats.setText(data.getTeleop().getClimbingStats().toString().toUpperCase());
 
         TextView supportedOtherRobotsWhenClimbing = findViewById(R.id.info_match_teleopSupportedOtherRobotsWhenClimbing);
-        supportedOtherRobotsWhenClimbing.setText(String.valueOf(data.getTeleop().supportedOtherRobotWhenClimbing()).toUpperCase(Locale.ROOT));
+        supportedOtherRobotsWhenClimbing.setText(String.valueOf(data.getTeleop().supportedOtherRobots()).toUpperCase(Locale.ROOT));
 
         // Summary
         TextView strategies = findViewById(R.id.info_match_strategies);

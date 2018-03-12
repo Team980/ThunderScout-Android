@@ -77,7 +77,7 @@ public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedLi
         climbingStats.setSelection(scoutingFlowActivity.getData().getTeleop().getClimbingStats().ordinal());
 
         CheckBox supportedOtherRobotsWhenClimbing = getView().findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
-        supportedOtherRobotsWhenClimbing.setChecked(scoutingFlowActivity.getData().getTeleop().supportedOtherRobotWhenClimbing());
+        supportedOtherRobotsWhenClimbing.setChecked(scoutingFlowActivity.getData().getTeleop().supportedOtherRobots());
         supportedOtherRobotsWhenClimbing.setOnClickListener(this);
     }
 
@@ -112,7 +112,7 @@ public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedLi
         if (view.getId() == R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing) {
             AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
 
-            scoutingFlowActivity.getData().getTeleop().setSupportedOtherRobotWhenClimbing(checkBox.isChecked());
+            scoutingFlowActivity.getData().getTeleop().setSupportedOtherRobots(checkBox.isChecked());
         }
     }
 }

@@ -179,13 +179,13 @@ public class CompareBottomSheetBinding {
 
         TextView supportedRobotPercent = dialogView.findViewById(R.id.info_alliance_station1_teleopSupportedRobotPercent);
         supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(station1.getDataList(),
-                data -> data.getTeleop().supportedOtherRobotWhenClimbing())) + "%");
+                data -> data.getTeleop().supportedOtherRobots())) + "%");
         TextView supportedRobotPercent2 = dialogView.findViewById(R.id.info_alliance_station2_teleopSupportedRobotPercent);
         supportedRobotPercent2.setText(formatter.format(ScoutDataStatistics.getPercentage(station2.getDataList(),
-                data -> data.getTeleop().supportedOtherRobotWhenClimbing())) + "%");
+                data -> data.getTeleop().supportedOtherRobots())) + "%");
         TextView supportedRobotPercent3 = dialogView.findViewById(R.id.info_alliance_station3_teleopSupportedRobotPercent);
         supportedRobotPercent3.setText(formatter.format(ScoutDataStatistics.getPercentage(station3.getDataList(),
-                data -> data.getTeleop().supportedOtherRobotWhenClimbing())) + "%");
+                data -> data.getTeleop().supportedOtherRobots())) + "%");
 
         // Summary
         RecyclerView strategies = dialogView.findViewById(R.id.info_alliance_strategies);

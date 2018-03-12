@@ -396,7 +396,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         scoutData.getTeleop().setClimbingStats(ClimbingStats.values()[climbingStats.getSelectedItemPosition()]);
 
         CheckBox supportedOtherRobotsWhenClimbing = teleopView.findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
-        scoutData.getTeleop().setSupportedOtherRobotWhenClimbing(supportedOtherRobotsWhenClimbing.isChecked());
+        scoutData.getTeleop().setSupportedOtherRobots(supportedOtherRobotsWhenClimbing.isChecked());
 
         // Summary
         View summaryView = viewPagerAdapter.getItem(2).getView();

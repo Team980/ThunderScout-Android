@@ -122,7 +122,7 @@ public class TeamInfoActivity extends AppCompatActivity {
 
         TextView supportedRobotPercent = findViewById(R.id.info_team_teleopSupportedRobotPercent);
         supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.getTeleop().supportedOtherRobotWhenClimbing())) + "%");
+                data -> data.getTeleop().supportedOtherRobots())) + "%");
 
         // Summary
         RecyclerView strategies = findViewById(R.id.info_team_strategies);

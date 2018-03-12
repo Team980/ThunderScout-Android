@@ -107,7 +107,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         data.getTeleop().setPowerCubeOpposingSwitchCount(Integer.parseInt(array[11]));
         data.getTeleop().setPowerCubePlayerStationCount(Integer.parseInt(array[12]));
         data.getTeleop().setClimbingStats(ClimbingStats.valueOf(array[13]));
-        data.getTeleop().setSupportedOtherRobotWhenClimbing(Boolean.parseBoolean(array[14]));
+        data.getTeleop().setSupportedOtherRobots(Boolean.parseBoolean(array[14]));
 
         //Summary
         data.setStrategies(array[15]);
@@ -229,7 +229,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         fieldList.add(String.valueOf(getTeleop().getPowerCubeOpposingSwitchCount()));
         fieldList.add(String.valueOf(getTeleop().getPowerCubePlayerStationCount()));
         fieldList.add(getTeleop().getClimbingStats().name());
-        fieldList.add(String.valueOf(getTeleop().supportedOtherRobotWhenClimbing()));
+        fieldList.add(String.valueOf(getTeleop().supportedOtherRobots()));
 
         //Summary
         fieldList.add(getStrategies());
@@ -299,11 +299,11 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         private int powerCubeOpposingSwitchCount;
         private int powerCubePlayerStationCount;
         private ClimbingStats climbingStats;
-        private boolean supportedOtherRobotWhenClimbing;
+        private boolean supportedOtherRobots;
 
         private Teleop() {
             climbingStats = ClimbingStats.DID_NOT_CLIMB;
-            supportedOtherRobotWhenClimbing = false;
+            supportedOtherRobots = false;
         }
 
         public int getPowerCubeAllianceSwitchCount() {
@@ -346,12 +346,12 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
             this.climbingStats = climbingStats;
         }
 
-        public boolean supportedOtherRobotWhenClimbing() {
-            return supportedOtherRobotWhenClimbing;
+        public boolean supportedOtherRobots() {
+            return supportedOtherRobots;
         }
 
-        public void setSupportedOtherRobotWhenClimbing(boolean supportedOtherRobotWhenClimbing) {
-            this.supportedOtherRobotWhenClimbing = supportedOtherRobotWhenClimbing;
+        public void setSupportedOtherRobots(boolean supportedOtherRobots) {
+            this.supportedOtherRobots = supportedOtherRobots;
         }
     }
 }

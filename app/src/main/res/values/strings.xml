@@ -26,9 +26,7 @@
     <string name="app_name">ThunderScout</string>
 
     <string name="welcome_message">
-        ThunderScout is designed by FRC Team 980 ThunderBots to help you scout matches quickly and powerfully.
-        With an intuitively designed scouting flow, robust configuration framework, and intelligent data presentation,
-        ThunderScout can adapt to fit any team\'s needs.
+        TODO new welcome
         \n
         \nTo get started, configure your device in the app settings, or dive in and scout your first match!
     </string>
@@ -43,28 +41,7 @@
 
     <!--- TODO Last update: v15 -->
     <string name="update_notes">
-        ThunderScout 2.0 is a major update that provides key improvements to the analytic features and the Bluetooth transfer system.
-        \n
-        \nThunderScout\'s analytic features have been redesigned from the ground up to be more useful, relevant, and elegant:
-        \n• The data collected is now presented across multiple screens.
-        \n• The Matches screen displays a generated schedule of the event, allowing you to see at a glance all the data you have collected, or may be missing.
-        \n• The Rankings screen ranks teams by an estimation of how many points they would score, on average, alone on the field based on your collected data.
-        \n• Both these screens are searchable, and you can customize the ranking criteria for the latter.
-        \n
-        \nThe match and team breakdowns have been updated to highlight statistical performance and point estimations, and now take up less space.
-        \n• A third "alliance" comparison view is also visible when you select three teams on the Rankings screen.
-        \n
-        \nThe Bluetooth transfer system has been improved to be more reliable and actionable:
-        \n• Notifications now keep you informed with the progress of background transfers and allow you to edit and retry failed transfers.
-        \n• The backend implementation has also been improved with variable alliance•station-based delays, automatic reattempts, and a confirmation phase.
-        \n• You can also select matches on either the Matches or the Rankings screen and batch send them to a specified device.
-        \n
-        \nOther notable changes:
-        \n• The alliance field has been updated to reflect individual alliance stations.
-        \n• The Bluetooth Device selection preference now opens a system dialog.
-        \n• An app shortcut (requires Android 7.1 and/or a supporting launcher) has been added to toggle the Bluetooth server.
-        \n• New squircle icon (now Adaptive on Android Oreo)
-        \n• You can now opt out of telemetry in the settings
+        ThunderScout 2018.1
         \n• These patch notes are also accessible from the About menu, if you ever go looking for them
     </string>
 

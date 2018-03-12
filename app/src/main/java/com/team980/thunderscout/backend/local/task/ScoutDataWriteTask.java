@@ -89,7 +89,7 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, List<ScoutDat
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT, data.getTeleop().getPowerCubeOpposingSwitchCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT, data.getTeleop().getPowerCubePlayerStationCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS, data.getTeleop().getClimbingStats().name());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING, data.getTeleop().supportedOtherRobotWhenClimbing());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING, data.getTeleop().supportedOtherRobots());
 
             // Summary
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES, data.getStrategies());

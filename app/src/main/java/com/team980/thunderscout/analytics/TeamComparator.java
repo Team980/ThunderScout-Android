@@ -33,21 +33,66 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
     //TODO The order isn't consistent when the data is equal-
     //TODO it appears to revert to the order fetched from the database when refreshed
 
-    SORT_TEAM_NUMBER("Team number") {
+    SORT_TEAM_NUMBER("Team Number") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return -(Integer.valueOf(o1.getTeam())
                     .compareTo(Integer.valueOf(o2.getTeam()))); //For this one smaller is better
         }
     },
 
-    SORT_LAST_UPDATED("Time updated") {
+    SORT_LAST_UPDATED("Time Updated") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return ScoutDataStatistics.getLastUpdated(o1.getDataList())
                     .compareTo(ScoutDataStatistics.getLastUpdated(o2.getDataList()));
         }
     },
 
-    SORT_TELEOP_POWER_CUBE_SCALE_COUNT("Average power cubes added to the scale (Teleop)") {
+    SORT_AUTO_LINE_CROSS_SUCCESS("Auto Line Cross Success") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
+                    data -> data.getAutonomous().crossedAutoLine()))
+                    .compareTo(ScoutDataStatistics.getPercentage(o2.getDataList(),
+                            data -> data.getAutonomous().crossedAutoLine()));
+        }
+    },
+
+    SORT_AUTO_POWER_CUBE_ALLIANCE_SWITCH_AVERAGE("Avg. Auto Alliance Switch Cubes") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
+                    data -> data.getAutonomous().getPowerCubeAllianceSwitchCount()))
+                    .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
+                            data -> data.getAutonomous().getPowerCubeAllianceSwitchCount()));
+        }
+    },
+
+    SORT_AUTO_POWER_CUBE_SCALE_AVERAGE("Avg. Auto Central Scale Cubes") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
+                    data -> data.getAutonomous().getPowerCubeScaleCount()))
+                    .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
+                            data -> data.getAutonomous().getPowerCubeScaleCount()));
+        }
+    },
+
+    SORT_AUTO_POWER_CUBE_PLAYER_STATION_AVERAGE("Avg. Auto Player Station Cubes") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
+                    data -> data.getAutonomous().getPowerCubePlayerStationCount()))
+                    .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
+                            data -> data.getAutonomous().getPowerCubePlayerStationCount()));
+        }
+    },
+
+    SORT_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_AVERAGE("Avg. Teleop Alliance Switch Cubes") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
+                    data -> data.getTeleop().getPowerCubeAllianceSwitchCount()))
+                    .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
+                            data -> data.getTeleop().getPowerCubeAllianceSwitchCount()));
+        }
+    },
+
+    SORT_TELEOP_POWER_CUBE_SCALE_AVERAGE("Avg. Teleop Central Scale Cubes") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
                     data -> data.getTeleop().getPowerCubeScaleCount()))
@@ -56,7 +101,25 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_CLIMBING_STATS_PERCENTAGE("Climb percentage") {
+    SORT_TELEOP_POWER_CUBE_OPPOSING_SWITCH_AVERAGE("Avg. Teleop Opposing Switch Cubes") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
+                    data -> data.getTeleop().getPowerCubeOpposingSwitchCount()))
+                    .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
+                            data -> data.getTeleop().getPowerCubeOpposingSwitchCount()));
+        }
+    },
+
+    SORT_TELEOP_POWER_CUBE_PLAYER_STATION_AVERAGE("Avg. Teleop Player Station Cubes") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
+                    data -> data.getTeleop().getPowerCubePlayerStationCount()))
+                    .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
+                            data -> data.getTeleop().getPowerCubePlayerStationCount()));
+        }
+    },
+
+    SORT_CLIMBING_STATS_PERCENTAGE("Climbing Success") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             int climbed = Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
                     data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED))
@@ -72,6 +135,15 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
                 return climbed;
             }
         }
+    },
+
+    SORT_SUPPORTED_OTHER_ROBOTS("Supported Other Robots") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
+                    data -> data.getTeleop().supportedOtherRobots()))
+                    .compareTo(ScoutDataStatistics.getPercentage(o2.getDataList(),
+                            data -> data.getTeleop().supportedOtherRobots()));
+        }
     };
 
     private String displayName;
@@ -81,7 +153,7 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
     }
 
     public static Comparator<TeamWrapper> getComparator(final TeamComparator option) {
-        return (o1, o2) -> option.compare(o1, o2) * -1;
+        return (o1, o2) -> option.compare(o1, o2) == 0 ? TeamComparator.SORT_TEAM_NUMBER.compare(o1, o2) * -1 : option.compare(o1, o2) * -1;
     }
 
     public static String[] getFormattedList() {

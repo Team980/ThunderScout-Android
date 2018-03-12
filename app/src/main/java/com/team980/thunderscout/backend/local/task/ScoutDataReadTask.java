@@ -209,7 +209,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
         int supportedOtherRobotWhenClimbing = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING));
 
-        data.getTeleop().setSupportedOtherRobotWhenClimbing(supportedOtherRobotWhenClimbing != 0); //I2B conversion
+        data.getTeleop().setSupportedOtherRobots(supportedOtherRobotWhenClimbing != 0); //I2B conversion
 
         // Summary
         String strategies = cursor.getString(
