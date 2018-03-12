@@ -60,7 +60,7 @@
                 android:layout_height="24dp"
                 android:layout_toRightOf="@+id/card_icon"
                 android:gravity="center_vertical"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 tools:text="Card Title" />

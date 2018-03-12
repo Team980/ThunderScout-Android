@@ -25,14 +25,21 @@
 package com.team980.thunderscout.analytics.rankings;
 
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.analytics.ScoutDataStatistics;
 import com.team980.thunderscout.analytics.TeamWrapper;
+import com.team980.thunderscout.analytics.rankings.breakdown.CommentsAdapter;
+import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Deprecated
@@ -79,167 +86,140 @@ public class CompareBottomSheetBinding {
         team3.setText(station3.getTeam());
 
         // Auto
-        /*TextView crossPercent = dialogView.findViewById(R.id.info_alliance_station1_autoCrossPercentage);
-        crossPercent.setText(formatter.format("todo") + "%");
+        TextView crossPercent = dialogView.findViewById(R.id.info_alliance_station1_autoCrossPercentage);
+        crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(station1.getDataList(),
+                data -> data.getAutonomous().crossedAutoLine())) + "%");
         TextView crossPercent2 = dialogView.findViewById(R.id.info_alliance_station2_autoCrossPercentage);
-        crossPercent2.setText(formatter.format(station2.getCrossedBaselinePercentage()) + "%");
+        crossPercent2.setText(formatter.format(ScoutDataStatistics.getPercentage(station2.getDataList(),
+                data -> data.getAutonomous().crossedAutoLine())) + "%");
         TextView crossPercent3 = dialogView.findViewById(R.id.info_alliance_station3_autoCrossPercentage);
-        crossPercent3.setText(formatter.format(station3.getCrossedBaselinePercentage()) + "%");
+        crossPercent3.setText(formatter.format(ScoutDataStatistics.getPercentage(station3.getDataList(),
+                data -> data.getAutonomous().crossedAutoLine())) + "%");
 
-        TextView mobility = dialogView.findViewById(R.id.info_alliance_station1_autoMobilityPoints);
-        mobility.setText(formatter.format(TeamPointEstimator.getBaselinePoints(station1)) + " pts");
-        TextView mobility2 = dialogView.findViewById(R.id.info_alliance_station2_autoMobilityPoints);
-        mobility2.setText(formatter.format(TeamPointEstimator.getBaselinePoints(station2)) + " pts");
-        TextView mobility3 = dialogView.findViewById(R.id.info_alliance_station3_autoMobilityPoints);
-        mobility3.setText(formatter.format(TeamPointEstimator.getBaselinePoints(station3)) + " pts");
+        TextView auto_powerCubeAllianceSwitchAverage = dialogView.findViewById(R.id.info_alliance_station1_autoPowerCubeAllianceSwitchAverage);
+        auto_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
+                data -> data.getAutonomous().getPowerCubeAllianceSwitchCount())));
+        TextView auto_powerCubeAllianceSwitchAverage2 = dialogView.findViewById(R.id.info_alliance_station2_autoPowerCubeAllianceSwitchAverage);
+        auto_powerCubeAllianceSwitchAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
+                data -> data.getAutonomous().getPowerCubeAllianceSwitchCount())));
+        TextView auto_powerCubeAllianceSwitchAverage3 = dialogView.findViewById(R.id.info_alliance_station3_autoPowerCubeAllianceSwitchAverage);
+        auto_powerCubeAllianceSwitchAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
+                data -> data.getAutonomous().getPowerCubeAllianceSwitchCount())));
 
-        TextView autoLowGoalCount = dialogView.findViewById(R.id.info_alliance_station1_autoLowGoalCount);
-        autoLowGoalCount.setText(formatter.format((station1.getAverageAutoLowGoalDumpAmount().getMinimumAmount()
-                + station1.getAverageAutoLowGoalDumpAmount().getMaximumAmount()) / 2));
-        TextView autoLowGoalCount2 = dialogView.findViewById(R.id.info_alliance_station2_autoLowGoalCount);
-        autoLowGoalCount2.setText(formatter.format((station2.getAverageAutoLowGoalDumpAmount().getMinimumAmount()
-                + station2.getAverageAutoLowGoalDumpAmount().getMaximumAmount()) / 2));
-        TextView autoLowGoalCount3 = dialogView.findViewById(R.id.info_alliance_station3_autoLowGoalCount);
-        autoLowGoalCount3.setText(formatter.format((station3.getAverageAutoLowGoalDumpAmount().getMinimumAmount()
-                + station3.getAverageAutoLowGoalDumpAmount().getMaximumAmount()) / 2));
+        TextView auto_powerCubeScaleAverage = dialogView.findViewById(R.id.info_alliance_station1_autoPowerCubeScaleAverage);
+        auto_powerCubeScaleAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
+                data -> data.getAutonomous().getPowerCubeScaleCount())));
+        TextView auto_powerCubeScaleAverage2 = dialogView.findViewById(R.id.info_alliance_station2_autoPowerCubeScaleAverage);
+        auto_powerCubeScaleAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
+                data -> data.getAutonomous().getPowerCubeScaleCount())));
+        TextView auto_powerCubeScaleAverage3 = dialogView.findViewById(R.id.info_alliance_station3_autoPowerCubeScaleAverage);
+        auto_powerCubeScaleAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
+                data -> data.getAutonomous().getPowerCubeScaleCount())));
 
-        TextView autoHighGoalCount = dialogView.findViewById(R.id.info_alliance_station1_autoHighGoalCount);
-        autoHighGoalCount.setText(formatter.format(station1.getAverageAutoHighGoals()));
-        TextView autoHighGoalCount2 = dialogView.findViewById(R.id.info_alliance_station2_autoHighGoalCount);
-        autoHighGoalCount2.setText(formatter.format(station2.getAverageAutoHighGoals()));
-        TextView autoHighGoalCount3 = dialogView.findViewById(R.id.info_alliance_station3_autoHighGoalCount);
-        autoHighGoalCount3.setText(formatter.format(station3.getAverageAutoHighGoals()));
-
-        TextView autoMissedGoalCount = dialogView.findViewById(R.id.info_alliance_station1_autoMissedGoalCount);
-        autoMissedGoalCount.setText(formatter.format(station1.getAverageAutoMissedHighGoals()));
-        TextView autoMissedGoalCount2 = dialogView.findViewById(R.id.info_alliance_station2_autoMissedGoalCount);
-        autoMissedGoalCount2.setText(formatter.format(station2.getAverageAutoMissedHighGoals()));
-        TextView autoMissedGoalCount3 = dialogView.findViewById(R.id.info_alliance_station3_autoMissedGoalCount);
-        autoMissedGoalCount3.setText(formatter.format(station3.getAverageAutoMissedHighGoals()));
-
-        TextView autoFuelPoints = dialogView.findViewById(R.id.info_alliance_station1_autoFuelPoints);
-        autoFuelPoints.setText(formatter.format(TeamPointEstimator.getAutoFuelPoints(station1)) + " pts");
-        TextView autoFuelPoints2 = dialogView.findViewById(R.id.info_alliance_station2_autoFuelPoints);
-        autoFuelPoints2.setText(formatter.format(TeamPointEstimator.getAutoFuelPoints(station2)) + " pts");
-        TextView autoFuelPoints3 = dialogView.findViewById(R.id.info_alliance_station3_autoFuelPoints);
-        autoFuelPoints3.setText(formatter.format(TeamPointEstimator.getAutoFuelPoints(station3)) + " pts");
-
-        TextView autoGearDeliveryCount = dialogView.findViewById(R.id.info_alliance_station1_autoGearDeliveryCount);
-        autoGearDeliveryCount.setText(formatter.format(station1.getAverageAutoGearsDelivered()));
-        TextView autoGearDeliveryCount2 = dialogView.findViewById(R.id.info_alliance_station2_autoGearDeliveryCount);
-        autoGearDeliveryCount2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(), data -> data.getAutonomous().getPowerCubeAllianceSwitchCount())));
-        TextView autoGearDeliveryCount3 = dialogView.findViewById(R.id.info_alliance_station3_autoGearDeliveryCount);
-        autoGearDeliveryCount3.setText(formatter.format(station3.getAverageAutoGearsDelivered()));
-
-        TextView autoGearDropCount = dialogView.findViewById(R.id.info_alliance_station1_autoGearDropCount);
-        autoGearDropCount.setText(formatter.format(station1.getAverageAutoGearsDropped()));
-        TextView autoGearDropCount2 = dialogView.findViewById(R.id.info_alliance_station2_autoGearDropCount);
-        autoGearDropCount2.setText(formatter.format(station2.getAverageAutoGearsDropped()));
-        TextView autoGearDropCount3 = dialogView.findViewById(R.id.info_alliance_station3_autoGearDropCount);
-        autoGearDropCount3.setText(formatter.format(station3.getAverageAutoGearsDropped()));
-
-        TextView autoRotorPoints = dialogView.findViewById(R.id.info_alliance_station1_autoRotorPoints);
-        autoRotorPoints.setText(formatter.format(TeamPointEstimator.getAutoRotorPoints(station1)) + " pts");
-        TextView autoRotorPoints2 = dialogView.findViewById(R.id.info_alliance_station2_autoRotorPoints);
-        autoRotorPoints2.setText(formatter.format(TeamPointEstimator.getAutoRotorPoints(station2)) + " pts");
-        TextView autoRotorPoints3 = dialogView.findViewById(R.id.info_alliance_station3_autoRotorPoints);
-        autoRotorPoints3.setText(formatter.format(TeamPointEstimator.getAutoRotorPoints(station3)) + " pts");
+        TextView auto_powerCubePlayerStationAverage = dialogView.findViewById(R.id.info_alliance_station1_autoPowerCubePlayerStationAverage);
+        auto_powerCubePlayerStationAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
+                data -> data.getAutonomous().getPowerCubePlayerStationCount())));
+        TextView auto_powerCubePlayerStationAverage2 = dialogView.findViewById(R.id.info_alliance_station2_autoPowerCubePlayerStationAverage);
+        auto_powerCubePlayerStationAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
+                data -> data.getAutonomous().getPowerCubePlayerStationCount())));
+        TextView auto_powerCubePlayerStationAverage3 = dialogView.findViewById(R.id.info_alliance_station3_autoPowerCubePlayerStationAverage);
+        auto_powerCubePlayerStationAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
+                data -> data.getAutonomous().getPowerCubePlayerStationCount())));
 
         // Teleop
-        TextView teleopLowGoalCount = dialogView.findViewById(R.id.info_alliance_station1_teleopLowGoalCount);
-        // ugh I hate FuelDumpAmount soooo much
-        float low = (station1.getAverageTeleopLowGoalDumpAmount().getMinimumAmount()
-                + station1.getAverageTeleopLowGoalDumpAmount().getMaximumAmount()) / 2; //average dump size
-        low *= station1.getAverageTeleopDumpFrequency(); /// times average dump amount
-        teleopLowGoalCount.setText(formatter.format(low));
-        TextView teleopLowGoalCount2 = dialogView.findViewById(R.id.info_alliance_station2_teleopLowGoalCount);
-        // ugh I hate FuelDumpAmount soooo much
-        float low2 = (station2.getAverageTeleopLowGoalDumpAmount().getMinimumAmount()
-                + station2.getAverageTeleopLowGoalDumpAmount().getMaximumAmount()) / 2; //average dump size
-        low2 *= station2.getAverageTeleopDumpFrequency(); /// times average dump amount
-        teleopLowGoalCount2.setText(formatter.format(low2));
-        TextView teleopLowGoalCount3 = dialogView.findViewById(R.id.info_alliance_station3_teleopLowGoalCount);
-        // ugh I hate FuelDumpAmount soooo much
-        float low3 = (station3.getAverageTeleopLowGoalDumpAmount().getMinimumAmount()
-                + station3.getAverageTeleopLowGoalDumpAmount().getMaximumAmount()) / 2; //average dump size
-        low3 *= station3.getAverageTeleopDumpFrequency(); /// times average dump amount
-        teleopLowGoalCount3.setText(formatter.format(low3));
+        TextView teleop_powerCubeAllianceSwitchAverage = dialogView.findViewById(R.id.info_alliance_station1_teleopPowerCubeAllianceSwitchAverage);
+        teleop_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
+                data -> data.getTeleop().getPowerCubeAllianceSwitchCount())));
+        TextView teleop_powerCubeAllianceSwitchAverage2 = dialogView.findViewById(R.id.info_alliance_station2_teleopPowerCubeAllianceSwitchAverage);
+        teleop_powerCubeAllianceSwitchAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
+                data -> data.getTeleop().getPowerCubeAllianceSwitchCount())));
+        TextView teleop_powerCubeAllianceSwitchAverage3 = dialogView.findViewById(R.id.info_alliance_station3_teleopPowerCubeAllianceSwitchAverage);
+        teleop_powerCubeAllianceSwitchAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
+                data -> data.getTeleop().getPowerCubeAllianceSwitchCount())));
 
-        TextView teleopHighGoalCount = dialogView.findViewById(R.id.info_alliance_station1_teleopHighGoalCount);
-        teleopHighGoalCount.setText(formatter.format(station1.getAverageTeleopHighGoals()));
-        TextView teleopHighGoalCount2 = dialogView.findViewById(R.id.info_alliance_station2_teleopHighGoalCount);
-        teleopHighGoalCount2.setText(formatter.format(station2.getAverageTeleopHighGoals()));
-        TextView teleopHighGoalCount3 = dialogView.findViewById(R.id.info_alliance_station3_teleopHighGoalCount);
-        teleopHighGoalCount3.setText(formatter.format(station3.getAverageTeleopHighGoals()));
+        TextView teleop_powerCubeScaleAverage = dialogView.findViewById(R.id.info_alliance_station1_teleopPowerCubeScaleAverage);
+        teleop_powerCubeScaleAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
+                data -> data.getTeleop().getPowerCubeScaleCount())));
+        TextView teleop_powerCubeScaleAverage2 = dialogView.findViewById(R.id.info_alliance_station2_teleopPowerCubeScaleAverage);
+        teleop_powerCubeScaleAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
+                data -> data.getTeleop().getPowerCubeScaleCount())));
+        TextView teleop_powerCubeScaleAverage3 = dialogView.findViewById(R.id.info_alliance_station3_teleopPowerCubeScaleAverage);
+        teleop_powerCubeScaleAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
+                data -> data.getTeleop().getPowerCubeScaleCount())));
 
-        TextView teleopMissedGoalCount = dialogView.findViewById(R.id.info_alliance_station1_teleopMissedGoalCount);
-        teleopMissedGoalCount.setText(formatter.format(station1.getAverageTeleopMissedHighGoals()));
-        TextView teleopMissedGoalCount2 = dialogView.findViewById(R.id.info_alliance_station2_teleopMissedGoalCount);
-        teleopMissedGoalCount2.setText(formatter.format(station2.getAverageTeleopMissedHighGoals()));
-        TextView teleopMissedGoalCount3 = dialogView.findViewById(R.id.info_alliance_station3_teleopMissedGoalCount);
-        teleopMissedGoalCount3.setText(formatter.format(station3.getAverageTeleopMissedHighGoals()));
+        TextView teleop_powerCubeOpposingSwitchAverage = dialogView.findViewById(R.id.info_alliance_station1_teleopPowerCubeOpposingSwitchAverage);
+        teleop_powerCubeOpposingSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
+                data -> data.getTeleop().getPowerCubeOpposingSwitchCount())));
+        TextView teleop_powerCubeOpposingSwitchAverage2 = dialogView.findViewById(R.id.info_alliance_station2_teleopPowerCubeOpposingSwitchAverage);
+        teleop_powerCubeOpposingSwitchAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
+                data -> data.getTeleop().getPowerCubeOpposingSwitchCount())));
+        TextView teleop_powerCubeOpposingSwitchAverage3 = dialogView.findViewById(R.id.info_alliance_station3_teleopPowerCubeOpposingSwitchAverage);
+        teleop_powerCubeOpposingSwitchAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
+                data -> data.getTeleop().getPowerCubeOpposingSwitchCount())));
 
-        TextView teleopFuelPoints = dialogView.findViewById(R.id.info_alliance_station1_teleopFuelPoints);
-        teleopFuelPoints.setText(formatter.format(TeamPointEstimator.getTeleopFuelPoints(station1)) + " pts");
-        TextView teleopFuelPoints2 = dialogView.findViewById(R.id.info_alliance_station2_teleopFuelPoints);
-        teleopFuelPoints2.setText(formatter.format(TeamPointEstimator.getTeleopFuelPoints(station2)) + " pts");
-        TextView teleopFuelPoints3 = dialogView.findViewById(R.id.info_alliance_station3_teleopFuelPoints);
-        teleopFuelPoints3.setText(formatter.format(TeamPointEstimator.getTeleopFuelPoints(station3)) + " pts");
-
-        TextView teleopGearDeliveryCount = dialogView.findViewById(R.id.info_alliance_station1_teleopGearDeliveryCount);
-        teleopGearDeliveryCount.setText(formatter.format(station1.getAverageTeleopGearsDelivered()));
-        TextView teleopGearDeliveryCount2 = dialogView.findViewById(R.id.info_alliance_station2_teleopGearDeliveryCount);
-        teleopGearDeliveryCount2.setText(formatter.format(station2.getAverageTeleopGearsDelivered()));
-        TextView teleopGearDeliveryCount3 = dialogView.findViewById(R.id.info_alliance_station3_teleopGearDeliveryCount);
-        teleopGearDeliveryCount3.setText(formatter.format(station3.getAverageTeleopGearsDelivered()));
-
-        TextView teleopGearDropCount = dialogView.findViewById(R.id.info_alliance_station1_teleopGearDropCount);
-        teleopGearDropCount.setText(formatter.format(station1.getAverageTeleopGearsDropped()));
-        TextView teleopGearDropCount2 = dialogView.findViewById(R.id.info_alliance_station2_teleopGearDropCount);
-        teleopGearDropCount2.setText(formatter.format(station2.getAverageTeleopGearsDropped()));
-        TextView teleopGearDropCount3 = dialogView.findViewById(R.id.info_alliance_station3_teleopGearDropCount);
-        teleopGearDropCount3.setText(formatter.format(station3.getAverageTeleopGearsDropped()));
-
-        TextView teleopRotorPoints = dialogView.findViewById(R.id.info_alliance_station1_teleopRotorPoints);
-        teleopRotorPoints.setText(formatter.format(TeamPointEstimator.getTeleopRotorPoints(station1)) + " pts");
-        TextView teleopRotorPoints2 = dialogView.findViewById(R.id.info_alliance_station2_teleopRotorPoints);
-        teleopRotorPoints2.setText(formatter.format(TeamPointEstimator.getTeleopRotorPoints(station2)) + " pts");
-        TextView teleopRotorPoints3 = dialogView.findViewById(R.id.info_alliance_station3_teleopRotorPoints);
-        teleopRotorPoints3.setText(formatter.format(TeamPointEstimator.getTeleopRotorPoints(station3)) + " pts");
+        TextView teleop_powerCubePlayerStationAverage = dialogView.findViewById(R.id.info_alliance_station1_teleopPowerCubePlayerStationAverage);
+        teleop_powerCubePlayerStationAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
+                data -> data.getTeleop().getPowerCubePlayerStationCount())));
+        TextView teleop_powerCubePlayerStationAverage2 = dialogView.findViewById(R.id.info_alliance_station2_teleopPowerCubePlayerStationAverage);
+        teleop_powerCubePlayerStationAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
+                data -> data.getTeleop().getPowerCubePlayerStationCount())));
+        TextView teleop_powerCubePlayerStationAverage3 = dialogView.findViewById(R.id.info_alliance_station3_teleopPowerCubePlayerStationAverage);
+        teleop_powerCubePlayerStationAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
+                data -> data.getTeleop().getPowerCubePlayerStationCount())));
 
         TextView climbPercent = dialogView.findViewById(R.id.info_alliance_station1_teleopClimbPercentage);
-        climbPercent.setText(formatter.format(station1.getClimbingStatsPercentage(ClimbingStats.CLIMBED)) + "%");
+        climbPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(station1.getDataList(),
+                data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
         TextView climbPercent2 = dialogView.findViewById(R.id.info_alliance_station2_teleopClimbPercentage);
-        climbPercent2.setText(formatter.format(station2.getClimbingStatsPercentage(ClimbingStats.CLIMBED)) + "%");
+        climbPercent2.setText(formatter.format(ScoutDataStatistics.getPercentage(station2.getDataList(),
+                data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
         TextView climbPercent3 = dialogView.findViewById(R.id.info_alliance_station3_teleopClimbPercentage);
-        climbPercent3.setText(formatter.format(station3.getClimbingStatsPercentage(ClimbingStats.CLIMBED)) + "%");
+        climbPercent3.setText(formatter.format(ScoutDataStatistics.getPercentage(station3.getDataList(),
+                data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
 
-        TextView climbPts = dialogView.findViewById(R.id.info_alliance_station1_teleopClimbPoints);
-        climbPts.setText(formatter.format(TeamPointEstimator.getClimbingPoints(station1)) + " pts");
-        TextView climbPts2 = dialogView.findViewById(R.id.info_alliance_station2_teleopClimbPoints);
-        climbPts2.setText(formatter.format(TeamPointEstimator.getClimbingPoints(station2)) + " pts");
-        TextView climbPts3 = dialogView.findViewById(R.id.info_alliance_station3_teleopClimbPoints);
-        climbPts3.setText(formatter.format(TeamPointEstimator.getClimbingPoints(station3)) + " pts");
+        TextView supportedRobotPercent = dialogView.findViewById(R.id.info_alliance_station1_teleopSupportedRobotPercent);
+        supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(station1.getDataList(),
+                data -> data.getTeleop().supportedOtherRobotWhenClimbing())) + "%");
+        TextView supportedRobotPercent2 = dialogView.findViewById(R.id.info_alliance_station2_teleopSupportedRobotPercent);
+        supportedRobotPercent2.setText(formatter.format(ScoutDataStatistics.getPercentage(station2.getDataList(),
+                data -> data.getTeleop().supportedOtherRobotWhenClimbing())) + "%");
+        TextView supportedRobotPercent3 = dialogView.findViewById(R.id.info_alliance_station3_teleopSupportedRobotPercent);
+        supportedRobotPercent3.setText(formatter.format(ScoutDataStatistics.getPercentage(station3.getDataList(),
+                data -> data.getTeleop().supportedOtherRobotWhenClimbing())) + "%");
 
         // Summary
-        TextView rankingPoints = dialogView.findViewById(R.id.info_alliance_station1_rankingPoints);
-        rankingPoints.setText(formatter.format(TeamPointEstimator.getRankingPoints(station1)) + " pts");
-        TextView rankingPoints2 = dialogView.findViewById(R.id.info_alliance_station2_rankingPoints);
-        rankingPoints2.setText(formatter.format(TeamPointEstimator.getRankingPoints(station2)) + " pts");
-        TextView rankingPoints3 = dialogView.findViewById(R.id.info_alliance_station3_rankingPoints);
-        rankingPoints3.setText(formatter.format(TeamPointEstimator.getRankingPoints(station3)) + " pts");
+        RecyclerView strategies = dialogView.findViewById(R.id.info_alliance_strategies);
+        TextView strategiesPlaceholder = dialogView.findViewById(R.id.info_alliance_strategiesPlaceholder);
 
-        TextView total = dialogView.findViewById(R.id.info_alliance_station1_totalPoints);
-        total.setText(formatter.format(TeamPointEstimator.getPointContribution(station1)) + " pts");
-        TextView total2 = dialogView.findViewById(R.id.info_alliance_station2_totalPoints);
-        total2.setText(formatter.format(TeamPointEstimator.getPointContribution(station2)) + " pts");
-        TextView total3 = dialogView.findViewById(R.id.info_alliance_station3_totalPoints);
-        total3.setText(formatter.format(TeamPointEstimator.getPointContribution(station3)) + " pts");
+        List<String> strategiesList = new ArrayList<>();
+        strategiesList.addAll(ScoutDataStatistics.getStringList(station1.getDataList(),
+                ScoutData::getStrategies, data -> "[" + data.getTeam() + " - " + data.getMatchNumber() + "]"));
+        strategiesList.addAll(ScoutDataStatistics.getStringList(station2.getDataList(),
+                ScoutData::getStrategies, data -> "[" + data.getTeam() + " - " + data.getMatchNumber() + "]"));
+        strategiesList.addAll(ScoutDataStatistics.getStringList(station3.getDataList(),
+                ScoutData::getStrategies, data -> "[" + data.getTeam() + " - " + data.getMatchNumber() + "]"));
+        if (strategiesList == null || strategiesList.isEmpty() || listContentsAreEmpty(strategiesList)) {
+            strategies.setVisibility(View.GONE);
+            strategiesPlaceholder.setVisibility(View.VISIBLE);
+        } else {
+            strategies.setVisibility(View.VISIBLE);
+            strategiesPlaceholder.setVisibility(View.GONE);
 
-        RecyclerView difficulties = dialogView.findViewById(R.id.info_alliance_troubleWith);
-        TextView difficultiesPlaceholder = dialogView.findViewById(R.id.info_alliance_troubleWithPlaceholder);
+            strategies.setLayoutManager(new LinearLayoutManager(dialogView.getContext()));
+            strategies.setAdapter(new CommentsAdapter(strategiesList));
+        }
 
-        if (station1.getTroublesList() == null || station1.getTroublesList().isEmpty() || listIsEmpty(station1.getTroublesList())) {
+        RecyclerView difficulties = dialogView.findViewById(R.id.info_alliance_difficulties);
+        TextView difficultiesPlaceholder = dialogView.findViewById(R.id.info_alliance_difficultiesPlaceholder);
+
+        List<String> difficultiesList = new ArrayList<>();
+        difficultiesList.addAll(ScoutDataStatistics.getStringList(station1.getDataList(),
+                ScoutData::getDifficulties, data -> "[" + data.getTeam() + " - " + data.getMatchNumber() + "]"));
+        difficultiesList.addAll(ScoutDataStatistics.getStringList(station2.getDataList(),
+                ScoutData::getDifficulties, data -> "[" + data.getTeam() + " - " + data.getMatchNumber() + "]"));
+        difficultiesList.addAll(ScoutDataStatistics.getStringList(station3.getDataList(),
+                ScoutData::getDifficulties, data -> "[" + data.getTeam() + " - " + data.getMatchNumber() + "]"));
+        if (difficultiesList == null || difficultiesList.isEmpty() || listContentsAreEmpty(difficultiesList)) {
             difficulties.setVisibility(View.GONE);
             difficultiesPlaceholder.setVisibility(View.VISIBLE);
         } else {
@@ -247,13 +227,20 @@ public class CompareBottomSheetBinding {
             difficultiesPlaceholder.setVisibility(View.GONE);
 
             difficulties.setLayoutManager(new LinearLayoutManager(dialogView.getContext()));
-            difficulties.setAdapter(new CommentsAdapter(station1.getTroublesList()));
+            difficulties.setAdapter(new CommentsAdapter(difficultiesList));
         }
 
         RecyclerView comments = dialogView.findViewById(R.id.info_alliance_comments);
         TextView commentsPlaceholder = dialogView.findViewById(R.id.info_alliance_commentsPlaceholder);
 
-        if (station1.getCommentsList() == null || station1.getCommentsList().isEmpty() || listIsEmpty(station1.getCommentsList())) {
+        List<String> commentsList = new ArrayList<>();
+        commentsList.addAll(ScoutDataStatistics.getStringList(station1.getDataList(),
+                ScoutData::getComments, data -> "[" + data.getTeam() + " - " + data.getMatchNumber() + "]"));
+        commentsList.addAll(ScoutDataStatistics.getStringList(station2.getDataList(),
+                ScoutData::getComments, data -> "[" + data.getTeam() + " - " + data.getMatchNumber() + "]"));
+        commentsList.addAll(ScoutDataStatistics.getStringList(station3.getDataList(),
+                ScoutData::getComments, data -> "[" + data.getTeam() + " - " + data.getMatchNumber() + "]"));
+        if (commentsList == null || commentsList.isEmpty() || listContentsAreEmpty(commentsList)) {
             comments.setVisibility(View.GONE);
             commentsPlaceholder.setVisibility(View.VISIBLE);
         } else {
@@ -261,8 +248,8 @@ public class CompareBottomSheetBinding {
             commentsPlaceholder.setVisibility(View.GONE);
 
             comments.setLayoutManager(new LinearLayoutManager(dialogView.getContext()));
-            comments.setAdapter(new CommentsAdapter(station1.getCommentsList()));
-        }*/
+            comments.setAdapter(new CommentsAdapter(commentsList));
+        }
     }
 
     private static boolean listContentsAreEmpty(List<String> list) {

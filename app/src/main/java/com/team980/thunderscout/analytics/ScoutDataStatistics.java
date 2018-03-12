@@ -58,8 +58,9 @@ public class ScoutDataStatistics {
         return (((double) StreamSupport.stream(dataList).filter(fieldGetter::apply).count()) / dataList.size()) * 100;
     }
 
-    public static List<String> getStringList(List<ScoutData> dataList, Function<ScoutData, String> fieldGetter) {
-        return StreamSupport.stream(dataList).map(fieldGetter).collect(Collectors.toList());
+    public static List<String> getStringList(List<ScoutData> dataList, Function<ScoutData, String> fieldGetter, Function<ScoutData, String> prefixer) {
+        return StreamSupport.stream(dataList).sorted().filter(data -> !fieldGetter.apply(data).isEmpty())
+                .map(data -> prefixer.apply(data) + " " + fieldGetter.apply(data)).collect(Collectors.toList());
     }
 
     public static Date getLastUpdated(List<ScoutData> dataList) {

@@ -80,9 +80,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:lines="1"
                     android:textSize="22sp"
-                    app:layout_columnWeight="1.5"
+                    app:layout_columnWeight="2"
+                    app:layout_gravity="center_vertical"
                     tools:text="~~~" />
 
             </android.support.v7.widget.GridLayout>

@@ -44,13 +44,22 @@
 
     </FrameLayout>
 
-    <android.support.v7.widget.GridLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="8dp"
+        android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
+        android:text="Avg. Power Cubes Delivered To..."
+        android:textColor="@color/white"
+        android:textSize="22sp" />
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         app:columnCount="4"
         app:orientation="horizontal"
         app:rowCount="2">
@@ -58,255 +67,154 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Avg. Low Goals"
+            android:text="Alliance Switch"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_station1_teleopLowGoalCount"
+            android:id="@+id/info_alliance_station1_teleopPowerCubeAllianceSwitchAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station2_teleopLowGoalCount"
+            android:id="@+id/info_alliance_station2_teleopPowerCubeAllianceSwitchAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station3_teleopLowGoalCount"
+            android:id="@+id/info_alliance_station3_teleopPowerCubeAllianceSwitchAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Avg. High Goals"
+            android:text="Central Scale"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_station1_teleopHighGoalCount"
+            android:id="@+id/info_alliance_station1_teleopPowerCubeScaleAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station2_teleopHighGoalCount"
+            android:id="@+id/info_alliance_station2_teleopPowerCubeScaleAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station3_teleopHighGoalCount"
+            android:id="@+id/info_alliance_station3_teleopPowerCubeScaleAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Avg. Missed High Goals"
+            android:text="Opposing Switch"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_station1_teleopMissedGoalCount"
+            android:id="@+id/info_alliance_station1_teleopPowerCubeOpposingSwitchAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station2_teleopMissedGoalCount"
+            android:id="@+id/info_alliance_station2_teleopPowerCubeOpposingSwitchAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station3_teleopMissedGoalCount"
+            android:id="@+id/info_alliance_station3_teleopPowerCubeOpposingSwitchAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Avg. Fuel Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_alliance_station1_teleopFuelPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station2_teleopFuelPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station3_teleopFuelPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Gears Delivered"
+            android:paddingBottom="16dp"
+            android:text="Player Station"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_station1_teleopGearDeliveryCount"
+            android:id="@+id/info_alliance_station1_teleopPowerCubePlayerStationAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station2_teleopGearDeliveryCount"
+            android:id="@+id/info_alliance_station2_teleopPowerCubePlayerStationAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station3_teleopGearDeliveryCount"
+            android:id="@+id/info_alliance_station3_teleopPowerCubePlayerStationAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Gears Dropped"
-            android:textSize="22sp"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_alliance_station1_teleopGearDropCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:id="@+id/info_alliance_station2_teleopGearDropCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:id="@+id/info_alliance_station3_teleopGearDropCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Rotor Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_alliance_station1_teleopRotorPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station2_teleopRotorPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station3_teleopRotorPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
+            tools:text="0.0" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Climbing Success"
+            android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
@@ -317,6 +225,7 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical"
             tools:text="0%" />
 
         <TextView
@@ -326,6 +235,7 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical"
             tools:text="0%" />
 
         <TextView
@@ -335,46 +245,45 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical"
             tools:text="0%" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Avg. Climbing Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:text="Supported Other Robots"
             android:textSize="22sp"
-            android:textStyle="bold"
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_station1_teleopClimbPoints"
+            android:id="@+id/info_alliance_station1_teleopSupportedRobotPercent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0 pts" />
+            app:layout_gravity="center_vertical"
+            tools:text="0%" />
 
         <TextView
-            android:id="@+id/info_alliance_station2_teleopClimbPoints"
+            android:id="@+id/info_alliance_station2_teleopSupportedRobotPercent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0 pts" />
+            app:layout_gravity="center_vertical"
+            tools:text="0%" />
 
         <TextView
-            android:id="@+id/info_alliance_station3_teleopClimbPoints"
+            android:id="@+id/info_alliance_station3_teleopSupportedRobotPercent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:textColor="@android:color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0 pts" />
+            app:layout_gravity="center_vertical"
+            tools:text="0%" />
 
     </android.support.v7.widget.GridLayout>
 

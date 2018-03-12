@@ -64,7 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Team"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:textSize="22sp"
                 app:layout_columnWeight="2" />
 
@@ -73,7 +73,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:textSize="22sp"
                 app:layout_columnWeight="1"
                 tools:text="111" />
@@ -83,7 +83,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:textSize="22sp"
                 app:layout_columnWeight="1"
                 tools:text="222" />
@@ -93,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:textSize="22sp"
                 app:layout_columnWeight="1"
                 tools:text="333" />

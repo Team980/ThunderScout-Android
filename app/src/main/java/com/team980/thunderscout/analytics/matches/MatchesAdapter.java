@@ -56,6 +56,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     private static final String KEY_CONTENTS = "adapter_contents";
     private static final String KEY_TEAM_FILTER = "adapter_team_filter";
     private static final String KEY_SELECTED_ITEMS = "adapter_selected_items";
+
     private LayoutInflater mInflator;
     private MatchesFragment fragment;
     private SparseArray<MatchWrapper> matchArray; //More efficient than a List, but harder to save state

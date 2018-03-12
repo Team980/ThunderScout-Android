@@ -53,6 +53,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
     private static final String KEY_CONTENTS = "adapter_contents";
     private static final String KEY_TEAM_FILTER = "adapter_team_filter";
     private static final String KEY_SELECTED_ITEMS = "adapter_selected_items";
+
     private LayoutInflater mInflator;
     private RankingsFragment fragment;
     private ArrayList<TeamWrapper> teamList; //The list that represents all the loaded data

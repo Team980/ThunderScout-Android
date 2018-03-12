@@ -23,107 +23,25 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.v7.widget.GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background_floating_light"
-        android:padding="16dp"
-        app:columnCount="4">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Ranking Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_alliance_station1_rankingPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station2_rankingPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station3_rankingPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-    </android.support.v7.widget.GridLayout>
-
-    <android.support.v7.widget.GridLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background_floating"
-        android:padding="16dp"
-        app:columnCount="4">
+        android:padding="16dp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Expected Total"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="2" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Summary"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/info_alliance_station1_totalPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station2_totalPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station3_totalPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-    </android.support.v7.widget.GridLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -137,20 +55,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trouble With"
+            android:text="Strategies"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="22sp" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/info_alliance_troubleWith"
+            android:id="@+id/info_alliance_strategies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             tools:listitem="@layout/comment_view" />
 
         <TextView
-            android:id="@+id/info_alliance_troubleWithPlaceholder"
+            android:id="@+id/info_alliance_strategiesPlaceholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N/A"
@@ -159,11 +76,32 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:paddingTop="16dp"
+            android:text="Difficulties"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textSize="22sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/info_alliance_difficulties"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            tools:listitem="@layout/comment_view" />
+
+        <TextView
+            android:id="@+id/info_alliance_difficultiesPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N/A"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
             android:text="Comments"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="22sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/info_alliance_comments"

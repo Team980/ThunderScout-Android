@@ -57,7 +57,7 @@
 
         <TextView
             android:text="Crossed Auto Line"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
@@ -76,7 +76,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:text="Power Cubes Delivered To..."
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
         android:textSize="22sp" />
 
     <android.support.v7.widget.GridLayout
@@ -127,14 +127,14 @@
 
         <!--<TextView
             android:text="Total Power Cubes Scored"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
             android:id="@+id/info_match_autoPowerCubeTotalCount"
             android:gravity="right"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0" />-->

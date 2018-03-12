@@ -59,7 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Auto Line Cross Success"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 

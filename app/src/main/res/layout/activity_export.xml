@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="Loading..."
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
     <!--List of data to export (or "All")
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="4dp"
             android:text="Export as"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <Spinner

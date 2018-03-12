@@ -129,7 +129,7 @@ public class TeamInfoActivity extends AppCompatActivity {
         TextView strategiesPlaceholder = findViewById(R.id.info_team_strategiesPlaceholder);
 
         List<String> strategiesList = ScoutDataStatistics.getStringList(dataList,
-                data -> "[" + data.getMatchNumber() + "] " + data.getStrategies());
+                ScoutData::getStrategies, data -> "[" + data.getMatchNumber() + "]");
         if (strategiesList == null || strategiesList.isEmpty() || listContentsAreEmpty(strategiesList)) {
             strategies.setVisibility(View.GONE);
             strategiesPlaceholder.setVisibility(View.VISIBLE);
@@ -145,7 +145,7 @@ public class TeamInfoActivity extends AppCompatActivity {
         TextView difficultiesPlaceholder = findViewById(R.id.info_team_difficultiesPlaceholder);
 
         List<String> difficultiesList = ScoutDataStatistics.getStringList(dataList,
-                data -> "[" + data.getMatchNumber() + "] " + data.getDifficulties());
+                ScoutData::getDifficulties, data -> "[" + data.getMatchNumber() + "]");
         if (difficultiesList == null || difficultiesList.isEmpty() || listContentsAreEmpty(difficultiesList)) {
             difficulties.setVisibility(View.GONE);
             difficultiesPlaceholder.setVisibility(View.VISIBLE);
@@ -161,7 +161,7 @@ public class TeamInfoActivity extends AppCompatActivity {
         TextView commentsPlaceholder = findViewById(R.id.info_team_commentsPlaceholder);
 
         List<String> commentsList = ScoutDataStatistics.getStringList(dataList,
-                data -> "[" + data.getMatchNumber() + "] " + data.getComments());
+                ScoutData::getComments, data -> "[" + data.getMatchNumber() + "]");
         if (commentsList == null || commentsList.isEmpty() || listContentsAreEmpty(commentsList)) {
             comments.setVisibility(View.GONE);
             commentsPlaceholder.setVisibility(View.VISIBLE);

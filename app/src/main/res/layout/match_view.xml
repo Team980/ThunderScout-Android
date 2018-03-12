@@ -36,7 +36,7 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/white"
         android:textSize="36sp"
         tools:text="1" />
 

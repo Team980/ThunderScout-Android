@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:text="Team 980"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <TextView

@@ -82,7 +82,7 @@
                     android:gravity="right"
                     android:lines="1"
                     android:textSize="22sp"
-                    app:layout_columnWeight="1.5"
+                    app:layout_columnWeight="2"
                     tools:text="~~~" />
 
                 <TextView
@@ -100,7 +100,7 @@
                     android:gravity="right"
                     android:lines="1"
                     android:textSize="22sp"
-                    app:layout_columnWeight="1.5"
+                    app:layout_columnWeight="2"
                     tools:text="~~~" />
 
             </android.support.v7.widget.GridLayout>

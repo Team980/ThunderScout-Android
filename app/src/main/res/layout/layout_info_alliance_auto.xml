@@ -46,8 +46,8 @@
 
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="8dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
@@ -58,7 +58,8 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Baseline Cross Success"
+            android:text="Auto Line Cross Success"
+            android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
@@ -69,6 +70,7 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical"
             tools:text="0%" />
 
         <TextView
@@ -78,6 +80,7 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical"
             tools:text="0%" />
 
         <TextView
@@ -87,294 +90,140 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical"
             tools:text="0%" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Mobility"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="2" />
+    </android.support.v7.widget.GridLayout>
 
-        <TextView
-            android:id="@+id/info_alliance_station1_autoMobilityPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Avg. Power Cubes Delivered To..."
+        android:textColor="@color/white"
+        android:textSize="22sp" />
 
-        <TextView
-            android:id="@+id/info_alliance_station2_autoMobilityPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station3_autoMobilityPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:columnCount="4"
+        app:orientation="horizontal"
+        app:rowCount="2">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Avg. Low Goals"
+            android:text="Alliance Switch"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_station1_autoLowGoalCount"
+            android:id="@+id/info_alliance_station1_autoPowerCubeAllianceSwitchAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station2_autoLowGoalCount"
+            android:id="@+id/info_alliance_station2_autoPowerCubeAllianceSwitchAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station3_autoLowGoalCount"
+            android:id="@+id/info_alliance_station3_autoPowerCubeAllianceSwitchAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Avg. High Goals"
+            android:text="Central Scale"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_station1_autoHighGoalCount"
+            android:id="@+id/info_alliance_station1_autoPowerCubeScaleAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station2_autoHighGoalCount"
+            android:id="@+id/info_alliance_station2_autoPowerCubeScaleAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station3_autoHighGoalCount"
+            android:id="@+id/info_alliance_station3_autoPowerCubeScaleAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Avg. Missed High Goals"
+            android:text="Player Station"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
         <TextView
-            android:id="@+id/info_alliance_station1_autoMissedGoalCount"
+            android:id="@+id/info_alliance_station1_autoPowerCubePlayerStationAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station2_autoMissedGoalCount"
+            android:id="@+id/info_alliance_station2_autoPowerCubePlayerStationAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
         <TextView
-            android:id="@+id/info_alliance_station3_autoMissedGoalCount"
+            android:id="@+id/info_alliance_station3_autoPowerCubePlayerStationAverage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Fuel Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_alliance_station1_autoFuelPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station2_autoFuelPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station3_autoFuelPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Gears Delivered"
-            android:textSize="22sp"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_alliance_station1_autoGearDeliveryCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:id="@+id/info_alliance_station2_autoGearDeliveryCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:id="@+id/info_alliance_station3_autoGearDeliveryCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Gears Dropped"
-            android:textSize="22sp"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_alliance_station1_autoGearDropCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:id="@+id/info_alliance_station2_autoGearDropCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:id="@+id/info_alliance_station3_autoGearDropCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Avg. Rotor Points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_columnWeight="2" />
-
-        <TextView
-            android:id="@+id/info_alliance_station1_autoRotorPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station2_autoRotorPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
-
-        <TextView
-            android:id="@+id/info_alliance_station3_autoRotorPoints"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0 pts" />
+            app:layout_gravity="center_vertical"
+            tools:text="0.0" />
 
     </android.support.v7.widget.GridLayout>
 
