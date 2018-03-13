@@ -30,7 +30,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
@@ -156,7 +155,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     HeaderPreferenceFragment.this.getFragmentManager().beginTransaction()
                             .replace(android.R.id.content, fragment)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE) //this mimics how some Google apps do it
+                            //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE) //this mimics how some Google apps do it
                             .addToBackStack(preference.getFragment())
                             .commit();
 

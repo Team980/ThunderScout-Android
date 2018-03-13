@@ -26,7 +26,7 @@
     <string name="app_name">ThunderScout</string>
 
     <string name="welcome_message">
-        TODO new welcome
+        ThunderScout is Team 980\'s robust and intuitive scouting app for FIRST Robotics Competition teams. Scout and analyze matches with an intuitive interface, and modularly configure and link devices to match the structure of your scouting team.
         \n
         \nTo get started, configure your device in the app settings, or dive in and scout your first match!
     </string>
@@ -39,10 +39,12 @@
         \nYou can opt out of telemetry in the app settings.
     </string>
 
-    <!--- TODO Last update: v15 -->
+    <!--- TODO Last update: v16 -->
     <string name="update_notes">
-        ThunderScout 2018.1
-        \n• These patch notes are also accessible from the About menu, if you ever go looking for them
+        ThunderScout 2018.1 now supports 2018\'s FIRST POWER UP, as well as improving the stability since the previous release.
+        \n
+        \nIn 2018, it\'s all about Power Cubes, and the scouting flow has been updated to match.
+        \nThe backend that provides for statistical calculations has also been updated, which will allow more types of statistics to be added in a future release.
     </string>
 
     <string-array name="alliance_stations_array">
