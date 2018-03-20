@@ -55,16 +55,16 @@ public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedLi
         super.onViewCreated(view, savedInstanceState);
 
         CounterCompoundView powerCubeAllianceSwitchCount = getView().findViewById(R.id.teleop_counterPowerCubeAllianceSwitch);
-        powerCubeAllianceSwitchCount.setValue(scoutingFlowActivity.getData().getTeleop().getPowerCubeAllianceSwitchCount());
+        powerCubeAllianceSwitchCount.setValue(scoutingFlowActivity.getData().getTeleopPowerCubeAllianceSwitchCount());
 
         CounterCompoundView powerCubeScaleCount = getView().findViewById(R.id.teleop_counterPowerCubeScaleCount);
-        powerCubeScaleCount.setValue(scoutingFlowActivity.getData().getTeleop().getPowerCubeScaleCount());
+        powerCubeScaleCount.setValue(scoutingFlowActivity.getData().getTeleopPowerCubeScaleCount());
 
         CounterCompoundView powerCubeOpposingSwitchCount = getView().findViewById(R.id.teleop_counterPowerCubeOpposingSwitchCount);
-        powerCubeOpposingSwitchCount.setValue(scoutingFlowActivity.getData().getTeleop().getPowerCubeOpposingSwitchCount());
+        powerCubeOpposingSwitchCount.setValue(scoutingFlowActivity.getData().getTeleopPowerCubeOpposingSwitchCount());
 
         CounterCompoundView powerCubePlayerStationCount = getView().findViewById(R.id.teleop_counterPowerCubePlayerStationCount);
-        powerCubePlayerStationCount.setValue(scoutingFlowActivity.getData().getTeleop().getPowerCubePlayerStationCount());
+        powerCubePlayerStationCount.setValue(scoutingFlowActivity.getData().getTeleopPowerCubePlayerStationCount());
 
         Spinner climbingStats = view.findViewById(R.id.teleop_spinnerClimbingStats);
         climbingStats.setOnItemSelectedListener(this);
@@ -74,10 +74,10 @@ public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedLi
         adapter.setDropDownViewResource(R.layout.spinner_climbing_stats_dropdown);
         climbingStats.setAdapter(adapter);
 
-        climbingStats.setSelection(scoutingFlowActivity.getData().getTeleop().getClimbingStats().ordinal());
+        climbingStats.setSelection(scoutingFlowActivity.getData().getClimbingStats().ordinal());
 
         CheckBox supportedOtherRobotsWhenClimbing = getView().findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
-        supportedOtherRobotsWhenClimbing.setChecked(scoutingFlowActivity.getData().getTeleop().supportedOtherRobots());
+        supportedOtherRobotsWhenClimbing.setChecked(scoutingFlowActivity.getData().supportedOtherRobots());
         supportedOtherRobotsWhenClimbing.setOnClickListener(this);
     }
 
@@ -99,7 +99,7 @@ public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedLi
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         ClimbingStats climbingStats = ClimbingStats.values()[position];
-        scoutingFlowActivity.getData().getTeleop().setClimbingStats(climbingStats);
+        scoutingFlowActivity.getData().setClimbingStats(climbingStats);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedLi
         if (view.getId() == R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing) {
             AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
 
-            scoutingFlowActivity.getData().getTeleop().setSupportedOtherRobots(checkBox.isChecked());
+            scoutingFlowActivity.getData().setSupportedOtherRobots(checkBox.isChecked());
         }
     }
 }

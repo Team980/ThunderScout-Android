@@ -121,7 +121,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.MatchVie
     public void filterByTeam(String query) {
         teamFilter = query;
 
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, fragment.getContext()).queryData(this);
+        AccountScope.getStorageWrapper(fragment.getContext()).queryData(this);
         notifyDataSetChanged();
     }
 

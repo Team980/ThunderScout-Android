@@ -167,7 +167,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+                AccountScope.getStorageWrapper(getContext()).queryData(adapter);
             }
         };
 
@@ -181,7 +181,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         compareSheetBehavior, adapter.getSelectedItems()); //TODO this is VERY bad
             }
         } else {
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+            AccountScope.getStorageWrapper(getContext()).queryData(adapter);
         }
     }
 
@@ -420,7 +420,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() { //SwipeRefreshLayout
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+        AccountScope.getStorageWrapper(getContext()).queryData(adapter);
     }
 
     public SwipeRefreshLayout getSwipeRefreshLayout() {
@@ -428,16 +428,16 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override //Deletion dialog
-    public void onClick(DialogInterface dialog, int which) { //TODO modular account scopes - CLOUD should prompt for password
+    public void onClick(DialogInterface dialog, int which) { //TODO CLOUD should prompt for password
         if (selectionMode) {
             ArrayList<ScoutData> dataToRemove = new ArrayList<>();
             for (TeamWrapper wrapper : adapter.getSelectedItems()) {
                 dataToRemove.addAll(wrapper.getDataList());
             }
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).removeData(dataToRemove, adapter);
+            AccountScope.getStorageWrapper(getContext()).removeData(dataToRemove, adapter);
             adapter.clearSelections();
         } else {
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
+            AccountScope.getStorageWrapper(getContext()).clearAllData(adapter);
         }
     }
 

@@ -40,6 +40,7 @@ import android.view.MenuItem;
 
 import com.team980.thunderscout.BuildConfig;
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.firebase_debug.FirebaseDebugActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -164,6 +165,13 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             //Direct listeners - overrides default header listener
+            Preference thundercloud = findPreference(getResources().getString(R.string.pref_thundercloud));
+            thundercloud.setOnPreferenceClickListener(preference1 -> {
+                Intent intent = new Intent(getContext(), FirebaseDebugActivity.class);
+                startActivity(intent);
+                return true;
+            });
+
             Preference notificationSettings = findPreference(getResources().getString(R.string.pref_notification_settings));
             notificationSettings.setOnPreferenceClickListener(preference1 -> {
                 Intent intent = new Intent();

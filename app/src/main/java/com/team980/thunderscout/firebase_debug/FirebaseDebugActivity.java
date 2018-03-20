@@ -24,22 +24,28 @@
 
 package com.team980.thunderscout.firebase_debug;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.R;
+import com.team980.thunderscout.backend.AccountScope;
 
 import java.util.Arrays;
 
+@Deprecated //TODO recreate as an actually good settings page
+/**
+ * https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md
+ */
 public class FirebaseDebugActivity extends AppCompatActivity {
 
     @Override
@@ -93,7 +99,7 @@ public class FirebaseDebugActivity extends AppCompatActivity {
         uidView.setText(uid);
 
         ImageView photoView = findViewById(R.id.photo);
-        photoView.setImageURI(photoUrl);
+        Glide.with(this).load(photoUrl).into(photoView);
     }
 
     public void authButton(View v) {
@@ -101,31 +107,37 @@ public class FirebaseDebugActivity extends AppCompatActivity {
                         .createSignInIntentBuilder()
                         .setTheme(R.style.ThunderScout_BaseTheme_ActionBar)
                         .setIsSmartLockEnabled(false)
-                        .setPrivacyPolicyUrl("https://thunderscout.team980.com/privacy-policy.html")
-                        .setLogo(R.mipmap.team980_logo)
-                        .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-                                new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
-                                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                        .setPrivacyPolicyUrl("http://team980.com/thunderscout/privacy-policy/")
+                        .setLogo(R.mipmap.ic_launcher_splash)
+                        .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
+                                new AuthUI.IdpConfig.PhoneBuilder().build(),
+                                new AuthUI.IdpConfig.GoogleBuilder().build()))
                         .build(),
-                121);
+                0);
     }
 
     public void signOut(View v) {
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener(task -> {
-                    // user is now signed out
+                    PreferenceManager.getDefaultSharedPreferences(this).edit()
+                            .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
                     reloadContent();
                 });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
-        if (requestCode == 121) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            reloadContent();
-        }
+    public void deleteAccount(View v) {
+        new AlertDialog.Builder(this)
+                .setTitle("Unlink account from ThunderCloud?")
+                .setIcon(R.drawable.ic_warning_white_24dp)
+                .setMessage("You will lose all data stored in your account! This cannot be reversed!")
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Delete", (dialog, which) -> AuthUI.getInstance()
+                        .delete(FirebaseDebugActivity.this)
+                        .addOnCompleteListener(task -> {
+                            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                                    .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
+                            reloadContent();
+                        })).show();
     }
 }

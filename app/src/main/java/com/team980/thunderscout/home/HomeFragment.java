@@ -320,7 +320,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
                 debug.add(data);
             }
         }
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).writeData(debug, new StorageWrapper.StorageListener() {
+        AccountScope.getStorageWrapper(getContext()).writeData(debug, new StorageWrapper.StorageListener() {
             @Override
             public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
                 Toast.makeText(getContext(), "Written " + dataWritten.size(), Toast.LENGTH_SHORT).show();

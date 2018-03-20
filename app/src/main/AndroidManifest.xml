@@ -133,10 +133,10 @@
             android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
 
-        <!--<activity
+        <activity
             android:name=".firebase_debug.FirebaseDebugActivity"
-            android:label="Storm Debug"
-            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />-->
+            android:label="ThunderCloud"
+            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
 
         <meta-data
             android:name="firebase_analytics_collection_enabled"

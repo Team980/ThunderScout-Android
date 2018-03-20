@@ -76,44 +76,44 @@ public class TeamInfoFragment extends Fragment {
         // Auto
         TextView crossPercent = view.findViewById(R.id.info_team_autoCrossPercentage);
         crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.getAutonomous().crossedAutoLine())) + "%");
+                data -> data.crossedAutoLine())) + "%");
 
         TextView auto_powerCubeAllianceSwitchAverage = view.findViewById(R.id.info_team_autoPowerCubeAllianceSwitchAverage);
         auto_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getAutonomous().getPowerCubeAllianceSwitchCount())));
+                data -> data.getAutoPowerCubeAllianceSwitchCount())));
 
         TextView auto_powerCubeScaleAverage = view.findViewById(R.id.info_team_autoPowerCubeScaleAverage);
         auto_powerCubeScaleAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getAutonomous().getPowerCubeScaleCount())));
+                data -> data.getAutoPowerCubeScaleCount())));
 
         TextView auto_powerCubePlayerStationAverage = view.findViewById(R.id.info_team_autoPowerCubePlayerStationAverage);
         auto_powerCubePlayerStationAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getAutonomous().getPowerCubePlayerStationCount())));
+                data -> data.getAutoPowerCubePlayerStationCount())));
 
         // Teleop
         TextView teleop_powerCubeAllianceSwitchAverage = view.findViewById(R.id.info_team_teleopPowerCubeAllianceSwitchAverage);
         teleop_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getTeleop().getPowerCubeAllianceSwitchCount())));
+                data -> data.getTeleopPowerCubeAllianceSwitchCount())));
 
         TextView teleop_powerCubeScaleAverage = view.findViewById(R.id.info_team_teleopPowerCubeScaleAverage);
         teleop_powerCubeScaleAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getTeleop().getPowerCubeScaleCount())));
+                data -> data.getTeleopPowerCubeScaleCount())));
 
         TextView teleop_powerCubeOpposingSwitchAverage = view.findViewById(R.id.info_team_teleopPowerCubeOpposingSwitchAverage);
         teleop_powerCubeOpposingSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getTeleop().getPowerCubeOpposingSwitchCount())));
+                data -> data.getTeleopPowerCubeOpposingSwitchCount())));
 
         TextView teleop_powerCubePlayerStationAverage = view.findViewById(R.id.info_team_teleopPowerCubePlayerStationAverage);
         teleop_powerCubePlayerStationAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getTeleop().getPowerCubePlayerStationCount())));
+                data -> data.getTeleopPowerCubePlayerStationCount())));
 
         TextView climbPercent = view.findViewById(R.id.info_team_teleopClimbPercentage);
         climbPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
+                data -> data.getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
 
         TextView supportedRobotPercent = view.findViewById(R.id.info_team_teleopSupportedRobotPercent);
         supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.getTeleop().supportedOtherRobots())) + "%");
+                data -> data.supportedOtherRobots())) + "%");
 
         // Summary
         RecyclerView strategies = view.findViewById(R.id.info_team_strategies);

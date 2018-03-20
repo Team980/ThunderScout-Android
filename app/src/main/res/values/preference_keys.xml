@@ -36,6 +36,7 @@
     <string name="pref_last_shown_update_card">last_update_notified</string>
 
     <!-- Link headers -->
+    <string name="pref_thundercloud">thundercloud</string>
     <string name="pref_notification_settings">notification_settings</string>
     <string name="pref_app_info">app_info</string>
 
@@ -53,12 +54,14 @@
     <!-- Match scouting -->
     <string name="pref_enable_match_scouting">enable_match_scout</string>
     <string name="pref_ms_save_to_local_device">ms_send_to_local_storage</string>
+    <string name="pref_ms_save_to_thundercloud">ms_save_to_thundercloud</string>
     <string name="pref_ms_send_to_bluetooth_server">ms_send_to_bt_server</string>
     <string name="pref_ms_bluetooth_server_device">ms_bt_server_device</string>
 
     <!-- Bluetooth server -->
     <string name="pref_enable_bluetooth_server">enable_bt_server</string>
     <string name="pref_bt_save_to_local_device">bt_send_to_local_storage</string>
+    <string name="pref_bt_save_to_thundercloud">bt_save_to_thundercloud</string>
     <string name="pref_bt_send_to_bluetooth_server">bt_send_to_bt_server</string>
     <string name="pref_bt_bluetooth_server_device">bt_bt_server_device</string>
 

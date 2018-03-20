@@ -98,7 +98,7 @@ public class ImportActivity extends AppCompatActivity {
             importProgress.setProgress(0);
             //TODO find a way to determine the maximum so this isn't indeterminate
 
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, this).writeData(dataToImport, new StorageWrapper.StorageListener() {
+            AccountScope.getStorageWrapper(this).writeData(dataToImport, new StorageWrapper.StorageListener() {
                 @Override
                 public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
                     importProgress.setVisibility(View.GONE);

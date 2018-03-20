@@ -25,18 +25,22 @@
 package com.team980.thunderscout.backend;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 
+import com.team980.thunderscout.R;
+import com.team980.thunderscout.backend.cloud.CloudStorageWrapper;
 import com.team980.thunderscout.backend.local.LocalStorageWrapper;
 
 public enum AccountScope {
-    LOCAL; //This device
-    //CLOUD; //ThunderCloud (Firebase) - Unimplemented
+    LOCAL, //This device
+    CLOUD; //ThunderCloud (Firebase)
 
     private static LocalStorageWrapper localStorageWrapper;
-    //private static CloudStorageWrapper cloudStorageWrapper;
+    private static CloudStorageWrapper cloudStorageWrapper;
 
     /**
      * Singleton to fetch StorageWrappers from AccountScopes
+     * Unless you are surfacing separate options for each AccountScope, using the other method is preferred.
      *
      * @param scope   the current AccountScope being used
      * @param context Android context
@@ -49,13 +53,26 @@ public enum AccountScope {
                     localStorageWrapper = new LocalStorageWrapper(context);
                 }
                 return localStorageWrapper;
-            /*case CLOUD:
+            case CLOUD:
                 if (cloudStorageWrapper == null) {
                     cloudStorageWrapper = new CloudStorageWrapper();
                 }
-                return cloudStorageWrapper;*/
+                return cloudStorageWrapper;
             default:
                 return null;
         }
+    }
+
+    /**
+     * Singleton to fetch StorageWrappers from the current AccoutnScope
+     *
+     * @param context Android context
+     * @return StorageWrapper instance for the currently selected scope
+     */
+    public static StorageWrapper getStorageWrapper(Context context) {
+        AccountScope scope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(context.getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()));
+
+        return getStorageWrapper(scope, context);
     }
 }

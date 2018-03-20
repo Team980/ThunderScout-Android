@@ -50,17 +50,17 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         CheckBox crossedAutoLine = getView().findViewById(R.id.auto_checkBoxCrossedAutoLine);
-        crossedAutoLine.setChecked(scoutingFlowActivity.getData().getAutonomous().crossedAutoLine());
+        crossedAutoLine.setChecked(scoutingFlowActivity.getData().crossedAutoLine());
         crossedAutoLine.setOnClickListener(this);
 
         CounterCompoundView powerCubeAllianceSwitchCount = getView().findViewById(R.id.auto_counterPowerCubeAllianceSwitchCount);
-        powerCubeAllianceSwitchCount.setValue(scoutingFlowActivity.getData().getAutonomous().getPowerCubeAllianceSwitchCount());
+        powerCubeAllianceSwitchCount.setValue(scoutingFlowActivity.getData().getAutoPowerCubeAllianceSwitchCount());
 
         CounterCompoundView powerCubeScaleCount = getView().findViewById(R.id.auto_counterPowerCubeScaleCount);
-        powerCubeScaleCount.setValue(scoutingFlowActivity.getData().getAutonomous().getPowerCubeScaleCount());
+        powerCubeScaleCount.setValue(scoutingFlowActivity.getData().getAutoPowerCubeScaleCount());
 
         CounterCompoundView powerCubePlayerStationCount = getView().findViewById(R.id.auto_counterPowerCubePlayerStationCount);
-        powerCubePlayerStationCount.setValue(scoutingFlowActivity.getData().getAutonomous().getPowerCubePlayerStationCount());
+        powerCubePlayerStationCount.setValue(scoutingFlowActivity.getData().getAutoPowerCubePlayerStationCount());
     }
 
     @Override
@@ -80,7 +80,7 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
         if (view.getId() == R.id.auto_checkBoxCrossedAutoLine) {
             AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
 
-            scoutingFlowActivity.getData().getAutonomous().setCrossedAutoLine(checkBox.isChecked());
+            scoutingFlowActivity.getData().setCrossedAutoLine(checkBox.isChecked());
         }
     }
 }

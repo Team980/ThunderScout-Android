@@ -59,6 +59,14 @@
         app:allowDividerBelow="false" />
 
     <android.support.v7.preference.Preference
+        android:icon="@drawable/ic_cloud_white_24dp"
+        android:key="@string/pref_thundercloud"
+        android:layout="@layout/preference_backport_material"
+        android:summary="Account settings"
+        android:title="ThunderCloud"
+        app:allowDividerBelow="false" />
+
+    <android.support.v7.preference.Preference
         android:icon="@drawable/ic_notification_white_24dp"
         android:key="@string/pref_notification_settings"
         android:layout="@layout/preference_backport_material"

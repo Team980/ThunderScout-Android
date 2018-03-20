@@ -50,87 +50,87 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
     SORT_AUTO_LINE_CROSS_SUCCESS("Auto Line Cross Success") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
-                    data -> data.getAutonomous().crossedAutoLine()))
+                    data -> data.crossedAutoLine()))
                     .compareTo(ScoutDataStatistics.getPercentage(o2.getDataList(),
-                            data -> data.getAutonomous().crossedAutoLine()));
+                            data -> data.crossedAutoLine()));
         }
     },
 
     SORT_AUTO_POWER_CUBE_ALLIANCE_SWITCH_AVERAGE("Avg. Auto Alliance Switch Cubes") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
-                    data -> data.getAutonomous().getPowerCubeAllianceSwitchCount()))
+                    data -> data.getAutoPowerCubeAllianceSwitchCount()))
                     .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
-                            data -> data.getAutonomous().getPowerCubeAllianceSwitchCount()));
+                            data -> data.getAutoPowerCubeAllianceSwitchCount()));
         }
     },
 
     SORT_AUTO_POWER_CUBE_SCALE_AVERAGE("Avg. Auto Central Scale Cubes") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
-                    data -> data.getAutonomous().getPowerCubeScaleCount()))
+                    data -> data.getAutoPowerCubeScaleCount()))
                     .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
-                            data -> data.getAutonomous().getPowerCubeScaleCount()));
+                            data -> data.getAutoPowerCubeScaleCount()));
         }
     },
 
     SORT_AUTO_POWER_CUBE_PLAYER_STATION_AVERAGE("Avg. Auto Player Station Cubes") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
-                    data -> data.getAutonomous().getPowerCubePlayerStationCount()))
+                    data -> data.getAutoPowerCubePlayerStationCount()))
                     .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
-                            data -> data.getAutonomous().getPowerCubePlayerStationCount()));
+                            data -> data.getAutoPowerCubePlayerStationCount()));
         }
     },
 
     SORT_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_AVERAGE("Avg. Teleop Alliance Switch Cubes") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
-                    data -> data.getTeleop().getPowerCubeAllianceSwitchCount()))
+                    data -> data.getTeleopPowerCubeAllianceSwitchCount()))
                     .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
-                            data -> data.getTeleop().getPowerCubeAllianceSwitchCount()));
+                            data -> data.getTeleopPowerCubeAllianceSwitchCount()));
         }
     },
 
     SORT_TELEOP_POWER_CUBE_SCALE_AVERAGE("Avg. Teleop Central Scale Cubes") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
-                    data -> data.getTeleop().getPowerCubeScaleCount()))
+                    data -> data.getTeleopPowerCubeScaleCount()))
                     .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
-                            data -> data.getTeleop().getPowerCubeScaleCount()));
+                            data -> data.getTeleopPowerCubeScaleCount()));
         }
     },
 
     SORT_TELEOP_POWER_CUBE_OPPOSING_SWITCH_AVERAGE("Avg. Teleop Opposing Switch Cubes") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
-                    data -> data.getTeleop().getPowerCubeOpposingSwitchCount()))
+                    data -> data.getTeleopPowerCubeOpposingSwitchCount()))
                     .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
-                            data -> data.getTeleop().getPowerCubeOpposingSwitchCount()));
+                            data -> data.getTeleopPowerCubeOpposingSwitchCount()));
         }
     },
 
     SORT_TELEOP_POWER_CUBE_PLAYER_STATION_AVERAGE("Avg. Teleop Player Station Cubes") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getAverage(o1.getDataList(),
-                    data -> data.getTeleop().getPowerCubePlayerStationCount()))
+                    data -> data.getTeleopPowerCubePlayerStationCount()))
                     .compareTo(ScoutDataStatistics.getAverage(o2.getDataList(),
-                            data -> data.getTeleop().getPowerCubePlayerStationCount()));
+                            data -> data.getTeleopPowerCubePlayerStationCount()));
         }
     },
 
     SORT_CLIMBING_STATS_PERCENTAGE("Climbing Success") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             int climbed = Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
-                    data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED))
+                    data -> data.getClimbingStats() == ClimbingStats.CLIMBED))
                     .compareTo(ScoutDataStatistics.getPercentage(o2.getDataList(),
-                            data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED));
+                            data -> data.getClimbingStats() == ClimbingStats.CLIMBED));
 
             if (climbed == 0) { //If it's the same...
                 return Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
-                        data -> data.getTeleop().getClimbingStats() == ClimbingStats.ATTEMPTED_CLIMB))
+                        data -> data.getClimbingStats() == ClimbingStats.ATTEMPTED_CLIMB))
                         .compareTo(ScoutDataStatistics.getPercentage(o2.getDataList(),
-                                data -> data.getTeleop().getClimbingStats() == ClimbingStats.ATTEMPTED_CLIMB));
+                                data -> data.getClimbingStats() == ClimbingStats.ATTEMPTED_CLIMB));
             } else {
                 return climbed;
             }
@@ -140,9 +140,9 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
     SORT_SUPPORTED_OTHER_ROBOTS("Supported Other Robots") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
-                    data -> data.getTeleop().supportedOtherRobots()))
+                    data -> data.supportedOtherRobots()))
                     .compareTo(ScoutDataStatistics.getPercentage(o2.getDataList(),
-                            data -> data.getTeleop().supportedOtherRobots()));
+                            data -> data.supportedOtherRobots()));
         }
     };
 

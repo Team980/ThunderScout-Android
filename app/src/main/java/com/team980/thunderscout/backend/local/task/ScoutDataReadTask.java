@@ -130,7 +130,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
     }
 
     private ScoutData initScoutData(Cursor cursor) {
-        ScoutData data = new ScoutData(cursor.getInt(
+        ScoutData data = new ScoutData(cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable._ID)));
 
         // Init
@@ -163,53 +163,53 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
         int crossedAutoLine = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE));
 
-        data.getAutonomous().setCrossedAutoLine(crossedAutoLine != 0); //I2B conversion
+        data.setCrossedAutoLine(crossedAutoLine != 0); //I2B conversion
 
         int autoPowerCubeNearSwitchCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT));
 
-        data.getAutonomous().setPowerCubeAllianceSwitchCount(autoPowerCubeNearSwitchCount);
+        data.setAutoPowerCubeAllianceSwitchCount(autoPowerCubeNearSwitchCount);
 
         int autoPowerCubeScaleCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT));
 
-        data.getAutonomous().setPowerCubeScaleCount(autoPowerCubeScaleCount);
+        data.setAutoPowerCubeScaleCount(autoPowerCubeScaleCount);
 
         int autoPowerCubeAllianceStationCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT));
 
-        data.getAutonomous().setPowerCubePlayerStationCount(autoPowerCubeAllianceStationCount);
+        data.setAutoPowerCubePlayerStationCount(autoPowerCubeAllianceStationCount);
 
         // Teleop
         int teleopPowerCubeNearSwitchCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT));
 
-        data.getTeleop().setPowerCubeAllianceSwitchCount(teleopPowerCubeNearSwitchCount);
+        data.setTeleopPowerCubeAllianceSwitchCount(teleopPowerCubeNearSwitchCount);
 
         int teleopPowerCubeFarSwitchCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT));
 
-        data.getTeleop().setPowerCubeOpposingSwitchCount(teleopPowerCubeFarSwitchCount);
+        data.setTeleopPowerCubeOpposingSwitchCount(teleopPowerCubeFarSwitchCount);
 
         int teleopPowerCubeScaleCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT));
 
-        data.getTeleop().setPowerCubeScaleCount(teleopPowerCubeScaleCount);
+        data.setTeleopPowerCubeScaleCount(teleopPowerCubeScaleCount);
 
         int teleopPowerCubeAllianceStationCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT));
 
-        data.getTeleop().setPowerCubePlayerStationCount(teleopPowerCubeAllianceStationCount);
+        data.setTeleopPowerCubePlayerStationCount(teleopPowerCubeAllianceStationCount);
 
         String climbingStats = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS));
 
-        data.getTeleop().setClimbingStats(ClimbingStats.valueOf(climbingStats));
+        data.setClimbingStats(ClimbingStats.valueOf(climbingStats));
 
         int supportedOtherRobotWhenClimbing = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING));
 
-        data.getTeleop().setSupportedOtherRobots(supportedOtherRobotWhenClimbing != 0); //I2B conversion
+        data.setSupportedOtherRobots(supportedOtherRobotWhenClimbing != 0); //I2B conversion
 
         // Summary
         String strategies = cursor.getString(

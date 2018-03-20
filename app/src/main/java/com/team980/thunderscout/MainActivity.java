@@ -32,6 +32,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -42,11 +43,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.analytics.matches.MatchesFragment;
 import com.team980.thunderscout.analytics.rankings.RankingsFragment;
 import com.team980.thunderscout.backend.AccountScope;
+import com.team980.thunderscout.firebase_debug.FirebaseDebugActivity;
 import com.team980.thunderscout.home.HomeFragment;
 import com.team980.thunderscout.preferences.SettingsActivity;
+
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -58,7 +65,9 @@ public class MainActivity extends AppCompatActivity
 
     public static final String ACTION_REFRESH_DATA_VIEW = "com.team80.thunderscout.ACTION_REFRESH_DATA_VIEW";
 
-    boolean accountMenuExpanded = false; //runtime state
+    private static final int REQUEST_CODE_AUTH = 1;
+
+    private boolean accountMenuExpanded = false; //runtime state
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,10 +195,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
-        } /*else if (id == R.id.nav_debug) {
-            Intent intent = new Intent(this, FirebaseDebugActivity.class);
-            startActivity(intent);
-        }*/
+        }
 
         //AccountScope navigation menu
         else if (id == R.id.nav_account_local) {
@@ -199,20 +205,38 @@ public class MainActivity extends AppCompatActivity
             updateAccountHeader();
             contractAccountMenu();
 
-            //TODO repopulate current fragment
-        } /*else if (id == R.id.nav_account_cloud) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.CLOUD.name()).apply();
+            Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(refreshIntent);
+        } else if (id == R.id.nav_account_cloud) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                PreferenceManager.getDefaultSharedPreferences(this).edit()
+                        .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.CLOUD.name()).apply();
 
-            updateAccountHeader();
-            contractAccountMenu();
+                updateAccountHeader();
+                contractAccountMenu();
 
-            //TODO repopulate current fragment
+                Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(refreshIntent);
+            } else {
+                startActivityForResult(AuthUI.getInstance()
+                                .createSignInIntentBuilder()
+                                .setTheme(R.style.ThunderScout_BaseTheme_ActionBar)
+                                .setIsSmartLockEnabled(false)
+                                .setPrivacyPolicyUrl("http://team980.com/thunderscout/privacy-policy/")
+                                .setLogo(R.mipmap.ic_launcher_splash)
+                                .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
+                                        new AuthUI.IdpConfig.PhoneBuilder().build(),
+                                        new AuthUI.IdpConfig.GoogleBuilder().build()))
+                                .build(),
+                        REQUEST_CODE_AUTH);
+            }
         } else if (id == R.id.nav_account_settings) {
-            Toast.makeText(this, "Open settings", Toast.LENGTH_SHORT).show(); //TODO
+            Intent intent = new Intent(this, FirebaseDebugActivity.class); //TODO replace with real account settings
+            startActivity(intent);
 
             contractAccountMenu();
-        }*/
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -220,11 +244,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
         if (accountMenuExpanded) {
             contractAccountMenu();
         } else {
-            //expandAccountMenu(); TODO reenable
+            expandAccountMenu();
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_AUTH) {
+            recreate();
         }
     }
 
@@ -239,22 +270,42 @@ public class MainActivity extends AppCompatActivity
         ImageView image = navigationView.getHeaderView(0).findViewById(R.id.account_image);
         switch (currentScope) {
             case LOCAL:
-                image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_account_circle_white_72dp));
+                image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_account_circle_white_72dp)); //TODO better image
 
                 ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(sharedPrefs
                         .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
                 ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("Local storage");
-
-                //TODO populate
                 break;
-            /*case CLOUD:
-                image.setImageDrawable(getResources().getDrawable(R.drawable.ic_cloud_circle_white_72dp));
+            case CLOUD:
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    if (user.getPhotoUrl() != null) {
+                        //Glide.with(this).load(user.getPhotoUrl()).apply(new RequestOptions().circleCrop()).into(image); TODO severe memory leak, crop issues
+                        image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_white_72dp));
+                    } else {
+                        image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_white_72dp));
+                    }
 
-                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("Team 980 (ThunderCloud)"); //TODO tweak based on account data
-                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("account@team980.com");
+                    if (user.getDisplayName() != null) {
+                        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(user.getDisplayName());
+                    } else {
+                        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("Signed in");
+                    }
 
-                //TODO populate
-                break;*/
+                    if (user.getEmail() != null) {
+                        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText(user.getEmail());
+                    } else if (user.getPhoneNumber() != null) {
+                        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText(user.getPhoneNumber());
+                    } else {
+                        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("No email or phone number specified");
+                    }
+                } else {
+                    image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_white_72dp));
+
+                    ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("Not signed in");
+                    ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("ThunderCloud");
+                }
+                break;
         }
     }
 
@@ -268,8 +319,19 @@ public class MainActivity extends AppCompatActivity
         view.getMenu().findItem(R.id.nav_account_local).setTitle(PreferenceManager.getDefaultSharedPreferences(this)
                 .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
 
-        //TODO do some UI tweaks depending on account values
-        //view.getMenu().findItem(R.id.nav_account_cloud).setIcon(R.drawable.ic_account_circle_white_72dp);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            if (user.getEmail() != null) {
+                view.getMenu().findItem(R.id.nav_account_cloud).setTitle(user.getEmail());
+            } else if (user.getPhoneNumber() != null) {
+                view.getMenu().findItem(R.id.nav_account_cloud).setTitle(user.getPhoneNumber());
+            } else {
+                view.getMenu().findItem(R.id.nav_account_cloud).setTitle("ThunderCloud");
+            }
+            view.getMenu().findItem(R.id.nav_account_cloud).setTitle(user.getEmail());
+        } else {
+            view.getMenu().findItem(R.id.nav_account_cloud).setTitle("ThunderCloud");
+        }
 
         dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_up_white_24dp));
         accountMenuExpanded = true;
@@ -282,7 +344,13 @@ public class MainActivity extends AppCompatActivity
         view.getMenu().clear();
         view.inflateMenu(R.menu.drawer_menu);
 
-        view.getMenu().findItem(R.id.nav_home).setChecked(true); //TODO set current item instead of HOME
+        if (getSupportFragmentManager().findFragmentById(R.id.fragment).getClass() == HomeFragment.class) {
+            view.setCheckedItem(R.id.nav_home);
+        } else if (getSupportFragmentManager().findFragmentById(R.id.fragment).getClass() == MatchesFragment.class) {
+            view.setCheckedItem(R.id.nav_matches);
+        } else if (getSupportFragmentManager().findFragmentById(R.id.fragment).getClass() == RankingsFragment.class) {
+            view.setCheckedItem(R.id.nav_rankings);
+        }
 
         dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_down_white_24dp));
         accountMenuExpanded = false;

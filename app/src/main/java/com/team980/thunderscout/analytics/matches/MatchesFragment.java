@@ -131,7 +131,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+                AccountScope.getStorageWrapper(getContext()).queryData(adapter);
             }
         };
 
@@ -139,7 +139,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
             setSelectionMode(savedInstanceState.getBoolean(KEY_SELECTION_MODE, false));
             adapter.onRestoreInstanceState(savedInstanceState);
         } else {
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+            AccountScope.getStorageWrapper(getContext()).queryData(adapter);
         }
     }
 
@@ -323,7 +323,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onRefresh() { //SwipeRefreshLayout
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+        AccountScope.getStorageWrapper(getContext()).queryData(adapter);
     }
 
     public SwipeRefreshLayout getSwipeRefreshLayout() {
@@ -331,12 +331,12 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override //Deletion dialog
-    public void onClick(DialogInterface dialog, int which) { //TODO modular account scopes - CLOUD should prompt for password
+    public void onClick(DialogInterface dialog, int which) { //TODO CLOUD should prompt for password
         if (selectionMode) {
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).removeData(adapter.getSelectedItems(), adapter);
+            AccountScope.getStorageWrapper(getContext()).removeData(adapter.getSelectedItems(), adapter);
             adapter.clearSelections();
         } else {
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
+            AccountScope.getStorageWrapper(getContext()).clearAllData(adapter);
         }
     }
 

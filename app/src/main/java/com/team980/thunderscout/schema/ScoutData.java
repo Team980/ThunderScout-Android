@@ -26,6 +26,7 @@ package com.team980.thunderscout.schema;
 
 import android.support.annotation.NonNull;
 
+import com.google.firebase.firestore.Exclude;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
@@ -39,17 +40,19 @@ import java.util.Date;
 public class ScoutData implements Comparable<ScoutData>, Serializable {
 
     /**
-     * ScoutData Version 2018-1
+     * ScoutData Version 2018-2
      * <p>
+     * [8] 2018-2: Flattens the object to be compatible with Firestore.
      * [7] 2018-1: First 2018 spec. Makes a few changes to how the 2017 spec was formatted.
      */
-    private static final long serialVersionUID = 7;
+    private static final long serialVersionUID = 8;
 
     /**
      * The unique ID used internally by the chosen storage provider
      * Used ONLY for internal tracking / data deletion
      */
-    private int id;
+    @Exclude
+    private String id;
 
     private String team; //trust me, this is better as a string
     private int matchNumber;
@@ -58,8 +61,17 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
     private Date date;
     private String source;
 
-    private Autonomous autonomous;
-    private Teleop teleop;
+    private boolean crossedAutoLine;
+    private int autoPowerCubeAllianceSwitchCount;
+    private int autoPowerCubeScaleCount;
+    private int autoPowerCubePlayerStationCount;
+
+    private int teleopPowerCubeAllianceSwitchCount;
+    private int teleopPowerCubeScaleCount;
+    private int teleopPowerCubeOpposingSwitchCount;
+    private int teleopPowerCubePlayerStationCount;
+    private ClimbingStats climbingStats;
+    private boolean supportedOtherRobots;
 
     private String strategies;
     private String difficulties;
@@ -70,20 +82,26 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         allianceStation = AllianceStation.RED_1;
         date = new Date(0);
 
-        autonomous = new Autonomous();
-        teleop = new Teleop();
+        crossedAutoLine = false;
+
+        climbingStats = ClimbingStats.DID_NOT_CLIMB;
+        supportedOtherRobots = false;
     }
 
-    public ScoutData(int primaryKey) { //ID can only be set at object creation
+    public ScoutData(String primaryKey) {
         id = primaryKey;
 
         //default values
         allianceStation = AllianceStation.RED_1;
         date = new Date(0);
 
-        autonomous = new Autonomous();
-        teleop = new Teleop();
+        crossedAutoLine = false;
+
+        climbingStats = ClimbingStats.DID_NOT_CLIMB;
+        supportedOtherRobots = false;
     }
+
+    // --- INIT ---
 
     public static ScoutData fromStringArray(String[] array) { //used by CSV
         ScoutData data = new ScoutData();
@@ -96,18 +114,18 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         data.setSource(array[4]);
 
         //Auto
-        data.getAutonomous().setCrossedAutoLine(Boolean.parseBoolean(array[5]));
-        data.getAutonomous().setPowerCubeAllianceSwitchCount(Integer.parseInt(array[6]));
-        data.getAutonomous().setPowerCubeScaleCount(Integer.parseInt(array[7]));
-        data.getAutonomous().setPowerCubePlayerStationCount(Integer.parseInt(array[8]));
+        data.setCrossedAutoLine(Boolean.parseBoolean(array[5]));
+        data.setAutoPowerCubeAllianceSwitchCount(Integer.parseInt(array[6]));
+        data.setAutoPowerCubeScaleCount(Integer.parseInt(array[7]));
+        data.setAutoPowerCubePlayerStationCount(Integer.parseInt(array[8]));
 
         //Teleop
-        data.getTeleop().setPowerCubeAllianceSwitchCount(Integer.parseInt(array[9]));
-        data.getTeleop().setPowerCubeScaleCount(Integer.parseInt(array[10]));
-        data.getTeleop().setPowerCubeOpposingSwitchCount(Integer.parseInt(array[11]));
-        data.getTeleop().setPowerCubePlayerStationCount(Integer.parseInt(array[12]));
-        data.getTeleop().setClimbingStats(ClimbingStats.valueOf(array[13]));
-        data.getTeleop().setSupportedOtherRobots(Boolean.parseBoolean(array[14]));
+        data.setTeleopPowerCubeAllianceSwitchCount(Integer.parseInt(array[9]));
+        data.setTeleopPowerCubeScaleCount(Integer.parseInt(array[10]));
+        data.setTeleopPowerCubeOpposingSwitchCount(Integer.parseInt(array[11]));
+        data.setTeleopPowerCubePlayerStationCount(Integer.parseInt(array[12]));
+        data.setClimbingStats(ClimbingStats.valueOf(array[13]));
+        data.setSupportedOtherRobots(Boolean.parseBoolean(array[14]));
 
         //Summary
         data.setStrategies(array[15]);
@@ -117,14 +135,19 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         return data;
     }
 
-    // --- INIT ---
-
     /**
      * The unique ID used internally by the chosen storage provider
      * Used ONLY for internal tracking / data deletion
      */
-    public int getId() {
+    public String getId() {
         return id;
+    }
+
+    /**
+     * This should ONLY be called by Firestore reads!
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTeam() {
@@ -169,16 +192,88 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         source = d;
     }
 
+    public boolean crossedAutoLine() {
+        return crossedAutoLine;
+    }
+
+    public void setCrossedAutoLine(boolean crossedAutoLine) {
+        this.crossedAutoLine = crossedAutoLine;
+    }
+
+    public int getAutoPowerCubeAllianceSwitchCount() {
+        return autoPowerCubeAllianceSwitchCount;
+    }
+
+    public void setAutoPowerCubeAllianceSwitchCount(int autoPowerCubeAllianceSwitchCount) {
+        this.autoPowerCubeAllianceSwitchCount = autoPowerCubeAllianceSwitchCount;
+    }
+
+    public int getAutoPowerCubeScaleCount() {
+        return autoPowerCubeScaleCount;
+    }
+
+    public void setAutoPowerCubeScaleCount(int autoPowerCubeScaleCount) {
+        this.autoPowerCubeScaleCount = autoPowerCubeScaleCount;
+    }
+
+    public int getAutoPowerCubePlayerStationCount() {
+        return autoPowerCubePlayerStationCount;
+    }
+
     // --- TELEOP ---
 
-    public Autonomous getAutonomous() {
-        return autonomous;
+    public void setAutoPowerCubePlayerStationCount(int autoPowerCubePlayerStationCount) {
+        this.autoPowerCubePlayerStationCount = autoPowerCubePlayerStationCount;
+    }
+
+    public int getTeleopPowerCubeAllianceSwitchCount() {
+        return teleopPowerCubeAllianceSwitchCount;
+    }
+
+    public void setTeleopPowerCubeAllianceSwitchCount(int teleopPowerCubeAllianceSwitchCount) {
+        this.teleopPowerCubeAllianceSwitchCount = teleopPowerCubeAllianceSwitchCount;
+    }
+
+    public int getTeleopPowerCubeScaleCount() {
+        return teleopPowerCubeScaleCount;
+    }
+
+    public void setTeleopPowerCubeScaleCount(int teleopPowerCubeScaleCount) {
+        this.teleopPowerCubeScaleCount = teleopPowerCubeScaleCount;
+    }
+
+    public int getTeleopPowerCubeOpposingSwitchCount() {
+        return teleopPowerCubeOpposingSwitchCount;
+    }
+
+    public void setTeleopPowerCubeOpposingSwitchCount(int teleopPowerCubeOpposingSwitchCount) {
+        this.teleopPowerCubeOpposingSwitchCount = teleopPowerCubeOpposingSwitchCount;
+    }
+
+    public int getTeleopPowerCubePlayerStationCount() {
+        return teleopPowerCubePlayerStationCount;
+    }
+
+    public void setTeleopPowerCubePlayerStationCount(int teleopPowerCubePlayerStationCount) {
+        this.teleopPowerCubePlayerStationCount = teleopPowerCubePlayerStationCount;
+    }
+
+    public ClimbingStats getClimbingStats() {
+        return climbingStats;
+    }
+
+    public void setClimbingStats(ClimbingStats climbingStats) {
+        this.climbingStats = climbingStats;
+    }
+
+    public boolean supportedOtherRobots() {
+        return supportedOtherRobots;
     }
 
     // --- SUMMARY ---
 
-    public Teleop getTeleop() {
-        return teleop;
+    public void setSupportedOtherRobots(boolean supportedOtherRobots) {
+        this.supportedOtherRobots = supportedOtherRobots;
     }
 
     public String getStrategies() {
@@ -218,18 +313,18 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         fieldList.add(getSource());
 
         //Auto
-        fieldList.add(String.valueOf(getAutonomous().crossedAutoLine()));
-        fieldList.add(String.valueOf(getAutonomous().getPowerCubeAllianceSwitchCount()));
-        fieldList.add(String.valueOf(getAutonomous().getPowerCubeScaleCount()));
-        fieldList.add(String.valueOf(getAutonomous().getPowerCubePlayerStationCount()));
+        fieldList.add(String.valueOf(crossedAutoLine()));
+        fieldList.add(String.valueOf(getAutoPowerCubeAllianceSwitchCount()));
+        fieldList.add(String.valueOf(getAutoPowerCubeScaleCount()));
+        fieldList.add(String.valueOf(getAutoPowerCubePlayerStationCount()));
 
         //Teleop
-        fieldList.add(String.valueOf(getTeleop().getPowerCubeAllianceSwitchCount()));
-        fieldList.add(String.valueOf(getTeleop().getPowerCubeScaleCount()));
-        fieldList.add(String.valueOf(getTeleop().getPowerCubeOpposingSwitchCount()));
-        fieldList.add(String.valueOf(getTeleop().getPowerCubePlayerStationCount()));
-        fieldList.add(getTeleop().getClimbingStats().name());
-        fieldList.add(String.valueOf(getTeleop().supportedOtherRobots()));
+        fieldList.add(String.valueOf(getTeleopPowerCubeAllianceSwitchCount()));
+        fieldList.add(String.valueOf(getTeleopPowerCubeScaleCount()));
+        fieldList.add(String.valueOf(getTeleopPowerCubeOpposingSwitchCount()));
+        fieldList.add(String.valueOf(getTeleopPowerCubePlayerStationCount()));
+        fieldList.add(getClimbingStats().name());
+        fieldList.add(String.valueOf(supportedOtherRobots()));
 
         //Summary
         fieldList.add(getStrategies());
@@ -245,113 +340,6 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
             return Integer.compare(matchNumber, other.getMatchNumber());
         } else {
             return team.compareTo(other.getTeam());
-        }
-    }
-
-    public class Autonomous implements Serializable {
-
-        private boolean crossedAutoLine;
-        private int powerCubeAllianceSwitchCount;
-        private int powerCubeScaleCount;
-        private int powerCubePlayerStationCount;
-
-        private Autonomous() {
-            crossedAutoLine = false;
-        }
-
-        public boolean crossedAutoLine() {
-            return crossedAutoLine;
-        }
-
-        public void setCrossedAutoLine(boolean crossedAutoLine) {
-            this.crossedAutoLine = crossedAutoLine;
-        }
-
-        public int getPowerCubeAllianceSwitchCount() {
-            return powerCubeAllianceSwitchCount;
-        }
-
-        public void setPowerCubeAllianceSwitchCount(int powerCubeAllianceSwitchCount) {
-            this.powerCubeAllianceSwitchCount = powerCubeAllianceSwitchCount;
-        }
-
-        public int getPowerCubeScaleCount() {
-            return powerCubeScaleCount;
-        }
-
-        public void setPowerCubeScaleCount(int powerCubeScaleCount) {
-            this.powerCubeScaleCount = powerCubeScaleCount;
-        }
-
-        public int getPowerCubePlayerStationCount() {
-            return powerCubePlayerStationCount;
-        }
-
-        public void setPowerCubePlayerStationCount(int powerCubePlayerStationCount) {
-            this.powerCubePlayerStationCount = powerCubePlayerStationCount;
-        }
-    }
-
-    public class Teleop implements Serializable {
-
-        private int powerCubeAllianceSwitchCount;
-        private int powerCubeScaleCount;
-        private int powerCubeOpposingSwitchCount;
-        private int powerCubePlayerStationCount;
-        private ClimbingStats climbingStats;
-        private boolean supportedOtherRobots;
-
-        private Teleop() {
-            climbingStats = ClimbingStats.DID_NOT_CLIMB;
-            supportedOtherRobots = false;
-        }
-
-        public int getPowerCubeAllianceSwitchCount() {
-            return powerCubeAllianceSwitchCount;
-        }
-
-        public void setPowerCubeAllianceSwitchCount(int powerCubeAllianceSwitchCount) {
-            this.powerCubeAllianceSwitchCount = powerCubeAllianceSwitchCount;
-        }
-
-        public int getPowerCubeScaleCount() {
-            return powerCubeScaleCount;
-        }
-
-        public void setPowerCubeScaleCount(int powerCubeScaleCount) {
-            this.powerCubeScaleCount = powerCubeScaleCount;
-        }
-
-        public int getPowerCubeOpposingSwitchCount() {
-            return powerCubeOpposingSwitchCount;
-        }
-
-        public void setPowerCubeOpposingSwitchCount(int powerCubeOpposingSwitchCount) {
-            this.powerCubeOpposingSwitchCount = powerCubeOpposingSwitchCount;
-        }
-
-        public int getPowerCubePlayerStationCount() {
-            return powerCubePlayerStationCount;
-        }
-
-        public void setPowerCubePlayerStationCount(int powerCubePlayerStationCount) {
-            this.powerCubePlayerStationCount = powerCubePlayerStationCount;
-        }
-
-        public ClimbingStats getClimbingStats() {
-            return climbingStats;
-        }
-
-        public void setClimbingStats(ClimbingStats climbingStats) {
-            this.climbingStats = climbingStats;
-        }
-
-        public boolean supportedOtherRobots() {
-            return supportedOtherRobots;
-        }
-
-        public void setSupportedOtherRobots(boolean supportedOtherRobots) {
-            this.supportedOtherRobots = supportedOtherRobots;
         }
     }
 }

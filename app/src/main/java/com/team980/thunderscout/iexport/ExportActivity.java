@@ -84,7 +84,7 @@ public class ExportActivity extends AppCompatActivity {
         } else {
             //Export all
             dataToExport = new ArrayList<>();
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, this).queryData(new StorageWrapper.StorageListener() {
+            AccountScope.getStorageWrapper(this).queryData(new StorageWrapper.StorageListener() {
                 @Override
                 public void onDataQuery(List<ScoutData> dataList) {
                     dataToExport.addAll(dataList);

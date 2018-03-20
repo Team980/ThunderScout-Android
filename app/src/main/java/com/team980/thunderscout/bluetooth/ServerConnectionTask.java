@@ -42,6 +42,8 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
@@ -250,7 +252,27 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                         Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
                         LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
                     }
-                }); //TODO assumes LOCAL
+                });
+            }
+
+            if (prefs.getBoolean(context.getResources().getString(R.string.pref_bt_save_to_thundercloud), false)) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    AccountScope.getStorageWrapper(AccountScope.CLOUD, context).writeData(result.getData(), new StorageWrapper.StorageListener() {
+                        @Override
+                        public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
+                            Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
+                        }
+                    });
+                } else {
+                    btTransferError.setContentTitle("ERROR: ThunderCloud account not set up");
+                    btTransferError.setContentText("Please sign in to ThunderCloud and try again");
+                    btTransferError.setWhen(System.currentTimeMillis());
+
+                    NotificationManagerCompat.from(context).notify(id, btTransferError.build());
+                    //NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
+                }
             }
 
             if (prefs.getBoolean(context.getResources().getString(R.string.pref_bt_send_to_bluetooth_server), false)) {
