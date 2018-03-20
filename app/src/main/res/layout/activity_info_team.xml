@@ -24,7 +24,6 @@
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -32,7 +31,7 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:transitionName="team"
+        android:transitionName="match"
         app:layout_scrollFlags="scroll|enterAlways">
 
         <android.support.v7.widget.Toolbar
@@ -43,58 +42,21 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
-
-        <LinearLayout
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center_horizontal"
+            android:background="?attr/colorPrimary"
+            app:tabGravity="fill"
+            app:tabMode="scrollable" />
 
-            <android.support.v7.widget.GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="8dp"
-                app:columnCount="2"
-                app:orientation="horizontal"
-                app:rowCount="2">
+    </android.support.design.widget.AppBarLayout>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Last Updated"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textSize="22sp"
-                    app:layout_columnWeight="1" />
-
-                <TextView
-                    android:id="@+id/info_team_lastUpdated"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textSize="22sp"
-                    app:layout_columnWeight="2"
-                    app:layout_gravity="center_vertical"
-                    tools:text="~~~" />
-
-            </android.support.v7.widget.GridLayout>
-
-            <include layout="@layout/layout_info_team_auto" />
-
-            <include layout="@layout/layout_info_team_teleop" />
-
-            <include layout="@layout/layout_info_team_summary" />
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior" />
 
 </android.support.design.widget.CoordinatorLayout>

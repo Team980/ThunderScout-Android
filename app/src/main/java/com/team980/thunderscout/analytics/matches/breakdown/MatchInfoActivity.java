@@ -30,16 +30,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.schema.ScoutData;
-
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class MatchInfoActivity extends AppCompatActivity {
 
@@ -75,66 +73,15 @@ public class MatchInfoActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(data.getAllianceStation().getColor().getColorPrimaryDark()));
         }
 
-        // Init
-        TextView date = findViewById(R.id.info_match_date);
-        date.setText(SimpleDateFormat.getDateTimeInstance().format(data.getDate()));
+        Fragment fragment = new MatchInfoFragment();
 
-        TextView source = findViewById(R.id.info_match_source);
-        source.setText(data.getSource());
+        Bundle args = new Bundle();
+        args.putSerializable(MatchInfoFragment.EXTRA_SCOUT_DATA, data);
+        fragment.setArguments(args);
 
-        // Auto
-        TextView crossedAutoLine = findViewById(R.id.info_match_autoCrossedAutoLine);
-        crossedAutoLine.setText(String.valueOf(data.getAutonomous().crossedAutoLine()).toUpperCase(Locale.ROOT));
-
-        TextView auto_powerCubeAllianceSwitchCount = findViewById(R.id.info_match_autoPowerCubeAllianceSwitchCount);
-        auto_powerCubeAllianceSwitchCount.setText(data.getAutonomous().getPowerCubeAllianceSwitchCount() + "");
-
-        TextView auto_powerCubeScaleCount = findViewById(R.id.info_match_autoPowerCubeScaleCount);
-        auto_powerCubeScaleCount.setText(data.getAutonomous().getPowerCubeScaleCount() + "");
-
-        TextView auto_powerCubePlayerStationCount = findViewById(R.id.info_match_autoPowerCubePlayerStationCount);
-        auto_powerCubePlayerStationCount.setText(data.getAutonomous().getPowerCubePlayerStationCount() + "");
-
-        // Teleop
-        TextView teleop_powerCubeAllianceSwitchCount = findViewById(R.id.info_match_teleopPowerCubeAllianceSwitchCount);
-        teleop_powerCubeAllianceSwitchCount.setText(data.getTeleop().getPowerCubeAllianceSwitchCount() + "");
-
-        TextView teleop_powerCubeScaleCount = findViewById(R.id.info_match_teleopPowerCubeScaleCount);
-        teleop_powerCubeScaleCount.setText(data.getTeleop().getPowerCubeScaleCount() + "");
-
-        TextView teleop_powerCubeOpposingSwitchCount = findViewById(R.id.info_match_teleopPowerCubeOpposingSwitchCount);
-        teleop_powerCubeOpposingSwitchCount.setText(data.getTeleop().getPowerCubeOpposingSwitchCount() + "");
-
-        TextView teleop_powerCubePlayerStationCount = findViewById(R.id.info_match_teleopPowerCubePlayerStationCount);
-        teleop_powerCubePlayerStationCount.setText(data.getTeleop().getPowerCubePlayerStationCount() + "");
-
-        TextView climbingStats = findViewById(R.id.info_match_teleopClimbingStats);
-        climbingStats.setText(data.getTeleop().getClimbingStats().toString().toUpperCase());
-
-        TextView supportedOtherRobotsWhenClimbing = findViewById(R.id.info_match_teleopSupportedOtherRobotsWhenClimbing);
-        supportedOtherRobotsWhenClimbing.setText(String.valueOf(data.getTeleop().supportedOtherRobots()).toUpperCase(Locale.ROOT));
-
-        // Summary
-        TextView strategies = findViewById(R.id.info_match_strategies);
-        if (data.getStrategies() != null && !data.getStrategies().isEmpty()) {
-            strategies.setText(data.getStrategies());
-        } else {
-            strategies.setText("N/A");
-        }
-
-        TextView difficulties = findViewById(R.id.info_match_difficulties);
-        if (data.getDifficulties() != null && !data.getDifficulties().isEmpty()) {
-            difficulties.setText(data.getDifficulties());
-        } else {
-            difficulties.setText("N/A");
-        }
-
-        TextView comments = findViewById(R.id.info_match_comments);
-        if (data.getComments() != null && !data.getComments().isEmpty()) {
-            comments.setText(data.getComments());
-        } else {
-            comments.setText("N/A");
-        }
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment, fragment);
+        ft.commit();
     }
 
     @Override
