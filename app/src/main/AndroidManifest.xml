@@ -134,7 +134,7 @@
             android:value="true" />
 
         <activity
-            android:name=".firebase_debug.FirebaseDebugActivity"
+            android:name=".backend.cloud.FirebaseDebugActivity"
             android:label="ThunderCloud"
             android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
 

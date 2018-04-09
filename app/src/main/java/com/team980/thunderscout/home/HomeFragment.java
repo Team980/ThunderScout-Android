@@ -301,7 +301,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
     @Override
     public boolean onLongClick(View view) {
-        if (!BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG || AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext()).getString(
+                getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name())) != AccountScope.LOCAL) {
             return true;
         }
 

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.team980.thunderscout.firebase_debug;
+package com.team980.thunderscout.backend.cloud;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -110,7 +110,6 @@ public class FirebaseDebugActivity extends AppCompatActivity {
                         .setPrivacyPolicyUrl("http://team980.com/thunderscout/privacy-policy/")
                         .setLogo(R.mipmap.ic_launcher_splash)
                         .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
-                                new AuthUI.IdpConfig.PhoneBuilder().build(),
                                 new AuthUI.IdpConfig.GoogleBuilder().build()))
                         .build(),
                 0);

@@ -30,6 +30,7 @@ import android.util.Log;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.WriteBatch;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.schema.ScoutData;
@@ -44,6 +45,11 @@ public class CloudStorageWrapper implements StorageWrapper {
 
     public CloudStorageWrapper() {
         db = FirebaseFirestore.getInstance();
+
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true) //Enable offline caching
+                .build();
+        db.setFirestoreSettings(settings);
     }
 
     @Override
@@ -55,7 +61,7 @@ public class CloudStorageWrapper implements StorageWrapper {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (DocumentSnapshot document : task.getResult()) {
-                            ScoutData data = document.toObject(ScoutData.class); //TODO this crashes
+                            ScoutData data = document.toObject(ScoutData.class); //TODO this crashes?
                             data.setId(document.getReference().getId()); //Firestore reference IDs are complicated
                             dataList.add(data);
                             Log.d(CloudStorageWrapper.this.getClass().getName(), "Document found: " + document.getId());
@@ -139,6 +145,16 @@ public class CloudStorageWrapper implements StorageWrapper {
 
     @Override
     public void clearAllData(@Nullable StorageListener listener) {
-        listener.onDataClear(false); //TODO
+        queryData(new StorageListener() {
+            @Override
+            public void onDataQuery(List<ScoutData> dataList) {
+                removeData(dataList, new StorageListener() {
+                    @Override
+                    public void onDataRemove(@Nullable List<ScoutData> dataRemoved) {
+                        listener.onDataClear(dataRemoved == dataList);
+                    }
+                });
+            }
+        });
     }
 }

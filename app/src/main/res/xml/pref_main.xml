@@ -62,7 +62,7 @@
         android:icon="@drawable/ic_cloud_white_24dp"
         android:key="@string/pref_thundercloud"
         android:layout="@layout/preference_backport_material"
-        android:summary="Account settings"
+        android:summary="Sign in to store your data on the cloud"
         android:title="ThunderCloud"
         app:allowDividerBelow="false" />
 

@@ -38,9 +38,11 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.BuildConfig;
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.firebase_debug.FirebaseDebugActivity;
+import com.team980.thunderscout.backend.cloud.FirebaseDebugActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -172,6 +174,18 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             });
 
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    thundercloud.setSummary("Signed in as " + user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    thundercloud.setSummary("Signed in as " + user.getPhoneNumber());
+                } else {
+                    thundercloud.setSummary("Signed in");
+                }
+            }
+
+
             Preference notificationSettings = findPreference(getResources().getString(R.string.pref_notification_settings));
             notificationSettings.setOnPreferenceClickListener(preference1 -> {
                 Intent intent = new Intent();
@@ -229,6 +243,19 @@ public class SettingsActivity extends AppCompatActivity {
 
             SettingsActivity activity = (SettingsActivity) getActivity();
             activity.getSupportActionBar().setTitle("Match scouting");
+
+            Preference cloudPreference = findPreference(getResources().getString(R.string.pref_ms_save_to_thundercloud));
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                cloudPreference.setEnabled(false);
+                cloudPreference.setSummary("Not signed in");
+            } else {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    cloudPreference.setSummary(user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    cloudPreference.setSummary(user.getPhoneNumber());
+                }
+            }
         }
     }
 
@@ -239,6 +266,19 @@ public class SettingsActivity extends AppCompatActivity {
 
             SettingsActivity activity = (SettingsActivity) getActivity();
             activity.getSupportActionBar().setTitle("Bluetooth server");
+
+            Preference cloudPreference = findPreference(getResources().getString(R.string.pref_bt_save_to_thundercloud));
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                cloudPreference.setEnabled(false);
+                cloudPreference.setSummary("Not signed in");
+            } else {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    cloudPreference.setSummary(user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    cloudPreference.setSummary(user.getPhoneNumber());
+                }
+            }
         }
     }
 }

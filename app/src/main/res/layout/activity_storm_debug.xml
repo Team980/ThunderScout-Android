@@ -28,7 +28,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context="com.team980.thunderscout.firebase_debug.FirebaseDebugActivity">
+    tools:context="com.team980.thunderscout.backend.cloud.FirebaseDebugActivity">
 
     <Button
         android:id="@+id/button_auth_ui"

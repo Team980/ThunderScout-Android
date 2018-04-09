@@ -49,7 +49,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.analytics.matches.MatchesFragment;
 import com.team980.thunderscout.analytics.rankings.RankingsFragment;
 import com.team980.thunderscout.backend.AccountScope;
-import com.team980.thunderscout.firebase_debug.FirebaseDebugActivity;
+import com.team980.thunderscout.backend.cloud.FirebaseDebugActivity;
 import com.team980.thunderscout.home.HomeFragment;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
@@ -226,7 +226,6 @@ public class MainActivity extends AppCompatActivity
                                 .setPrivacyPolicyUrl("http://team980.com/thunderscout/privacy-policy/")
                                 .setLogo(R.mipmap.ic_launcher_splash)
                                 .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
-                                        new AuthUI.IdpConfig.PhoneBuilder().build(),
                                         new AuthUI.IdpConfig.GoogleBuilder().build()))
                                 .build(),
                         REQUEST_CODE_AUTH);
