@@ -24,6 +24,7 @@
 
 package com.team980.thunderscout.preferences;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -166,7 +167,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     HeaderPreferenceFragment.this.getFragmentManager().beginTransaction()
                             .replace(android.R.id.content, fragment)
-                            //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE) //this mimics how some Google apps do it
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE) //this mimics how some Google apps do it
                             .addToBackStack(preference.getFragment())
                             .commit();
 

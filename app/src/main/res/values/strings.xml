@@ -39,20 +39,30 @@
         \nYou can opt out of telemetry in the app settings.
     </string>
 
-    <!--- TODO Last update: v16 -->
+    <!--- TODO Last update: v17 -->
     <string name="update_notes">
-        ThunderScout 2018.1 now supports 2018\'s FIRST POWER UP, as well as improving the stability since the previous release.
+        Introducing ThunderCloud! With ThunderCloud, your data gains an additional home on Google\'s Firebase cloud servers.
+        \nSigning in with an email or Google account allows you to store data online, separately from what\'s already saved on your local device.
+        \nThis data can then be viewed on other devices signed in to ThunderScout with this account.
         \n
-        \nIn 2018, it\'s all about Power Cubes, and the scouting flow has been updated to match.
-        \nThe backend that provides for statistical calculations has also been updated, which will allow more types of statistics to be added in a future release.
-    </string>
+        \nThunderCloud is still in its infancy, and much of its design is not final - so your feedback would be very much appreciated!
+        \n
+        \n(Oh, and the team info screen now incorporates individual match tabs.)
+        \n
+        \nTechnical note: ThunderCloud is being in a separate branch from the rest of the app, and may change significantly or disappear in subsequent releases.
+        </string>
 
-    <!--- TODO remove before flight -->
-    <string name="thundercloud_disclaimer">ThunderCloud is currently in beta. No guarantees are made as to the preservation of your data.
-        \n\nIt is recommenced to use ThunderCloud while online. Offline caching has not been tested, and may not work as intended.
-        \n\nA server wipe is not expected until after the Houston Championship. Make sure to backup your data locally during and after the event.
-        \n\nThunderCloud is not guaranteed to ship with the 2018.2 release, and may change significantly in future releases.
-        \n\nFor more information, please contact the developer at info@team980.com.</string>
+    <!--- TODO remove before flight (stable) -->
+    <string name="thundercloud_disclaimer">
+        ThunderCloud is currently in beta. No guarantees are made as to the preservation of your data.
+        \n
+        \nIt is recommenced to use ThunderCloud while online. Offline caching has not been tested, and may not work as intended.
+        \n
+        \nA server wipe is not expected until after the Houston Championship. Make sure to backup your data locally during and after the event.
+        \n
+        \nThunderCloud is not guaranteed to ship with the 2018.2 release, and may change significantly in future releases.
+        \n
+        \nFor more information, please contact the developer at info@team980.com.</string>
 
     <string-array name="alliance_stations_array">
         <item>Red 1</item>
