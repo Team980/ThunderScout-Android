@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
@@ -242,6 +243,27 @@ public class SettingsActivity extends AppCompatActivity {
                 findPreference(getResources().getString(R.string.pref_enable_crashlytics)).setEnabled(false);
                 //findPreference(getResources().getString(R.string.pref_enable_performance_monitoring)).setEnabled(false);
             }
+        }
+    }
+
+    public static class AppearancePreferenceFragment extends PreferenceFragmentCompat {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            addPreferencesFromResource(R.xml.pref_appearance);
+
+            SettingsActivity activity = (SettingsActivity) getActivity();
+            activity.getSupportActionBar().setTitle("Theme settings [BETA]");
+
+            findPreference(getResources().getString(R.string.pref_app_theme))
+                    .setOnPreferenceChangeListener((preference, newValue) -> {
+                        if ((boolean) newValue) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        }
+                        activity.recreate();
+                        return true;
+                    });
         }
     }
 

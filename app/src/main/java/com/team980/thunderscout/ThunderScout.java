@@ -31,6 +31,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.service.quicksettings.TileService;
 import android.support.multidex.MultiDexApplication;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -106,6 +107,11 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
             Fabric.with(this, crashlyticsKit);
         }
 
+        if (sharedPref.getBoolean(getResources().getString(R.string.pref_app_theme), false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     @Override

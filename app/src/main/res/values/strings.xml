@@ -49,7 +49,7 @@
         \n
         \n(Oh, and the team info screen now incorporates individual match tabs.)
         \n
-        \nTechnical note: ThunderCloud is being in a separate branch from the rest of the app, and may change significantly or disappear in subsequent releases.
+        \nTechnical note: ThunderCloud is being developed in a separate branch from the rest of the app, and may change significantly or disappear in subsequent releases.
         </string>
 
     <!--- TODO remove before flight (stable) -->
