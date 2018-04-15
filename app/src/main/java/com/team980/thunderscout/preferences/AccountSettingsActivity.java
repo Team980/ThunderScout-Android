@@ -57,7 +57,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
         if (user == null) {
             super.onCreate(savedInstanceState);
-            //TODO show first run dialog
+            //TODO show first run dialog?
 
             startActivityForResult(AuthUI.getInstance()
                             .createSignInIntentBuilder()
@@ -73,10 +73,11 @@ public class AccountSettingsActivity extends AppCompatActivity {
         }
 
         setTheme(R.style.ThunderScout_BaseTheme_ActionBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_settings);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView nameView = findViewById(R.id.name);
         nameView.setText(user.getDisplayName());
