@@ -145,6 +145,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
 
     /**
      * This should ONLY be called by Firestore reads!
+     * TODO - refactor CloudStorageWrapper to manually create and delete hierarchy, removing the need for this method
      */
     public void setId(String id) {
         this.id = id;

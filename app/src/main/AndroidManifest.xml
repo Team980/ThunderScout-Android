@@ -79,6 +79,10 @@
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".iexport.ImportActivity"
@@ -98,6 +102,11 @@
             android:label="About"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.MaterialAbout" />
+        <activity
+            android:name=".preferences.AccountSettingsActivity"
+            android:label="ThunderCloud"
+            android:parentActivityName=".preferences.SettingsActivity"
+            android:theme="@style/ThunderScout.Transparent" />
 
         <service android:name=".bluetooth.BluetoothServerService" />
         <service
@@ -132,11 +141,6 @@
         <meta-data
             android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
-
-        <activity
-            android:name=".backend.cloud.FirebaseDebugActivity"
-            android:label="ThunderCloud"
-            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />
 
         <meta-data
             android:name="firebase_analytics_collection_enabled"

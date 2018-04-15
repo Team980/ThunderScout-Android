@@ -41,10 +41,9 @@
 
         <ImageView
             android:id="@+id/account_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="-6dp"
-            android:paddingTop="24dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="24dp"
             android:src="@drawable/ic_account_circle_white_72dp" />
 
         <TextView
@@ -63,7 +62,6 @@
 
     </LinearLayout>
 
-    <!--TODO reenable -->
     <ImageView
         android:id="@+id/account_dropdown"
         android:layout_width="wrap_content"

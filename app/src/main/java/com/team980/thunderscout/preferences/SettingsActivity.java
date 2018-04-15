@@ -42,7 +42,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.BuildConfig;
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.backend.cloud.FirebaseDebugActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -133,6 +132,15 @@ public class SettingsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == 1) {
+            recreate();
+        }
+    }
+
     public static class HeaderPreferenceFragment extends PreferenceFragmentCompat {
 
         @Override
@@ -169,8 +177,8 @@ public class SettingsActivity extends AppCompatActivity {
             //Direct listeners - overrides default header listener
             Preference thundercloud = findPreference(getResources().getString(R.string.pref_thundercloud));
             thundercloud.setOnPreferenceClickListener(preference1 -> {
-                Intent intent = new Intent(getContext(), FirebaseDebugActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(getContext(), AccountSettingsActivity.class);
+                startActivityForResult(intent, 1);
                 return true;
             });
 

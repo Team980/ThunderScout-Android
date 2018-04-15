@@ -27,6 +27,7 @@ package com.team980.thunderscout.backend.cloud;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -56,7 +57,7 @@ public class CloudStorageWrapper implements StorageWrapper {
     public void queryData(@Nullable StorageListener listener) {
         List<ScoutData> dataList = new ArrayList<>();
 
-        db.collection("data")
+        db.collection("data").document("users").collection(FirebaseAuth.getInstance().getUid())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -76,7 +77,7 @@ public class CloudStorageWrapper implements StorageWrapper {
 
     @Override
     public void writeData(ScoutData data, @Nullable StorageListener listener) {
-        db.collection("data")
+        db.collection("data").document("users").collection(FirebaseAuth.getInstance().getUid())
                 .add(data)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -94,7 +95,7 @@ public class CloudStorageWrapper implements StorageWrapper {
         WriteBatch batch = db.batch();
 
         for (ScoutData data : dataList) {
-            DocumentReference ref = db.collection("data").document();
+            DocumentReference ref = db.collection("data").document("users").collection(FirebaseAuth.getInstance().getUid()).document();
             batch.set(ref, data);
         }
 
@@ -111,7 +112,7 @@ public class CloudStorageWrapper implements StorageWrapper {
 
     @Override
     public void removeData(ScoutData data, @Nullable StorageListener listener) {
-        db.collection("data")
+        db.collection("data").document("users").collection(FirebaseAuth.getInstance().getUid())
                 .document(data.getId())
                 .delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -129,7 +130,7 @@ public class CloudStorageWrapper implements StorageWrapper {
         WriteBatch batch = db.batch();
 
         for (ScoutData data : dataList) {
-            batch.delete(db.collection("data").document(data.getId()));
+            batch.delete(db.collection("data").document("users").collection(FirebaseAuth.getInstance().getUid()).document(data.getId()));
         }
 
         batch.commit().addOnCompleteListener(task -> {

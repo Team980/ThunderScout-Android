@@ -47,6 +47,13 @@
         \nThe backend that provides for statistical calculations has also been updated, which will allow more types of statistics to be added in a future release.
     </string>
 
+    <!--- TODO remove before flight -->
+    <string name="thundercloud_disclaimer">ThunderCloud is currently in beta. No guarantees are made as to the preservation of your data.
+        \n\nIt is recommenced to use ThunderCloud while online. Offline caching has not been tested, and may not work as intended.
+        \n\nA server wipe is not expected until after the Houston Championship. Make sure to backup your data locally during and after the event.
+        \n\nThunderCloud is not guaranteed to ship with the 2018.2 release, and may change significantly in future releases.
+        \n\nFor more information, please contact the developer at info@team980.com.</string>
+
     <string-array name="alliance_stations_array">
         <item>Red 1</item>
         <item>Red 2</item>

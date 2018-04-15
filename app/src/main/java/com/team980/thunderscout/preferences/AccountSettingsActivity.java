@@ -1,0 +1,161 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package com.team980.thunderscout.preferences;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.crashlytics.android.Crashlytics;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.team980.thunderscout.MainActivity;
+import com.team980.thunderscout.R;
+import com.team980.thunderscout.backend.AccountScope;
+
+import java.util.Arrays;
+
+public class AccountSettingsActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            super.onCreate(savedInstanceState);
+            //TODO show first run dialog
+
+            startActivityForResult(AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setTheme(R.style.ThunderScout_BaseTheme_ActionBar)
+                            .setIsSmartLockEnabled(false)
+                            .setPrivacyPolicyUrl("http://team980.com/thunderscout/privacy-policy/")
+                            .setLogo(R.mipmap.ic_launcher_splash)
+                            .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
+                                    new AuthUI.IdpConfig.GoogleBuilder().build()))
+                            .build(),
+                    0);
+            return;
+        }
+
+        setTheme(R.style.ThunderScout_BaseTheme_ActionBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_account_settings);
+
+        TextView nameView = findViewById(R.id.name);
+        nameView.setText(user.getDisplayName());
+
+        TextView emailView = findViewById(R.id.email);
+        emailView.setText(user.getEmail());
+
+        ImageView photoView = findViewById(R.id.photo);
+        if (user.getPhotoUrl() != null) {
+            Glide.with(this).load(user.getPhotoUrl().toString().replace("s96-c/photo.jpg", "s400-c/photo.jpg")).apply(new RequestOptions().circleCrop()).into(photoView);
+        } else {
+            Glide.with(this).load(R.drawable.ic_cloud_circle_white_72dp).into(photoView);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        IdpResponse response = IdpResponse.fromResultIntent(data);
+
+        if (resultCode == RESULT_OK) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            Toast.makeText(this, "Signed in as " + user.getDisplayName(), Toast.LENGTH_LONG).show();
+
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.CLOUD.name()).apply();
+            setResult(MainActivity.REQUEST_CODE_AUTH);
+            finish();
+        } else {
+            if (response == null) {
+                // User pressed back button
+                finish();
+                return;
+            }
+
+            if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+                new AlertDialog.Builder(this)
+                        .setTitle("No Internet connection")
+                        .setIcon(R.drawable.ic_warning_white_24dp)
+                        .setMessage("Please connect to the Internet and try again")
+                        .setPositiveButton("OK", (dialog, which) -> finish())
+                        .setOnDismissListener((dialog) -> finish())
+                        .create().show();
+                return;
+            }
+
+            Toast.makeText(this, "An unknown error occurred", Toast.LENGTH_LONG).show();
+            Log.e(getClass().getName(), "Sign-in error: ", response.getError());
+            Crashlytics.logException(response.getError());
+        }
+    }
+
+    public void signOut(View v) {
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(task -> {
+                    Toast.makeText(this, "Signed out", Toast.LENGTH_LONG).show();
+                    PreferenceManager.getDefaultSharedPreferences(this).edit()
+                            .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
+                    setResult(MainActivity.REQUEST_CODE_AUTH);
+                    finish();
+                });
+    }
+
+    public void deleteAccount(View v) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete account?")
+                .setIcon(R.drawable.ic_warning_white_24dp)
+                .setMessage("You will lose all data stored in your account! This cannot be reversed!")
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Delete", (dialog, which) -> AuthUI.getInstance()
+                        .delete(AccountSettingsActivity.this)
+                        .addOnCompleteListener(task -> {
+                            Toast.makeText(this, "Account deleted", Toast.LENGTH_LONG).show();
+                            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                                    .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
+                            setResult(MainActivity.REQUEST_CODE_AUTH);
+                            finish();
+                        })).show();
+    }
+}

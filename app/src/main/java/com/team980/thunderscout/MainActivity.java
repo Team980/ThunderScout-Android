@@ -43,17 +43,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.firebase.ui.auth.AuthUI;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.analytics.matches.MatchesFragment;
 import com.team980.thunderscout.analytics.rankings.RankingsFragment;
 import com.team980.thunderscout.backend.AccountScope;
-import com.team980.thunderscout.backend.cloud.FirebaseDebugActivity;
 import com.team980.thunderscout.home.HomeFragment;
+import com.team980.thunderscout.preferences.AccountSettingsActivity;
 import com.team980.thunderscout.preferences.SettingsActivity;
-
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final String ACTION_REFRESH_DATA_VIEW = "com.team80.thunderscout.ACTION_REFRESH_DATA_VIEW";
 
-    private static final int REQUEST_CODE_AUTH = 1;
+    public static final int REQUEST_CODE_AUTH = 1;
 
     private boolean accountMenuExpanded = false; //runtime state
 
@@ -219,22 +218,16 @@ public class MainActivity extends AppCompatActivity
                 Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(refreshIntent);
             } else {
-                startActivityForResult(AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setTheme(R.style.ThunderScout_BaseTheme_ActionBar)
-                                .setIsSmartLockEnabled(false)
-                                .setPrivacyPolicyUrl("http://team980.com/thunderscout/privacy-policy/")
-                                .setLogo(R.mipmap.ic_launcher_splash)
-                                .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
-                                        new AuthUI.IdpConfig.GoogleBuilder().build()))
-                                .build(),
-                        REQUEST_CODE_AUTH);
+                contractAccountMenu();
+
+                Intent intent = new Intent(this, AccountSettingsActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_AUTH);
             }
         } else if (id == R.id.nav_account_settings) {
-            Intent intent = new Intent(this, FirebaseDebugActivity.class); //TODO replace with real account settings
-            startActivity(intent);
-
             contractAccountMenu();
+
+            Intent intent = new Intent(this, AccountSettingsActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_AUTH);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -253,7 +246,7 @@ public class MainActivity extends AppCompatActivity
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_AUTH) {
+        if (resultCode == REQUEST_CODE_AUTH) { //yes this is correct
             recreate();
         }
     }
@@ -279,8 +272,7 @@ public class MainActivity extends AppCompatActivity
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     if (user.getPhotoUrl() != null) {
-                        //Glide.with(this).load(user.getPhotoUrl()).apply(new RequestOptions().circleCrop()).into(image); TODO severe memory leak, crop issues
-                        image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_white_72dp));
+                        Glide.with(this).load(user.getPhotoUrl().toString().replace("s96-c/photo.jpg", "s400-c/photo.jpg")).apply(new RequestOptions().circleCrop()).into(image);
                     } else {
                         image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_white_72dp));
                     }
@@ -320,16 +312,19 @@ public class MainActivity extends AppCompatActivity
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            if (user.getEmail() != null) {
+            if (user.getDisplayName() != null) {
+                view.getMenu().findItem(R.id.nav_account_cloud).setTitle(user.getDisplayName());
+            } else if (user.getEmail() != null) {
                 view.getMenu().findItem(R.id.nav_account_cloud).setTitle(user.getEmail());
             } else if (user.getPhoneNumber() != null) {
                 view.getMenu().findItem(R.id.nav_account_cloud).setTitle(user.getPhoneNumber());
             } else {
                 view.getMenu().findItem(R.id.nav_account_cloud).setTitle("ThunderCloud");
             }
-            view.getMenu().findItem(R.id.nav_account_cloud).setTitle(user.getEmail());
         } else {
-            view.getMenu().findItem(R.id.nav_account_cloud).setTitle("ThunderCloud");
+            view.getMenu().findItem(R.id.nav_account_cloud).setTitle("Sign in to ThunderCloud");
+            view.getMenu().findItem(R.id.nav_account_settings).setEnabled(false);
+            view.getMenu().findItem(R.id.nav_account_settings).setVisible(false);
         }
 
         dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_up_white_24dp));
