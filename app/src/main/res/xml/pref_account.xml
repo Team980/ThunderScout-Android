@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
@@ -22,10 +22,12 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <color name="primary">#212121</color>
-    <color name="primary_dark">#101010</color>
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <color name="secondary">#616161</color>
-    <color name="secondary_dark">#424242</color>
-</resources>
+    <android.support.v7.preference.SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="@string/pref_enable_push_notifications"
+        android:summary="Used to deliver updates on ThunderCloud services"
+        android:title="Receive developer messages" />
+
+</android.support.v7.preference.PreferenceScreen>

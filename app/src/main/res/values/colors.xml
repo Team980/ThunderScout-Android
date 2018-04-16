@@ -23,8 +23,8 @@
   -->
 
 <resources>
-    <color name="primary">#78909C</color> <!-- TODO #222 -->
-    <color name="primary_dark">#546E7A</color> <!-- TODO #111 -->
+    <color name="primary">#78909C</color>
+    <color name="primary_dark">#546E7A</color>
 
     <color name="secondary">#757575</color>
     <color name="secondary_dark">#424242</color>

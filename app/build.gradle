@@ -41,7 +41,7 @@ android {
         targetSdkVersion 27
         multiDexEnabled true
         versionCode 17 //Next public release: 18
-        versionName "2018.2-beta1"
+        versionName "2018.2-beta2"
         resConfigs "en"
     }
 
@@ -84,6 +84,7 @@ dependencies { //TODO use the ${thingy}
     implementation 'com.google.firebase:firebase-auth:' + firebaseVersion
     implementation 'com.google.firebase:firebase-core:' + firebaseVersion
     implementation 'com.google.firebase:firebase-firestore:' + firebaseVersion
+    implementation 'com.google.firebase:firebase-messaging:' + firebaseVersion
 
     implementation 'com.google.android.gms:play-services-auth:' + firebaseVersion
 

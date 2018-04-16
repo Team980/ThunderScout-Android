@@ -106,13 +106,19 @@
 
         </android.support.constraint.ConstraintLayout>
 
+        <FrameLayout
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:content="@xml/pref_account" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="8dp"
+            android:padding="16dp"
             android:text="@string/thundercloud_disclaimer"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 </ScrollView>

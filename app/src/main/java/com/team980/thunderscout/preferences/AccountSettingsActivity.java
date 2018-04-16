@@ -25,10 +25,12 @@
 package com.team980.thunderscout.preferences;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,10 +45,13 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class AccountSettingsActivity extends AppCompatActivity {
@@ -91,6 +96,12 @@ public class AccountSettingsActivity extends AppCompatActivity {
         } else {
             Glide.with(this).load(R.drawable.ic_cloud_circle_white_72dp).into(photoView);
         }
+
+        AccountPreferenceFragment fragment = new AccountPreferenceFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment, fragment)
+                .commit();
     }
 
     @Override
@@ -105,7 +116,14 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.CLOUD.name()).apply();
+
+            if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getResources().getString(R.string.pref_enable_push_notifications), true)) {
+                FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+                FirebaseInstanceId.getInstance().getToken();
+            }
+
             setResult(MainActivity.REQUEST_CODE_AUTH);
+
             finish();
         } else {
             if (response == null) {
@@ -136,9 +154,20 @@ public class AccountSettingsActivity extends AppCompatActivity {
                 .signOut(this)
                 .addOnCompleteListener(task -> {
                     Toast.makeText(this, "Signed out", Toast.LENGTH_LONG).show();
+
                     PreferenceManager.getDefaultSharedPreferences(this).edit()
                             .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
+
+                    FirebaseMessaging.getInstance().setAutoInitEnabled(false);
+                    AsyncTask.execute(() -> {
+                        try {
+                            FirebaseInstanceId.getInstance().deleteInstanceId();
+                        } catch (IOException ignored) {
+                        }
+                    });
+
                     setResult(MainActivity.REQUEST_CODE_AUTH);
+
                     finish();
                 });
     }
@@ -153,10 +182,50 @@ public class AccountSettingsActivity extends AppCompatActivity {
                         .delete(AccountSettingsActivity.this)
                         .addOnCompleteListener(task -> {
                             Toast.makeText(this, "Account deleted", Toast.LENGTH_LONG).show();
+
                             PreferenceManager.getDefaultSharedPreferences(this).edit()
                                     .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
+
+                            FirebaseMessaging.getInstance().setAutoInitEnabled(false);
+                            AsyncTask.execute(() -> {
+                                try {
+                                    FirebaseInstanceId.getInstance().deleteInstanceId();
+                                } catch (IOException ignored) {
+                                }
+                            });
+
                             setResult(MainActivity.REQUEST_CODE_AUTH);
+
                             finish();
                         })).show();
+    }
+
+    public static class AccountPreferenceFragment extends PreferenceFragmentCompat {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            addPreferencesFromResource(R.xml.pref_account);
+
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                findPreference(getResources().getString(R.string.pref_enable_push_notifications))
+                        .setEnabled(false);
+            } else {
+                findPreference(getResources().getString(R.string.pref_enable_push_notifications))
+                        .setOnPreferenceChangeListener((preference, newValue) -> {
+                            if ((boolean) newValue) {
+                                FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+                                FirebaseInstanceId.getInstance().getToken();
+                            } else {
+                                FirebaseMessaging.getInstance().setAutoInitEnabled(false);
+                                AsyncTask.execute(() -> {
+                                    try {
+                                        FirebaseInstanceId.getInstance().deleteInstanceId();
+                                    } catch (IOException ignored) {
+                                    }
+                                });
+                            }
+                            return true;
+                        });
+            }
+        }
     }
 }

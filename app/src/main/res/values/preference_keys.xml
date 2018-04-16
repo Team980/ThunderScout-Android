@@ -47,10 +47,6 @@
     <string name="pref_enable_crashlytics">enable_crashlytics</string>
     <string name="pref_enable_performance_monitoring">enable_performance_monitoring</string>
 
-    <!-- Appearance -->
-    <string name="pref_app_theme">app_theme</string>
-    <string name="pref_tint_navigation_bar">tint_nav_bar</string>
-
     <!-- Match scouting -->
     <string name="pref_enable_match_scouting">enable_match_scout</string>
     <string name="pref_ms_save_to_local_device">ms_send_to_local_storage</string>
@@ -64,5 +60,12 @@
     <string name="pref_bt_save_to_thundercloud">bt_save_to_thundercloud</string>
     <string name="pref_bt_send_to_bluetooth_server">bt_send_to_bt_server</string>
     <string name="pref_bt_bluetooth_server_device">bt_bt_server_device</string>
+
+    <!-- ThunderCloud -->
+    <string name="pref_enable_push_notifications">enable_push_notifications</string>
+
+    <!-- Appearance -->
+    <string name="pref_app_theme">app_theme</string>
+    <string name="pref_tint_navigation_bar">tint_nav_bar</string>
 
 </resources>
