@@ -39,9 +39,13 @@
         \nYou can opt out of telemetry in the app settings.
     </string>
 
-    <!--- TODO Last update: v17 -->
+    <!--- TODO Last update: v18 -->
     <string name="update_notes">
-        Introducing ThunderCloud! With ThunderCloud, your data gains an additional home on Google\'s Firebase cloud servers.
+        2018.2-beta2 enables developer messages for signed in users that will provide updates on the status of the ThunderCloud beta.
+        \n
+        \nPrevious release notes:
+        \n
+        \nIntroducing ThunderCloud! With ThunderCloud, your data gains an additional home on Google\'s Firebase cloud servers.
         \nSigning in with an email or Google account allows you to store data online, separately from what\'s already saved on your local device.
         \nThis data can then be viewed on other devices signed in to ThunderScout with this account.
         \n

@@ -40,7 +40,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         multiDexEnabled true
-        versionCode 17 //Next public release: 18
+        versionCode 18 //Next public release: 19
         versionName "2018.2-beta2"
         resConfigs "en"
     }
