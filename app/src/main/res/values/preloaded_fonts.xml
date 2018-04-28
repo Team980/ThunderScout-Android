@@ -23,12 +23,15 @@
   -->
 
 <resources>
-    <color name="primary">#212121</color>
-    <color name="primary_dark">#151515</color>
-
-    <color name="secondary">#616161</color>
-    <color name="secondary_dark">#373737</color>
-
-    <color name="alliance_red_primary">#9C1117</color>
-    <color name="alliance_red_primary_dark">#760000</color>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/libre_franklin</item>
+        <item>@font/libre_franklin_black</item>
+        <item>@font/libre_franklin_bold</item>
+        <item>@font/libre_franklin_extrabold</item>
+        <item>@font/libre_franklin_extralight</item>
+        <item>@font/libre_franklin_light</item>
+        <item>@font/libre_franklin_medium</item>
+        <item>@font/libre_franklin_semibold</item>
+        <item>@font/libre_franklin_thin</item>
+    </array>
 </resources>
