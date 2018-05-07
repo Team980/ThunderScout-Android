@@ -76,6 +76,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="12dp"
+                android:fontFamily="@font/nunito_sans_bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintStart_toEndOf="@+id/photo"
                 app:layout_constraintTop_toTopOf="@+id/photo"
@@ -102,7 +103,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_cloud_circle_white_72dp" />
+                tools:src="@drawable/ic_cloud_circle_72dp" />
 
         </android.support.constraint.ConstraintLayout>
 

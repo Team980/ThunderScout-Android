@@ -68,7 +68,7 @@ public class CompareBottomSheetBinding {
             }
         });
 
-        toolbar.setNavigationIcon(R.drawable.ic_expand_less_white_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_expand_less_24dp);
         toolbar.setNavigationOnClickListener(v -> {
             if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);

@@ -61,11 +61,11 @@ public class BluetoothQuickTileService extends TileService { //TODO new icon tha
             //TODO use STATE_UNAVAILABLE when no Bluetooth adapter is present
             //TODO Should I disable Active Mode for server responsiveness?
             tile.setIcon(Icon.createWithResource(this,
-                    R.drawable.ic_bluetooth_searching_white_24dp));
+                    R.drawable.ic_bluetooth_searching_24dp));
             tile.setState(Tile.STATE_ACTIVE);
         } else {
             tile.setIcon(Icon.createWithResource(this,
-                    R.drawable.ic_bluetooth_disabled_white_24dp));
+                    R.drawable.ic_bluetooth_disabled_24dp));
             tile.setState(Tile.STATE_INACTIVE);
         }
 

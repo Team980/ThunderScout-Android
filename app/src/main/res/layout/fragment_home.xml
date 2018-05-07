@@ -39,7 +39,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+            app:popupTheme="@style/ThunderScout.PopupOverlay"
+            app:theme="@style/ThunderScout.AppBarOverlay"
             app:title="@string/app_name" />
 
     </android.support.design.widget.AppBarLayout>
@@ -69,7 +70,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:scaleType="center"
-        android:src="@drawable/ic_add_white_24dp"
+        android:src="@drawable/ic_add_24dp"
         app:backgroundTint="@color/accent"
         app:elevation="6dp"
         app:fabSize="normal"

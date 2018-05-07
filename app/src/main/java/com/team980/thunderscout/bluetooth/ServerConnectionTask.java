@@ -87,7 +87,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
         }
 
         btTransferInProgress = new NotificationCompat.Builder(context, "bt_transfer")
-                .setSmallIcon(R.drawable.ic_bluetooth_transfer_white_24dp) //TODO animated icon?
+                .setSmallIcon(R.drawable.ic_bluetooth_transfer_24dp) //TODO animated icon?
                 .setUsesChronometer(true)
                 .setOngoing(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -97,7 +97,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS);
 
         btTransferSuccess = new NotificationCompat.Builder(context, "bt_transfer")
-                .setSmallIcon(R.drawable.ic_check_circle_white_24dp)
+                .setSmallIcon(R.drawable.ic_check_circle_24dp)
                 .setTicker("Bluetooth transfer succeeded")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -107,7 +107,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                 .setGroup("BT_SERVER_TRANSFER_SUCCESS");
 
         btTransferError = new NotificationCompat.Builder(context, "bt_transfer")
-                .setSmallIcon(R.drawable.ic_warning_white_24dp)
+                .setSmallIcon(R.drawable.ic_warning_24dp)
                 .setTicker("Bluetooth transfer failed")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)

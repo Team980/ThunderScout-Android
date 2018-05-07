@@ -158,13 +158,12 @@ public class SettingsActivity extends AppCompatActivity {
 
                     PreferenceFragmentCompat fragment;
                     try {
+                        //TODO check against fragment injection
                         fragment = (PreferenceFragmentCompat) Class.forName(preference.getFragment()).newInstance();
                     } catch (Exception e) {
                         e.printStackTrace();
                         return true;
                     }
-
-                    //TODO check against fragment injection
 
                     HeaderPreferenceFragment.this.getFragmentManager().beginTransaction()
                             .replace(android.R.id.content, fragment)
@@ -238,22 +237,6 @@ public class SettingsActivity extends AppCompatActivity {
 
             bindPreferenceSummaryToValue(findPreference(getResources().getString(R.string.pref_device_name)));
 
-            if (BuildConfig.DEBUG) { //Disable analytics on debug builds
-                findPreference(getResources().getString(R.string.pref_enable_analytics)).setEnabled(false);
-                findPreference(getResources().getString(R.string.pref_enable_crashlytics)).setEnabled(false);
-                //findPreference(getResources().getString(R.string.pref_enable_performance_monitoring)).setEnabled(false);
-            }
-        }
-    }
-
-    public static class AppearancePreferenceFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            addPreferencesFromResource(R.xml.pref_appearance);
-
-            SettingsActivity activity = (SettingsActivity) getActivity();
-            activity.getSupportActionBar().setTitle("Theme settings [BETA]");
-
             findPreference(getResources().getString(R.string.pref_app_theme))
                     .setOnPreferenceChangeListener((preference, newValue) -> {
                         if ((boolean) newValue) {
@@ -264,6 +247,12 @@ public class SettingsActivity extends AppCompatActivity {
                         activity.recreate();
                         return true;
                     });
+
+            if (BuildConfig.DEBUG) { //Disable analytics on debug builds
+                findPreference(getResources().getString(R.string.pref_enable_analytics)).setEnabled(false);
+                findPreference(getResources().getString(R.string.pref_enable_crashlytics)).setEnabled(false);
+                //findPreference(getResources().getString(R.string.pref_enable_performance_monitoring)).setEnabled(false);
+            }
         }
     }
 

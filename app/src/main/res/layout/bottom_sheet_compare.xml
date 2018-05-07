@@ -45,7 +45,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+            app:popupTheme="@style/ThunderScout.PopupOverlay"
+            app:theme="@style/ThunderScout.AppBarOverlay"
             app:title="Compare teams..." />
 
         <android.support.v7.widget.GridLayout
@@ -64,7 +65,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Team"
-                android:textColor="@color/white"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="22sp"
                 app:layout_columnWeight="2" />
 
@@ -73,7 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:textColor="@color/white"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="22sp"
                 app:layout_columnWeight="1"
                 tools:text="111" />
@@ -83,7 +84,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:textColor="@color/white"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="22sp"
                 app:layout_columnWeight="1"
                 tools:text="222" />
@@ -93,7 +94,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:textColor="@color/white"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="22sp"
                 app:layout_columnWeight="1"
                 tools:text="333" />

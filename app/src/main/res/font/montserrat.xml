@@ -22,19 +22,8 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-    <array name="preloaded_fonts" translatable="false">
-        <item>@font/allerta</item>
-        <item>@font/allerta_stencil</item>
-        <item>@font/arimo</item>
-        <item>@font/libre_franklin_bold</item>
-        <item>@font/libre_franklin_semibold</item>
-        <item>@font/montserrat</item>
-        <item>@font/nunito_sans_bold</item>
-        <item>@font/oswald</item>
-        <item>@font/roboto</item>
-        <item>@font/roboto_mono</item>
-        <item>@font/source_sans_pro</item>
-        <item>@font/sunflower</item>
-    </array>
-</resources>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:fontProviderAuthority="com.google.android.gms.fonts"
+    app:fontProviderCerts="@array/com_google_android_gms_fonts_certs"
+    app:fontProviderPackage="com.google.android.gms"
+    app:fontProviderQuery="name=Montserrat&amp;weight=700" />

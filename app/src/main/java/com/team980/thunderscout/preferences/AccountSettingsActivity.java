@@ -94,7 +94,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
         if (user.getPhotoUrl() != null) {
             Glide.with(this).load(user.getPhotoUrl().toString().replace("s96-c/photo.jpg", "s400-c/photo.jpg")).apply(new RequestOptions().circleCrop()).into(photoView);
         } else {
-            Glide.with(this).load(R.drawable.ic_cloud_circle_white_72dp).into(photoView);
+            Glide.with(this).load(R.drawable.ic_cloud_circle_72dp).into(photoView);
         }
 
         AccountPreferenceFragment fragment = new AccountPreferenceFragment();
@@ -135,7 +135,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
             if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
                 new AlertDialog.Builder(this)
                         .setTitle("No Internet connection")
-                        .setIcon(R.drawable.ic_warning_white_24dp)
+                        .setIcon(R.drawable.ic_warning_24dp)
                         .setMessage("Please connect to the Internet and try again")
                         .setPositiveButton("OK", (dialog, which) -> finish())
                         .setOnDismissListener((dialog) -> finish())
@@ -175,7 +175,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
     public void deleteAccount(View v) {
         new AlertDialog.Builder(this)
                 .setTitle("Delete account?")
-                .setIcon(R.drawable.ic_warning_white_24dp)
+                .setIcon(R.drawable.ic_warning_24dp)
                 .setMessage("You will lose all data stored in your account! This cannot be reversed!")
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("Delete", (dialog, which) -> AuthUI.getInstance()

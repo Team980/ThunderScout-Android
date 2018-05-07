@@ -140,7 +140,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         swipeContainer.setOnRefreshListener(this);
 
         swipeContainer.setColorSchemeResources(R.color.accent);
-        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
+        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.background_card);
 
         scoutButton = view.findViewById(R.id.fab_scout);
         scoutButton.setOnClickListener(this);
@@ -224,7 +224,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         if (!sharedPrefs.getBoolean(getResources().getString(R.string.pref_shown_welcome_card), false)) {
             Card welcomeCard = new Card("Welcome to ThunderScout!");
 
-            welcomeCard.setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.ic_app_badge_white_48dp));
+            welcomeCard.setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.ic_app_badge_48dp));
             welcomeCard.setText(getResources().getString(R.string.welcome_message));
             welcomeCard.setDismissable(true);
             welcomeCard.addAction(new CardAction("Dismiss", (card, action) -> {
@@ -243,7 +243,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         if (!sharedPrefs.getBoolean(getResources().getString(R.string.pref_shown_telemetry_card), false)) {
             Card telemetryCard = new Card("Telemetry");
 
-            telemetryCard.setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.ic_forum_white));
+            telemetryCard.setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.ic_forum_24dp));
             telemetryCard.setText(getResources().getString(R.string.telemetry_prompt));
             telemetryCard.setDismissable(true);
             telemetryCard.addAction(new CardAction("Configure", (card, action) -> {
@@ -269,7 +269,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         if (sharedPrefs.getInt(getResources().getString(R.string.pref_last_shown_update_card), 0) != BuildConfig.VERSION_CODE) {
             Card updateCard = new Card("New in version " + BuildConfig.VERSION_NAME);
 
-            updateCard.setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.ic_whats_new_white_24dp));
+            updateCard.setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.ic_whats_new_24dp));
             updateCard.setText(getResources().getString(R.string.update_notes));
             updateCard.setDismissable(true);
             updateCard.addAction(new CardAction("Dismiss", (card, action) -> {

@@ -59,7 +59,7 @@ public class FCMMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             Notification remoteNotification = new NotificationCompat.Builder(this, "push_notifications")
                     .setColor(getResources().getColor(R.color.accent))
-                    .setSmallIcon(R.drawable.ic_app_badge_white_48dp)
+                    .setSmallIcon(R.drawable.ic_app_badge_48dp)
                     .setContentTitle(remoteMessage.getNotification().getTitle())
                     .setContentText(remoteMessage.getNotification().getBody())
                     .build();

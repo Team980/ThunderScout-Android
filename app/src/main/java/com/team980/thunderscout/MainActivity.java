@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity
         ImageView image = navigationView.getHeaderView(0).findViewById(R.id.account_image);
         switch (currentScope) {
             case LOCAL:
-                image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_account_circle_white_72dp)); //TODO better image
+                image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_account_circle_72dp)); //TODO better image
 
                 ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(sharedPrefs
                         .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity
                     if (user.getPhotoUrl() != null) {
                         Glide.with(this).load(user.getPhotoUrl().toString().replace("s96-c/photo.jpg", "s400-c/photo.jpg")).apply(new RequestOptions().circleCrop()).into(image);
                     } else {
-                        image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_white_72dp));
+                        image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_72dp));
                     }
 
                     if (user.getDisplayName() != null) {
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity
                         ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("No email or phone number specified");
                     }
                 } else {
-                    image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_white_72dp));
+                    image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_72dp));
 
                     ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("Not signed in");
                     ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("ThunderCloud");
@@ -327,7 +327,7 @@ public class MainActivity extends AppCompatActivity
             view.getMenu().findItem(R.id.nav_account_settings).setVisible(false);
         }
 
-        dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_up_white_24dp));
+        dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_up_24dp));
         accountMenuExpanded = true;
     }
 
@@ -346,7 +346,7 @@ public class MainActivity extends AppCompatActivity
             view.setCheckedItem(R.id.nav_rankings);
         }
 
-        dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_down_white_24dp));
+        dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_down_24dp));
         accountMenuExpanded = false;
     }
 

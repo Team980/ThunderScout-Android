@@ -40,7 +40,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+            app:popupTheme="@style/ThunderScout.PopupOverlay"
+            app:theme="@style/ThunderScout.AppBarOverlay" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
@@ -48,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="?attr/colorPrimary"
+            app:theme="@style/ThunderScout.AppBarOverlay"
             app:tabGravity="fill"
             app:tabMode="scrollable" />
 

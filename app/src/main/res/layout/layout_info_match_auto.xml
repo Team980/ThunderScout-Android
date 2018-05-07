@@ -57,7 +57,7 @@
 
         <TextView
             android:text="Crossed Auto Line"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
@@ -76,7 +76,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:text="Power Cubes Delivered To..."
-        android:textColor="@color/white"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 
     <android.support.v7.widget.GridLayout

@@ -97,7 +97,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
 
         ViewPager viewPager = findViewById(R.id.view_pager);
 
@@ -279,7 +279,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 } else {
                     suspendDialog = new AlertDialog.Builder(this)
                             .setTitle("ThunderCloud account not set up")
-                            .setIcon(R.drawable.ic_warning_white_24dp)
+                            .setIcon(R.drawable.ic_warning_24dp)
                             .setMessage("Please sign in to ThunderCloud and try again")
                             .setPositiveButton("OK", (dialog, which) -> finish())
                             .setOnDismissListener((dialog) -> finish())
@@ -295,7 +295,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                         suspendDialog = new AlertDialog.Builder(this)
                                 .setTitle("Bluetooth is disabled")
-                                .setIcon(R.drawable.ic_warning_white_24dp)
+                                .setIcon(R.drawable.ic_warning_24dp)
                                 .setMessage("Please enable Bluetooth and try again")
                                 .setPositiveButton("OK", (dialog, which) -> finish())
                                 .setOnDismissListener((dialog) -> finish())
@@ -309,7 +309,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 } catch (IllegalArgumentException e) {
                     suspendDialog = new AlertDialog.Builder(this)
                             .setTitle("Bluetooth server device not set")
-                            .setIcon(R.drawable.ic_warning_white_24dp)
+                            .setIcon(R.drawable.ic_warning_24dp)
                             .setMessage("Please configure your scouting settings and try again")
                             .setPositiveButton("OK", (dialog, which) -> finish())
                             .setOnDismissListener((dialog) -> finish())

@@ -59,7 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Auto Line Cross Success"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="2" />
 
@@ -101,7 +101,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:text="Avg. Power Cubes Delivered To..."
-        android:textColor="@color/white"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 
     <android.support.v7.widget.GridLayout

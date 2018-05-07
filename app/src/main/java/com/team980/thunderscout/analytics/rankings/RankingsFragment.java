@@ -153,7 +153,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         swipeContainer.setOnRefreshListener(this);
         swipeContainer.setColorSchemeResources(R.color.accent);
-        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
+        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.background_card);
 
         compareSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottom_sheet_compare));
         compareSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -169,13 +169,13 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
                     }
                     Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
-                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_more_white_24dp);
+                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_more_24dp);
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.secondary_dark));
                     }
                     Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
-                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_less_white_24dp);
+                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_less_24dp);
                 }
             }
 
@@ -382,7 +382,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             MainActivity activity = (MainActivity) getActivity();
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
 
             toolbar.setNavigationOnClickListener(v -> {
                 if (selectionMode) {

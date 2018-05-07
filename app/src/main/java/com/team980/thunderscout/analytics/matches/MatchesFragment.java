@@ -147,7 +147,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         swipeContainer.setOnRefreshListener(this);
         swipeContainer.setColorSchemeResources(R.color.accent);
-        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
+        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.background_card);
 
         receiver = new BroadcastReceiver() {
             @Override
@@ -293,7 +293,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             MainActivity activity = (MainActivity) getActivity();
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
 
             toolbar.setNavigationOnClickListener(v -> {
                 if (selectionMode) {

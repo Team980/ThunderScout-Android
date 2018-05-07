@@ -33,7 +33,8 @@
         android:layout_height="48dp"
         android:layout_gravity="center_vertical"
         android:paddingLeft="16dp"
-        android:src="@drawable/ic_people_white_24dp" />
+        android:src="@drawable/ic_people_24dp"
+        android:tint="?android:attr/textColorSecondary" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -47,7 +48,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:text="Team 980"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp" />
 
         <TextView

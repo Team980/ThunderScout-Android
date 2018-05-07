@@ -23,12 +23,15 @@
   -->
 
 <resources>
-    <color name="primary">#212121</color>
-    <color name="primary_dark">#151515</color>
-
-    <color name="secondary">#616161</color>
-    <color name="secondary_dark">#373737</color>
-
     <color name="alliance_red_primary">#9C1117</color>
     <color name="alliance_red_primary_dark">#760000</color>
+    <color name="alliance_blue_primary">#005291</color>
+    <color name="alliance_blue_primary_dark">#004275</color>
+
+    <color name="background">#303030</color>
+    <color name="background_floating">#424242</color>
+    <color name="background_card">#424242</color>
+
+    <!--<color name="navigation_bar">@color/primary_dark</color>
+    <color name="navigation_bar_divider">@color/primary</color>-->
 </resources>

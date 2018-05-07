@@ -44,12 +44,13 @@
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:layout_marginTop="24dp"
-            android:src="@drawable/ic_account_circle_white_72dp" />
+            android:src="@drawable/ic_account_circle_72dp" />
 
         <TextView
             android:id="@+id/account_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_sans_bold"
             android:paddingTop="12dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             tools:text="Team 980" />
@@ -69,6 +70,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:paddingBottom="12dp"
-        android:src="@drawable/ic_arrow_drop_down_white_24dp" />
+        android:src="@drawable/ic_arrow_drop_down_24dp" />
 
 </RelativeLayout>
