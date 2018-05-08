@@ -76,7 +76,7 @@ public class TeamInfoFragment extends Fragment {
         // Auto
         TextView crossPercent = view.findViewById(R.id.info_team_autoCrossPercentage);
         crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.crossedAutoLine())) + "%");
+                data -> data.getCrossedAutoLine())) + "%");
 
         TextView auto_powerCubeAllianceSwitchAverage = view.findViewById(R.id.info_team_autoPowerCubeAllianceSwitchAverage);
         auto_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
@@ -113,7 +113,7 @@ public class TeamInfoFragment extends Fragment {
 
         TextView supportedRobotPercent = view.findViewById(R.id.info_team_teleopSupportedRobotPercent);
         supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.supportedOtherRobots())) + "%");
+                data -> data.getSupportedOtherRobots())) + "%");
 
         // Summary
         RecyclerView strategies = view.findViewById(R.id.info_team_strategies);

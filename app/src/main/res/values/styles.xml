@@ -42,6 +42,9 @@
         <item name="actionBarStyle">@style/ThunderScout.ActionBar</item>
         <item name="toolbarStyle">@style/ThunderScout.Toolbar</item>
 
+        <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+        <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
         </item>
         <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
@@ -65,6 +68,9 @@
         <item name="android:actionBarStyle">@style/ThunderScout.ActionBar</item>
         <item name="actionBarStyle">@style/ThunderScout.ActionBar</item>
         <item name="toolbarStyle">@style/ThunderScout.Toolbar</item>
+
+        <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+        <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
 
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
         </item>
@@ -92,6 +98,9 @@
         <item name="actionBarStyle">@style/ThunderScout.ActionBar</item>
         <item name="toolbarStyle">@style/ThunderScout.Toolbar</item>
 
+        <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+        <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
         </item>
         <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
@@ -110,6 +119,9 @@
         <item name="actionBarStyle">@style/ThunderScout.ActionBar</item>
         <item name="toolbarStyle">@style/ThunderScout.Toolbar</item>
 
+        <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+        <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
         </item>
         <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
@@ -125,6 +137,9 @@
         <item name="android:actionBarStyle">@style/ThunderScout.ActionBar</item>
         <item name="actionBarStyle">@style/ThunderScout.ActionBar</item>
         <item name="toolbarStyle">@style/ThunderScout.Toolbar</item>
+
+        <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+        <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
 
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
         </item>
@@ -220,5 +235,17 @@
     <style name="ThunderScout.Toolbar.SubtitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:fontFamily">@font/nunito_sans</item>
         <item name="fontFamily">@font/nunito_sans</item>
+    </style>
+
+    <!-- Alert Dialog styles -->
+    <style name="ThunderScout.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:titleTextStyle">@style/ThunderScout.AlertDialog.Title</item>
+    </style>
+
+    <!-- TODO this doesn't work! -->
+    <style name="ThunderScout.AlertDialog.Title" parent="TextAppearance.AppCompat.Title">
+        <item name="android:fontFamily">@font/nunito_sans_bold</item>
+        <item name="fontFamily">@font/nunito_sans_bold</item>
     </style>
 </resources>

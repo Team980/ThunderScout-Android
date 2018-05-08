@@ -78,7 +78,7 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, List<ScoutDat
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getSource());
 
             // Auto
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE, data.crossedAutoLine());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE, data.getCrossedAutoLine());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT, data.getAutoPowerCubeAllianceSwitchCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT, data.getAutoPowerCubeScaleCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT, data.getAutoPowerCubePlayerStationCount());
@@ -89,7 +89,7 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, List<ScoutDat
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT, data.getTeleopPowerCubeOpposingSwitchCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT, data.getTeleopPowerCubePlayerStationCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS, data.getClimbingStats().name());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING, data.supportedOtherRobots());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING, data.getSupportedOtherRobots());
 
             // Summary
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES, data.getStrategies());

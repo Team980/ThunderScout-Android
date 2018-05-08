@@ -193,7 +193,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         source = d;
     }
 
-    public boolean crossedAutoLine() {
+    public boolean getCrossedAutoLine() {
         return crossedAutoLine;
     }
 
@@ -267,7 +267,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         this.climbingStats = climbingStats;
     }
 
-    public boolean supportedOtherRobots() {
+    public boolean getSupportedOtherRobots() {
         return supportedOtherRobots;
     }
 
@@ -314,7 +314,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         fieldList.add(getSource());
 
         //Auto
-        fieldList.add(String.valueOf(crossedAutoLine()));
+        fieldList.add(String.valueOf(getCrossedAutoLine()));
         fieldList.add(String.valueOf(getAutoPowerCubeAllianceSwitchCount()));
         fieldList.add(String.valueOf(getAutoPowerCubeScaleCount()));
         fieldList.add(String.valueOf(getAutoPowerCubePlayerStationCount()));
@@ -325,7 +325,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         fieldList.add(String.valueOf(getTeleopPowerCubeOpposingSwitchCount()));
         fieldList.add(String.valueOf(getTeleopPowerCubePlayerStationCount()));
         fieldList.add(getClimbingStats().name());
-        fieldList.add(String.valueOf(supportedOtherRobots()));
+        fieldList.add(String.valueOf(getSupportedOtherRobots()));
 
         //Summary
         fieldList.add(getStrategies());

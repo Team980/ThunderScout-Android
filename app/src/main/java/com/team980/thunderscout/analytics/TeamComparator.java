@@ -50,9 +50,9 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
     SORT_AUTO_LINE_CROSS_SUCCESS("Auto Line Cross Success") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
-                    data -> data.crossedAutoLine()))
+                    data -> data.getCrossedAutoLine()))
                     .compareTo(ScoutDataStatistics.getPercentage(o2.getDataList(),
-                            data -> data.crossedAutoLine()));
+                            data -> data.getCrossedAutoLine()));
         }
     },
 
@@ -140,9 +140,9 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
     SORT_SUPPORTED_OTHER_ROBOTS("Supported Other Robots") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
-                    data -> data.supportedOtherRobots()))
+                    data -> data.getSupportedOtherRobots()))
                     .compareTo(ScoutDataStatistics.getPercentage(o2.getDataList(),
-                            data -> data.supportedOtherRobots()));
+                            data -> data.getSupportedOtherRobots()));
         }
     };
 

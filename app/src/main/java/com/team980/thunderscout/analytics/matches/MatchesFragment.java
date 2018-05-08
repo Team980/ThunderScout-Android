@@ -68,7 +68,7 @@ import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.ArrayList;
 
-public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, View.OnClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, View.OnClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener, MainActivity.BackPressListener {
 
     //Instance state parameters
     private static final String KEY_SELECTION_MODE = "selection_mode";
@@ -176,6 +176,16 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         super.onPause();
 
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (selectionMode) {
+            adapter.clearSelections();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

@@ -77,7 +77,7 @@ public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedLi
         climbingStats.setSelection(scoutingFlowActivity.getData().getClimbingStats().ordinal());
 
         CheckBox supportedOtherRobotsWhenClimbing = getView().findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
-        supportedOtherRobotsWhenClimbing.setChecked(scoutingFlowActivity.getData().supportedOtherRobots());
+        supportedOtherRobotsWhenClimbing.setChecked(scoutingFlowActivity.getData().getSupportedOtherRobots());
         supportedOtherRobotsWhenClimbing.setOnClickListener(this);
     }
 

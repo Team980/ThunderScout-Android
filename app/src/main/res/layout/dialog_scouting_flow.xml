@@ -24,24 +24,14 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="?dialogPreferredPadding"
+    android:paddingRight="?dialogPreferredPadding">
 
-    <!-- TODO remove -->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        app:theme="@style/ThunderScout.AppBarOverlay" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -63,39 +53,39 @@
                 android:hint="980"
                 android:inputType="number"
                 android:textSize="22sp" />
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/dialog_allianceStationButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:textColor="@color/white"
-                android:text="Red 1" />
-
         </LinearLayout>
 
-        <LinearLayout
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/dialog_allianceStationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:orientation="horizontal">
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="1dp"
+            android:text="Red 1"
+            android:textColor="@color/white" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Qualification Match "
-                android:textSize="22sp" />
+    </FrameLayout>
 
-            <EditText
-                android:id="@+id/dialog_editTextMatchNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="2"
-                android:hint="0"
-                android:inputType="number"
-                android:textSize="22sp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="horizontal">
 
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Qualification Match "
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/dialog_editTextMatchNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="2"
+            android:hint="0"
+            android:inputType="number"
+            android:textSize="22sp" />
 
     </LinearLayout>
 

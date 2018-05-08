@@ -225,6 +225,9 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         if (compareSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             compareSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             return true;
+        } else if (selectionMode) {
+            adapter.clearSelections();
+            return true;
         } else {
             return false;
         }

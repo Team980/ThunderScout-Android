@@ -70,7 +70,7 @@ public class MatchInfoFragment extends Fragment {
 
         // Auto
         TextView crossedAutoLine = view.findViewById(R.id.info_match_autoCrossedAutoLine);
-        crossedAutoLine.setText(String.valueOf(data.crossedAutoLine()).toUpperCase(Locale.ROOT));
+        crossedAutoLine.setText(String.valueOf(data.getCrossedAutoLine()).toUpperCase(Locale.ROOT));
 
         TextView auto_powerCubeAllianceSwitchCount = view.findViewById(R.id.info_match_autoPowerCubeAllianceSwitchCount);
         auto_powerCubeAllianceSwitchCount.setText(data.getAutoPowerCubeAllianceSwitchCount() + "");
@@ -98,7 +98,7 @@ public class MatchInfoFragment extends Fragment {
         climbingStats.setText(data.getClimbingStats().toString().toUpperCase());
 
         TextView supportedOtherRobotsWhenClimbing = view.findViewById(R.id.info_match_teleopSupportedOtherRobotsWhenClimbing);
-        supportedOtherRobotsWhenClimbing.setText(String.valueOf(data.supportedOtherRobots()).toUpperCase(Locale.ROOT));
+        supportedOtherRobotsWhenClimbing.setText(String.valueOf(data.getSupportedOtherRobots()).toUpperCase(Locale.ROOT));
 
         // Summary
         TextView strategies = view.findViewById(R.id.info_match_strategies);

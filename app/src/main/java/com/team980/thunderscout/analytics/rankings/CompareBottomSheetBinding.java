@@ -88,13 +88,13 @@ public class CompareBottomSheetBinding {
         // Auto
         TextView crossPercent = dialogView.findViewById(R.id.info_alliance_station1_autoCrossPercentage);
         crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(station1.getDataList(),
-                data -> data.crossedAutoLine())) + "%");
+                data -> data.getCrossedAutoLine())) + "%");
         TextView crossPercent2 = dialogView.findViewById(R.id.info_alliance_station2_autoCrossPercentage);
         crossPercent2.setText(formatter.format(ScoutDataStatistics.getPercentage(station2.getDataList(),
-                data -> data.crossedAutoLine())) + "%");
+                data -> data.getCrossedAutoLine())) + "%");
         TextView crossPercent3 = dialogView.findViewById(R.id.info_alliance_station3_autoCrossPercentage);
         crossPercent3.setText(formatter.format(ScoutDataStatistics.getPercentage(station3.getDataList(),
-                data -> data.crossedAutoLine())) + "%");
+                data -> data.getCrossedAutoLine())) + "%");
 
         TextView auto_powerCubeAllianceSwitchAverage = dialogView.findViewById(R.id.info_alliance_station1_autoPowerCubeAllianceSwitchAverage);
         auto_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
@@ -179,13 +179,13 @@ public class CompareBottomSheetBinding {
 
         TextView supportedRobotPercent = dialogView.findViewById(R.id.info_alliance_station1_teleopSupportedRobotPercent);
         supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(station1.getDataList(),
-                data -> data.supportedOtherRobots())) + "%");
+                data -> data.getSupportedOtherRobots())) + "%");
         TextView supportedRobotPercent2 = dialogView.findViewById(R.id.info_alliance_station2_teleopSupportedRobotPercent);
         supportedRobotPercent2.setText(formatter.format(ScoutDataStatistics.getPercentage(station2.getDataList(),
-                data -> data.supportedOtherRobots())) + "%");
+                data -> data.getSupportedOtherRobots())) + "%");
         TextView supportedRobotPercent3 = dialogView.findViewById(R.id.info_alliance_station3_teleopSupportedRobotPercent);
         supportedRobotPercent3.setText(formatter.format(ScoutDataStatistics.getPercentage(station3.getDataList(),
-                data -> data.supportedOtherRobots())) + "%");
+                data -> data.getSupportedOtherRobots())) + "%");
 
         // Summary
         RecyclerView strategies = dialogView.findViewById(R.id.info_alliance_strategies);

@@ -36,7 +36,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -62,14 +61,12 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Match settings");
         builder.setCancelable(false);
 
         View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_scouting_flow, null);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-        final Toolbar toolbar = dialogView.findViewById(R.id.toolbar);
-        toolbar.setTitle("Match Settings");
 
         teamNumber = dialogView.findViewById(R.id.dialog_editTextTeamNumber);
         teamNumber.requestFocus();

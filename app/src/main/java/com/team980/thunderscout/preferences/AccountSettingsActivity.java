@@ -156,7 +156,10 @@ public class AccountSettingsActivity extends AppCompatActivity {
                     Toast.makeText(this, "Signed out", Toast.LENGTH_LONG).show();
 
                     PreferenceManager.getDefaultSharedPreferences(this).edit()
-                            .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
+                            .putBoolean(getResources().getString(R.string.pref_ms_save_to_thundercloud), false)
+                            .putBoolean(getResources().getString(R.string.pref_bt_save_to_thundercloud), false)
+                            .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name())
+                            .apply();
 
                     FirebaseMessaging.getInstance().setAutoInitEnabled(false);
                     AsyncTask.execute(() -> {
@@ -184,7 +187,10 @@ public class AccountSettingsActivity extends AppCompatActivity {
                             Toast.makeText(this, "Account deleted", Toast.LENGTH_LONG).show();
 
                             PreferenceManager.getDefaultSharedPreferences(this).edit()
-                                    .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
+                                    .putBoolean(getResources().getString(R.string.pref_ms_save_to_thundercloud), false)
+                                    .putBoolean(getResources().getString(R.string.pref_bt_save_to_thundercloud), false)
+                                    .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name())
+                                    .apply();
 
                             FirebaseMessaging.getInstance().setAutoInitEnabled(false);
                             AsyncTask.execute(() -> {

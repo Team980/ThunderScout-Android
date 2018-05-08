@@ -50,7 +50,7 @@ public class AutoFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         CheckBox crossedAutoLine = getView().findViewById(R.id.auto_checkBoxCrossedAutoLine);
-        crossedAutoLine.setChecked(scoutingFlowActivity.getData().crossedAutoLine());
+        crossedAutoLine.setChecked(scoutingFlowActivity.getData().getCrossedAutoLine());
         crossedAutoLine.setOnClickListener(this);
 
         CounterCompoundView powerCubeAllianceSwitchCount = getView().findViewById(R.id.auto_counterPowerCubeAllianceSwitchCount);
