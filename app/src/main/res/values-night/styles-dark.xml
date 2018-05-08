@@ -45,11 +45,11 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">false</item>
     </style>
 
-    <style name="ThunderScout.DayNight.MaterialAbout" parent="Theme.Mal.Light.DarkActionBar">
+    <style name="ThunderScout.DayNight.MaterialAbout" parent="Theme.Mal.Dark">
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">false</item>
     </style>
 
-    <style name="ThunderScout.DayNight.LibraryInfo" parent="AboutLibrariesTheme.Light.DarkToolbar">
+    <style name="ThunderScout.DayNight.LibraryInfo" parent="AboutLibrariesTheme">
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">false</item>
     </style>
 

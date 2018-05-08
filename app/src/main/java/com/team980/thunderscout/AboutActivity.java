@@ -26,7 +26,11 @@ package com.team980.thunderscout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 
 import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
@@ -39,8 +43,9 @@ import com.mikepenz.aboutlibraries.LibsBuilder;
 
 public class AboutActivity extends MaterialAboutActivity {
 
+    @NonNull
     @Override
-    protected MaterialAboutList getMaterialAboutList(Context context) {
+    protected MaterialAboutList getMaterialAboutList(@NonNull Context context) {
         MaterialAboutCard.Builder titleCard = new MaterialAboutCard.Builder();
 
         titleCard.addItem(new MaterialAboutTitleItem.Builder()
@@ -51,7 +56,7 @@ public class AboutActivity extends MaterialAboutActivity {
         titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Version " + BuildConfig.VERSION_NAME)
                 .subText("Click for patch notes")
-                .icon(R.drawable.ic_info_outline_24dp)
+                .icon(getTintedIcon(R.drawable.ic_info_outline_24dp))
                 .setOnClickAction(() -> {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AboutActivity.this);
                     builder.setTitle("New in version " + BuildConfig.VERSION_NAME);
@@ -63,7 +68,7 @@ public class AboutActivity extends MaterialAboutActivity {
 
         titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("View on Google Play")
-                .icon(R.drawable.ic_google_play_24dp)
+                .icon(getTintedIcon(R.drawable.ic_google_play_24dp))
                 .setOnClickAction(() -> {
                     try {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
@@ -75,7 +80,7 @@ public class AboutActivity extends MaterialAboutActivity {
 
         titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("View on Amazon Appstore")
-                .icon(R.drawable.ic_amazon_24dp)
+                .icon(getTintedIcon(R.drawable.ic_amazon_24dp))
                 .setOnClickAction(() -> {
                     try {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("amzn://apps/android?p=" + getPackageName())));
@@ -88,7 +93,7 @@ public class AboutActivity extends MaterialAboutActivity {
         titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Fork on GitHub")
                 .subText("Team980/ThunderScout-Android")
-                .icon(R.drawable.ic_github_24dp)
+                .icon(getTintedIcon(R.drawable.ic_github_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("https://github.com/Team980/ThunderScout-Android"));
@@ -98,7 +103,7 @@ public class AboutActivity extends MaterialAboutActivity {
 
         /*titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("View on Chief Delphi")
-                .icon(R.drawable.ic_forum_24dp)
+                .icon(getTintedIcon(R.drawable.ic_forum_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("https://www.chiefdelphi.com/forums/showthread.php?t=151953"));
@@ -108,7 +113,7 @@ public class AboutActivity extends MaterialAboutActivity {
 
         titleCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Open source licenses")
-                .icon(R.drawable.ic_code_24dp)
+                .icon(getTintedIcon(R.drawable.ic_code_24dp))
                 .setOnClickAction(() -> new LibsBuilder()
                         .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
                         .withActivityTheme(R.style.ThunderScout_LibraryInfo)
@@ -123,13 +128,13 @@ public class AboutActivity extends MaterialAboutActivity {
         authorCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Luke Myers")
                 .subText("Lead Developer")
-                .icon(R.drawable.ic_person_24dp)
+                .icon(getTintedIcon(R.drawable.ic_person_24dp))
                 .build());
 
         authorCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Chief Delphi")
                 .subText("@19lmyers")
-                .icon(R.drawable.ic_forum_24dp)
+                .icon(getTintedIcon(R.drawable.ic_forum_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("https://www.chiefdelphi.com/forums/member.php?u=91239"));
@@ -146,7 +151,7 @@ public class AboutActivity extends MaterialAboutActivity {
         teamCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Like us on Facebook")
                 .subText("@Team980Thunderbots")
-                .icon(R.drawable.ic_facebook_24dp)
+                .icon(getTintedIcon(R.drawable.ic_facebook_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("https://www.facebook.com/Team980ThunderBots"));
@@ -157,7 +162,7 @@ public class AboutActivity extends MaterialAboutActivity {
         teamCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Follow us on Twitter")
                 .subText("@frc980")
-                .icon(R.drawable.ic_twitter_24dp)
+                .icon(getTintedIcon(R.drawable.ic_twitter_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("https://twitter.com/frc980"));
@@ -168,7 +173,7 @@ public class AboutActivity extends MaterialAboutActivity {
         teamCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Follow us on Instagram")
                 .subText("@frcteam980")
-                .icon(R.drawable.ic_instagram_24dp)
+                .icon(getTintedIcon(R.drawable.ic_instagram_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("https://www.instagram.com/frcteam980/"));
@@ -179,7 +184,7 @@ public class AboutActivity extends MaterialAboutActivity {
         teamCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Follow us on Snapchat")
                 .subText("@frcteam980")
-                .icon(R.drawable.ic_snapchat_24dp)
+                .icon(getTintedIcon(R.drawable.ic_snapchat_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("https://www.snapchat.com/add/frcteam980"));
@@ -190,7 +195,7 @@ public class AboutActivity extends MaterialAboutActivity {
         teamCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Subscribe to us on YouTube")
                 .subText("FRC Team 980 Official")
-                .icon(R.drawable.ic_youtube_24dp)
+                .icon(getTintedIcon(R.drawable.ic_youtube_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("https://www.youtube.com/channel/UCxW_2sc2SANjckwsFJt14AQ"));
@@ -201,7 +206,7 @@ public class AboutActivity extends MaterialAboutActivity {
         teamCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Visit our website")
                 .subText("team980.com")
-                .icon(R.drawable.ic_web_24dp)
+                .icon(getTintedIcon(R.drawable.ic_web_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("http://team980.com/"));
@@ -221,4 +226,12 @@ public class AboutActivity extends MaterialAboutActivity {
         return getString(R.string.mal_title_about);
     }
 
+    /**
+     * Manually create Drawable icons to "support" DayNight icon tinting
+     */
+    private Drawable getTintedIcon(@DrawableRes int iconRes) {
+        Drawable icon = getResources().getDrawable(iconRes);
+        DrawableCompat.setTint(icon, getResources().getColor(R.color.about_icon_override));
+        return icon;
+    }
 }

@@ -52,7 +52,7 @@
                 android:layout_height="24dp"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="8dp"
-                android:tint="?android:attr/textColorPrimary"
+                android:tint="?android:attr/textColorSecondary"
                 tools:src="@drawable/ic_info_24dp" />
 
             <TextView
@@ -63,7 +63,7 @@
                 android:fontFamily="@font/nunito_sans_bold"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:textColor="?android:attr/textColorPrimary"
+                android:textColor="@color/card_title_color"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 tools:text="Card Title" />

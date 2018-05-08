@@ -32,6 +32,10 @@
     <color name="background_floating">#424242</color>
     <color name="background_card">#424242</color>
 
+    <color name="navigation_bar_divider">#32FFFFFF</color>
     <!--<color name="navigation_bar">@color/primary_dark</color>
     <color name="navigation_bar_divider">@color/primary</color>-->
+
+    <color name="card_title_color">@android:color/primary_text_dark</color>
+    <color name="about_icon_override">@android:color/primary_text_dark</color>
 </resources>

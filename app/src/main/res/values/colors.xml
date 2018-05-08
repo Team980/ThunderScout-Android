@@ -58,6 +58,9 @@
 
     <color name="shortcut_background">#F5F5F5</color>
 
+    <color name="card_title_color">@android:color/tertiary_text_light</color>
+    <color name="about_icon_override">@android:color/tertiary_text_light</color>
+
     <!--<color name="primary">#fbc02d</color> Old theme
     <color name="primary_dark">#F9A825</color>
     <color name="accent">#fdd835</color>-->
