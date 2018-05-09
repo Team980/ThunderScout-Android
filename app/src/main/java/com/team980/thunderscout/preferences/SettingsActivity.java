@@ -31,6 +31,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.preference.EditTextPreference;
@@ -236,15 +237,18 @@ public class SettingsActivity extends AppCompatActivity {
             activity.getSupportActionBar().setTitle("General settings");
 
             bindPreferenceSummaryToValue(findPreference(getResources().getString(R.string.pref_device_name)));
+            bindPreferenceSummaryToValue(findPreference(getResources().getString(R.string.pref_app_theme))); //later overidden
 
             findPreference(getResources().getString(R.string.pref_app_theme))
                     .setOnPreferenceChangeListener((preference, newValue) -> {
-                        if ((boolean) newValue) {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        } else {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        }
-                        activity.recreate();
+                        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, newValue);
+
+                        //TODO prompt fo LOCATION permission for Automatic and reenable
+
+                        AppCompatDelegate.setDefaultNightMode(Integer.valueOf((String) newValue));
+                        Snackbar.make(getView(), "Restart to apply theme change", Snackbar.LENGTH_INDEFINITE)
+                                .setAction("Ok", v -> activity.recreate())
+                                .show();
                         return true;
                     });
 

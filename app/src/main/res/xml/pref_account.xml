@@ -22,12 +22,20 @@
   ~ SOFTWARE.
   -->
 
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.preference.SwitchPreferenceCompat
         android:defaultValue="true"
         android:key="@string/pref_enable_push_notifications"
         android:summary="Used to deliver updates on ThunderCloud services"
         android:title="Receive developer messages" />
+
+    <android.support.v7.preference.Preference
+        android:icon="@drawable/ic_info_outline_24dp"
+        android:key="@string/pref_privacy_policy"
+        android:summary="Opens in web browser"
+        android:title="ThunderScout Privacy Policy"
+        app:allowDividerBelow="false" />
 
 </android.support.v7.preference.PreferenceScreen>

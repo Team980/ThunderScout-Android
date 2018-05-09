@@ -43,6 +43,8 @@
     <!-- General -->
     <string name="pref_device_name">device_name</string>
 
+    <string name="pref_app_theme">app_theme</string>
+
     <string name="pref_enable_analytics">enable_analytics</string>
     <string name="pref_enable_crashlytics">enable_crashlytics</string>
     <string name="pref_enable_performance_monitoring">enable_performance_monitoring</string>
@@ -63,9 +65,6 @@
 
     <!-- ThunderCloud -->
     <string name="pref_enable_push_notifications">enable_push_notifications</string>
-
-    <!-- Appearance -->
-    <string name="pref_app_theme">app_theme</string>
-    <string name="pref_tint_navigation_bar">tint_nav_bar</string>
+    <string name="pref_privacy_policy">privacy_policy</string>
 
 </resources>

@@ -56,18 +56,6 @@
         \nTechnical note: ThunderCloud is being developed in a separate branch from the rest of the app, and may change significantly or disappear in subsequent releases.
         </string>
 
-    <!--- TODO remove before flight (stable) -->
-    <string name="thundercloud_disclaimer">
-        ThunderCloud is currently in beta. No guarantees are made as to the preservation of your data.
-        \n
-        \nIt is recommenced to use ThunderCloud while online. Offline caching has not been tested, and may not work as intended.
-        \n
-        \nA server wipe is not expected until after the Houston Championship. Make sure to backup your data locally during and after the event.
-        \n
-        \nThunderCloud is not guaranteed to ship with the 2018.2 release, and may change significantly in future releases.
-        \n
-        \nFor more information, please contact the developer at info@team980.com.</string>
-
     <string-array name="alliance_stations_array">
         <item>Red 1</item>
         <item>Red 2</item>
@@ -86,6 +74,20 @@
     <string-array name="iexport_file_types">
         <item>CSV</item>
         <!--<item>JSON</item>-->
+    </string-array>
+
+    <string-array name="pref_app_theme_options">
+        <item>Default</item>
+        <!--<item>Automatic</item>-->
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
+    <string-array name="pref_app_theme_values">
+        <item>-1</item>
+        <!--<item>0</item>-->
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
     <string name="shortcut_match_scout_short">Match scout</string>

@@ -30,10 +30,12 @@
 
     <android.support.v7.preference.PreferenceCategory android:title="Appearance">
 
-        <android.support.v7.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
+        <android.support.v7.preference.ListPreference
             android:key="@string/pref_app_theme"
-            android:title="Enable dark theme" />
+            android:defaultValue="1"
+            android:entries="@array/pref_app_theme_options"
+            android:entryValues="@array/pref_app_theme_values"
+            android:title="Application theme" />
 
     </android.support.v7.preference.PreferenceCategory>
 

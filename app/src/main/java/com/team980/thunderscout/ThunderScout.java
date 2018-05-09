@@ -127,11 +127,7 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
             });
         }
 
-        if (sharedPref.getBoolean(getResources().getString(R.string.pref_app_theme), true)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        AppCompatDelegate.setDefaultNightMode(Integer.valueOf(sharedPref.getString(getResources().getString(R.string.pref_app_theme), "-1")));
     }
 
     @Override

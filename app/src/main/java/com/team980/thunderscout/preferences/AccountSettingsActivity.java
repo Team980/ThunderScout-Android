@@ -25,11 +25,13 @@
 package com.team980.thunderscout.preferences;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
 import android.view.View;
@@ -210,6 +212,13 @@ public class AccountSettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             addPreferencesFromResource(R.xml.pref_account);
+
+            Preference privacyPolicy = findPreference(getResources().getString(R.string.pref_privacy_policy));
+            privacyPolicy.setOnPreferenceClickListener(preference1 -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://team980.com/thunderscout/privacy-policy/")); //TODO test with redesigned site
+                startActivity(browserIntent);
+                return true;
+            });
 
             if (FirebaseAuth.getInstance().getCurrentUser() == null) {
                 findPreference(getResources().getString(R.string.pref_enable_push_notifications))
