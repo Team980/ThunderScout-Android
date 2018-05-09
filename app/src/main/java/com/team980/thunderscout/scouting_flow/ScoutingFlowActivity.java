@@ -48,6 +48,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
@@ -95,7 +97,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
 
         ViewPager viewPager = findViewById(R.id.view_pager);
 
@@ -263,6 +265,28 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 //If this errors, we'll catch it internally
             }
 
+            // ThunderCloud
+            if (prefs.getBoolean(getResources().getString(R.string.pref_ms_save_to_thundercloud), false)) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    AccountScope.getStorageWrapper(AccountScope.CLOUD, this).writeData(getData(), new StorageWrapper.StorageListener() {
+                        @Override
+                        public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
+                            Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
+                            LocalBroadcastManager.getInstance(ScoutingFlowActivity.this).sendBroadcast(refreshIntent);
+                        }
+                    });
+                } else {
+                    suspendDialog = new AlertDialog.Builder(this)
+                            .setTitle("ThunderCloud account not set up")
+                            .setIcon(R.drawable.ic_warning_24dp)
+                            .setMessage("Please sign in to ThunderCloud and try again")
+                            .setPositiveButton("OK", (dialog, which) -> finish())
+                            .setOnDismissListener((dialog) -> finish())
+                            .create();
+                }
+            }
+
             // Bluetooth server
             if (prefs.getBoolean(getResources().getString(R.string.pref_ms_send_to_bluetooth_server), false)) {
                 String address = prefs.getString(getResources().getString(R.string.pref_ms_bluetooth_server_device), null);
@@ -271,7 +295,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                         suspendDialog = new AlertDialog.Builder(this)
                                 .setTitle("Bluetooth is disabled")
-                                .setIcon(R.drawable.ic_warning_white_24dp)
+                                .setIcon(R.drawable.ic_warning_24dp)
                                 .setMessage("Please enable Bluetooth and try again")
                                 .setPositiveButton("OK", (dialog, which) -> finish())
                                 .setOnDismissListener((dialog) -> finish())
@@ -285,7 +309,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                 } catch (IllegalArgumentException e) {
                     suspendDialog = new AlertDialog.Builder(this)
                             .setTitle("Bluetooth server device not set")
-                            .setIcon(R.drawable.ic_warning_white_24dp)
+                            .setIcon(R.drawable.ic_warning_24dp)
                             .setMessage("Please configure your scouting settings and try again")
                             .setPositiveButton("OK", (dialog, which) -> finish())
                             .setOnDismissListener((dialog) -> finish())
@@ -366,37 +390,37 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         View autoView = viewPagerAdapter.getItem(0).getView();
 
         CheckBox crossedAutoLine = autoView.findViewById(R.id.auto_checkBoxCrossedAutoLine);
-        scoutData.getAutonomous().setCrossedAutoLine(crossedAutoLine.isChecked());
+        scoutData.setCrossedAutoLine(crossedAutoLine.isChecked());
 
         CounterCompoundView auto_powerCubeAllianceSwitchCount = autoView.findViewById(R.id.auto_counterPowerCubeAllianceSwitchCount);
-        scoutData.getAutonomous().setPowerCubeAllianceSwitchCount((int) auto_powerCubeAllianceSwitchCount.getValue());
+        scoutData.setAutoPowerCubeAllianceSwitchCount((int) auto_powerCubeAllianceSwitchCount.getValue());
 
         CounterCompoundView auto_powerCubeScaleCount = autoView.findViewById(R.id.auto_counterPowerCubeScaleCount);
-        scoutData.getAutonomous().setPowerCubeScaleCount((int) auto_powerCubeScaleCount.getValue());
+        scoutData.setAutoPowerCubeScaleCount((int) auto_powerCubeScaleCount.getValue());
 
         CounterCompoundView auto_powerCubePlayerStationCount = autoView.findViewById(R.id.auto_counterPowerCubePlayerStationCount);
-        scoutData.getAutonomous().setPowerCubePlayerStationCount((int) auto_powerCubePlayerStationCount.getValue());
+        scoutData.setAutoPowerCubePlayerStationCount((int) auto_powerCubePlayerStationCount.getValue());
 
         // Teleop
         View teleopView = viewPagerAdapter.getItem(1).getView();
 
         CounterCompoundView teleop_powerCubeAllianceSwitchCount = teleopView.findViewById(R.id.teleop_counterPowerCubeAllianceSwitch);
-        scoutData.getTeleop().setPowerCubeAllianceSwitchCount((int) teleop_powerCubeAllianceSwitchCount.getValue());
+        scoutData.setTeleopPowerCubeAllianceSwitchCount((int) teleop_powerCubeAllianceSwitchCount.getValue());
 
         CounterCompoundView teleop_powerCubeScaleCount = teleopView.findViewById(R.id.teleop_counterPowerCubeScaleCount);
-        scoutData.getTeleop().setPowerCubeScaleCount((int) teleop_powerCubeScaleCount.getValue());
+        scoutData.setTeleopPowerCubeScaleCount((int) teleop_powerCubeScaleCount.getValue());
 
         CounterCompoundView teleop_powerCubeOpposingSwitchCount = teleopView.findViewById(R.id.teleop_counterPowerCubeOpposingSwitchCount);
-        scoutData.getTeleop().setPowerCubeOpposingSwitchCount((int) teleop_powerCubeOpposingSwitchCount.getValue());
+        scoutData.setTeleopPowerCubeOpposingSwitchCount((int) teleop_powerCubeOpposingSwitchCount.getValue());
 
         CounterCompoundView teleop_powerCubePlayerStationCount = teleopView.findViewById(R.id.teleop_counterPowerCubePlayerStationCount);
-        scoutData.getTeleop().setPowerCubePlayerStationCount((int) teleop_powerCubePlayerStationCount.getValue());
+        scoutData.setTeleopPowerCubePlayerStationCount((int) teleop_powerCubePlayerStationCount.getValue());
 
         Spinner climbingStats = teleopView.findViewById(R.id.teleop_spinnerClimbingStats);
-        scoutData.getTeleop().setClimbingStats(ClimbingStats.values()[climbingStats.getSelectedItemPosition()]);
+        scoutData.setClimbingStats(ClimbingStats.values()[climbingStats.getSelectedItemPosition()]);
 
         CheckBox supportedOtherRobotsWhenClimbing = teleopView.findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
-        scoutData.getTeleop().setSupportedOtherRobots(supportedOtherRobotsWhenClimbing.isChecked());
+        scoutData.setSupportedOtherRobots(supportedOtherRobotsWhenClimbing.isChecked());
 
         // Summary
         View summaryView = viewPagerAdapter.getItem(2).getView();

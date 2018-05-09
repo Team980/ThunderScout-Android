@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
@@ -24,41 +24,159 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
-    <style name="ThunderScout.BaseTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent</item>
-    </style>
-
-    <style name="ThunderScout.BaseTheme.ActionBar" parent="Theme.AppCompat">
+    <!-- DayNight styles -->
+    <style name="ThunderScout.BaseTheme" parent="ThunderScout.DayNight.BaseTheme">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
 
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:windowActivityTransitions" tools:targetApi="lollipop">false</item>
+        <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
+            @transition/shared_element_transform
+        </item>
+        <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
+            @transition/shared_element_transform
+        </item>
+
+        <item name="android:actionBarStyle">@style/ThunderScout.ActionBar</item>
+        <item name="actionBarStyle">@style/ThunderScout.ActionBar</item>
+        <item name="toolbarStyle">@style/ThunderScout.Toolbar</item>
+
+        <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+        <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
+        </item>
+        <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
+            @color/navigation_bar_divider
+        </item>
     </style>
 
-    <style name="ThunderScout.BaseTheme.DialogWhenLarge" parent="Theme.AppCompat.DialogWhenLarge">
+    <style name="ThunderScout.BaseTheme.ActionBar" parent="ThunderScout.DayNight.BaseTheme.ActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
+
+        <item name="android:windowActivityTransitions" tools:targetApi="lollipop">false</item>
+        <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
+            @transition/shared_element_transform
+        </item>
+        <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
+            @transition/shared_element_transform
+        </item>
+
+        <item name="android:actionBarStyle">@style/ThunderScout.ActionBar</item>
+        <item name="actionBarStyle">@style/ThunderScout.ActionBar</item>
+        <item name="toolbarStyle">@style/ThunderScout.Toolbar</item>
+
+        <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+        <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
+        </item>
+        <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
+            @color/navigation_bar_divider
+        </item>
+
+        <item name="preferenceTheme">@style/ThunderScout.PreferenceOverlay</item>
     </style>
 
+    <style name="ThunderScout.BaseTheme.DialogWhenLarge" parent="ThunderScout.DayNight.BaseTheme.DialogWhenLarge">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="android:windowActivityTransitions" tools:targetApi="lollipop">false</item>
+        <item name="android:windowSharedElementEnterTransition" tools:targetApi="lollipop">
+            @transition/shared_element_transform
+        </item>
+        <item name="android:windowSharedElementExitTransition" tools:targetApi="lollipop">
+            @transition/shared_element_transform
+        </item>
+
+        <item name="android:actionBarStyle">@style/ThunderScout.ActionBar</item>
+        <item name="actionBarStyle">@style/ThunderScout.ActionBar</item>
+        <item name="toolbarStyle">@style/ThunderScout.Toolbar</item>
+
+        <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+        <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
+        </item>
+        <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
+            @color/navigation_bar_divider
+        </item>
+
+        <item name="actionBarTheme">@style/ThunderScout.AppBarOverlay</item>
+    </style>
+
+    <style name="ThunderScout.MaterialAbout" parent="ThunderScout.DayNight.MaterialAbout">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="android:actionBarStyle">@style/ThunderScout.ActionBar</item>
+        <item name="actionBarStyle">@style/ThunderScout.ActionBar</item>
+        <item name="toolbarStyle">@style/ThunderScout.Toolbar</item>
+
+        <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+        <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
+        </item>
+        <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
+            @color/navigation_bar_divider
+        </item>
+    </style>
+
+    <style name="ThunderScout.LibraryInfo" parent="ThunderScout.DayNight.LibraryInfo">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="android:actionBarStyle">@style/ThunderScout.ActionBar</item>
+        <item name="actionBarStyle">@style/ThunderScout.ActionBar</item>
+        <item name="toolbarStyle">@style/ThunderScout.Toolbar</item>
+
+        <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+        <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
+        </item>
+        <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
+            @color/navigation_bar_divider
+        </item>
+
+        <item name="about_libraries_card">@color/background_card</item>
+    </style>
+
+    <style name="ThunderScout.PopupOverlay" parent="ThunderScout.DayNight.PopupOverlay" />
+
+    <!-- Common styles -->
     <style name="ThunderScout.BaseTheme.NavigationPane" parent="ThunderScout.BaseTheme">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
         <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">false</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent
+        </item>
     </style>
 
     <style name="ThunderScout.BaseTheme.SplashScreen" parent="ThunderScout.BaseTheme">
-        <item name="colorPrimaryDark">@color/background</item>
+        <item name="colorPrimaryDark">@color/splash_background</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">
+            @color/splash_background
+        </item>
+        <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
+            @color/splash_background
+        </item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">false</item>
     </style>
 
-    <style name="ThunderScout.BaseTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="ThunderScout.BaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="ThunderScout.Transparent" parent="Theme.AppCompat">
+    <style name="ThunderScout.Transparent" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -67,17 +185,67 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="ThunderScout.MaterialAbout" parent="Theme.Mal.Dark">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent</item>
+    <style name="ThunderScout.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="ThunderScout.PreferenceOverlay" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="android:tint">?android:attr/textColorSecondary</item>
     </style>
 
-    <style name="ThunderScout.LibraryInfo" parent="AboutLibrariesTheme">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent</item>
-        <item name="about_libraries_card">@color/background_floating</item>
+    <!-- Action Bar styles -->
+    <style name="ThunderScout.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="android:titleTextStyle" tools:targetApi="lollipop">
+            @style/ThunderScout.ActionBar.TitleTextStyle
+        </item>
+        <item name="titleTextStyle">@style/ThunderScout.ActionBar.TitleTextStyle</item>
+
+        <item name="android:subtitleTextStyle" tools:targetApi="lollipop">
+            @style/ThunderScout.ActionBar.SubtitleTextStyle
+        </item>
+        <item name="subtitleTextStyle">@style/ThunderScout.ActionBar.SubtitleTextStyle</item>
     </style>
 
+    <style name="ThunderScout.ActionBar.TitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/nunito_sans_bold</item>
+        <item name="fontFamily">@font/nunito_sans_bold</item>
+    </style>
+
+    <style name="ThunderScout.ActionBar.SubtitleTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:fontFamily">@font/nunito_sans</item>
+        <item name="fontFamily">@font/nunito_sans</item>
+    </style>
+
+    <style name="ThunderScout.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:titleTextAppearance" tools:targetApi="lollipop">
+            @style/ThunderScout.Toolbar.TitleTextAppearance
+        </item>
+        <item name="titleTextAppearance">@style/ThunderScout.Toolbar.TitleTextAppearance</item>
+
+        <item name="android:subtitleTextAppearance" tools:targetApi="lollipop">
+            @style/ThunderScout.Toolbar.SubtitleTextAppearance
+        </item>
+        <item name="subtitleTextAppearance">@style/ThunderScout.Toolbar.SubtitleTextAppearance
+        </item>
+    </style>
+
+    <style name="ThunderScout.Toolbar.TitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">@font/nunito_sans_bold</item>
+        <item name="fontFamily">@font/nunito_sans_bold</item>
+    </style>
+
+    <style name="ThunderScout.Toolbar.SubtitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:fontFamily">@font/nunito_sans</item>
+        <item name="fontFamily">@font/nunito_sans</item>
+    </style>
+
+    <!-- Alert Dialog styles -->
+    <style name="ThunderScout.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:titleTextStyle">@style/ThunderScout.AlertDialog.Title</item>
+    </style>
+
+    <!-- TODO this doesn't work! -->
+    <style name="ThunderScout.AlertDialog.Title" parent="TextAppearance.AppCompat.Title">
+        <item name="android:fontFamily">@font/nunito_sans_bold</item>
+        <item name="fontFamily">@font/nunito_sans_bold</item>
+    </style>
 </resources>

@@ -24,6 +24,7 @@
 
 package com.team980.thunderscout.preferences;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -31,6 +32,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
@@ -38,6 +40,8 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.BuildConfig;
 import com.team980.thunderscout.R;
 
@@ -130,6 +134,15 @@ public class SettingsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == 1) {
+            recreate();
+        }
+    }
+
     public static class HeaderPreferenceFragment extends PreferenceFragmentCompat {
 
         @Override
@@ -145,17 +158,16 @@ public class SettingsActivity extends AppCompatActivity {
 
                     PreferenceFragmentCompat fragment;
                     try {
+                        //TODO check against fragment injection
                         fragment = (PreferenceFragmentCompat) Class.forName(preference.getFragment()).newInstance();
                     } catch (Exception e) {
                         e.printStackTrace();
                         return true;
                     }
 
-                    //TODO check against fragment injection
-
                     HeaderPreferenceFragment.this.getFragmentManager().beginTransaction()
                             .replace(android.R.id.content, fragment)
-                            //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE) //this mimics how some Google apps do it
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE) //this mimics how some Google apps do it
                             .addToBackStack(preference.getFragment())
                             .commit();
 
@@ -164,6 +176,25 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             //Direct listeners - overrides default header listener
+            Preference thundercloud = findPreference(getResources().getString(R.string.pref_thundercloud));
+            thundercloud.setOnPreferenceClickListener(preference1 -> {
+                Intent intent = new Intent(getContext(), AccountSettingsActivity.class);
+                startActivityForResult(intent, 1);
+                return true;
+            });
+
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    thundercloud.setSummary("Signed in as " + user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    thundercloud.setSummary("Signed in as " + user.getPhoneNumber());
+                } else {
+                    thundercloud.setSummary("Signed in");
+                }
+            }
+
+
             Preference notificationSettings = findPreference(getResources().getString(R.string.pref_notification_settings));
             notificationSettings.setOnPreferenceClickListener(preference1 -> {
                 Intent intent = new Intent();
@@ -206,6 +237,17 @@ public class SettingsActivity extends AppCompatActivity {
 
             bindPreferenceSummaryToValue(findPreference(getResources().getString(R.string.pref_device_name)));
 
+            findPreference(getResources().getString(R.string.pref_app_theme))
+                    .setOnPreferenceChangeListener((preference, newValue) -> {
+                        if ((boolean) newValue) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        }
+                        activity.recreate();
+                        return true;
+                    });
+
             if (BuildConfig.DEBUG) { //Disable analytics on debug builds
                 findPreference(getResources().getString(R.string.pref_enable_analytics)).setEnabled(false);
                 findPreference(getResources().getString(R.string.pref_enable_crashlytics)).setEnabled(false);
@@ -221,6 +263,19 @@ public class SettingsActivity extends AppCompatActivity {
 
             SettingsActivity activity = (SettingsActivity) getActivity();
             activity.getSupportActionBar().setTitle("Match scouting");
+
+            Preference cloudPreference = findPreference(getResources().getString(R.string.pref_ms_save_to_thundercloud));
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                cloudPreference.setEnabled(false);
+                cloudPreference.setSummary("Not signed in");
+            } else {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    cloudPreference.setSummary(user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    cloudPreference.setSummary(user.getPhoneNumber());
+                }
+            }
         }
     }
 
@@ -231,6 +286,19 @@ public class SettingsActivity extends AppCompatActivity {
 
             SettingsActivity activity = (SettingsActivity) getActivity();
             activity.getSupportActionBar().setTitle("Bluetooth server");
+
+            Preference cloudPreference = findPreference(getResources().getString(R.string.pref_bt_save_to_thundercloud));
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                cloudPreference.setEnabled(false);
+                cloudPreference.setSummary("Not signed in");
+            } else {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    cloudPreference.setSummary(user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    cloudPreference.setSummary(user.getPhoneNumber());
+                }
+            }
         }
     }
 }

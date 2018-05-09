@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="No file selected"
-        android:textColor="@color/white"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="20sp" />
 
     <TextView
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="Loading..."
-        android:textColor="@color/white"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="20sp"
         android:visibility="gone" />
 

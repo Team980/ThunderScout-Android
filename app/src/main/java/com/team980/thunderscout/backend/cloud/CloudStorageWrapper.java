@@ -25,41 +25,137 @@
 package com.team980.thunderscout.backend.cloud;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.WriteBatch;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.schema.ScoutData;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class CloudStorageWrapper implements StorageWrapper { //Stub - TODO
+public class CloudStorageWrapper implements StorageWrapper {
+
+    private FirebaseFirestore db;
+
+    public CloudStorageWrapper() {
+        db = FirebaseFirestore.getInstance();
+
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true) //Enable offline caching
+                .build();
+        db.setFirestoreSettings(settings);
+    }
 
     @Override
     public void queryData(@Nullable StorageListener listener) {
+        List<ScoutData> dataList = new ArrayList<>();
 
+        db.collection("data").document("users").collection(FirebaseAuth.getInstance().getUid())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            ScoutData data = document.toObject(ScoutData.class); //TODO this crashes?
+                            data.setId(document.getReference().getId()); //Firestore reference IDs are complicated
+                            dataList.add(data);
+                            Log.d(CloudStorageWrapper.this.getClass().getName(), "Document found: " + document.getId());
+                        }
+                        Log.d(CloudStorageWrapper.this.getClass().getName(), "Successfully got documents");
+                    } else {
+                        Log.d(CloudStorageWrapper.this.getClass().getName(), "Error getting documents", task.getException());
+                    }
+                    listener.onDataQuery(dataList);
+                });
     }
 
     @Override
     public void writeData(ScoutData data, @Nullable StorageListener listener) {
-
+        db.collection("data").document("users").collection(FirebaseAuth.getInstance().getUid())
+                .add(data)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(CloudStorageWrapper.this.getClass().getName(), "Successfully added documents");
+                        listener.onDataWrite(Collections.singletonList(data));
+                    } else {
+                        Log.d(CloudStorageWrapper.this.getClass().getName(), "Error adding documents", task.getException());
+                        listener.onDataWrite(null);
+                    }
+                });
     }
 
     @Override
     public void writeData(List<ScoutData> dataList, @Nullable StorageListener listener) {
+        WriteBatch batch = db.batch();
 
+        for (ScoutData data : dataList) {
+            DocumentReference ref = db.collection("data").document("users").collection(FirebaseAuth.getInstance().getUid()).document();
+            batch.set(ref, data);
+        }
+
+        batch.commit().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d(CloudStorageWrapper.this.getClass().getName(), "Successfully added documents");
+                listener.onDataWrite(dataList);
+            } else {
+                Log.d(CloudStorageWrapper.this.getClass().getName(), "Error adding documents", task.getException());
+                listener.onDataWrite(null);
+            }
+        });
     }
 
     @Override
     public void removeData(ScoutData data, @Nullable StorageListener listener) {
-
+        db.collection("data").document("users").collection(FirebaseAuth.getInstance().getUid())
+                .document(data.getId())
+                .delete().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d(CloudStorageWrapper.this.getClass().getName(), "Successfully removed documents");
+                listener.onDataRemove(Collections.singletonList(data));
+            } else {
+                Log.d(CloudStorageWrapper.this.getClass().getName(), "Error removing documents", task.getException());
+                listener.onDataRemove(null);
+            }
+        });
     }
 
     @Override
     public void removeData(List<ScoutData> dataList, @Nullable StorageListener listener) {
+        WriteBatch batch = db.batch();
 
+        for (ScoutData data : dataList) {
+            batch.delete(db.collection("data").document("users").collection(FirebaseAuth.getInstance().getUid()).document(data.getId()));
+        }
+
+        batch.commit().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d(CloudStorageWrapper.this.getClass().getName(), "Successfully removed documents");
+                listener.onDataRemove(dataList);
+            } else {
+                Log.d(CloudStorageWrapper.this.getClass().getName(), "Error removing documents", task.getException());
+                listener.onDataRemove(null);
+            }
+        });
     }
 
     @Override
     public void clearAllData(@Nullable StorageListener listener) {
-
+        queryData(new StorageListener() {
+            @Override
+            public void onDataQuery(List<ScoutData> dataList) {
+                removeData(dataList, new StorageListener() {
+                    @Override
+                    public void onDataRemove(@Nullable List<ScoutData> dataRemoved) {
+                        listener.onDataClear(dataRemoved == dataList);
+                    }
+                });
+            }
+        });
     }
 }

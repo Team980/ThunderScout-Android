@@ -29,30 +29,26 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home_white_24dp"
+            android:icon="@drawable/ic_home_24dp"
             android:title="Home" />
         <item
             android:id="@+id/nav_matches"
-            android:icon="@drawable/ic_save_white_24dp"
+            android:icon="@drawable/ic_save_24dp"
             android:title="Matches" />
         <item
             android:id="@+id/nav_rankings"
-            android:icon="@drawable/ic_people_white_24dp"
+            android:icon="@drawable/ic_people_24dp"
             android:title="Rankings" />
     </group>
 
     <group android:id="@+id/group_bottom">
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings_white_24dp"
+            android:icon="@drawable/ic_settings_24dp"
             android:title="Settings" />
         <item
             android:id="@+id/nav_about"
-            android:icon="@drawable/ic_info_white_24dp"
+            android:icon="@drawable/ic_info_24dp"
             android:title="About" />
-        <!--<item
-            android:id="@+id/nav_debug"
-            android:icon="@drawable/ic_cloud_upload_white_24dp"
-            android:title="Storm Debug" />-->
     </group>
 </menu>

@@ -31,6 +31,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
@@ -55,6 +56,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.TeamComparator;
@@ -103,7 +106,25 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         MainActivity activity = (MainActivity) getActivity();
 
+        AccountScope currentScope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext())
+                .getString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()));
+
         toolbar = view.findViewById(R.id.toolbar);
+        switch (currentScope) {
+            case LOCAL:
+                toolbar.setSubtitle("Local storage");
+                break;
+            case CLOUD:
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    toolbar.setSubtitle(user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    toolbar.setSubtitle(user.getPhoneNumber());
+                } else {
+                    toolbar.setSubtitle("ThunderCloud");
+                }
+                break;
+        }
         activity.setSupportActionBar(toolbar);
 
         drawer = getActivity().findViewById(R.id.drawer_layout);
@@ -132,7 +153,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         swipeContainer.setOnRefreshListener(this);
         swipeContainer.setColorSchemeResources(R.color.accent);
-        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
+        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.background_card);
 
         compareSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottom_sheet_compare));
         compareSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -148,13 +169,13 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
                     }
                     Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
-                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_more_white_24dp);
+                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_more_24dp);
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.secondary_dark));
                     }
                     Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
-                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_less_white_24dp);
+                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_less_24dp);
                 }
             }
 
@@ -167,7 +188,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+                onRefresh();
             }
         };
 
@@ -181,7 +202,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         compareSheetBehavior, adapter.getSelectedItems()); //TODO this is VERY bad
             }
         } else {
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+            AccountScope.getStorageWrapper(getContext()).queryData(adapter);
         }
     }
 
@@ -203,6 +224,9 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public boolean onBackPressed() {
         if (compareSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             compareSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            return true;
+        } else if (selectionMode) {
+            adapter.clearSelections();
             return true;
         } else {
             return false;
@@ -361,7 +385,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             MainActivity activity = (MainActivity) getActivity();
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
 
             toolbar.setNavigationOnClickListener(v -> {
                 if (selectionMode) {
@@ -420,7 +444,26 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() { //SwipeRefreshLayout
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+        AccountScope currentScope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext())
+                .getString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()));
+
+        switch (currentScope) {
+            case LOCAL:
+                toolbar.setSubtitle("Local storage");
+                break;
+            case CLOUD:
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    toolbar.setSubtitle(user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    toolbar.setSubtitle(user.getPhoneNumber());
+                } else {
+                    toolbar.setSubtitle("ThunderCloud");
+                }
+                break;
+        }
+
+        AccountScope.getStorageWrapper(getContext()).queryData(adapter);
     }
 
     public SwipeRefreshLayout getSwipeRefreshLayout() {
@@ -428,16 +471,16 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override //Deletion dialog
-    public void onClick(DialogInterface dialog, int which) { //TODO modular account scopes - CLOUD should prompt for password
+    public void onClick(DialogInterface dialog, int which) { //TODO CLOUD should prompt for password
         if (selectionMode) {
             ArrayList<ScoutData> dataToRemove = new ArrayList<>();
             for (TeamWrapper wrapper : adapter.getSelectedItems()) {
                 dataToRemove.addAll(wrapper.getDataList());
             }
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).removeData(dataToRemove, adapter);
+            AccountScope.getStorageWrapper(getContext()).removeData(dataToRemove, adapter);
             adapter.clearSelections();
         } else {
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
+            AccountScope.getStorageWrapper(getContext()).clearAllData(adapter);
         }
     }
 

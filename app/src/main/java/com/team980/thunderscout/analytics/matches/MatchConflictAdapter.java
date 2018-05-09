@@ -114,7 +114,7 @@ public class MatchConflictAdapter extends RecyclerView.Adapter<MatchConflictAdap
             deleteButton.setOnClickListener(v -> new AlertDialog.Builder(context)
                     .setTitle("Delete this match from this account?")
                     .setPositiveButton("Delete", (dialog, which) -> {
-                        AccountScope.getStorageWrapper(AccountScope.LOCAL, context).removeData(data, parentAdapter); //TODO support multiple accounts, use snackbar
+                        AccountScope.getStorageWrapper(context).removeData(data, parentAdapter); //TODO use snackbar
 
                         dataList.remove(data);
                         notifyItemRemoved(getAdapterPosition());

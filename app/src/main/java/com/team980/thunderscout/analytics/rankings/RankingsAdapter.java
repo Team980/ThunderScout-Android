@@ -127,7 +127,7 @@ class RankingsAdapter extends RecyclerView.Adapter<RankingsAdapter.TeamViewHolde
     public void filterByTeam(String query) {
         teamFilter = query;
 
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, fragment.getContext()).queryData(this);
+        AccountScope.getStorageWrapper(fragment.getContext()).queryData(this);
         notifyDataSetChanged();
     }
 

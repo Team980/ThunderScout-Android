@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
@@ -22,28 +22,12 @@
   ~ SOFTWARE.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:orientation="horizontal">
-
-    <TextView
-        android:id="@+id/value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|center_vertical"
-        android:layout_marginRight="8dp"
-        android:text="NONE"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="25sp" />
-
-    <TextView
-        android:id="@+id/numericalValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
-        android:text="(0 - 0)"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp" />
-</LinearLayout>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportHeight="24.0"
+    android:viewportWidth="24.0">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 12,0.15667728 C 5.4624858,0.15667728 0.15667728,5.462486 0.15667728,12 0.15667728,18.537515 5.4624858,23.843323 12,23.843323 18.537514,23.843323 23.843323,18.537515 23.843323,12 23.843323,5.462486 18.537514,0.15667728 12,0.15667728 Z M 17.329495,16.73733 H 7.2626708 c -1.9659915,0 -3.5529967,-1.587005 -3.5529967,-3.552997 0,-1.965992 1.5870052,-3.5529974 3.5529967,-3.5529974 l 0.1658066,0.011845 C 7.9495835,7.5942841 9.7852985,6.0783388 12,6.0783388 c 2.617374,0 4.737329,2.1199548 4.737329,4.7373292 h 0.592166 c 1.634379,0 2.96083,1.326452 2.96083,2.960831 0,1.634379 -1.326451,2.960831 -2.96083,2.960831 z" />
+</vector>

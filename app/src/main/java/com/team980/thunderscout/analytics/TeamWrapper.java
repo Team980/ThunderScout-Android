@@ -66,34 +66,34 @@ public class TeamWrapper implements Serializable {
                 return "Last updated " + SimpleDateFormat.getDateTimeInstance().format(ScoutDataStatistics.getLastUpdated(dataList));
             case SORT_AUTO_LINE_CROSS_SUCCESS:
                 return "Crossed the auto line in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                        data -> data.getAutonomous().crossedAutoLine())) + "% of matches";
+                        ScoutData::getCrossedAutoLine)) + "% of matches";
             case SORT_AUTO_POWER_CUBE_ALLIANCE_SWITCH_AVERAGE:
-                return "Delivered " + ScoutDataStatistics.getAverage(dataList,
-                        data -> data.getAutonomous().getPowerCubeAllianceSwitchCount()) + " cubes";
+                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getAutoPowerCubeAllianceSwitchCount)) + " cubes";
             case SORT_AUTO_POWER_CUBE_SCALE_AVERAGE:
-                return "Delivered " + ScoutDataStatistics.getAverage(dataList,
-                        data -> data.getAutonomous().getPowerCubeScaleCount()) + " cubes";
+                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getAutoPowerCubeScaleCount)) + " cubes";
             case SORT_AUTO_POWER_CUBE_PLAYER_STATION_AVERAGE:
-                return "Delivered " + ScoutDataStatistics.getAverage(dataList,
-                        data -> data.getAutonomous().getPowerCubePlayerStationCount()) + " cubes";
+                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getAutoPowerCubePlayerStationCount)) + " cubes";
             case SORT_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_AVERAGE:
-                return "Delivered " + ScoutDataStatistics.getAverage(dataList,
-                        data -> data.getTeleop().getPowerCubeAllianceSwitchCount()) + " cubes";
+                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopPowerCubeAllianceSwitchCount)) + " cubes";
             case SORT_TELEOP_POWER_CUBE_SCALE_AVERAGE:
-                return "Delivered " + ScoutDataStatistics.getAverage(dataList,
-                        data -> data.getTeleop().getPowerCubeScaleCount()) + " cubes";
+                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopPowerCubeScaleCount)) + " cubes";
             case SORT_TELEOP_POWER_CUBE_OPPOSING_SWITCH_AVERAGE:
-                return "Delivered " + ScoutDataStatistics.getAverage(dataList,
-                        data -> data.getTeleop().getPowerCubeOpposingSwitchCount()) + " cubes";
+                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopPowerCubeOpposingSwitchCount)) + " cubes";
             case SORT_TELEOP_POWER_CUBE_PLAYER_STATION_AVERAGE:
-                return "Delivered " + ScoutDataStatistics.getAverage(dataList,
-                        data -> data.getTeleop().getPowerCubePlayerStationCount()) + " cubes";
+                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopPowerCubePlayerStationCount)) + " cubes";
             case SORT_CLIMBING_STATS_PERCENTAGE:
                 return "Climbed in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                        data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED)) + "% of matches";
+                        data -> data.getClimbingStats() == ClimbingStats.CLIMBED)) + "% of matches";
             case SORT_SUPPORTED_OTHER_ROBOTS:
                 return "Supported other robots in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                        data -> data.getTeleop().supportedOtherRobots())) + "% of matches";
+                        ScoutData::getSupportedOtherRobots)) + "% of matches";
             default: //Fallback - shouldn't trigger
                 return dataList.size() + " matches";
         }

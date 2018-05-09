@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -41,6 +42,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
@@ -73,6 +76,25 @@ public class ImportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import);
 
+        AccountScope currentScope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()));
+
+        switch (currentScope) {
+            case LOCAL:
+                getSupportActionBar().setSubtitle("Local storage");
+                break;
+            case CLOUD:
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    getSupportActionBar().setSubtitle(user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    getSupportActionBar().setSubtitle(user.getPhoneNumber());
+                } else {
+                    getSupportActionBar().setSubtitle("ThunderCloud");
+                }
+                break;
+        }
+
         dataToImport = new ArrayList<>();
 
         fileInfo = findViewById(R.id.fileInfo);
@@ -98,7 +120,7 @@ public class ImportActivity extends AppCompatActivity {
             importProgress.setProgress(0);
             //TODO find a way to determine the maximum so this isn't indeterminate
 
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, this).writeData(dataToImport, new StorageWrapper.StorageListener() {
+            AccountScope.getStorageWrapper(this).writeData(dataToImport, new StorageWrapper.StorageListener() {
                 @Override
                 public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
                     importProgress.setVisibility(View.GONE);

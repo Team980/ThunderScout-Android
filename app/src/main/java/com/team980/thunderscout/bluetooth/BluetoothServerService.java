@@ -147,7 +147,7 @@ public class BluetoothServerService extends Service {
         }
 
         running = new NotificationCompat.Builder(this, "bluetooth_server")
-                .setSmallIcon(R.drawable.ic_bluetooth_searching_white_24dp)
+                .setSmallIcon(R.drawable.ic_bluetooth_searching_24dp)
                 .setContentTitle("Bluetooth server")
                 .setContentText("Click to open settings") //todo new icon?
                 .setOngoing(true)
@@ -160,7 +160,7 @@ public class BluetoothServerService extends Service {
                 .setGroup("BT_SERVER");
 
         adapterDisabled = new NotificationCompat.Builder(this, "bluetooth_server")
-                .setSmallIcon(R.drawable.ic_warning_white_24dp)
+                .setSmallIcon(R.drawable.ic_warning_24dp)
                 .setContentTitle("Bluetooth is disabled")
                 .setContentText("Please enable Bluetooth before using the Bluetooth Server")
                 .setOngoing(true)
@@ -173,7 +173,7 @@ public class BluetoothServerService extends Service {
                 .setGroup("BT_SERVER");
 
         adapterMissing = new NotificationCompat.Builder(this, "bluetooth_server")
-                .setSmallIcon(R.drawable.ic_warning_white_24dp)
+                .setSmallIcon(R.drawable.ic_warning_24dp)
                 .setContentTitle("This device doesn't support Bluetooth")
                 .setContentText("Please disable the Bluetooth Server")
                 .setOngoing(true)
@@ -199,7 +199,7 @@ public class BluetoothServerService extends Service {
         adapterDisabled.setContentIntent(enableBluetoothIntent);
 
         NotificationCompat.Action enableBluetoothSetting = new NotificationCompat.Action(
-                R.drawable.ic_bluetooth_searching_white_24dp,
+                R.drawable.ic_bluetooth_searching_24dp,
                 "Enable Bluetooth",
                 enableBluetoothIntent
         );
@@ -211,7 +211,7 @@ public class BluetoothServerService extends Service {
         adapterMissing.setContentIntent(disableServerIntent);
 
         NotificationCompat.Action disableServerSetting = new NotificationCompat.Action(
-                R.drawable.ic_clear_white_24dp,
+                R.drawable.ic_clear_24dp,
                 "Disable Server",
                 disableServerIntent
         );

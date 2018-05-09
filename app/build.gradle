@@ -40,8 +40,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         multiDexEnabled true
-        versionCode 16 //Next public release: 17
-        versionName "2018.1"
+        versionCode 18 //Next public release: 19
+        versionName "2018.2-beta2"
         resConfigs "en"
     }
 
@@ -71,26 +71,24 @@ android {
     }
 }
 
-dependencies {
+dependencies { //TODO use the ${thingy}
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    def firebaseVersion = '11.8.0'
-    def supportVersion = '27.1.0'
+    def supportVersion = '27.1.1'
 
     //Firebase Crashlytics
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
-        transitive = true
-    }
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.2'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-auth:' + firebaseVersion
-    implementation 'com.google.firebase:firebase-core:' + firebaseVersion
-    implementation 'com.google.firebase:firebase-firestore:' + firebaseVersion
+    implementation 'com.google.firebase:firebase-auth:15.1.0'
+    implementation 'com.google.firebase:firebase-core:15.0.2'
+    implementation 'com.google.firebase:firebase-firestore:16.0.0'
+    implementation 'com.google.firebase:firebase-messaging:15.0.2'
 
-    implementation 'com.google.android.gms:play-services-auth:' + firebaseVersion
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
 
     //FirebaseUI
-    implementation 'com.firebaseui:firebase-ui-auth:3.2.2'
+    implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
 
     //Android Support
     implementation 'com.android.support:support-v4:' + supportVersion
@@ -104,18 +102,21 @@ dependencies {
 
     implementation 'com.android.support:preference-v14:' + supportVersion
 
+    implementation 'com.android.support:support-annotations:' + supportVersion
     implementation 'com.android.support:support-vector-drawable:' + supportVersion
     implementation 'com.android.support:design:' + supportVersion
     implementation 'com.android.support:customtabs:' + supportVersion
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 
     implementation 'com.android.support:multidex:1.0.3'
 
     //Material About, Library Info
     implementation 'com.github.daniel-stoneuk:material-about-library:2.2.4'
-    //Weird version system
-    implementation('com.mikepenz:aboutlibraries:6.0.6@aar') {
-        transitive = true
+    implementation 'com.mikepenz:aboutlibraries:6.0.8'
+
+    //Glide (image loading)
+    implementation ("com.github.bumptech.glide:glide:4.7.1") {
+        exclude group: "com.android.support"
     }
 
     //OpenCSV

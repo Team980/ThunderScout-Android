@@ -30,6 +30,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -53,6 +54,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
@@ -65,7 +68,7 @@ import com.team980.thunderscout.util.TransitionUtils;
 
 import java.util.ArrayList;
 
-public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, View.OnClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener, View.OnClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener, MainActivity.BackPressListener {
 
     //Instance state parameters
     private static final String KEY_SELECTION_MODE = "selection_mode";
@@ -97,7 +100,25 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         MainActivity activity = (MainActivity) getActivity();
 
+        AccountScope currentScope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext())
+                .getString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()));
+
         toolbar = view.findViewById(R.id.toolbar);
+        switch (currentScope) {
+            case LOCAL:
+                toolbar.setSubtitle("Local storage");
+                break;
+            case CLOUD:
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    toolbar.setSubtitle(user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    toolbar.setSubtitle(user.getPhoneNumber());
+                } else {
+                    toolbar.setSubtitle("ThunderCloud");
+                }
+                break;
+        }
         activity.setSupportActionBar(toolbar);
 
         drawer = getActivity().findViewById(R.id.drawer_layout);
@@ -126,12 +147,12 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         swipeContainer.setOnRefreshListener(this);
         swipeContainer.setColorSchemeResources(R.color.accent);
-        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
+        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.background_card);
 
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+                onRefresh();
             }
         };
 
@@ -139,7 +160,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
             setSelectionMode(savedInstanceState.getBoolean(KEY_SELECTION_MODE, false));
             adapter.onRestoreInstanceState(savedInstanceState);
         } else {
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+            AccountScope.getStorageWrapper(getContext()).queryData(adapter);
         }
     }
 
@@ -155,6 +176,16 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         super.onPause();
 
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (selectionMode) {
+            adapter.clearSelections();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -272,7 +303,7 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             MainActivity activity = (MainActivity) getActivity();
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
+            activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
 
             toolbar.setNavigationOnClickListener(v -> {
                 if (selectionMode) {
@@ -323,7 +354,26 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onRefresh() { //SwipeRefreshLayout
-        AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).queryData(adapter);
+        AccountScope currentScope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext())
+                .getString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()));
+
+        switch (currentScope) {
+            case LOCAL:
+                toolbar.setSubtitle("Local storage");
+                break;
+            case CLOUD:
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user.getEmail() != null) {
+                    toolbar.setSubtitle(user.getEmail());
+                } else if (user.getPhoneNumber() != null) {
+                    toolbar.setSubtitle(user.getPhoneNumber());
+                } else {
+                    toolbar.setSubtitle("ThunderCloud");
+                }
+                break;
+        }
+
+        AccountScope.getStorageWrapper(getContext()).queryData(adapter);
     }
 
     public SwipeRefreshLayout getSwipeRefreshLayout() {
@@ -331,12 +381,12 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override //Deletion dialog
-    public void onClick(DialogInterface dialog, int which) { //TODO modular account scopes - CLOUD should prompt for password
+    public void onClick(DialogInterface dialog, int which) { //TODO CLOUD should prompt for password
         if (selectionMode) {
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).removeData(adapter.getSelectedItems(), adapter);
+            AccountScope.getStorageWrapper(getContext()).removeData(adapter.getSelectedItems(), adapter);
             adapter.clearSelections();
         } else {
-            AccountScope.getStorageWrapper(AccountScope.LOCAL, getContext()).clearAllData(adapter);
+            AccountScope.getStorageWrapper(getContext()).clearAllData(adapter);
         }
     }
 

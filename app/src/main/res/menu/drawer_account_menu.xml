@@ -26,15 +26,14 @@
 
     <item
         android:id="@+id/nav_account_local"
-        android:icon="@drawable/ic_smartphone_white_24dp"
+        android:icon="@drawable/ic_smartphone_24dp"
         android:title="My device" />
-    <!--<item
+    <item
         android:id="@+id/nav_account_cloud"
-        android:icon="@drawable/ic_cloud_white_24dp"
-        android:title="ThunderCloud"
-        android:visible="false" />
+        android:icon="@drawable/ic_cloud_24dp"
+        android:title="ThunderCloud" />
     <item
         android:id="@+id/nav_account_settings"
-        android:icon="@drawable/ic_settings_white_24dp"
-        android:title="Manage accounts" />-->
+        android:icon="@drawable/ic_settings_24dp"
+        android:title="Account settings" />
 </menu>

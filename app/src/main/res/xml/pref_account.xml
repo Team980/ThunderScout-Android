@@ -22,15 +22,12 @@
   ~ SOFTWARE.
   -->
 
-<PreferenceScreen>
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<android.support.v7.preference.ListPreference
-        android:title="Theme"
-        android:key="@string/pref_app_theme"/>-->
+    <android.support.v7.preference.SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="@string/pref_enable_push_notifications"
+        android:summary="Used to deliver updates on ThunderCloud services"
+        android:title="Receive developer messages" />
 
-    <!---<android.support.v7.preference.SwitchPreferenceCompat
-        android:title="Tint navigation bar"
-        android:summary="May help prevent burn in on OLED devices"
-        android:key="@string/pref_tint_navigation_bar"/>-->
-
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>

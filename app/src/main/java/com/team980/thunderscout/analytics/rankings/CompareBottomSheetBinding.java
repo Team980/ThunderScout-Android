@@ -68,7 +68,7 @@ public class CompareBottomSheetBinding {
             }
         });
 
-        toolbar.setNavigationIcon(R.drawable.ic_expand_less_white_24dp);
+        toolbar.setNavigationIcon(R.drawable.ic_expand_less_24dp);
         toolbar.setNavigationOnClickListener(v -> {
             if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -88,104 +88,104 @@ public class CompareBottomSheetBinding {
         // Auto
         TextView crossPercent = dialogView.findViewById(R.id.info_alliance_station1_autoCrossPercentage);
         crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(station1.getDataList(),
-                data -> data.getAutonomous().crossedAutoLine())) + "%");
+                data -> data.getCrossedAutoLine())) + "%");
         TextView crossPercent2 = dialogView.findViewById(R.id.info_alliance_station2_autoCrossPercentage);
         crossPercent2.setText(formatter.format(ScoutDataStatistics.getPercentage(station2.getDataList(),
-                data -> data.getAutonomous().crossedAutoLine())) + "%");
+                data -> data.getCrossedAutoLine())) + "%");
         TextView crossPercent3 = dialogView.findViewById(R.id.info_alliance_station3_autoCrossPercentage);
         crossPercent3.setText(formatter.format(ScoutDataStatistics.getPercentage(station3.getDataList(),
-                data -> data.getAutonomous().crossedAutoLine())) + "%");
+                data -> data.getCrossedAutoLine())) + "%");
 
         TextView auto_powerCubeAllianceSwitchAverage = dialogView.findViewById(R.id.info_alliance_station1_autoPowerCubeAllianceSwitchAverage);
         auto_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
-                data -> data.getAutonomous().getPowerCubeAllianceSwitchCount())));
+                data -> data.getAutoPowerCubeAllianceSwitchCount())));
         TextView auto_powerCubeAllianceSwitchAverage2 = dialogView.findViewById(R.id.info_alliance_station2_autoPowerCubeAllianceSwitchAverage);
         auto_powerCubeAllianceSwitchAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
-                data -> data.getAutonomous().getPowerCubeAllianceSwitchCount())));
+                data -> data.getAutoPowerCubeAllianceSwitchCount())));
         TextView auto_powerCubeAllianceSwitchAverage3 = dialogView.findViewById(R.id.info_alliance_station3_autoPowerCubeAllianceSwitchAverage);
         auto_powerCubeAllianceSwitchAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
-                data -> data.getAutonomous().getPowerCubeAllianceSwitchCount())));
+                data -> data.getAutoPowerCubeAllianceSwitchCount())));
 
         TextView auto_powerCubeScaleAverage = dialogView.findViewById(R.id.info_alliance_station1_autoPowerCubeScaleAverage);
         auto_powerCubeScaleAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
-                data -> data.getAutonomous().getPowerCubeScaleCount())));
+                data -> data.getAutoPowerCubeScaleCount())));
         TextView auto_powerCubeScaleAverage2 = dialogView.findViewById(R.id.info_alliance_station2_autoPowerCubeScaleAverage);
         auto_powerCubeScaleAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
-                data -> data.getAutonomous().getPowerCubeScaleCount())));
+                data -> data.getAutoPowerCubeScaleCount())));
         TextView auto_powerCubeScaleAverage3 = dialogView.findViewById(R.id.info_alliance_station3_autoPowerCubeScaleAverage);
         auto_powerCubeScaleAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
-                data -> data.getAutonomous().getPowerCubeScaleCount())));
+                data -> data.getAutoPowerCubeScaleCount())));
 
         TextView auto_powerCubePlayerStationAverage = dialogView.findViewById(R.id.info_alliance_station1_autoPowerCubePlayerStationAverage);
         auto_powerCubePlayerStationAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
-                data -> data.getAutonomous().getPowerCubePlayerStationCount())));
+                data -> data.getAutoPowerCubePlayerStationCount())));
         TextView auto_powerCubePlayerStationAverage2 = dialogView.findViewById(R.id.info_alliance_station2_autoPowerCubePlayerStationAverage);
         auto_powerCubePlayerStationAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
-                data -> data.getAutonomous().getPowerCubePlayerStationCount())));
+                data -> data.getAutoPowerCubePlayerStationCount())));
         TextView auto_powerCubePlayerStationAverage3 = dialogView.findViewById(R.id.info_alliance_station3_autoPowerCubePlayerStationAverage);
         auto_powerCubePlayerStationAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
-                data -> data.getAutonomous().getPowerCubePlayerStationCount())));
+                data -> data.getAutoPowerCubePlayerStationCount())));
 
         // Teleop
         TextView teleop_powerCubeAllianceSwitchAverage = dialogView.findViewById(R.id.info_alliance_station1_teleopPowerCubeAllianceSwitchAverage);
         teleop_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
-                data -> data.getTeleop().getPowerCubeAllianceSwitchCount())));
+                data -> data.getTeleopPowerCubeAllianceSwitchCount())));
         TextView teleop_powerCubeAllianceSwitchAverage2 = dialogView.findViewById(R.id.info_alliance_station2_teleopPowerCubeAllianceSwitchAverage);
         teleop_powerCubeAllianceSwitchAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
-                data -> data.getTeleop().getPowerCubeAllianceSwitchCount())));
+                data -> data.getTeleopPowerCubeAllianceSwitchCount())));
         TextView teleop_powerCubeAllianceSwitchAverage3 = dialogView.findViewById(R.id.info_alliance_station3_teleopPowerCubeAllianceSwitchAverage);
         teleop_powerCubeAllianceSwitchAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
-                data -> data.getTeleop().getPowerCubeAllianceSwitchCount())));
+                data -> data.getTeleopPowerCubeAllianceSwitchCount())));
 
         TextView teleop_powerCubeScaleAverage = dialogView.findViewById(R.id.info_alliance_station1_teleopPowerCubeScaleAverage);
         teleop_powerCubeScaleAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
-                data -> data.getTeleop().getPowerCubeScaleCount())));
+                data -> data.getTeleopPowerCubeScaleCount())));
         TextView teleop_powerCubeScaleAverage2 = dialogView.findViewById(R.id.info_alliance_station2_teleopPowerCubeScaleAverage);
         teleop_powerCubeScaleAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
-                data -> data.getTeleop().getPowerCubeScaleCount())));
+                data -> data.getTeleopPowerCubeScaleCount())));
         TextView teleop_powerCubeScaleAverage3 = dialogView.findViewById(R.id.info_alliance_station3_teleopPowerCubeScaleAverage);
         teleop_powerCubeScaleAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
-                data -> data.getTeleop().getPowerCubeScaleCount())));
+                data -> data.getTeleopPowerCubeScaleCount())));
 
         TextView teleop_powerCubeOpposingSwitchAverage = dialogView.findViewById(R.id.info_alliance_station1_teleopPowerCubeOpposingSwitchAverage);
         teleop_powerCubeOpposingSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
-                data -> data.getTeleop().getPowerCubeOpposingSwitchCount())));
+                data -> data.getTeleopPowerCubeOpposingSwitchCount())));
         TextView teleop_powerCubeOpposingSwitchAverage2 = dialogView.findViewById(R.id.info_alliance_station2_teleopPowerCubeOpposingSwitchAverage);
         teleop_powerCubeOpposingSwitchAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
-                data -> data.getTeleop().getPowerCubeOpposingSwitchCount())));
+                data -> data.getTeleopPowerCubeOpposingSwitchCount())));
         TextView teleop_powerCubeOpposingSwitchAverage3 = dialogView.findViewById(R.id.info_alliance_station3_teleopPowerCubeOpposingSwitchAverage);
         teleop_powerCubeOpposingSwitchAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
-                data -> data.getTeleop().getPowerCubeOpposingSwitchCount())));
+                data -> data.getTeleopPowerCubeOpposingSwitchCount())));
 
         TextView teleop_powerCubePlayerStationAverage = dialogView.findViewById(R.id.info_alliance_station1_teleopPowerCubePlayerStationAverage);
         teleop_powerCubePlayerStationAverage.setText(formatter.format(ScoutDataStatistics.getAverage(station1.getDataList(),
-                data -> data.getTeleop().getPowerCubePlayerStationCount())));
+                data -> data.getTeleopPowerCubePlayerStationCount())));
         TextView teleop_powerCubePlayerStationAverage2 = dialogView.findViewById(R.id.info_alliance_station2_teleopPowerCubePlayerStationAverage);
         teleop_powerCubePlayerStationAverage2.setText(formatter.format(ScoutDataStatistics.getAverage(station2.getDataList(),
-                data -> data.getTeleop().getPowerCubePlayerStationCount())));
+                data -> data.getTeleopPowerCubePlayerStationCount())));
         TextView teleop_powerCubePlayerStationAverage3 = dialogView.findViewById(R.id.info_alliance_station3_teleopPowerCubePlayerStationAverage);
         teleop_powerCubePlayerStationAverage3.setText(formatter.format(ScoutDataStatistics.getAverage(station3.getDataList(),
-                data -> data.getTeleop().getPowerCubePlayerStationCount())));
+                data -> data.getTeleopPowerCubePlayerStationCount())));
 
         TextView climbPercent = dialogView.findViewById(R.id.info_alliance_station1_teleopClimbPercentage);
         climbPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(station1.getDataList(),
-                data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
+                data -> data.getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
         TextView climbPercent2 = dialogView.findViewById(R.id.info_alliance_station2_teleopClimbPercentage);
         climbPercent2.setText(formatter.format(ScoutDataStatistics.getPercentage(station2.getDataList(),
-                data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
+                data -> data.getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
         TextView climbPercent3 = dialogView.findViewById(R.id.info_alliance_station3_teleopClimbPercentage);
         climbPercent3.setText(formatter.format(ScoutDataStatistics.getPercentage(station3.getDataList(),
-                data -> data.getTeleop().getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
+                data -> data.getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
 
         TextView supportedRobotPercent = dialogView.findViewById(R.id.info_alliance_station1_teleopSupportedRobotPercent);
         supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(station1.getDataList(),
-                data -> data.getTeleop().supportedOtherRobots())) + "%");
+                data -> data.getSupportedOtherRobots())) + "%");
         TextView supportedRobotPercent2 = dialogView.findViewById(R.id.info_alliance_station2_teleopSupportedRobotPercent);
         supportedRobotPercent2.setText(formatter.format(ScoutDataStatistics.getPercentage(station2.getDataList(),
-                data -> data.getTeleop().supportedOtherRobots())) + "%");
+                data -> data.getSupportedOtherRobots())) + "%");
         TextView supportedRobotPercent3 = dialogView.findViewById(R.id.info_alliance_station3_teleopSupportedRobotPercent);
         supportedRobotPercent3.setText(formatter.format(ScoutDataStatistics.getPercentage(station3.getDataList(),
-                data -> data.getTeleop().supportedOtherRobots())) + "%");
+                data -> data.getSupportedOtherRobots())) + "%");
 
         // Summary
         RecyclerView strategies = dialogView.findViewById(R.id.info_alliance_strategies);

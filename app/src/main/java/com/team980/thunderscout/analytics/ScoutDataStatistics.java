@@ -59,7 +59,7 @@ public class ScoutDataStatistics {
     }
 
     public static List<String> getStringList(List<ScoutData> dataList, Function<ScoutData, String> fieldGetter, Function<ScoutData, String> prefixer) {
-        return StreamSupport.stream(dataList).sorted().filter(data -> !fieldGetter.apply(data).isEmpty())
+        return StreamSupport.stream(dataList).sorted().filter(data -> fieldGetter.apply(data) != null && !fieldGetter.apply(data).isEmpty())
                 .map(data -> prefixer.apply(data) + " " + fieldGetter.apply(data)).collect(Collectors.toList());
     }
 

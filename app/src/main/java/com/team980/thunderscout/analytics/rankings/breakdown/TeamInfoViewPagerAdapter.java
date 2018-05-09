@@ -34,6 +34,7 @@ import com.team980.thunderscout.schema.ScoutData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TeamInfoViewPagerAdapter extends FragmentPagerAdapter {
@@ -46,6 +47,8 @@ public class TeamInfoViewPagerAdapter extends FragmentPagerAdapter {
 
         tabs = new ArrayList<>();
         matches = dataList;
+
+        Collections.sort(matches, (o1, o2) -> Integer.compare(o1.getMatchNumber(), o2.getMatchNumber()));
 
         TeamInfoFragment teamInfo = new TeamInfoFragment();
 

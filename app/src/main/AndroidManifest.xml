@@ -79,6 +79,10 @@
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".iexport.ImportActivity"
@@ -98,11 +102,16 @@
             android:label="About"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.MaterialAbout" />
+        <activity
+            android:name=".preferences.AccountSettingsActivity"
+            android:label="ThunderCloud"
+            android:parentActivityName=".preferences.SettingsActivity"
+            android:theme="@style/ThunderScout.Transparent" />
 
         <service android:name=".bluetooth.BluetoothServerService" />
         <service
             android:name=".bluetooth.util.BluetoothQuickTileService"
-            android:icon="@drawable/ic_bluetooth_searching_white_24dp"
+            android:icon="@drawable/ic_bluetooth_searching_24dp"
             android:label="Bluetooth Server"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
@@ -112,6 +121,11 @@
             <meta-data
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
+        </service>
+        <service android:name=".push.FCMMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
         </service>
 
         <provider
@@ -133,17 +147,29 @@
             android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
 
-        <!--<activity
-            android:name=".firebase_debug.FirebaseDebugActivity"
-            android:label="Storm Debug"
-            android:theme="@style/ThunderScout.BaseTheme.ActionBar" />-->
-
         <meta-data
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
             android:value="false" />
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_app_badge_48dp" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/accent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="push_notifications" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

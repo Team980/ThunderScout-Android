@@ -90,7 +90,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
         }
 
         btTransferInProgress = new NotificationCompat.Builder(context, "bt_transfer")
-                .setSmallIcon(R.drawable.ic_bluetooth_transfer_white_24dp) //TODO animated icon?
+                .setSmallIcon(R.drawable.ic_bluetooth_transfer_24dp) //TODO animated icon?
                 .setOngoing(true)
                 .setUsesChronometer(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -100,7 +100,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS);
 
         btTransferSuccess = new NotificationCompat.Builder(context, "bt_transfer")
-                .setSmallIcon(R.drawable.ic_check_circle_white_24dp)
+                .setSmallIcon(R.drawable.ic_check_circle_24dp)
                 .setTicker("Bluetooth transfer succeeded")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -110,7 +110,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
                 .setGroup("BT_CLIENT_TRANSFER_SUCCESS");
 
         btTransferError = new NotificationCompat.Builder(context, "bt_transfer")
-                .setSmallIcon(R.drawable.ic_warning_white_24dp)
+                .setSmallIcon(R.drawable.ic_warning_24dp)
                 .setTicker("Bluetooth transfer failed")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -311,7 +311,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             PendingIntent editPendingIntent = PendingIntent.getBroadcast(context, NotificationIdFactory.getNewRequestCode(), editIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             btTransferError.addAction(new NotificationCompat.Action(
-                    R.drawable.ic_create_white_24dp,
+                    R.drawable.ic_create_24dp,
                     "Edit",
                     editPendingIntent
             ));
@@ -326,7 +326,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             PendingIntent retryPendingIntent = PendingIntent.getBroadcast(context, NotificationIdFactory.getNewRequestCode(), retryIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             btTransferError.addAction(new NotificationCompat.Action(
-                    R.drawable.ic_refresh_white_24dp,
+                    R.drawable.ic_refresh_24dp,
                     "Retry",
                     retryPendingIntent
             ));

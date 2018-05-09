@@ -78,18 +78,18 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, List<ScoutDat
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getSource());
 
             // Auto
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE, data.getAutonomous().crossedAutoLine());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT, data.getAutonomous().getPowerCubeAllianceSwitchCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT, data.getAutonomous().getPowerCubeScaleCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT, data.getAutonomous().getPowerCubePlayerStationCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE, data.getCrossedAutoLine());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT, data.getAutoPowerCubeAllianceSwitchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT, data.getAutoPowerCubeScaleCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT, data.getAutoPowerCubePlayerStationCount());
 
             // Teleop
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT, data.getTeleop().getPowerCubeAllianceSwitchCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT, data.getTeleop().getPowerCubeScaleCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT, data.getTeleop().getPowerCubeOpposingSwitchCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT, data.getTeleop().getPowerCubePlayerStationCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS, data.getTeleop().getClimbingStats().name());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING, data.getTeleop().supportedOtherRobots());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT, data.getTeleopPowerCubeAllianceSwitchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT, data.getTeleopPowerCubeScaleCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT, data.getTeleopPowerCubeOpposingSwitchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT, data.getTeleopPowerCubePlayerStationCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS, data.getClimbingStats().name());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING, data.getSupportedOtherRobots());
 
             // Summary
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES, data.getStrategies());

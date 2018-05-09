@@ -27,16 +27,23 @@ package com.team980.thunderscout;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.service.quicksettings.TileService;
 import android.support.multidex.MultiDexApplication;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.team980.thunderscout.bluetooth.BluetoothServerService;
 import com.team980.thunderscout.bluetooth.util.BluetoothQuickTileService;
+
+import java.io.IOException;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -106,6 +113,25 @@ public class ThunderScout extends MultiDexApplication implements SharedPreferenc
             Fabric.with(this, crashlyticsKit);
         }
 
+        if (FirebaseAuth.getInstance().getCurrentUser() != null
+                && sharedPref.getBoolean(getResources().getString(R.string.pref_enable_push_notifications), true)) {
+            FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+            FirebaseInstanceId.getInstance().getToken();
+        } else {
+            FirebaseMessaging.getInstance().setAutoInitEnabled(false);
+            AsyncTask.execute(() -> {
+                try {
+                    FirebaseInstanceId.getInstance().deleteInstanceId();
+                } catch (IOException ignored) {
+                }
+            });
+        }
+
+        if (sharedPref.getBoolean(getResources().getString(R.string.pref_app_theme), true)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     @Override

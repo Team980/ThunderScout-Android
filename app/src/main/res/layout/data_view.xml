@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:text="Team 980"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp" />
 
         <TextView
@@ -71,7 +71,8 @@
         android:layout_marginRight="56dp"
         android:background="?attr/selectableItemBackground"
         android:padding="12dp"
-        android:src="@drawable/ic_info_white_24dp" />
+        android:src="@drawable/ic_info_24dp"
+        android:tint="?android:attr/textColorSecondary" />
 
     <ImageButton
         android:id="@+id/button_delete"
@@ -80,6 +81,7 @@
         android:layout_gravity="right|center_vertical"
         android:background="?attr/selectableItemBackground"
         android:padding="12dp"
-        android:src="@drawable/ic_delete_white_24dp" />
+        android:src="@drawable/ic_delete_24dp"
+        android:tint="?android:attr/textColorSecondary" />
 
 </FrameLayout>

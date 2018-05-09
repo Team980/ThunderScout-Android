@@ -70,35 +70,35 @@ public class MatchInfoFragment extends Fragment {
 
         // Auto
         TextView crossedAutoLine = view.findViewById(R.id.info_match_autoCrossedAutoLine);
-        crossedAutoLine.setText(String.valueOf(data.getAutonomous().crossedAutoLine()).toUpperCase(Locale.ROOT));
+        crossedAutoLine.setText(String.valueOf(data.getCrossedAutoLine()).toUpperCase(Locale.ROOT));
 
         TextView auto_powerCubeAllianceSwitchCount = view.findViewById(R.id.info_match_autoPowerCubeAllianceSwitchCount);
-        auto_powerCubeAllianceSwitchCount.setText(data.getAutonomous().getPowerCubeAllianceSwitchCount() + "");
+        auto_powerCubeAllianceSwitchCount.setText(data.getAutoPowerCubeAllianceSwitchCount() + "");
 
         TextView auto_powerCubeScaleCount = view.findViewById(R.id.info_match_autoPowerCubeScaleCount);
-        auto_powerCubeScaleCount.setText(data.getAutonomous().getPowerCubeScaleCount() + "");
+        auto_powerCubeScaleCount.setText(data.getAutoPowerCubeScaleCount() + "");
 
         TextView auto_powerCubePlayerStationCount = view.findViewById(R.id.info_match_autoPowerCubePlayerStationCount);
-        auto_powerCubePlayerStationCount.setText(data.getAutonomous().getPowerCubePlayerStationCount() + "");
+        auto_powerCubePlayerStationCount.setText(data.getAutoPowerCubePlayerStationCount() + "");
 
         // Teleop
         TextView teleop_powerCubeAllianceSwitchCount = view.findViewById(R.id.info_match_teleopPowerCubeAllianceSwitchCount);
-        teleop_powerCubeAllianceSwitchCount.setText(data.getTeleop().getPowerCubeAllianceSwitchCount() + "");
+        teleop_powerCubeAllianceSwitchCount.setText(data.getTeleopPowerCubeAllianceSwitchCount() + "");
 
         TextView teleop_powerCubeScaleCount = view.findViewById(R.id.info_match_teleopPowerCubeScaleCount);
-        teleop_powerCubeScaleCount.setText(data.getTeleop().getPowerCubeScaleCount() + "");
+        teleop_powerCubeScaleCount.setText(data.getTeleopPowerCubeScaleCount() + "");
 
         TextView teleop_powerCubeOpposingSwitchCount = view.findViewById(R.id.info_match_teleopPowerCubeOpposingSwitchCount);
-        teleop_powerCubeOpposingSwitchCount.setText(data.getTeleop().getPowerCubeOpposingSwitchCount() + "");
+        teleop_powerCubeOpposingSwitchCount.setText(data.getTeleopPowerCubeOpposingSwitchCount() + "");
 
         TextView teleop_powerCubePlayerStationCount = view.findViewById(R.id.info_match_teleopPowerCubePlayerStationCount);
-        teleop_powerCubePlayerStationCount.setText(data.getTeleop().getPowerCubePlayerStationCount() + "");
+        teleop_powerCubePlayerStationCount.setText(data.getTeleopPowerCubePlayerStationCount() + "");
 
         TextView climbingStats = view.findViewById(R.id.info_match_teleopClimbingStats);
-        climbingStats.setText(data.getTeleop().getClimbingStats().toString().toUpperCase());
+        climbingStats.setText(data.getClimbingStats().toString().toUpperCase());
 
         TextView supportedOtherRobotsWhenClimbing = view.findViewById(R.id.info_match_teleopSupportedOtherRobotsWhenClimbing);
-        supportedOtherRobotsWhenClimbing.setText(String.valueOf(data.getTeleop().supportedOtherRobots()).toUpperCase(Locale.ROOT));
+        supportedOtherRobotsWhenClimbing.setText(String.valueOf(data.getSupportedOtherRobots()).toUpperCase(Locale.ROOT));
 
         // Summary
         TextView strategies = view.findViewById(R.id.info_match_strategies);
