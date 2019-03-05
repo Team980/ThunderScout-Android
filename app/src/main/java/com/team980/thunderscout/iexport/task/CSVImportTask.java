@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,6 @@ package com.team980.thunderscout.iexport.task;
 import android.net.Uri;
 import android.os.AsyncTask;
 
-import com.crashlytics.android.Crashlytics;
 import com.opencsv.CSVReader;
 import com.team980.thunderscout.ThunderScout;
 import com.team980.thunderscout.iexport.ImportActivity;
@@ -54,7 +53,7 @@ public class CSVImportTask extends AsyncTask<Uri, Integer, List<ScoutData>> {
         try {
             reader = new CSVReader(new InputStreamReader(activity.getContentResolver().openInputStream(fileUri[0])));
         } catch (FileNotFoundException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return null;
         }
 
@@ -71,7 +70,7 @@ public class CSVImportTask extends AsyncTask<Uri, Integer, List<ScoutData>> {
                 publishProgress(dataList.size());
             }
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return null;
         }
 

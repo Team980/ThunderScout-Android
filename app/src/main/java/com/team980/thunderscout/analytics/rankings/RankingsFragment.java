@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
@@ -56,8 +55,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.TeamComparator;
@@ -101,30 +98,13 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         MainActivity activity = (MainActivity) getActivity();
 
-        AccountScope currentScope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext())
-                .getString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()));
-
         toolbar = view.findViewById(R.id.toolbar);
-        switch (currentScope) {
-            case LOCAL:
-                toolbar.setSubtitle("Local storage");
-                break;
-            case CLOUD:
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user.getEmail() != null) {
-                    toolbar.setSubtitle(user.getEmail());
-                } else if (user.getPhoneNumber() != null) {
-                    toolbar.setSubtitle(user.getPhoneNumber());
-                } else {
-                    toolbar.setSubtitle("ThunderCloud");
-                }
-                break;
-        }
+        toolbar.setSubtitle("Local storage");
         activity.setSupportActionBar(toolbar);
 
         drawer = getActivity().findViewById(R.id.drawer_layout);
@@ -444,25 +424,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() { //SwipeRefreshLayout
-        AccountScope currentScope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext())
-                .getString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()));
-
-        switch (currentScope) {
-            case LOCAL:
-                toolbar.setSubtitle("Local storage");
-                break;
-            case CLOUD:
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user.getEmail() != null) {
-                    toolbar.setSubtitle(user.getEmail());
-                } else if (user.getPhoneNumber() != null) {
-                    toolbar.setSubtitle(user.getPhoneNumber());
-                } else {
-                    toolbar.setSubtitle("ThunderCloud");
-                }
-                break;
-        }
-
         AccountScope.getStorageWrapper(getContext()).queryData(adapter);
     }
 

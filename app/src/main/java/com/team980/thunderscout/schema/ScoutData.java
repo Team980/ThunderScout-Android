@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,6 @@ package com.team980.thunderscout.schema;
 
 import android.support.annotation.NonNull;
 
-import com.google.firebase.firestore.Exclude;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
@@ -51,7 +50,6 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
      * The unique ID used internally by the chosen storage provider
      * Used ONLY for internal tracking / data deletion
      */
-    @Exclude
     private String id;
 
     private String team; //trust me, this is better as a string

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,13 @@
 package com.team980.thunderscout.backend;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 
-import com.team980.thunderscout.R;
-import com.team980.thunderscout.backend.cloud.CloudStorageWrapper;
 import com.team980.thunderscout.backend.local.LocalStorageWrapper;
 
 public enum AccountScope {
-    LOCAL, //This device
-    CLOUD; //ThunderCloud (Firebase)
+    LOCAL; //This device
 
     private static LocalStorageWrapper localStorageWrapper;
-    private static CloudStorageWrapper cloudStorageWrapper;
 
     /**
      * Singleton to fetch StorageWrappers from AccountScopes
@@ -53,11 +48,6 @@ public enum AccountScope {
                     localStorageWrapper = new LocalStorageWrapper(context);
                 }
                 return localStorageWrapper;
-            case CLOUD:
-                if (cloudStorageWrapper == null) {
-                    cloudStorageWrapper = new CloudStorageWrapper();
-                }
-                return cloudStorageWrapper;
             default:
                 return null;
         }
@@ -70,9 +60,6 @@ public enum AccountScope {
      * @return StorageWrapper instance for the currently selected scope
      */
     public static StorageWrapper getStorageWrapper(Context context) {
-        AccountScope scope = AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(context.getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()));
-
-        return getStorageWrapper(scope, context);
+        return getStorageWrapper(LOCAL, context);
     }
 }

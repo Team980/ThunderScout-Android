@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,9 @@
 import java.text.SimpleDateFormat
 
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     compileOptions { //Used for a subset of compatible features such as try-with-resources
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -38,10 +37,10 @@ android {
     defaultConfig {
         applicationId "com.team980.thunderscout"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
         multiDexEnabled true
         versionCode 18 //Next public release: 19
-        versionName "2018.2-beta2"
+        versionName "2019.1-dev"
         resConfigs "en"
     }
 
@@ -74,21 +73,7 @@ android {
 dependencies { //TODO use the ${thingy}
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    def supportVersion = '27.1.1'
-
-    //Firebase Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.2'
-
-    //Firebase
-    implementation 'com.google.firebase:firebase-auth:15.1.0'
-    implementation 'com.google.firebase:firebase-core:15.0.2'
-    implementation 'com.google.firebase:firebase-firestore:16.0.0'
-    implementation 'com.google.firebase:firebase-messaging:15.0.2'
-
-    implementation 'com.google.android.gms:play-services-auth:15.0.1'
-
-    //FirebaseUI
-    implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
+    def supportVersion = '28.0.0' //TODO This is no longer supported - migrate to AndroidX
 
     //Android Support
     implementation 'com.android.support:support-v4:' + supportVersion
@@ -106,18 +91,13 @@ dependencies { //TODO use the ${thingy}
     implementation 'com.android.support:support-vector-drawable:' + supportVersion
     implementation 'com.android.support:design:' + supportVersion
     implementation 'com.android.support:customtabs:' + supportVersion
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     implementation 'com.android.support:multidex:1.0.3'
 
     //Material About, Library Info
     implementation 'com.github.daniel-stoneuk:material-about-library:2.2.4'
     implementation 'com.mikepenz:aboutlibraries:6.0.8'
-
-    //Glide (image loading)
-    implementation ("com.github.bumptech.glide:glide:4.7.1") {
-        exclude group: "com.android.support"
-    }
 
     //OpenCSV
     implementation('com.opencsv:opencsv:4.1') {
@@ -126,7 +106,7 @@ dependencies { //TODO use the ${thingy}
     }
 
     //Gson
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     //Stream Support
     implementation 'net.sourceforge.streamsupport:streamsupport:1.6.0'

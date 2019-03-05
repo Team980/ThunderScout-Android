@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,9 +36,7 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.bluetooth.util.BluetoothServerToggleActivity;
 import com.team980.thunderscout.preferences.SettingsActivity;
@@ -63,13 +61,13 @@ public class BluetoothServerService extends Service {
             @Override
             public void onReceive(Context context, Intent intent) {
                 final String action = intent.getAction();
-                Crashlytics.log(Log.INFO, this.getClass().getName(), "Change detected in Bluetooth adapter");
+                System.out.println(this.getClass().getName() + " Change detected in Bluetooth adapter");
 
                 if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
                     final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,
                             BluetoothAdapter.ERROR);
 
-                    Crashlytics.log(Log.INFO, this.getClass().getName(), "Bluetooth adapter state: " + state);
+                    System.out.println(this.getClass().getName() + " Bluetooth adapter state: " + state);
                     switch (state) {
                         case BluetoothAdapter.STATE_TURNING_OFF:
                             NotificationManagerCompat.from(context).notify(SERVER_NOTIFICATION_ID, adapterDisabled.build());
@@ -96,23 +94,23 @@ public class BluetoothServerService extends Service {
         //TODO manage notifications in here; more diverse and explanatory descriptions and states
 
         registerReceiver(receiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
-        Crashlytics.log(Log.INFO, this.getClass().getName(), "Starting Bluetooth service");
+        System.out.println(this.getClass().getName() + " Starting Bluetooth service");
 
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
 
             NotificationManagerCompat.from(this).notify(SERVER_NOTIFICATION_ID, adapterMissing.build());
-            Crashlytics.log(Log.ERROR, this.getClass().getName(), "NULL Bluetooth adapter");
+            System.out.println(this.getClass().getName() + " NULL Bluetooth adapter");
         } else if (!mBluetoothAdapter.isEnabled()) {
 
             //mBluetoothAdapter.enable(); //Applications should NEVER call this directly
             NotificationManagerCompat.from(this).notify(SERVER_NOTIFICATION_ID, adapterDisabled.build());
-            Crashlytics.log(Log.INFO, this.getClass().getName(), "Requesting Bluetooth to be enabled");
+            System.out.println(this.getClass().getName() + " Requesting Bluetooth to be enabled");
         } else {
 
             acceptThread = new ServerListenerThread(getApplicationContext());
             acceptThread.start();
-            Crashlytics.log(Log.INFO, this.getClass().getName(), "Bluetooth on, starting server accept thread");
+            System.out.println(this.getClass().getName() + " Bluetooth on, starting server accept thread");
         }
 
         // If we get killed, after returning from here, restart - TODO is this why it runs twice?
@@ -129,7 +127,7 @@ public class BluetoothServerService extends Service {
     public void onDestroy() {
         stopForeground(true);
 
-        Crashlytics.log(Log.INFO, this.getClass().getName(), "Stopping Bluetooth service");
+        System.out.println(this.getClass().getName() + " Stopping Bluetooth service");
 
         unregisterReceiver(receiver);
 

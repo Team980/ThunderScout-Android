@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.bluetooth.util.BluetoothInfo;
 
 import java.io.IOException;
@@ -52,7 +50,7 @@ public class ServerListenerThread extends Thread {
             // MY_UUID is the app's UUID string, also used by the client code
             tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(BluetoothInfo.SERVICE_NAME, UUID.fromString(BluetoothInfo.UUID));
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
         }
         mmServerSocket = tmp;
 
@@ -64,17 +62,17 @@ public class ServerListenerThread extends Thread {
         while (true) {
             final BluetoothSocket socket;
             try {
-                Crashlytics.log(Log.INFO, this.getClass().getName(), "Listening for incoming connections");
+                System.out.println(this.getClass().getName() + " Listening for incoming connections");
                 socket = mmServerSocket.accept();
             } catch (IOException e) {
-                Crashlytics.logException(e);
+                e.printStackTrace();
                 break;
             }
             // If a connection was accepted
             if (socket != null) {
                 // Do work to manage the connection (in a separate thread)
 
-                Crashlytics.log(Log.INFO, this.getClass().getName(), "Connected to " + socket.getRemoteDevice().getName());
+                System.out.println(this.getClass().getName() + " Connected to " + socket.getRemoteDevice().getName());
 
                 ServerConnectionTask readTask = new ServerConnectionTask(socket, context);
                 readTask.execute();

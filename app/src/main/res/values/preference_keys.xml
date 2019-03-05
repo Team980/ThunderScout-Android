@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+  ~ Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -26,17 +26,13 @@
 <resources>
 
     <!-- System -->
-    <string name="pref_current_account_scope">current_account_scope</string>
-
     <string name="pref_last_used_match_number">last_used_match_number</string>
     <string name="pref_last_used_alliance_station">last_used_alliance_station</string>
 
     <string name="pref_shown_welcome_card">shown_welcome_card</string>
-    <string name="pref_shown_telemetry_card">shown_telemetry_card</string>
     <string name="pref_last_shown_update_card">last_update_notified</string>
 
     <!-- Link headers -->
-    <string name="pref_thundercloud">thundercloud</string>
     <string name="pref_notification_settings">notification_settings</string>
     <string name="pref_app_info">app_info</string>
 
@@ -45,26 +41,16 @@
 
     <string name="pref_app_theme">app_theme</string>
 
-    <string name="pref_enable_analytics">enable_analytics</string>
-    <string name="pref_enable_crashlytics">enable_crashlytics</string>
-    <string name="pref_enable_performance_monitoring">enable_performance_monitoring</string>
-
     <!-- Match scouting -->
     <string name="pref_enable_match_scouting">enable_match_scout</string>
     <string name="pref_ms_save_to_local_device">ms_send_to_local_storage</string>
-    <string name="pref_ms_save_to_thundercloud">ms_save_to_thundercloud</string>
     <string name="pref_ms_send_to_bluetooth_server">ms_send_to_bt_server</string>
     <string name="pref_ms_bluetooth_server_device">ms_bt_server_device</string>
 
     <!-- Bluetooth server -->
     <string name="pref_enable_bluetooth_server">enable_bt_server</string>
     <string name="pref_bt_save_to_local_device">bt_send_to_local_storage</string>
-    <string name="pref_bt_save_to_thundercloud">bt_save_to_thundercloud</string>
     <string name="pref_bt_send_to_bluetooth_server">bt_send_to_bt_server</string>
     <string name="pref_bt_bluetooth_server_device">bt_bt_server_device</string>
-
-    <!-- ThunderCloud -->
-    <string name="pref_enable_push_notifications">enable_push_notifications</string>
-    <string name="pref_privacy_policy">privacy_policy</string>
 
 </resources>

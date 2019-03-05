@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
@@ -62,11 +60,11 @@ public class ScoutDataClearTask extends AsyncTask<Void, Void, Boolean> {
         try {
             rowsDeleted = db.delete(ScoutDataContract.ScoutDataTable.TABLE_NAME, null, null);
         } catch (SQLiteException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return false;
         }
 
-        Crashlytics.log(Log.INFO, this.getClass().getName(), rowsDeleted + " rows deleted from DB");
+        System.out.println(this.getClass().getName() + " " + rowsDeleted + " rows deleted from DB");
 
         db.close();
         return true;

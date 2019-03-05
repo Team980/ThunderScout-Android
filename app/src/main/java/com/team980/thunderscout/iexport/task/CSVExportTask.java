@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.opencsv.CSVWriter;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.iexport.ExportActivity;
@@ -69,7 +67,7 @@ public class CSVExportTask extends AsyncTask<ScoutData, Integer, File> {
         try {
             writer = new CSVWriter(new FileWriter(csv));
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return null;
         }
 
@@ -83,7 +81,7 @@ public class CSVExportTask extends AsyncTask<ScoutData, Integer, File> {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             //ignore
         }
 
@@ -101,7 +99,6 @@ public class CSVExportTask extends AsyncTask<ScoutData, Integer, File> {
     protected void onPostExecute(File file) {
         super.onPostExecute(file);
 
-        Crashlytics.log(Log.INFO, this.getClass().getName(), "CSV export complete: " + file.getAbsolutePath());
         Toast.makeText(activity, "CSV export complete: " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
 
         activity.onExportCompletion(file);

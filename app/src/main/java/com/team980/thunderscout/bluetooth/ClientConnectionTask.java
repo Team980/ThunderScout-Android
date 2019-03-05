@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +37,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.bluetooth.util.BluetoothInfo;
 import com.team980.thunderscout.bluetooth.util.BluetoothTransferNotificationReceiver;
@@ -156,7 +154,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
         try {
             Thread.sleep(scoutData.getAllianceStation().getDelay()); //Variable delay based on AllianceStation
         } catch (InterruptedException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
         }
 
         publishProgress(0, trial);
@@ -171,7 +169,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             // MY_UUID is the app's UUID string, also used by the server code
             mmSocket = device.createRfcommSocketToServiceRecord(UUID.fromString(BluetoothInfo.UUID));
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return new TaskResult(scoutData, e);
         }
 
@@ -186,12 +184,12 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             try {
                 mmSocket.close();
             } catch (IOException closeException) {
-                Crashlytics.logException(closeException);
+                closeException.printStackTrace();
             }
             return new TaskResult(scoutData, connectException);
         }
 
-        Crashlytics.log(Log.INFO, this.getClass().getName(), "Connection to server device successful");
+        System.out.println(this.getClass().getName() + " Connection to server device successful");
         publishProgress(40, trial);
 
         ObjectInputStream inputStream;
@@ -201,18 +199,18 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             inputStream = new ObjectInputStream(mmSocket.getInputStream());
             outputStream.flush();
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return new TaskResult(scoutData, e);
         }
 
         publishProgress(60, trial);
 
-        Crashlytics.log(Log.INFO, this.getClass().getName(), "Attempting to send scout data");
+        System.out.println(this.getClass().getName() + " Attempting to send scout data");
         try {
             outputStream.writeObject(scoutData);
             outputStream.flush();
         } catch (Exception e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return new TaskResult(scoutData, e);
         }
 
@@ -222,7 +220,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
         try {
             resultCode = inputStream.readInt();
         } catch (Exception e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return new TaskResult(scoutData, e);
         }
 
@@ -232,7 +230,7 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             inputStream.close();
             outputStream.close();
         } catch (Exception e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
         }
 
         publishProgress(-1, trial);
@@ -240,11 +238,11 @@ public class ClientConnectionTask extends AsyncTask<Void, Integer, ClientConnect
             return new TaskResult(scoutData, null);
         } else if (resultCode == RESULT_CODE_VERSION_MISMATCH) { //Server caught the InvalidClassException and responded
             Exception e = new Exception("App version mismatch; data rejected by server");
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return new TaskResult(scoutData, e, true); //Explicitly prevent more attempts
         } else { //No result code or improper value (?)
             Exception e = new Exception("Failed to receive confirmation from server");
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return new TaskResult(scoutData, e);
         }
     }

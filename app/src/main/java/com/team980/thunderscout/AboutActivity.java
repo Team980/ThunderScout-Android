@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -145,7 +145,7 @@ public class AboutActivity extends MaterialAboutActivity {
         MaterialAboutCard.Builder teamCard = new MaterialAboutCard.Builder();
         teamCard.addItem(new MaterialAboutTitleItem.Builder()
                 .text("FRC Team 980 ThunderBots")
-                .icon(R.mipmap.team980_logo) //TODO standard team icon?
+                .icon(R.mipmap.avatar_icon)
                 .build());
 
         teamCard.addItem(new MaterialAboutActionItem.Builder()

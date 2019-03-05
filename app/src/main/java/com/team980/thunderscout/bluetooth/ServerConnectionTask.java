@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,9 +41,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.crashlytics.android.Crashlytics;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
@@ -143,7 +140,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             inputStream = new ObjectInputStream(mmSocket.getInputStream());
             outputStream.flush();
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return new TaskResult(null, e);
         }
 
@@ -154,16 +151,16 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             data = (ScoutData) inputStream.readObject();
         } catch (InvalidClassException versionError) { //serialVersionUID mismatch - notify client
             try {
-                Crashlytics.logException(versionError);
+                versionError.printStackTrace();
                 outputStream.writeInt(ClientConnectionTask.RESULT_CODE_VERSION_MISMATCH);
                 outputStream.flush();
                 return new TaskResult(null, versionError);
             } catch (Exception another) {
-                Crashlytics.logException(another);
+                another.printStackTrace();
                 return new TaskResult(null, versionError); //return the version mismatch error anyway - that's the one we want to show
             }
         } catch (Exception other) {
-            Crashlytics.logException(other);
+            other.printStackTrace();
             return new TaskResult(null, other);
         }
 
@@ -173,7 +170,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             outputStream.writeInt(ClientConnectionTask.RESULT_CODE_SUCCESSFUL);
             outputStream.flush();
         } catch (Exception e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return new TaskResult(null, e);
         }
 
@@ -183,7 +180,7 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
             inputStream.close();
             outputStream.close();
         } catch (IOException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
         }
 
         publishProgress(-1);
@@ -253,26 +250,6 @@ public class ServerConnectionTask extends AsyncTask<Void, Integer, ServerConnect
                         LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
                     }
                 });
-            }
-
-            if (prefs.getBoolean(context.getResources().getString(R.string.pref_bt_save_to_thundercloud), false)) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    AccountScope.getStorageWrapper(AccountScope.CLOUD, context).writeData(result.getData(), new StorageWrapper.StorageListener() {
-                        @Override
-                        public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
-                            Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
-                            LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
-                        }
-                    });
-                } else {
-                    btTransferError.setContentTitle("ERROR: ThunderCloud account not set up");
-                    btTransferError.setContentText("Please sign in to ThunderCloud and try again");
-                    btTransferError.setWhen(System.currentTimeMillis());
-
-                    NotificationManagerCompat.from(context).notify(id, btTransferError.build());
-                    //NotificationManagerCompat.from(context).notify(ERROR_SUMMARY_ID, btTransferError.setGroupSummary(true).build());
-                }
             }
 
             if (prefs.getBoolean(context.getResources().getString(R.string.pref_bt_send_to_bluetooth_server), false)) {

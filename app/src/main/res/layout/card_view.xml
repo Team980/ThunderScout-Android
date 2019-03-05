@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+  ~ Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:layout_toRightOf="@+id/card_icon"
-                android:fontFamily="@font/nunito_sans_bold"
+                android:fontFamily="@font/arimo"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="@color/card_title_color"

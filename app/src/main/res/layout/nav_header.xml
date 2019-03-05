@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+  ~ Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@
             android:id="@+id/account_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_bold"
+            android:fontFamily="@font/arimo"
             android:paddingTop="12dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             tools:text="Team 980" />
@@ -62,14 +62,5 @@
             tools:text="account@team980.com" />
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/account_dropdown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:paddingBottom="12dp"
-        android:src="@drawable/ic_arrow_drop_down_24dp" />
 
 </RelativeLayout>

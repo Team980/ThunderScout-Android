@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+  ~ Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,8 @@
     <color name="navigation_bar_divider">#32FFFFFF</color>
     <!--<color name="navigation_bar">@color/primary_dark</color>
     <color name="navigation_bar_divider">@color/primary</color>-->
+
+    <color name="splash_background">#212121</color>
 
     <color name="card_title_color">@android:color/primary_text_dark</color>
     <color name="about_icon_override">@android:color/primary_text_dark</color>

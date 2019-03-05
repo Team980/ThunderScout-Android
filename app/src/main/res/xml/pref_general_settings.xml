@@ -1,7 +1,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+  ~ Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -36,35 +36,6 @@
             android:entries="@array/pref_app_theme_options"
             android:entryValues="@array/pref_app_theme_values"
             android:title="Application theme" />
-
-    </android.support.v7.preference.PreferenceCategory>
-
-    <android.support.v7.preference.PreferenceCategory android:title="Telemetry">
-
-        <android.support.v7.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_enable_analytics"
-            android:summary="Sharing usage statistics helps the development of new features and improvments"
-            android:title="Send usage statistics" />
-
-        <android.support.v7.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_enable_crashlytics"
-            android:summary="Sharing crash reports helps fix bugs and increase the stability of the app"
-            android:title="Send crash reports" />
-
-        <!--<android.support.v7.preference.android.support.v7.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_enable_performance_monitoring"
-            android:title="Send performance reports"
-            android:layout="@layout/preference_backport_material"
-            android:summary=""/>-->
-
-        <android.support.v7.preference.Preference
-            android:icon="@drawable/ic_info_24dp"
-            android:layout="@layout/preference_backport_material"
-            android:selectable="false"
-            android:summary="A restart is required for changes to theme and telemetry settings to fully take effect." />
 
     </android.support.v7.preference.PreferenceCategory>
 

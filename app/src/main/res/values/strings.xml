@@ -1,7 +1,7 @@
 <!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+  ~ Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -31,29 +31,13 @@
         \nTo get started, configure your device in the app settings, or dive in and scout your first match!
     </string>
 
-    <string name="telemetry_prompt">
-        ThunderScout uses Firebase Analytics to collect information such as usage statistics and crash reports.
-        \n
-        \nThis information is used to provide insight on app performance as well as fix bugs for future releases.
-        \n
-        \nYou can opt out of telemetry in the app settings.
-    </string>
-
-    <!--- TODO Last update: v18 -->
+    <!--- TODO Last update: v18-edited -->
     <string name="update_notes">
-        2018.2-beta2 enables developer messages for signed in users that will provide updates on the status of the ThunderCloud beta.
+        2019.1 adds support for the 2019 game, DESTINATION: DEEP SPACE.
+        \nA few other changes have been made as well to prevent some of the more frequent bugs experienced during the 2018 season.
         \n
-        \nPrevious release notes:
-        \n
-        \nIntroducing ThunderCloud! With ThunderCloud, your data gains an additional home on Google\'s Firebase cloud servers.
-        \nSigning in with an email or Google account allows you to store data online, separately from what\'s already saved on your local device.
-        \nThis data can then be viewed on other devices signed in to ThunderScout with this account.
-        \n
-        \nThunderCloud is still in its infancy, and much of its design is not final - so your feedback would be very much appreciated!
-        \n
-        \n(Oh, and the team info screen now incorporates individual match tabs.)
-        \n
-        \nTechnical note: ThunderCloud is being developed in a separate branch from the rest of the app, and may change significantly or disappear in subsequent releases.
+        \nNote:
+        \nYou may notice that the telemetry settings and ThunderCloud are not present in this release.
         </string>
 
     <string-array name="alliance_stations_array">
@@ -97,6 +81,4 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="fui_default_toolbar_title" translatable="false">ThunderCloud</string>
 </resources>

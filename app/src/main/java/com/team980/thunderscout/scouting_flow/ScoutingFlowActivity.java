@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,8 +48,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.MainActivity;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.backend.AccountScope;
@@ -263,28 +261,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
                     }
                 });
                 //If this errors, we'll catch it internally
-            }
-
-            // ThunderCloud
-            if (prefs.getBoolean(getResources().getString(R.string.pref_ms_save_to_thundercloud), false)) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    AccountScope.getStorageWrapper(AccountScope.CLOUD, this).writeData(getData(), new StorageWrapper.StorageListener() {
-                        @Override
-                        public void onDataWrite(@Nullable List<ScoutData> dataWritten) {
-                            Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
-                            LocalBroadcastManager.getInstance(ScoutingFlowActivity.this).sendBroadcast(refreshIntent);
-                        }
-                    });
-                } else {
-                    suspendDialog = new AlertDialog.Builder(this)
-                            .setTitle("ThunderCloud account not set up")
-                            .setIcon(R.drawable.ic_warning_24dp)
-                            .setMessage("Please sign in to ThunderCloud and try again")
-                            .setPositiveButton("OK", (dialog, which) -> finish())
-                            .setOnDismissListener((dialog) -> finish())
-                            .create();
-                }
             }
 
             // Bluetooth server

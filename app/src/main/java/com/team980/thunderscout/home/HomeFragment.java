@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 package com.team980.thunderscout.home;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -84,6 +85,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -240,32 +242,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
             adapter.addCard(welcomeCard);
         }
 
-        if (!sharedPrefs.getBoolean(getResources().getString(R.string.pref_shown_telemetry_card), false)) {
-            Card telemetryCard = new Card("Telemetry");
-
-            telemetryCard.setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.ic_forum_24dp));
-            telemetryCard.setText(getResources().getString(R.string.telemetry_prompt));
-            telemetryCard.setDismissable(true);
-            telemetryCard.addAction(new CardAction("Configure", (card, action) -> {
-                Intent intent = new Intent(getContext(), SettingsActivity.class);
-                intent.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT, SettingsActivity.GeneralPreferenceFragment.class.getName());
-                startActivity(intent);
-                adapter.dismissCard(card);
-                sharedPrefs.edit().putBoolean(getResources().getString(R.string.pref_shown_telemetry_card), true).apply();
-            }));
-            telemetryCard.addAction(new CardAction("Dismiss", (card, action) -> {
-                int index = adapter.indexOf(card);
-                adapter.dismissCard(card);
-                sharedPrefs.edit().putBoolean(getResources().getString(R.string.pref_shown_telemetry_card), true).apply();
-                Snackbar.make(dataView, "Card dismissed", Snackbar.LENGTH_LONG).setAction("Undo", v -> {
-                    adapter.addCard(card, index);
-                    sharedPrefs.edit().putBoolean(getResources().getString(R.string.pref_shown_telemetry_card), false).apply();
-                }).show();
-            }));
-
-            adapter.addCard(telemetryCard);
-        }
-
         if (sharedPrefs.getInt(getResources().getString(R.string.pref_last_shown_update_card), 0) != BuildConfig.VERSION_CODE) {
             Card updateCard = new Card("New in version " + BuildConfig.VERSION_NAME);
 
@@ -301,8 +277,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Shar
 
     @Override
     public boolean onLongClick(View view) {
-        if (!BuildConfig.DEBUG || AccountScope.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext()).getString(
-                getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name())) != AccountScope.LOCAL) {
+        if (!BuildConfig.DEBUG) {
             return true;
         }
 

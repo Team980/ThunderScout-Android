@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
-  ~ Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+  ~ Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
   ~
   ~ Permission is hereby granted, free of charge, to any person obtaining a copy
   ~ of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".ThunderScout"
@@ -102,11 +103,6 @@
             android:label="About"
             android:parentActivityName=".MainActivity"
             android:theme="@style/ThunderScout.MaterialAbout" />
-        <activity
-            android:name=".preferences.AccountSettingsActivity"
-            android:label="ThunderCloud"
-            android:parentActivityName=".preferences.SettingsActivity"
-            android:theme="@style/ThunderScout.Transparent" />
 
         <service android:name=".bluetooth.BluetoothServerService" />
         <service
@@ -121,11 +117,6 @@
             <meta-data
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="true" />
-        </service>
-        <service android:name=".push.FCMMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
         </service>
 
         <provider
@@ -146,26 +137,6 @@
         <meta-data
             android:name="com.samsung.android.sdk.multiwindow.enable"
             android:value="true" />
-
-        <meta-data
-            android:name="firebase_analytics_collection_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="firebase_crashlytics_collection_enabled"
-            android:value="false" />
-        <meta-data
-            android:name="firebase_messaging_auto_init_enabled"
-            android:value="false" />
-
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_app_badge_48dp" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/accent" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="push_notifications" />
 
         <meta-data
             android:name="preloaded_fonts"

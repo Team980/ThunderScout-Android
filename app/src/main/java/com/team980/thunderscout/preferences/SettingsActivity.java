@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,9 +41,6 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.view.MenuItem;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.team980.thunderscout.BuildConfig;
 import com.team980.thunderscout.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -177,25 +174,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             //Direct listeners - overrides default header listener
-            Preference thundercloud = findPreference(getResources().getString(R.string.pref_thundercloud));
-            thundercloud.setOnPreferenceClickListener(preference1 -> {
-                Intent intent = new Intent(getContext(), AccountSettingsActivity.class);
-                startActivityForResult(intent, 1);
-                return true;
-            });
-
-            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user.getEmail() != null) {
-                    thundercloud.setSummary("Signed in as " + user.getEmail());
-                } else if (user.getPhoneNumber() != null) {
-                    thundercloud.setSummary("Signed in as " + user.getPhoneNumber());
-                } else {
-                    thundercloud.setSummary("Signed in");
-                }
-            }
-
-
             Preference notificationSettings = findPreference(getResources().getString(R.string.pref_notification_settings));
             notificationSettings.setOnPreferenceClickListener(preference1 -> {
                 Intent intent = new Intent();
@@ -251,12 +229,6 @@ public class SettingsActivity extends AppCompatActivity {
                                 .show();
                         return true;
                     });
-
-            if (BuildConfig.DEBUG) { //Disable analytics on debug builds
-                findPreference(getResources().getString(R.string.pref_enable_analytics)).setEnabled(false);
-                findPreference(getResources().getString(R.string.pref_enable_crashlytics)).setEnabled(false);
-                //findPreference(getResources().getString(R.string.pref_enable_performance_monitoring)).setEnabled(false);
-            }
         }
     }
 
@@ -267,19 +239,6 @@ public class SettingsActivity extends AppCompatActivity {
 
             SettingsActivity activity = (SettingsActivity) getActivity();
             activity.getSupportActionBar().setTitle("Match scouting");
-
-            Preference cloudPreference = findPreference(getResources().getString(R.string.pref_ms_save_to_thundercloud));
-            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                cloudPreference.setEnabled(false);
-                cloudPreference.setSummary("Not signed in");
-            } else {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user.getEmail() != null) {
-                    cloudPreference.setSummary(user.getEmail());
-                } else if (user.getPhoneNumber() != null) {
-                    cloudPreference.setSummary(user.getPhoneNumber());
-                }
-            }
         }
     }
 
@@ -290,19 +249,6 @@ public class SettingsActivity extends AppCompatActivity {
 
             SettingsActivity activity = (SettingsActivity) getActivity();
             activity.getSupportActionBar().setTitle("Bluetooth server");
-
-            Preference cloudPreference = findPreference(getResources().getString(R.string.pref_bt_save_to_thundercloud));
-            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                cloudPreference.setEnabled(false);
-                cloudPreference.setSummary("Not signed in");
-            } else {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user.getEmail() != null) {
-                    cloudPreference.setSummary(user.getEmail());
-                } else if (user.getPhoneNumber() != null) {
-                    cloudPreference.setSummary(user.getPhoneNumber());
-                }
-            }
         }
     }
 }

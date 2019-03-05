@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,6 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
-import com.crashlytics.android.Crashlytics;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
@@ -109,7 +108,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
                     sortOrder                                 // The sort order
             );
         } catch (SQLiteException e) {
-            Crashlytics.logException(e);
+            e.printStackTrace();
             return null;
         }
 

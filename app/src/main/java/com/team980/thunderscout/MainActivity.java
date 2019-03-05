@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2016 - 2018 Luke Myers (FRC Team 980 ThunderBots)
+ * Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,30 +32,22 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.content.res.AppCompatResources;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.team980.thunderscout.analytics.matches.MatchesFragment;
 import com.team980.thunderscout.analytics.rankings.RankingsFragment;
-import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.home.HomeFragment;
-import com.team980.thunderscout.preferences.AccountSettingsActivity;
 import com.team980.thunderscout.preferences.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String INTENT_FLAG_SHOWN_FRAGMENT = "SHOWN_FRAGMENT";
     public static final int INTENT_FLAGS_HOME = 0;
@@ -76,8 +68,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        navigationView.getHeaderView(0).setOnClickListener(this);
 
         updateAccountHeader();
 
@@ -196,52 +186,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
-        //AccountScope navigation menu
-        else if (id == R.id.nav_account_local) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.LOCAL.name()).apply();
-
-            updateAccountHeader();
-            contractAccountMenu();
-
-            Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(refreshIntent);
-        } else if (id == R.id.nav_account_cloud) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                PreferenceManager.getDefaultSharedPreferences(this).edit()
-                        .putString(getResources().getString(R.string.pref_current_account_scope), AccountScope.CLOUD.name()).apply();
-
-                updateAccountHeader();
-                contractAccountMenu();
-
-                Intent refreshIntent = new Intent().setAction(MainActivity.ACTION_REFRESH_DATA_VIEW);
-                LocalBroadcastManager.getInstance(this).sendBroadcast(refreshIntent);
-            } else {
-                contractAccountMenu();
-
-                Intent intent = new Intent(this, AccountSettingsActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_AUTH);
-            }
-        } else if (id == R.id.nav_account_settings) {
-            contractAccountMenu();
-
-            Intent intent = new Intent(this, AccountSettingsActivity.class);
-            startActivityForResult(intent, REQUEST_CODE_AUTH);
-        }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (accountMenuExpanded) {
-            contractAccountMenu();
-        } else {
-            expandAccountMenu();
-        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -256,98 +203,13 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        AccountScope currentScope = AccountScope.valueOf(sharedPrefs.getString(getResources().getString(R.string.pref_current_account_scope),
-                AccountScope.LOCAL.name()));
-
         ImageView image = navigationView.getHeaderView(0).findViewById(R.id.account_image);
-        switch (currentScope) {
-            case LOCAL:
-                image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_account_circle_72dp)); //TODO better image
 
-                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(sharedPrefs
-                        .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
-                ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("Local storage");
-                break;
-            case CLOUD:
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    if (user.getPhotoUrl() != null) {
-                        Glide.with(this).load(user.getPhotoUrl().toString().replace("s96-c/photo.jpg", "s400-c/photo.jpg")).apply(new RequestOptions().circleCrop()).into(image);
-                    } else {
-                        image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_72dp));
-                    }
+        image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_account_circle_72dp)); //TODO better image
 
-                    if (user.getDisplayName() != null) {
-                        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(user.getDisplayName());
-                    } else {
-                        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("Signed in");
-                    }
-
-                    if (user.getEmail() != null) {
-                        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText(user.getEmail());
-                    } else if (user.getPhoneNumber() != null) {
-                        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText(user.getPhoneNumber());
-                    } else {
-                        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("No email or phone number specified");
-                    }
-                } else {
-                    image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_cloud_circle_72dp));
-
-                    ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText("Not signed in");
-                    ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("ThunderCloud");
-                }
-                break;
-        }
-    }
-
-    private void expandAccountMenu() {
-        NavigationView view = findViewById(R.id.nav_view);
-        ImageView dropdown = view.getHeaderView(0).findViewById(R.id.account_dropdown);
-
-        view.getMenu().clear();
-        view.inflateMenu(R.menu.drawer_account_menu);
-
-        view.getMenu().findItem(R.id.nav_account_local).setTitle(PreferenceManager.getDefaultSharedPreferences(this)
+        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(sharedPrefs
                 .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            if (user.getDisplayName() != null) {
-                view.getMenu().findItem(R.id.nav_account_cloud).setTitle(user.getDisplayName());
-            } else if (user.getEmail() != null) {
-                view.getMenu().findItem(R.id.nav_account_cloud).setTitle(user.getEmail());
-            } else if (user.getPhoneNumber() != null) {
-                view.getMenu().findItem(R.id.nav_account_cloud).setTitle(user.getPhoneNumber());
-            } else {
-                view.getMenu().findItem(R.id.nav_account_cloud).setTitle("ThunderCloud");
-            }
-        } else {
-            view.getMenu().findItem(R.id.nav_account_cloud).setTitle("Sign in to ThunderCloud");
-            view.getMenu().findItem(R.id.nav_account_settings).setEnabled(false);
-            view.getMenu().findItem(R.id.nav_account_settings).setVisible(false);
-        }
-
-        dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_up_24dp));
-        accountMenuExpanded = true;
-    }
-
-    private void contractAccountMenu() {
-        NavigationView view = findViewById(R.id.nav_view);
-        ImageView dropdown = view.getHeaderView(0).findViewById(R.id.account_dropdown);
-
-        view.getMenu().clear();
-        view.inflateMenu(R.menu.drawer_menu);
-
-        if (getSupportFragmentManager().findFragmentById(R.id.fragment).getClass() == HomeFragment.class) {
-            view.setCheckedItem(R.id.nav_home);
-        } else if (getSupportFragmentManager().findFragmentById(R.id.fragment).getClass() == MatchesFragment.class) {
-            view.setCheckedItem(R.id.nav_matches);
-        } else if (getSupportFragmentManager().findFragmentById(R.id.fragment).getClass() == RankingsFragment.class) {
-            view.setCheckedItem(R.id.nav_rankings);
-        }
-
-        dropdown.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_arrow_drop_down_24dp));
-        accountMenuExpanded = false;
+        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("Local storage");
     }
 
     public interface BackPressListener {
