@@ -29,7 +29,7 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">true</item>
     </style>
 
-    <style name="ThunderScout.DayNight.BaseTheme.ActionBar" parent="Theme.AppCompat.DayNight">
+    <style name="ThunderScout.DayNight.BaseTheme.ActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">true</item>
     </style>
 
@@ -42,10 +42,11 @@
     </style>
 
     <style name="ThunderScout.DayNight.BaseTheme.SplashScreen" parent="ThunderScout.BaseTheme">
+        <item name="android:windowLightStatusBar" tools:targetApi="M">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">true</item>
     </style>
 
-    <style name="ThunderScout.DayNight.MaterialAbout" parent="Theme.Mal.Light">
+    <style name="ThunderScout.DayNight.MaterialAbout" parent="Theme.Mal.Light.DarkActionBar">
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">true</item>
     </style>
 

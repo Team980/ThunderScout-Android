@@ -173,7 +173,6 @@
         <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
             @color/splash_background
         </item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">false</item>
     </style>
 
     <style name="ThunderScout.Transparent" parent="Theme.AppCompat.NoActionBar">

@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity
 
     public static final int REQUEST_CODE_AUTH = 1;
 
-    private boolean accountMenuExpanded = false; //runtime state
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.ThunderScout_BaseTheme_NavigationPane); //Disable splash screen
