@@ -24,11 +24,10 @@
 
 package com.team980.thunderscout.analytics;
 
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
-
 import java.util.Comparator;
 
 //TODO break out logic - Average/Min/Max and the statistic should be selectable separately
+@Deprecated //TODO update for 2019
 public enum TeamComparator implements Comparator<TeamWrapper> {
     //TODO The order isn't consistent when the data is equal-
     //TODO it appears to revert to the order fetched from the database when refreshed
@@ -45,9 +44,9 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
             return ScoutDataStatistics.getLastUpdated(o1.getDataList())
                     .compareTo(ScoutDataStatistics.getLastUpdated(o2.getDataList()));
         }
-    },
+    };//,
 
-    SORT_AUTO_LINE_CROSS_SUCCESS("Auto Line Cross Success") {
+    /*SORT_AUTO_LINE_CROSS_SUCCESS("Auto Line Cross Success") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
                     data -> data.getCrossedAutoLine()))
@@ -137,14 +136,14 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_SUPPORTED_OTHER_ROBOTS("Supported Other Robots") {
+    SORT_SUPPORTED_OTHER_ROBOTS("Supported another robot") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.valueOf(ScoutDataStatistics.getPercentage(o1.getDataList(),
-                    data -> data.getSupportedOtherRobots()))
+                    data -> data.supportedOtherRobots()))
                     .compareTo(ScoutDataStatistics.getPercentage(o2.getDataList(),
-                            data -> data.getSupportedOtherRobots()));
+                            data -> data.supportedOtherRobots()));
         }
-    };
+    };*/
 
     private String displayName;
 

@@ -37,8 +37,8 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.schema.ScoutData;
 
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
+@Deprecated // TODO update for 2019
 public class MatchInfoFragment extends Fragment {
 
     public static final String EXTRA_SCOUT_DATA = "com.team980.thunderscout.SCOUT_DATA";
@@ -60,7 +60,6 @@ public class MatchInfoFragment extends Fragment {
         Bundle args = getArguments(); //TODO use Argument bundle
         ScoutData data = (ScoutData) args.getSerializable(EXTRA_SCOUT_DATA);
 
-
         // Init
         TextView date = view.findViewById(R.id.info_match_date);
         date.setText(SimpleDateFormat.getDateTimeInstance().format(data.getDate()));
@@ -68,6 +67,7 @@ public class MatchInfoFragment extends Fragment {
         TextView source = view.findViewById(R.id.info_match_source);
         source.setText(data.getSource());
 
+        /*
         // Auto
         TextView crossedAutoLine = view.findViewById(R.id.info_match_autoCrossedAutoLine);
         crossedAutoLine.setText(String.valueOf(data.getCrossedAutoLine()).toUpperCase(Locale.ROOT));
@@ -120,7 +120,7 @@ public class MatchInfoFragment extends Fragment {
             comments.setText(data.getComments());
         } else {
             comments.setText("N/A");
-        }
+        }*/
     }
 
     @Override

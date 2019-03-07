@@ -25,24 +25,17 @@
 package com.team980.thunderscout.analytics.rankings;
 
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.analytics.ScoutDataStatistics;
 import com.team980.thunderscout.analytics.TeamWrapper;
-import com.team980.thunderscout.analytics.rankings.breakdown.CommentsAdapter;
-import com.team980.thunderscout.schema.ScoutData;
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated
+@Deprecated // TODO update for 2019, then leave deprecated
 //TODO replace with Data Binding - I really didn't want to shove this into RankingsFragment.java
 //TODO ...except there's actually more going on in here than I CAN replace with Data Binding...
 public class CompareBottomSheetBinding {
@@ -85,6 +78,7 @@ public class CompareBottomSheetBinding {
         TextView team3 = dialogView.findViewById(R.id.info_alliance_station3_team);
         team3.setText(station3.getTeam());
 
+        /*
         // Auto
         TextView crossPercent = dialogView.findViewById(R.id.info_alliance_station1_autoCrossPercentage);
         crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(station1.getDataList(),
@@ -249,7 +243,7 @@ public class CompareBottomSheetBinding {
 
             comments.setLayoutManager(new LinearLayoutManager(dialogView.getContext()));
             comments.setAdapter(new CommentsAdapter(commentsList));
-        }
+        }*/
     }
 
     private static boolean listContentsAreEmpty(List<String> list) {

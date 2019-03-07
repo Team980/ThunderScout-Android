@@ -53,7 +53,8 @@ import com.team980.thunderscout.backend.AccountScope;
 import com.team980.thunderscout.backend.StorageWrapper;
 import com.team980.thunderscout.bluetooth.ClientConnectionTask;
 import com.team980.thunderscout.schema.ScoutData;
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
+import com.team980.thunderscout.schema.enumeration.ClimbTime;
+import com.team980.thunderscout.schema.enumeration.HabLevel;
 import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 import com.team980.thunderscout.util.TransitionUtils;
 
@@ -328,46 +329,77 @@ public class ScoutingFlowActivity extends AppCompatActivity implements View.OnCl
         scoutData.setSource(PreferenceManager.getDefaultSharedPreferences(this)
                 .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
 
-        // Autonomous
-        CheckBox crossedAutoLine = findViewById(R.id.auto_checkBoxCrossedAutoLine);
-        scoutData.setCrossedAutoLine(crossedAutoLine.isChecked());
+        // Sandstorm
+        Spinner startingLevel = findViewById(R.id.storm_spinnerStartingLevel);
+        scoutData.setStartingLevel(HabLevel.values()[startingLevel.getSelectedItemPosition()]);
 
-        CounterCompoundView auto_powerCubeAllianceSwitchCount = findViewById(R.id.auto_counterPowerCubeAllianceSwitchCount);
-        scoutData.setAutoPowerCubeAllianceSwitchCount((int) auto_powerCubeAllianceSwitchCount.getValue());
+        CheckBox crossedHabLine = findViewById(R.id.storm_checkBoxCrossedHabLine);
+        scoutData.setCrossedHabLine(crossedHabLine.isChecked());
 
-        CounterCompoundView auto_powerCubeScaleCount = findViewById(R.id.auto_counterPowerCubeScaleCount);
-        scoutData.setAutoPowerCubeScaleCount((int) auto_powerCubeScaleCount.getValue());
+        CounterCompoundView storm_HighRocketHatchCount = findViewById(R.id.storm_counterHighRocketHatch);
+        scoutData.setStormHighRocketHatchCount((int) storm_HighRocketHatchCount.getValue());
 
-        CounterCompoundView auto_powerCubePlayerStationCount = findViewById(R.id.auto_counterPowerCubePlayerStationCount);
-        scoutData.setAutoPowerCubePlayerStationCount((int) auto_powerCubePlayerStationCount.getValue());
+        CounterCompoundView storm_MidRocketHatchCount = findViewById(R.id.storm_counterMidRocketHatch);
+        scoutData.setStormMiddleRocketHatchCount((int) storm_MidRocketHatchCount.getValue());
+
+        CounterCompoundView storm_LowRocketHatchCount = findViewById(R.id.storm_counterLowRocketHatch);
+        scoutData.setStormLowRocketHatchCount((int) storm_LowRocketHatchCount.getValue());
+
+        CounterCompoundView storm_CargoShipHatchCount = findViewById(R.id.storm_counterCargoShipHatch);
+        scoutData.setStormCargoShipHatchCount((int) storm_CargoShipHatchCount.getValue());
+
+        CounterCompoundView storm_HighRocketCargoCount = findViewById(R.id.storm_counterHighRocketCargo);
+        scoutData.setStormHighRocketCargoCount((int) storm_HighRocketCargoCount.getValue());
+
+        CounterCompoundView storm_MidRocketCargoCount = findViewById(R.id.storm_counterMidRocketCargo);
+        scoutData.setStormMiddleRocketCargoCount((int) storm_MidRocketCargoCount.getValue());
+
+        CounterCompoundView storm_LowRocketCargoCount = findViewById(R.id.storm_counterLowRocketCargo);
+        scoutData.setStormLowRocketCargoCount((int) storm_LowRocketCargoCount.getValue());
+
+        CounterCompoundView storm_CargoShipCargoCount = findViewById(R.id.storm_counterCargoShipCargo);
+        scoutData.setStormCargoShipCargoCount((int) storm_CargoShipCargoCount.getValue());
 
         // Teleoperated
-        CounterCompoundView teleop_powerCubeAllianceSwitchCount = findViewById(R.id.teleop_counterPowerCubeAllianceSwitch);
-        scoutData.setTeleopPowerCubeAllianceSwitchCount((int) teleop_powerCubeAllianceSwitchCount.getValue());
+        CounterCompoundView teleop_HighRocketHatchCount = findViewById(R.id.teleop_counterHighRocketHatch);
+        scoutData.setTeleopHighRocketHatchCount((int) teleop_HighRocketHatchCount.getValue());
 
-        CounterCompoundView teleop_powerCubeScaleCount = findViewById(R.id.teleop_counterPowerCubeScaleCount);
-        scoutData.setTeleopPowerCubeScaleCount((int) teleop_powerCubeScaleCount.getValue());
+        CounterCompoundView teleop_MidRocketHatchCount = findViewById(R.id.teleop_counterMidRocketHatch);
+        scoutData.setTeleopMiddleRocketHatchCount((int) teleop_MidRocketHatchCount.getValue());
 
-        CounterCompoundView teleop_powerCubeOpposingSwitchCount = findViewById(R.id.teleop_counterPowerCubeOpposingSwitchCount);
-        scoutData.setTeleopPowerCubeOpposingSwitchCount((int) teleop_powerCubeOpposingSwitchCount.getValue());
+        CounterCompoundView teleop_LowRocketHatchCount = findViewById(R.id.teleop_counterLowRocketHatch);
+        scoutData.setTeleopLowRocketHatchCount((int) teleop_LowRocketHatchCount.getValue());
 
-        CounterCompoundView teleop_powerCubePlayerStationCount = findViewById(R.id.teleop_counterPowerCubePlayerStationCount);
-        scoutData.setTeleopPowerCubePlayerStationCount((int) teleop_powerCubePlayerStationCount.getValue());
+        CounterCompoundView teleop_CargoShipHatchCount = findViewById(R.id.teleop_counterCargoShipHatch);
+        scoutData.setTeleopCargoShipHatchCount((int) teleop_CargoShipHatchCount.getValue());
 
-        Spinner climbingStats = findViewById(R.id.teleop_spinnerClimbingStats);
-        scoutData.setClimbingStats(ClimbingStats.values()[climbingStats.getSelectedItemPosition()]);
+        CounterCompoundView teleop_HighRocketCargoCount = findViewById(R.id.teleop_counterHighRocketCargo);
+        scoutData.setTeleopHighRocketCargoCount((int) teleop_HighRocketCargoCount.getValue());
 
-        CheckBox supportedOtherRobotsWhenClimbing = findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
-        scoutData.setSupportedOtherRobots(supportedOtherRobotsWhenClimbing.isChecked());
+        CounterCompoundView teleop_MidRocketCargoCount = findViewById(R.id.teleop_counterMidRocketCargo);
+        scoutData.setTeleopMiddleRocketCargoCount((int) teleop_MidRocketCargoCount.getValue());
 
-        // Summary
-        EditText strategies = findViewById(R.id.summary_edittextStrategies);
-        scoutData.setStrategies(strategies.getText().toString());
+        CounterCompoundView teleop_LowRocketCargoCount = findViewById(R.id.teleop_counterLowRocketCargo);
+        scoutData.setTeleopLowRocketCargoCount((int) teleop_LowRocketCargoCount.getValue());
 
-        EditText difficulties = findViewById(R.id.summary_edittextDifficulties);
-        scoutData.setDifficulties(difficulties.getText().toString());
+        CounterCompoundView teleop_CargoShipCargoCount = findViewById(R.id.teleop_counterCargoShipCargo);
+        scoutData.setTeleopCargoShipCargoCount((int) teleop_CargoShipCargoCount.getValue());
 
-        EditText comments = findViewById(R.id.summary_edittextComments);
-        scoutData.setComments(comments.getText().toString());
+        // Endgame
+        Spinner climbLevel = findViewById(R.id.endgame_spinnerClimbLevel);
+        scoutData.setEndgameClimbLevel(HabLevel.values()[climbLevel.getSelectedItemPosition()]);
+
+        Spinner climbTime = findViewById(R.id.endgame_spinnerClimbTime);
+        scoutData.setEndgameClimbTime(ClimbTime.values()[climbTime.getSelectedItemPosition()]);
+
+        CheckBox supportedOtherRobots = findViewById(R.id.endgame_checkBoxSupportedOtherRobotsWhenClimbing);
+        scoutData.setSupportedOtherRobots(supportedOtherRobots.isChecked());
+
+        EditText climbDescription = findViewById(R.id.endgame_edittextClimbDescription);
+        scoutData.setClimbDescription(climbDescription.getText().toString());
+
+        // Notes
+        EditText notes = findViewById(R.id.edittextNotes);
+        scoutData.setNotes(notes.getText().toString());
     }
 }

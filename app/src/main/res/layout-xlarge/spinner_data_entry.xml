@@ -29,7 +29,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
-    android:maxLines="1"
     android:textAlignment="inherit"
-    android:textSize="18sp"
-    tools:text="Hello" />
+    android:textSize="30sp"
+    tools:text="Hello"
+    android:singleLine="true" />

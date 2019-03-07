@@ -22,14 +22,13 @@
   ~ SOFTWARE.
   -->
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
-    style="?android:attr/spinnerItemStyle"
+    style="?android:attr/spinnerDropDownItemStyle"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="48dip"
     android:ellipsize="marquee"
-    android:maxLines="1"
-    android:textAlignment="inherit"
-    android:textSize="24sp"
-    tools:text="Hello" />
+    android:textSize="18sp"
+    tools:text="Hello"
+    android:singleLine="true" />

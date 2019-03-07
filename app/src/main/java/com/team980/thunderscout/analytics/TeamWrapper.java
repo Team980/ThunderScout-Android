@@ -25,7 +25,6 @@
 package com.team980.thunderscout.analytics;
 
 import com.team980.thunderscout.schema.ScoutData;
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -35,6 +34,7 @@ import java.util.ArrayList;
 /**
  * Represents data for one team, for all the matches they played in.
  */
+@Deprecated //TODO update for 2019
 public class TeamWrapper implements Serializable {
 
     private String team;
@@ -64,7 +64,7 @@ public class TeamWrapper implements Serializable {
             case SORT_TEAM_NUMBER: //fall through
             case SORT_LAST_UPDATED:
                 return "Last updated " + SimpleDateFormat.getDateTimeInstance().format(ScoutDataStatistics.getLastUpdated(dataList));
-            case SORT_AUTO_LINE_CROSS_SUCCESS:
+            /*case SORT_AUTO_LINE_CROSS_SUCCESS:
                 return "Crossed the auto line in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
                         ScoutData::getCrossedAutoLine)) + "% of matches";
             case SORT_AUTO_POWER_CUBE_ALLIANCE_SWITCH_AVERAGE:
@@ -93,7 +93,7 @@ public class TeamWrapper implements Serializable {
                         data -> data.getClimbingStats() == ClimbingStats.CLIMBED)) + "% of matches";
             case SORT_SUPPORTED_OTHER_ROBOTS:
                 return "Supported other robots in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                        ScoutData::getSupportedOtherRobots)) + "% of matches";
+                        ScoutData::getSupportedOtherRobots)) + "% of matches";*/
             default: //Fallback - shouldn't trigger
                 return dataList.size() + " matches";
         }

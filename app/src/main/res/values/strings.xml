@@ -49,10 +49,18 @@
         <item>Blue 3</item>
     </string-array>
 
-    <string-array name="climbing_stats_array">
-        <item>DID NOT CLIMB</item>
-        <item>ATTEMPTED CLIMB</item>
-        <item>CLIMBED</item>
+    <string-array name="hab_level_array">
+        <item>None</item>
+        <item>Level 1</item>
+        <item>Level 2</item>
+        <item>Level 3</item>
+    </string-array>
+
+    <string-array name="climb_time_array">
+        <item>&lt;5 seconds</item>
+        <item>5–10 seconds</item>
+        <item>10–15 seconds</item>
+        <item>&gt;15 seconds</item>
     </string-array>
 
     <string-array name="iexport_file_types">

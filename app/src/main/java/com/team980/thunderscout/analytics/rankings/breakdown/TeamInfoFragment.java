@@ -27,8 +27,6 @@ package com.team980.thunderscout.analytics.rankings.breakdown;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +35,13 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.ScoutDataStatistics;
 import com.team980.thunderscout.schema.ScoutData;
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated //TODO update for 2019
 public class TeamInfoFragment extends Fragment {
 
     public static final String EXTRA_SCOUT_DATA_LIST = "com.team980.thunderscout.SCOUT_DATA_LIST";
@@ -73,6 +71,7 @@ public class TeamInfoFragment extends Fragment {
         TextView lastUpdated = view.findViewById(R.id.info_team_lastUpdated);
         lastUpdated.setText(SimpleDateFormat.getDateTimeInstance().format(ScoutDataStatistics.getLastUpdated(dataList)));
 
+        /*
         // Auto
         TextView crossPercent = view.findViewById(R.id.info_team_autoCrossPercentage);
         crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
@@ -162,7 +161,7 @@ public class TeamInfoFragment extends Fragment {
 
             comments.setLayoutManager(new LinearLayoutManager(getContext()));
             comments.setAdapter(new CommentsAdapter(commentsList));
-        }
+        }*/
     }
 
     private boolean listContentsAreEmpty(List<String> list) {

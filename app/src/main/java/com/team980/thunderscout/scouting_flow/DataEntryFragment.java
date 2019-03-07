@@ -26,6 +26,7 @@ package com.team980.thunderscout.scouting_flow;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
@@ -38,7 +39,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.team980.thunderscout.R;
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
+import com.team980.thunderscout.schema.enumeration.ClimbTime;
+import com.team980.thunderscout.schema.enumeration.HabLevel;
 import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 
 public class DataEntryFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -51,59 +53,98 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Autonomous
-        CheckBox crossedAutoLine = getView().findViewById(R.id.auto_checkBoxCrossedAutoLine);
-        crossedAutoLine.setChecked(scoutingFlowActivity.getData().getCrossedAutoLine());
-        crossedAutoLine.setOnClickListener(this);
-
-        CounterCompoundView auto_powerCubeAllianceSwitchCount = getView().findViewById(R.id.auto_counterPowerCubeAllianceSwitchCount);
-        auto_powerCubeAllianceSwitchCount.setValue(scoutingFlowActivity.getData().getAutoPowerCubeAllianceSwitchCount());
-
-        CounterCompoundView auto_powerCubeScaleCount = getView().findViewById(R.id.auto_counterPowerCubeScaleCount);
-        auto_powerCubeScaleCount.setValue(scoutingFlowActivity.getData().getAutoPowerCubeScaleCount());
-
-        CounterCompoundView auto_powerCubePlayerStationCount = getView().findViewById(R.id.auto_counterPowerCubePlayerStationCount);
-        auto_powerCubePlayerStationCount.setValue(scoutingFlowActivity.getData().getAutoPowerCubePlayerStationCount());
-
-        // Teleoperated
-        CounterCompoundView powerCubeAllianceSwitchCount = getView().findViewById(R.id.teleop_counterPowerCubeAllianceSwitch);
-        powerCubeAllianceSwitchCount.setValue(scoutingFlowActivity.getData().getTeleopPowerCubeAllianceSwitchCount());
-
-        CounterCompoundView powerCubeScaleCount = getView().findViewById(R.id.teleop_counterPowerCubeScaleCount);
-        powerCubeScaleCount.setValue(scoutingFlowActivity.getData().getTeleopPowerCubeScaleCount());
-
-        CounterCompoundView powerCubeOpposingSwitchCount = getView().findViewById(R.id.teleop_counterPowerCubeOpposingSwitchCount);
-        powerCubeOpposingSwitchCount.setValue(scoutingFlowActivity.getData().getTeleopPowerCubeOpposingSwitchCount());
-
-        CounterCompoundView powerCubePlayerStationCount = getView().findViewById(R.id.teleop_counterPowerCubePlayerStationCount);
-        powerCubePlayerStationCount.setValue(scoutingFlowActivity.getData().getTeleopPowerCubePlayerStationCount());
-
-        Spinner climbingStats = view.findViewById(R.id.teleop_spinnerClimbingStats);
-        climbingStats.setOnItemSelectedListener(this);
+        // Sandstorm
+        Spinner startingLevel = view.findViewById(R.id.storm_spinnerStartingLevel);
+        startingLevel.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.climbing_stats_array, R.layout.spinner_climbing_stats);
-        adapter.setDropDownViewResource(R.layout.spinner_climbing_stats_dropdown);
-        climbingStats.setAdapter(adapter);
+                R.array.hab_level_array, R.layout.spinner_data_entry);
+        adapter.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
+        startingLevel.setAdapter(adapter);
 
-        climbingStats.setSelection(scoutingFlowActivity.getData().getClimbingStats().ordinal());
+        CheckBox crossedHabLine = view.findViewById(R.id.storm_checkBoxCrossedHabLine);
+        crossedHabLine.setChecked(scoutingFlowActivity.getData().crossedHabLine());
+        crossedHabLine.setOnClickListener(this);
 
-        CheckBox supportedOtherRobotsWhenClimbing = getView().findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
-        supportedOtherRobotsWhenClimbing.setChecked(scoutingFlowActivity.getData().getSupportedOtherRobots());
-        supportedOtherRobotsWhenClimbing.setOnClickListener(this);
+        CounterCompoundView storm_HighRocketHatchCount = view.findViewById(R.id.storm_counterHighRocketHatch);
+        storm_HighRocketHatchCount.setValue(scoutingFlowActivity.getData().getStormHighRocketHatchCount());
 
-        // Summary
-        EditText strategies = getView().findViewById(R.id.summary_edittextStrategies);
-        strategies.setText(scoutingFlowActivity.getData().getStrategies());
+        CounterCompoundView storm_MidRocketHatchCount = view.findViewById(R.id.storm_counterMidRocketHatch);
+        storm_MidRocketHatchCount.setValue(scoutingFlowActivity.getData().getStormMiddleRocketHatchCount());
 
-        EditText difficulties = getView().findViewById(R.id.summary_edittextDifficulties);
-        difficulties.setText(scoutingFlowActivity.getData().getDifficulties());
+        CounterCompoundView storm_LowRocketHatchCount = view.findViewById(R.id.storm_counterLowRocketHatch);
+        storm_LowRocketHatchCount.setValue(scoutingFlowActivity.getData().getStormLowRocketHatchCount());
 
-        EditText comments = getView().findViewById(R.id.summary_edittextComments);
-        comments.setText(scoutingFlowActivity.getData().getComments());
+        CounterCompoundView storm_CargoShipHatchCount = view.findViewById(R.id.storm_counterCargoShipHatch);
+        storm_CargoShipHatchCount.setValue(scoutingFlowActivity.getData().getStormCargoShipHatchCount());
+
+        CounterCompoundView storm_HighRocketCargoCount = view.findViewById(R.id.storm_counterHighRocketCargo);
+        storm_HighRocketCargoCount.setValue(scoutingFlowActivity.getData().getStormHighRocketCargoCount());
+
+        CounterCompoundView storm_MidRocketCargoCount = view.findViewById(R.id.storm_counterMidRocketCargo);
+        storm_MidRocketCargoCount.setValue(scoutingFlowActivity.getData().getStormMiddleRocketCargoCount());
+
+        CounterCompoundView storm_LowRocketCargoCount = view.findViewById(R.id.storm_counterLowRocketCargo);
+        storm_LowRocketCargoCount.setValue(scoutingFlowActivity.getData().getStormLowRocketCargoCount());
+
+        CounterCompoundView storm_CargoShipCargoCount = view.findViewById(R.id.storm_counterCargoShipCargo);
+        storm_CargoShipCargoCount.setValue(scoutingFlowActivity.getData().getStormCargoShipCargoCount());
+
+        // Teleoperated
+        CounterCompoundView teleop_HighRocketHatchCount = view.findViewById(R.id.teleop_counterHighRocketHatch);
+        teleop_HighRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopHighRocketHatchCount());
+
+        CounterCompoundView teleop_MidRocketHatchCount = view.findViewById(R.id.teleop_counterMidRocketHatch);
+        teleop_MidRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopMiddleRocketHatchCount());
+
+        CounterCompoundView teleop_LowRocketHatchCount = view.findViewById(R.id.teleop_counterLowRocketHatch);
+        teleop_LowRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopLowRocketHatchCount());
+
+        CounterCompoundView teleop_CargoShipHatchCount = view.findViewById(R.id.teleop_counterCargoShipHatch);
+        teleop_CargoShipHatchCount.setValue(scoutingFlowActivity.getData().getTeleopCargoShipHatchCount());
+
+        CounterCompoundView teleop_HighRocketCargoCount = view.findViewById(R.id.teleop_counterHighRocketCargo);
+        teleop_HighRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopHighRocketCargoCount());
+
+        CounterCompoundView teleop_MidRocketCargoCount = view.findViewById(R.id.teleop_counterMidRocketCargo);
+        teleop_MidRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopMiddleRocketCargoCount());
+
+        CounterCompoundView teleop_LowRocketCargoCount = view.findViewById(R.id.teleop_counterLowRocketCargo);
+        teleop_LowRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopLowRocketCargoCount());
+
+        CounterCompoundView teleop_CargoShipCargoCount = view.findViewById(R.id.teleop_counterCargoShipCargo);
+        teleop_CargoShipCargoCount.setValue(scoutingFlowActivity.getData().getTeleopCargoShipCargoCount());
+
+        // Endgame
+        Spinner climbLevel = view.findViewById(R.id.endgame_spinnerClimbLevel);
+        climbLevel.setOnItemSelectedListener(this);
+
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),
+                R.array.hab_level_array, R.layout.spinner_data_entry);
+        adapter.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
+        climbLevel.setAdapter(adapter2);
+
+        Spinner climbTime = view.findViewById(R.id.endgame_spinnerClimbTime);
+        climbTime.setOnItemSelectedListener(this);
+
+        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getContext(),
+                R.array.climb_time_array, R.layout.spinner_data_entry);
+        adapter.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
+        climbTime.setAdapter(adapter3);
+
+        CheckBox supportedOtherRobot = view.findViewById(R.id.endgame_checkBoxSupportedOtherRobotsWhenClimbing);
+        supportedOtherRobot.setChecked(scoutingFlowActivity.getData().supportedOtherRobots());
+        supportedOtherRobot.setOnClickListener(this);
+
+        EditText climbDescription = view.findViewById(R.id.endgame_edittextClimbDescription);
+        climbDescription.setText(scoutingFlowActivity.getData().getClimbDescription());
+
+        // Notes
+        EditText notes = view.findViewById(R.id.edittextNotes);
+        notes.setText(scoutingFlowActivity.getData().getNotes());
     }
 
     @Override
@@ -119,12 +160,22 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
     }
 
     /**
-     * Listener for ClimbingStats spinner
+     * Listener for data entry spinners
      */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        ClimbingStats climbingStats = ClimbingStats.values()[position];
-        scoutingFlowActivity.getData().setClimbingStats(climbingStats);
+        if (parent.getId() == R.id.storm_spinnerStartingLevel) {
+            HabLevel startingLevel = HabLevel.values()[position];
+            scoutingFlowActivity.getData().setStartingLevel(startingLevel);
+
+        } else if (parent.getId() == R.id.endgame_spinnerClimbLevel) {
+            HabLevel climbLevel = HabLevel.values()[position];
+            scoutingFlowActivity.getData().setEndgameClimbLevel(climbLevel);
+
+        } else if (parent.getId() == R.id.endgame_spinnerClimbTime) {
+            ClimbTime climbTime = ClimbTime.values()[position];
+            scoutingFlowActivity.getData().setEndgameClimbTime(climbTime);
+        }
     }
 
     @Override
@@ -132,13 +183,16 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         //do nothing
     }
 
+    /**
+     * Listener for data entry checkboxes
+     */
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.auto_checkBoxCrossedAutoLine) {
+        if (view.getId() == R.id.storm_checkBoxCrossedHabLine) {
 
             AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
-            scoutingFlowActivity.getData().setCrossedAutoLine(checkBox.isChecked());
-        } else if (view.getId() == R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing) {
+            scoutingFlowActivity.getData().setCrossedHabLine(checkBox.isChecked());
+        } else if (view.getId() == R.id.endgame_checkBoxSupportedOtherRobotsWhenClimbing) {
 
             AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
             scoutingFlowActivity.getData().setSupportedOtherRobots(checkBox.isChecked());

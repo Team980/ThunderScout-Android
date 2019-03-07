@@ -28,8 +28,8 @@ import android.support.annotation.NonNull;
 
 public enum ClimbTime {
     LESS_THAN_FIVE_SECONDS("<5 seconds"),
-    FIVE_TO_TEN_SECONDS("5-10 seconds"),
-    TEN_TO_FIFTEEN_SECONDS("10-15 seconds"),
+    FIVE_TO_TEN_SECONDS("5–10 seconds"),
+    TEN_TO_FIFTEEN_SECONDS("10–15 seconds"),
     GREATER_THAN_FIFTEEN_SECONDS(">15 seconds");
 
     private String displayString;
