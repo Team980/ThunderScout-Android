@@ -30,6 +30,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
@@ -118,6 +119,8 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
         dialog.setCanceledOnTouchOutside(false);
         //Complex code to override auto dismiss
         dialog.setOnShowListener(d -> {
+            //TextView title = dialog.findViewById(R.id.alertTitle);
+            //title.setTypeface(ResourcesCompat.getFont(getContext(), R.font.arimo));
 
             Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
             button.setOnClickListener(view -> mListener.onDialogPositiveClick(ScoutingFlowDialogFragment.this));
@@ -125,6 +128,11 @@ public class ScoutingFlowDialogFragment extends AppCompatDialogFragment implemen
 
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return dialog;
+    }
+
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        super.show(manager, tag);
     }
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener

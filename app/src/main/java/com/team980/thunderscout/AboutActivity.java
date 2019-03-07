@@ -137,7 +137,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .icon(getTintedIcon(R.drawable.ic_forum_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse("https://www.chiefdelphi.com/forums/member.php?u=91239"));
+                    i.setData(Uri.parse("https://www.chiefdelphi.com/u/19lmyers"));
                     startActivity(i);
                 })
                 .build());
@@ -182,17 +182,6 @@ public class AboutActivity extends MaterialAboutActivity {
                 .build());
 
         teamCard.addItem(new MaterialAboutActionItem.Builder()
-                .text("Follow us on Snapchat")
-                .subText("@frcteam980")
-                .icon(getTintedIcon(R.drawable.ic_snapchat_24dp))
-                .setOnClickAction(() -> {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse("https://www.snapchat.com/add/frcteam980"));
-                    startActivity(i);
-                })
-                .build());
-
-        teamCard.addItem(new MaterialAboutActionItem.Builder()
                 .text("Subscribe to us on YouTube")
                 .subText("FRC Team 980 Official")
                 .icon(getTintedIcon(R.drawable.ic_youtube_24dp))
@@ -209,7 +198,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .icon(getTintedIcon(R.drawable.ic_web_24dp))
                 .setOnClickAction(() -> {
                     Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse("http://team980.com/"));
+                    i.setData(Uri.parse("https://team980.com/"));
                     startActivity(i);
                 })
                 .build());

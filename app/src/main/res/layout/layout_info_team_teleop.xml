@@ -39,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Teleop"
+            android:fontFamily="@font/arimo"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="25sp" />
 

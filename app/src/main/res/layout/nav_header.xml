@@ -57,6 +57,7 @@
 
         <TextView
             android:id="@+id/account_id"
+            android:fontFamily="@font/arimo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="account@team980.com" />

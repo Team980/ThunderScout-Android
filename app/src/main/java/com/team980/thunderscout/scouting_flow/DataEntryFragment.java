@@ -24,7 +24,6 @@
 
 package com.team980.thunderscout.scouting_flow;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,25 +34,41 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.schema.enumeration.ClimbingStats;
 import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 
-public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedListener, View.OnClickListener {
+public class DataEntryFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private ScoutingFlowActivity scoutingFlowActivity;
+    ScoutingFlowActivity scoutingFlowActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_teleop, container, false);
+        return inflater.inflate(R.layout.fragment_data_entry, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Autonomous
+        CheckBox crossedAutoLine = getView().findViewById(R.id.auto_checkBoxCrossedAutoLine);
+        crossedAutoLine.setChecked(scoutingFlowActivity.getData().getCrossedAutoLine());
+        crossedAutoLine.setOnClickListener(this);
+
+        CounterCompoundView auto_powerCubeAllianceSwitchCount = getView().findViewById(R.id.auto_counterPowerCubeAllianceSwitchCount);
+        auto_powerCubeAllianceSwitchCount.setValue(scoutingFlowActivity.getData().getAutoPowerCubeAllianceSwitchCount());
+
+        CounterCompoundView auto_powerCubeScaleCount = getView().findViewById(R.id.auto_counterPowerCubeScaleCount);
+        auto_powerCubeScaleCount.setValue(scoutingFlowActivity.getData().getAutoPowerCubeScaleCount());
+
+        CounterCompoundView auto_powerCubePlayerStationCount = getView().findViewById(R.id.auto_counterPowerCubePlayerStationCount);
+        auto_powerCubePlayerStationCount.setValue(scoutingFlowActivity.getData().getAutoPowerCubePlayerStationCount());
+
+        // Teleoperated
         CounterCompoundView powerCubeAllianceSwitchCount = getView().findViewById(R.id.teleop_counterPowerCubeAllianceSwitch);
         powerCubeAllianceSwitchCount.setValue(scoutingFlowActivity.getData().getTeleopPowerCubeAllianceSwitchCount());
 
@@ -79,6 +94,16 @@ public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedLi
         CheckBox supportedOtherRobotsWhenClimbing = getView().findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
         supportedOtherRobotsWhenClimbing.setChecked(scoutingFlowActivity.getData().getSupportedOtherRobots());
         supportedOtherRobotsWhenClimbing.setOnClickListener(this);
+
+        // Summary
+        EditText strategies = getView().findViewById(R.id.summary_edittextStrategies);
+        strategies.setText(scoutingFlowActivity.getData().getStrategies());
+
+        EditText difficulties = getView().findViewById(R.id.summary_edittextDifficulties);
+        difficulties.setText(scoutingFlowActivity.getData().getDifficulties());
+
+        EditText comments = getView().findViewById(R.id.summary_edittextComments);
+        comments.setText(scoutingFlowActivity.getData().getComments());
     }
 
     @Override
@@ -109,9 +134,13 @@ public class TeleopFragment extends Fragment implements Spinner.OnItemSelectedLi
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing) {
-            AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
+        if (view.getId() == R.id.auto_checkBoxCrossedAutoLine) {
 
+            AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
+            scoutingFlowActivity.getData().setCrossedAutoLine(checkBox.isChecked());
+        } else if (view.getId() == R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing) {
+
+            AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
             scoutingFlowActivity.getData().setSupportedOtherRobots(checkBox.isChecked());
         }
     }

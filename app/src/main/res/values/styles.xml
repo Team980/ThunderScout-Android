@@ -240,10 +240,18 @@
     <style name="ThunderScout.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="colorAccent">@color/accent</item>
         <item name="android:titleTextStyle">@style/ThunderScout.AlertDialog.Title</item>
+
+        <item name="buttonBarNegativeButtonStyle">@style/ThunderScout.AlertDialog.Button</item>
+        <item name="buttonBarPositiveButtonStyle">@style/ThunderScout.AlertDialog.Button</item>
     </style>
 
     <!-- TODO this doesn't work! -->
     <style name="ThunderScout.AlertDialog.Title" parent="TextAppearance.AppCompat.Title">
+        <item name="android:fontFamily">@font/arimo</item>
+        <item name="fontFamily">@font/arimo</item>
+    </style>
+
+    <style name="ThunderScout.AlertDialog.Button" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:fontFamily">@font/arimo</item>
         <item name="fontFamily">@font/arimo</item>
     </style>

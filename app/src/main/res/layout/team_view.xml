@@ -46,6 +46,7 @@
             android:id="@+id/team_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/arimo"
             android:paddingTop="15dp"
             android:text="Team 980"
             android:textColor="?android:attr/textColorPrimary"
@@ -56,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/team_number"
+            android:fontFamily="@font/arimo"
             android:text="Description"
             android:textSize="14sp" />
 

@@ -35,9 +35,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -61,11 +60,11 @@ import com.team980.thunderscout.util.TransitionUtils;
 import java.util.Date;
 import java.util.List;
 
-public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener, StorageWrapper.StorageListener {
+public class ScoutingFlowActivity extends AppCompatActivity implements View.OnClickListener, ScoutingFlowDialogFragment.ScoutingFlowDialogFragmentListener, StorageWrapper.StorageListener {
 
     public static final String EXTRA_SCOUT_DATA = "EXTRA_SCOUT_DATA";
 
-    private ScoutingFlowViewPagerAdapter viewPagerAdapter;
+    private DataEntryFragment dataEntryFragment;
     private ScoutData scoutData;
     private FloatingActionButton fab;
 
@@ -97,16 +96,11 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
 
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        dataEntryFragment = new DataEntryFragment();
 
-        viewPagerAdapter = new ScoutingFlowViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(viewPagerAdapter);
-
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.addOnPageChangeListener(this);
-
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(viewPager);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.data_entry_fragment, dataEntryFragment);
+        ft.commit();
 
         fab = findViewById(R.id.fab_finish);
         fab.setOnClickListener(this);
@@ -116,7 +110,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
             getSupportActionBar().setSubtitle("Qualification Match " + scoutData.getMatchNumber());
 
             toolbar.setBackground(new ColorDrawable(getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary())));
-            tabLayout.setBackground(new ColorDrawable(getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary())));
             findViewById(R.id.app_bar_layout).setBackground(new ColorDrawable(getResources().getColor(scoutData.getAllianceStation().getColor().getColorPrimary())));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -206,33 +199,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putSerializable("ScoutData", scoutData);
     }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        //do nothing
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        switch (position) {
-            case 2: //SUMMARY tab
-                fab.show();
-                fab.setClickable(true);
-                break;
-
-            default: //Other tabs
-
-                fab.hide();
-                fab.setClickable(false);
-                break;
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        //Do nothing
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -362,52 +328,46 @@ public class ScoutingFlowActivity extends AppCompatActivity implements ViewPager
         scoutData.setSource(PreferenceManager.getDefaultSharedPreferences(this)
                 .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
 
-        // Auto
-        View autoView = viewPagerAdapter.getItem(0).getView();
-
-        CheckBox crossedAutoLine = autoView.findViewById(R.id.auto_checkBoxCrossedAutoLine);
+        // Autonomous
+        CheckBox crossedAutoLine = findViewById(R.id.auto_checkBoxCrossedAutoLine);
         scoutData.setCrossedAutoLine(crossedAutoLine.isChecked());
 
-        CounterCompoundView auto_powerCubeAllianceSwitchCount = autoView.findViewById(R.id.auto_counterPowerCubeAllianceSwitchCount);
+        CounterCompoundView auto_powerCubeAllianceSwitchCount = findViewById(R.id.auto_counterPowerCubeAllianceSwitchCount);
         scoutData.setAutoPowerCubeAllianceSwitchCount((int) auto_powerCubeAllianceSwitchCount.getValue());
 
-        CounterCompoundView auto_powerCubeScaleCount = autoView.findViewById(R.id.auto_counterPowerCubeScaleCount);
+        CounterCompoundView auto_powerCubeScaleCount = findViewById(R.id.auto_counterPowerCubeScaleCount);
         scoutData.setAutoPowerCubeScaleCount((int) auto_powerCubeScaleCount.getValue());
 
-        CounterCompoundView auto_powerCubePlayerStationCount = autoView.findViewById(R.id.auto_counterPowerCubePlayerStationCount);
+        CounterCompoundView auto_powerCubePlayerStationCount = findViewById(R.id.auto_counterPowerCubePlayerStationCount);
         scoutData.setAutoPowerCubePlayerStationCount((int) auto_powerCubePlayerStationCount.getValue());
 
-        // Teleop
-        View teleopView = viewPagerAdapter.getItem(1).getView();
-
-        CounterCompoundView teleop_powerCubeAllianceSwitchCount = teleopView.findViewById(R.id.teleop_counterPowerCubeAllianceSwitch);
+        // Teleoperated
+        CounterCompoundView teleop_powerCubeAllianceSwitchCount = findViewById(R.id.teleop_counterPowerCubeAllianceSwitch);
         scoutData.setTeleopPowerCubeAllianceSwitchCount((int) teleop_powerCubeAllianceSwitchCount.getValue());
 
-        CounterCompoundView teleop_powerCubeScaleCount = teleopView.findViewById(R.id.teleop_counterPowerCubeScaleCount);
+        CounterCompoundView teleop_powerCubeScaleCount = findViewById(R.id.teleop_counterPowerCubeScaleCount);
         scoutData.setTeleopPowerCubeScaleCount((int) teleop_powerCubeScaleCount.getValue());
 
-        CounterCompoundView teleop_powerCubeOpposingSwitchCount = teleopView.findViewById(R.id.teleop_counterPowerCubeOpposingSwitchCount);
+        CounterCompoundView teleop_powerCubeOpposingSwitchCount = findViewById(R.id.teleop_counterPowerCubeOpposingSwitchCount);
         scoutData.setTeleopPowerCubeOpposingSwitchCount((int) teleop_powerCubeOpposingSwitchCount.getValue());
 
-        CounterCompoundView teleop_powerCubePlayerStationCount = teleopView.findViewById(R.id.teleop_counterPowerCubePlayerStationCount);
+        CounterCompoundView teleop_powerCubePlayerStationCount = findViewById(R.id.teleop_counterPowerCubePlayerStationCount);
         scoutData.setTeleopPowerCubePlayerStationCount((int) teleop_powerCubePlayerStationCount.getValue());
 
-        Spinner climbingStats = teleopView.findViewById(R.id.teleop_spinnerClimbingStats);
+        Spinner climbingStats = findViewById(R.id.teleop_spinnerClimbingStats);
         scoutData.setClimbingStats(ClimbingStats.values()[climbingStats.getSelectedItemPosition()]);
 
-        CheckBox supportedOtherRobotsWhenClimbing = teleopView.findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
+        CheckBox supportedOtherRobotsWhenClimbing = findViewById(R.id.teleop_checkBoxSupportedOtherRobotsWhenClimbing);
         scoutData.setSupportedOtherRobots(supportedOtherRobotsWhenClimbing.isChecked());
 
         // Summary
-        View summaryView = viewPagerAdapter.getItem(2).getView();
-
-        EditText strategies = summaryView.findViewById(R.id.summary_edittextStrategies);
+        EditText strategies = findViewById(R.id.summary_edittextStrategies);
         scoutData.setStrategies(strategies.getText().toString());
 
-        EditText difficulties = summaryView.findViewById(R.id.summary_edittextDifficulties);
+        EditText difficulties = findViewById(R.id.summary_edittextDifficulties);
         scoutData.setDifficulties(difficulties.getText().toString());
 
-        EditText comments = summaryView.findViewById(R.id.summary_edittextComments);
+        EditText comments = findViewById(R.id.summary_edittextComments);
         scoutData.setComments(comments.getText().toString());
     }
 }
