@@ -32,7 +32,7 @@ public class ScoutDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
 
-    public static final String DATABASE_NAME = "ThunderScout_SCOUT_DATA_2018.db";
+    public static final String DATABASE_NAME = "ThunderScout_SCOUT_DATA_2019.db";
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String FLOAT_TYPE = " REAL";
@@ -49,21 +49,35 @@ public class ScoutDataDbHelper extends SQLiteOpenHelper {
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE + TEXT_TYPE + COMMA_SEP +
 
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_STARTING_LEVEL + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CROSSED_HAB_LINE + INTEGER_TYPE + COMMA_SEP +
 
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS + TEXT_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_LOW_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
 
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES + TEXT_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_DIFFICULTIES + TEXT_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS + TEXT_TYPE + ")";
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_LOW_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MIDDLE_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MIDDLE_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_LEVEL + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_TIME + TEXT_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
+
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_NOTES + TEXT_TYPE + ")";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + ScoutDataContract.ScoutDataTable.TABLE_NAME;

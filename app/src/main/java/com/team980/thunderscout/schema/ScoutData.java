@@ -27,7 +27,8 @@ package com.team980.thunderscout.schema;
 import android.support.annotation.NonNull;
 
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
+import com.team980.thunderscout.schema.enumeration.ClimbTime;
+import com.team980.thunderscout.schema.enumeration.HabLevel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,12 +40,11 @@ import java.util.Date;
 public class ScoutData implements Comparable<ScoutData>, Serializable {
 
     /**
-     * ScoutData Version 2018-2
+     * ScoutData Version 2019-1
      * <p>
-     * [8] 2018-2: Flattens the object to be compatible with Firestore.
-     * [7] 2018-1: First 2018 spec. Makes a few changes to how the 2017 spec was formatted.
+     * [9] 2019-1: First 2019 spec. It's categorized differently from 2018.
      */
-    private static final long serialVersionUID = 8;
+    private static final long serialVersionUID = 9;
 
     /**
      * The unique ID used internally by the chosen storage provider
@@ -59,30 +59,46 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
     private Date date;
     private String source;
 
-    private boolean crossedAutoLine;
-    private int autoPowerCubeAllianceSwitchCount;
-    private int autoPowerCubeScaleCount;
-    private int autoPowerCubePlayerStationCount;
+    private HabLevel startingLevel;
+    private boolean crossedHabLine;
 
-    private int teleopPowerCubeAllianceSwitchCount;
-    private int teleopPowerCubeScaleCount;
-    private int teleopPowerCubeOpposingSwitchCount;
-    private int teleopPowerCubePlayerStationCount;
-    private ClimbingStats climbingStats;
+    private int stormHighRocketHatchCount;
+    private int stormMiddleRocketHatchCount;
+    private int stormLowRocketHatchCount;
+    private int stormCargoShipHatchCount;
+
+    private int stormHighRocketCargoCount;
+    private int stormMiddleRocketCargoCount;
+    private int stormLowRocketCargoCount;
+    private int stormCargoShipCargoCount;
+
+    private int teleopHighRocketHatchCount;
+    private int teleopMiddleRocketHatchCount;
+    private int teleopLowRocketHatchCount;
+    private int teleopCargoShipHatchCount;
+
+    private int teleopHighRocketCargoCount;
+    private int teleopMiddleRocketCargoCount;
+    private int teleopLowRocketCargoCount;
+    private int teleopCargoShipCargoCount;
+
+    private HabLevel endgameClimbLevel;
+    private ClimbTime endgameClimbTime;
     private boolean supportedOtherRobots;
+    private String climbDescription;
 
-    private String strategies;
-    private String difficulties;
-    private String comments;
+    private String notes;
 
     public ScoutData() {
         //default values
         allianceStation = AllianceStation.RED_1;
         date = new Date(0);
 
-        crossedAutoLine = false;
+        startingLevel = HabLevel.LEVEL_1;
+        crossedHabLine = false;
 
-        climbingStats = ClimbingStats.DID_NOT_CLIMB;
+        endgameClimbLevel = HabLevel.NONE;
+        endgameClimbTime = ClimbTime.GREATER_THAN_FIFTEEN_SECONDS;
         supportedOtherRobots = false;
     }
 
@@ -90,48 +106,15 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         id = primaryKey;
 
         //default values
-        allianceStation = AllianceStation.RED_1;
-        date = new Date(0);
+        startingLevel = HabLevel.LEVEL_1;
+        crossedHabLine = false;
 
-        crossedAutoLine = false;
-
-        climbingStats = ClimbingStats.DID_NOT_CLIMB;
+        endgameClimbLevel = HabLevel.NONE;
+        endgameClimbTime = ClimbTime.GREATER_THAN_FIFTEEN_SECONDS;
         supportedOtherRobots = false;
     }
 
     // --- INIT ---
-
-    public static ScoutData fromStringArray(String[] array) { //used by CSV
-        ScoutData data = new ScoutData();
-
-        //Init
-        data.setTeam(array[0]);
-        data.setMatchNumber(Integer.parseInt(array[1]));
-        data.setAllianceStation(AllianceStation.valueOf(array[2]));
-        data.setDate(new Date(Long.parseLong(array[3])));
-        data.setSource(array[4]);
-
-        //Auto
-        data.setCrossedAutoLine(Boolean.parseBoolean(array[5]));
-        data.setAutoPowerCubeAllianceSwitchCount(Integer.parseInt(array[6]));
-        data.setAutoPowerCubeScaleCount(Integer.parseInt(array[7]));
-        data.setAutoPowerCubePlayerStationCount(Integer.parseInt(array[8]));
-
-        //Teleop
-        data.setTeleopPowerCubeAllianceSwitchCount(Integer.parseInt(array[9]));
-        data.setTeleopPowerCubeScaleCount(Integer.parseInt(array[10]));
-        data.setTeleopPowerCubeOpposingSwitchCount(Integer.parseInt(array[11]));
-        data.setTeleopPowerCubePlayerStationCount(Integer.parseInt(array[12]));
-        data.setClimbingStats(ClimbingStats.valueOf(array[13]));
-        data.setSupportedOtherRobots(Boolean.parseBoolean(array[14]));
-
-        //Summary
-        data.setStrategies(array[15]);
-        data.setDifficulties(array[16]);
-        data.setComments(array[17]);
-
-        return data;
-    }
 
     /**
      * The unique ID used internally by the chosen storage provider
@@ -185,120 +168,249 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         return source;
     }
 
-    // --- AUTO ---
-
     public void setSource(String d) {
         source = d;
     }
 
-    public boolean getCrossedAutoLine() {
-        return crossedAutoLine;
+    // --- SANDSTORM ---
+
+    public HabLevel getStartingLevel() {
+        return startingLevel;
     }
 
-    public void setCrossedAutoLine(boolean crossedAutoLine) {
-        this.crossedAutoLine = crossedAutoLine;
+    public void setStartingLevel(HabLevel startingLevel) {
+        this.startingLevel = startingLevel;
     }
 
-    public int getAutoPowerCubeAllianceSwitchCount() {
-        return autoPowerCubeAllianceSwitchCount;
+    public boolean crossedHabLine() {
+        return crossedHabLine;
     }
 
-    public void setAutoPowerCubeAllianceSwitchCount(int autoPowerCubeAllianceSwitchCount) {
-        this.autoPowerCubeAllianceSwitchCount = autoPowerCubeAllianceSwitchCount;
+    public void setCrossedHabLine(boolean crossedHabLine) {
+        this.crossedHabLine = crossedHabLine;
     }
 
-    public int getAutoPowerCubeScaleCount() {
-        return autoPowerCubeScaleCount;
+    public int getStormHighRocketHatchCount() {
+        return stormHighRocketHatchCount;
     }
 
-    public void setAutoPowerCubeScaleCount(int autoPowerCubeScaleCount) {
-        this.autoPowerCubeScaleCount = autoPowerCubeScaleCount;
+    public void setStormHighRocketHatchCount(int stormHighRocketHatchCount) {
+        this.stormHighRocketHatchCount = stormHighRocketHatchCount;
     }
 
-    public int getAutoPowerCubePlayerStationCount() {
-        return autoPowerCubePlayerStationCount;
+    public int getStormMiddleRocketHatchCount() {
+        return stormMiddleRocketHatchCount;
     }
 
-    // --- TELEOP ---
-
-    public void setAutoPowerCubePlayerStationCount(int autoPowerCubePlayerStationCount) {
-        this.autoPowerCubePlayerStationCount = autoPowerCubePlayerStationCount;
+    public void setStormMiddleRocketHatchCount(int stormMiddleRocketHatchCount) {
+        this.stormMiddleRocketHatchCount = stormMiddleRocketHatchCount;
     }
 
-    public int getTeleopPowerCubeAllianceSwitchCount() {
-        return teleopPowerCubeAllianceSwitchCount;
+    public int getStormLowRocketHatchCount() {
+        return stormLowRocketHatchCount;
     }
 
-    public void setTeleopPowerCubeAllianceSwitchCount(int teleopPowerCubeAllianceSwitchCount) {
-        this.teleopPowerCubeAllianceSwitchCount = teleopPowerCubeAllianceSwitchCount;
+    public void setStormLowRocketHatchCount(int stormLowRocketHatchCount) {
+        this.stormLowRocketHatchCount = stormLowRocketHatchCount;
     }
 
-    public int getTeleopPowerCubeScaleCount() {
-        return teleopPowerCubeScaleCount;
+    public int getStormCargoShipHatchCount() {
+        return stormCargoShipHatchCount;
     }
 
-    public void setTeleopPowerCubeScaleCount(int teleopPowerCubeScaleCount) {
-        this.teleopPowerCubeScaleCount = teleopPowerCubeScaleCount;
+    public void setStormCargoShipHatchCount(int stormCargoShipHatchCount) {
+        this.stormCargoShipHatchCount = stormCargoShipHatchCount;
     }
 
-    public int getTeleopPowerCubeOpposingSwitchCount() {
-        return teleopPowerCubeOpposingSwitchCount;
+    public int getStormHighRocketCargoCount() {
+        return stormHighRocketCargoCount;
     }
 
-    public void setTeleopPowerCubeOpposingSwitchCount(int teleopPowerCubeOpposingSwitchCount) {
-        this.teleopPowerCubeOpposingSwitchCount = teleopPowerCubeOpposingSwitchCount;
+    public void setStormHighRocketCargoCount(int stormHighRocketCargoCount) {
+        this.stormHighRocketCargoCount = stormHighRocketCargoCount;
     }
 
-    public int getTeleopPowerCubePlayerStationCount() {
-        return teleopPowerCubePlayerStationCount;
+    public int getStormMiddleRocketCargoCount() {
+        return stormMiddleRocketCargoCount;
     }
 
-    public void setTeleopPowerCubePlayerStationCount(int teleopPowerCubePlayerStationCount) {
-        this.teleopPowerCubePlayerStationCount = teleopPowerCubePlayerStationCount;
+    public void setStormMiddleRocketCargoCount(int stormMiddleRocketCargoCount) {
+        this.stormMiddleRocketCargoCount = stormMiddleRocketCargoCount;
     }
 
-    public ClimbingStats getClimbingStats() {
-        return climbingStats;
+    public int getStormLowRocketCargoCount() {
+        return stormLowRocketCargoCount;
     }
 
-    public void setClimbingStats(ClimbingStats climbingStats) {
-        this.climbingStats = climbingStats;
+    public void setStormLowRocketCargoCount(int stormLowRocketCargoCount) {
+        this.stormLowRocketCargoCount = stormLowRocketCargoCount;
     }
 
-    public boolean getSupportedOtherRobots() {
+    public int getStormCargoShipCargoCount() {
+        return stormCargoShipCargoCount;
+    }
+
+    public void setStormCargoShipCargoCount(int stormCargoShipCargoCount) {
+        this.stormCargoShipCargoCount = stormCargoShipCargoCount;
+    }
+
+    // --- TELEOPERATED ---
+
+    public int getTeleopHighRocketHatchCount() {
+        return teleopHighRocketHatchCount;
+    }
+
+    public void setTeleopHighRocketHatchCount(int teleopHighRocketHatchCount) {
+        this.teleopHighRocketHatchCount = teleopHighRocketHatchCount;
+    }
+
+    public int getTeleopMiddleRocketHatchCount() {
+        return teleopMiddleRocketHatchCount;
+    }
+
+    public void setTeleopMiddleRocketHatchCount(int teleopMiddleRocketHatchCount) {
+        this.teleopMiddleRocketHatchCount = teleopMiddleRocketHatchCount;
+    }
+
+    public int getTeleopLowRocketHatchCount() {
+        return teleopLowRocketHatchCount;
+    }
+
+    public void setTeleopLowRocketHatchCount(int teleopLowRocketHatchCount) {
+        this.teleopLowRocketHatchCount = teleopLowRocketHatchCount;
+    }
+
+    public int getTeleopCargoShipHatchCount() {
+        return teleopCargoShipHatchCount;
+    }
+
+    public void setTeleopCargoShipHatchCount(int teleopCargoShipHatchCount) {
+        this.teleopCargoShipHatchCount = teleopCargoShipHatchCount;
+    }
+
+    public int getTeleopHighRocketCargoCount() {
+        return teleopHighRocketCargoCount;
+    }
+
+    public void setTeleopHighRocketCargoCount(int teleopHighRocketCargoCount) {
+        this.teleopHighRocketCargoCount = teleopHighRocketCargoCount;
+    }
+
+    public int getTeleopMiddleRocketCargoCount() {
+        return teleopMiddleRocketCargoCount;
+    }
+
+    public void setTeleopMiddleRocketCargoCount(int teleopMiddleRocketCargoCount) {
+        this.teleopMiddleRocketCargoCount = teleopMiddleRocketCargoCount;
+    }
+
+    public int getTeleopLowRocketCargoCount() {
+        return teleopLowRocketCargoCount;
+    }
+
+    public void setTeleopLowRocketCargoCount(int teleopLowRocketCargoCount) {
+        this.teleopLowRocketCargoCount = teleopLowRocketCargoCount;
+    }
+
+    public int getTeleopCargoShipCargoCount() {
+        return teleopCargoShipCargoCount;
+    }
+
+    public void setTeleopCargoShipCargoCount(int teleopCargoShipCargoCount) {
+        this.teleopCargoShipCargoCount = teleopCargoShipCargoCount;
+    }
+
+    // --- ENDGAME ---
+
+    public HabLevel getEndgameClimbLevel() {
+        return endgameClimbLevel;
+    }
+
+    public void setEndgameClimbLevel(HabLevel endgameClimbLevel) {
+        this.endgameClimbLevel = endgameClimbLevel;
+    }
+
+    public ClimbTime getEndgameClimbTime() {
+        return endgameClimbTime;
+    }
+
+    public void setEndgameClimbTime(ClimbTime endgameClimbTime) {
+        this.endgameClimbTime = endgameClimbTime;
+    }
+
+    public boolean supportedOtherRobots() {
         return supportedOtherRobots;
     }
-
-    // --- SUMMARY ---
 
     public void setSupportedOtherRobots(boolean supportedOtherRobots) {
         this.supportedOtherRobots = supportedOtherRobots;
     }
 
-    public String getStrategies() {
-        return strategies;
+    public String getClimbDescription() {
+        return climbDescription;
     }
 
-    public void setStrategies(String strategies) {
-        this.strategies = strategies;
+    public void setClimbDescription(String climbDescription) {
+        this.climbDescription = climbDescription;
     }
 
-    public String getDifficulties() {
-        return difficulties;
+    // --- NOTES ---
+
+    public String getNotes() {
+        return notes;
     }
 
-    public void setDifficulties(String difficulties) {
-        this.difficulties = difficulties;
-    }
-
-    public String getComments() {
-        return comments;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     // --- OTHER METHODS ---
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public static ScoutData fromStringArray(@NonNull String[] array) { //used by CSV
+        ScoutData data = new ScoutData();
+
+        //Init
+        data.setTeam(array[0]);
+        data.setMatchNumber(Integer.parseInt(array[1]));
+        data.setAllianceStation(AllianceStation.valueOf(array[2]));
+        data.setDate(new Date(Long.parseLong(array[3])));
+        data.setSource(array[4]);
+
+        //Sandstorm
+        data.setStartingLevel(HabLevel.valueOf(array[5]));
+        data.setCrossedHabLine(Boolean.parseBoolean(array[6]));
+
+        data.setStormHighRocketHatchCount(Integer.parseInt(array[7]));
+        data.setStormMiddleRocketHatchCount(Integer.parseInt(array[8]));
+        data.setStormLowRocketHatchCount(Integer.parseInt(array[9]));
+        data.setStormCargoShipHatchCount(Integer.parseInt(array[10]));
+
+        data.setStormHighRocketCargoCount(Integer.parseInt(array[11]));
+        data.setStormMiddleRocketCargoCount(Integer.parseInt(array[12]));
+        data.setStormLowRocketCargoCount(Integer.parseInt(array[13]));
+        data.setStormCargoShipCargoCount(Integer.parseInt(array[14]));
+
+        //Teleoperated
+        data.setTeleopHighRocketHatchCount(Integer.parseInt(array[15]));
+        data.setTeleopMiddleRocketHatchCount(Integer.parseInt(array[16]));
+        data.setTeleopLowRocketHatchCount(Integer.parseInt(array[17]));
+        data.setTeleopCargoShipHatchCount(Integer.parseInt(array[18]));
+
+        data.setTeleopHighRocketCargoCount(Integer.parseInt(array[19]));
+        data.setTeleopMiddleRocketCargoCount(Integer.parseInt(array[20]));
+        data.setTeleopLowRocketCargoCount(Integer.parseInt(array[21]));
+        data.setTeleopCargoShipCargoCount(Integer.parseInt(array[22]));
+
+        //Endgame
+        data.setEndgameClimbLevel(HabLevel.valueOf(array[23]));
+        data.setEndgameClimbTime(ClimbTime.valueOf(array[24]));
+        data.setSupportedOtherRobots(Boolean.parseBoolean(array[25]));
+        data.setClimbDescription(array[26]);
+
+        //Notes
+        data.setNotes(array[27]);
+
+        return data;
     }
 
     public String[] toStringArray() {
@@ -311,26 +423,41 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         fieldList.add(String.valueOf(getDate().getTime()));
         fieldList.add(getSource());
 
-        //Auto
-        fieldList.add(String.valueOf(getCrossedAutoLine()));
-        fieldList.add(String.valueOf(getAutoPowerCubeAllianceSwitchCount()));
-        fieldList.add(String.valueOf(getAutoPowerCubeScaleCount()));
-        fieldList.add(String.valueOf(getAutoPowerCubePlayerStationCount()));
+        //Sandstorm
+        fieldList.add(String.valueOf(getStartingLevel()));
+        fieldList.add(String.valueOf(crossedHabLine()));
 
-        //Teleop
-        fieldList.add(String.valueOf(getTeleopPowerCubeAllianceSwitchCount()));
-        fieldList.add(String.valueOf(getTeleopPowerCubeScaleCount()));
-        fieldList.add(String.valueOf(getTeleopPowerCubeOpposingSwitchCount()));
-        fieldList.add(String.valueOf(getTeleopPowerCubePlayerStationCount()));
-        fieldList.add(getClimbingStats().name());
-        fieldList.add(String.valueOf(getSupportedOtherRobots()));
+        fieldList.add(String.valueOf(getStormHighRocketHatchCount()));
+        fieldList.add(String.valueOf(getStormMiddleRocketHatchCount()));
+        fieldList.add(String.valueOf(getStormLowRocketHatchCount()));
+        fieldList.add(String.valueOf(getStormCargoShipHatchCount()));
 
-        //Summary
-        fieldList.add(getStrategies());
-        fieldList.add(getDifficulties());
-        fieldList.add(getComments());
+        fieldList.add(String.valueOf(getStormHighRocketCargoCount()));
+        fieldList.add(String.valueOf(getStormMiddleRocketCargoCount()));
+        fieldList.add(String.valueOf(getStormLowRocketCargoCount()));
+        fieldList.add(String.valueOf(getStormCargoShipCargoCount()));
 
-        return fieldList.toArray(new String[fieldList.size()]);
+        //Teleoperated
+        fieldList.add(String.valueOf(getTeleopHighRocketHatchCount()));
+        fieldList.add(String.valueOf(getTeleopMiddleRocketHatchCount()));
+        fieldList.add(String.valueOf(getTeleopLowRocketHatchCount()));
+        fieldList.add(String.valueOf(getTeleopCargoShipHatchCount()));
+
+        fieldList.add(String.valueOf(getTeleopHighRocketCargoCount()));
+        fieldList.add(String.valueOf(getTeleopMiddleRocketCargoCount()));
+        fieldList.add(String.valueOf(getTeleopLowRocketCargoCount()));
+        fieldList.add(String.valueOf(getTeleopCargoShipCargoCount()));
+
+        //Endgame
+        fieldList.add(String.valueOf(getEndgameClimbLevel()));
+        fieldList.add(String.valueOf(getEndgameClimbTime()));
+        fieldList.add(String.valueOf(supportedOtherRobots()));
+        fieldList.add(getClimbDescription());
+
+        //Notes
+        fieldList.add(getNotes());
+
+        return fieldList.toArray(new String[0]);
     }
 
     @Override

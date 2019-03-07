@@ -36,7 +36,8 @@ import com.team980.thunderscout.backend.local.ScoutDataContract;
 import com.team980.thunderscout.backend.local.ScoutDataDbHelper;
 import com.team980.thunderscout.schema.ScoutData;
 import com.team980.thunderscout.schema.enumeration.AllianceStation;
-import com.team980.thunderscout.schema.enumeration.ClimbingStats;
+import com.team980.thunderscout.schema.enumeration.ClimbTime;
+import com.team980.thunderscout.schema.enumeration.HabLevel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,34 +64,6 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
 
         SQLiteDatabase db = new ScoutDataDbHelper(context).getReadableDatabase();
 
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                ScoutDataContract.ScoutDataTable._ID,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TEAM_NUMBER,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_MATCH_NUMBER,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_ALLIANCE_STATION,
-
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE,
-
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT,
-
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING,
-
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_DIFFICULTIES,
-                ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS
-        };
-
         // How you want the results sorted in the resulting Cursor
         String sortOrder =
                 ScoutDataContract.ScoutDataTable._ID + " DESC";
@@ -100,7 +73,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
         try {
             cursor = db.query(
                     ScoutDataContract.ScoutDataTable.TABLE_NAME,  // The table to query
-                    projection,                               // The columns to return
+                    null,                               // The columns to return
                     null,                                // The columns for the WHERE clause
                     null,                            // The values for the WHERE clause
                     null,                                     // don't group the rows
@@ -158,73 +131,124 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
 
         data.setSource(dataSource);
 
-        // Auto
-        int crossedAutoLine = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE));
+        // Sandstorm
+        String startingLevel = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_STARTING_LEVEL));
 
-        data.setCrossedAutoLine(crossedAutoLine != 0); //I2B conversion
+        data.setStartingLevel(HabLevel.valueOf(startingLevel));
 
-        int autoPowerCubeNearSwitchCount = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT));
+        int crossedHabLine = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CROSSED_HAB_LINE));
 
-        data.setAutoPowerCubeAllianceSwitchCount(autoPowerCubeNearSwitchCount);
+        data.setCrossedHabLine(crossedHabLine != 0); //I2B conversion
 
-        int autoPowerCubeScaleCount = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT));
+        int stormHighRocketHatchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_HATCH_COUNT));
 
-        data.setAutoPowerCubeScaleCount(autoPowerCubeScaleCount);
+        data.setStormHighRocketHatchCount(stormHighRocketHatchCount);
 
-        int autoPowerCubeAllianceStationCount = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT));
+        int stormMiddleRocketHatchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_HATCH_COUNT));
 
-        data.setAutoPowerCubePlayerStationCount(autoPowerCubeAllianceStationCount);
+        data.setStormMiddleRocketHatchCount(stormMiddleRocketHatchCount);
 
-        // Teleop
-        int teleopPowerCubeNearSwitchCount = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT));
+        int stormLowRocketHatchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_LOW_ROCKET_HATCH_COUNT));
 
-        data.setTeleopPowerCubeAllianceSwitchCount(teleopPowerCubeNearSwitchCount);
+        data.setStormLowRocketHatchCount(stormLowRocketHatchCount);
 
-        int teleopPowerCubeFarSwitchCount = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT));
+        int stormCargoShipHatchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_HATCH_COUNT));
 
-        data.setTeleopPowerCubeOpposingSwitchCount(teleopPowerCubeFarSwitchCount);
+        data.setStormCargoShipHatchCount(stormCargoShipHatchCount);
 
-        int teleopPowerCubeScaleCount = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT));
+        int stormHighRocketCargoCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_CARGO_COUNT));
 
-        data.setTeleopPowerCubeScaleCount(teleopPowerCubeScaleCount);
+        data.setStormHighRocketCargoCount(stormHighRocketCargoCount);
 
-        int teleopPowerCubeAllianceStationCount = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT));
+        int stormMiddleRocketCargoCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_CARGO_COUNT));
 
-        data.setTeleopPowerCubePlayerStationCount(teleopPowerCubeAllianceStationCount);
+        data.setStormMiddleRocketCargoCount(stormMiddleRocketCargoCount);
 
-        String climbingStats = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS));
+        int stormLowRocketCargoCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_LOW_ROCKET_CARGO_COUNT));
 
-        data.setClimbingStats(ClimbingStats.valueOf(climbingStats));
+        data.setStormLowRocketCargoCount(stormLowRocketCargoCount);
+
+        int stormCargoShipCargoCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_CARGO_COUNT));
+
+        data.setStormCargoShipCargoCount(stormCargoShipCargoCount);
+
+        // Teleoperated
+        int teleopHighRocketHatchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_HATCH_COUNT));
+
+        data.setTeleopHighRocketHatchCount(teleopHighRocketHatchCount);
+
+        int teleopMiddleRocketHatchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MIDDLE_ROCKET_HATCH_COUNT));
+
+        data.setTeleopMiddleRocketHatchCount(teleopMiddleRocketHatchCount);
+
+        int teleopLowRocketHatchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_HATCH_COUNT));
+
+        data.setTeleopLowRocketHatchCount(teleopLowRocketHatchCount);
+
+        int teleopCargoShipHatchCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_HATCH_COUNT));
+
+        data.setTeleopCargoShipHatchCount(teleopCargoShipHatchCount);
+
+        int teleopHighRocketCargoCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_CARGO_COUNT));
+
+        data.setTeleopHighRocketCargoCount(teleopHighRocketCargoCount);
+
+        int teleopMiddleRocketCargoCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MIDDLE_ROCKET_CARGO_COUNT));
+
+        data.setTeleopMiddleRocketCargoCount(teleopMiddleRocketCargoCount);
+
+        int teleopLowRocketCargoCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_CARGO_COUNT));
+
+        data.setTeleopLowRocketCargoCount(teleopLowRocketCargoCount);
+
+        int teleopCargoShipCargoCount = cursor.getInt(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_CARGO_COUNT));
+
+        data.setTeleopCargoShipCargoCount(teleopCargoShipCargoCount);
+
+        // Endgame
+        String endgameClimbLevel = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_LEVEL));
+
+        data.setEndgameClimbLevel(HabLevel.valueOf(endgameClimbLevel));
+
+        String endgameClimbTime = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_TIME));
+
+        data.setEndgameClimbTime(ClimbTime.valueOf(endgameClimbTime));
 
         int supportedOtherRobotWhenClimbing = cursor.getInt(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING));
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING));
 
         data.setSupportedOtherRobots(supportedOtherRobotWhenClimbing != 0); //I2B conversion
 
-        // Summary
-        String strategies = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES));
+        String climbDescription = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_DESCRIPTION));
 
-        data.setStrategies(strategies);
+        data.setClimbDescription(climbDescription);
 
-        String difficulties = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DIFFICULTIES));
+        // Notes
+        String notes = cursor.getString(
+                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_NOTES));
 
-        data.setDifficulties(difficulties);
-
-        String comments = cursor.getString(
-                cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS));
-
-        data.setComments(comments);
+        data.setNotes(notes);
 
         return data;
     }

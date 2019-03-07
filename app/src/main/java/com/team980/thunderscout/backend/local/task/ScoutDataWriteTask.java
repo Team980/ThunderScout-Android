@@ -76,24 +76,39 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, List<ScoutDat
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATE_ADDED, data.getDate().getTime());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DATA_SOURCE, data.getSource());
 
-            // Auto
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_CROSSED_AUTO_LINE, data.getCrossedAutoLine());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_ALLIANCE_SWITCH_COUNT, data.getAutoPowerCubeAllianceSwitchCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_SCALE_COUNT, data.getAutoPowerCubeScaleCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_AUTO_POWER_CUBE_PLAYER_STATION_COUNT, data.getAutoPowerCubePlayerStationCount());
+            // Sandstorm
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_STARTING_LEVEL, data.getStartingLevel().name());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CROSSED_HAB_LINE, data.crossedHabLine());
 
-            // Teleop
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_COUNT, data.getTeleopPowerCubeAllianceSwitchCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_SCALE_COUNT, data.getTeleopPowerCubeScaleCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_OPPOSING_SWITCH_COUNT, data.getTeleopPowerCubeOpposingSwitchCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_POWER_CUBE_PLAYER_STATION_COUNT, data.getTeleopPowerCubePlayerStationCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CLIMBING_STATS, data.getClimbingStats().name());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING, data.getSupportedOtherRobots());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_HATCH_COUNT, data.getStormHighRocketHatchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_HATCH_COUNT, data.getStormMiddleRocketHatchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_LOW_ROCKET_HATCH_COUNT, data.getStormLowRocketHatchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_HATCH_COUNT, data.getStormCargoShipHatchCount());
 
-            // Summary
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STRATEGIES, data.getStrategies());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_DIFFICULTIES, data.getDifficulties());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_COMMENTS, data.getComments());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_CARGO_COUNT, data.getStormHighRocketCargoCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_CARGO_COUNT, data.getStormMiddleRocketCargoCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_LOW_ROCKET_CARGO_COUNT, data.getStormLowRocketCargoCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_CARGO_COUNT, data.getStormCargoShipCargoCount());
+
+            // Teleoperated
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_HATCH_COUNT, data.getTeleopHighRocketHatchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MIDDLE_ROCKET_HATCH_COUNT, data.getTeleopMiddleRocketHatchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_HATCH_COUNT, data.getTeleopLowRocketHatchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_HATCH_COUNT, data.getTeleopCargoShipHatchCount());
+
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_CARGO_COUNT, data.getTeleopHighRocketCargoCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MIDDLE_ROCKET_CARGO_COUNT, data.getTeleopMiddleRocketCargoCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_CARGO_COUNT, data.getTeleopLowRocketCargoCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_CARGO_COUNT, data.getTeleopCargoShipCargoCount());
+
+            // Endgame
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_LEVEL, data.getEndgameClimbLevel().name());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_TIME, data.getEndgameClimbTime().name());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING, data.supportedOtherRobots());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_DESCRIPTION, data.getClimbDescription());
+
+            // Notes
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_NOTES, data.getNotes());
 
             long rowId;
             try {

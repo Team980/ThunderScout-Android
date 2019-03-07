@@ -24,18 +24,21 @@
 
 package com.team980.thunderscout.schema.enumeration;
 
-public enum ClimbingStats {
+import android.support.annotation.NonNull;
 
-    DID_NOT_CLIMB("Did not climb"),
-    ATTEMPTED_CLIMB("Attempted climb"),
-    CLIMBED("Climbed");
+public enum HabLevel {
+    NONE("None"),
+    LEVEL_1("Level 1"),
+    LEVEL_2("Level 2"),
+    LEVEL_3("Level 3");
 
     private String displayString;
 
-    ClimbingStats(String par1) {
+    HabLevel(String par1) {
         displayString = par1;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return displayString;
