@@ -65,7 +65,6 @@ public class ScoutingFlowActivity extends AppCompatActivity implements View.OnCl
 
     public static final String EXTRA_SCOUT_DATA = "EXTRA_SCOUT_DATA";
 
-    private DataEntryFragment dataEntryFragment;
     private ScoutData scoutData;
     private FloatingActionButton fab;
 
@@ -97,7 +96,7 @@ public class ScoutingFlowActivity extends AppCompatActivity implements View.OnCl
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_24dp);
 
-        dataEntryFragment = new DataEntryFragment();
+        DataEntryFragment dataEntryFragment = new DataEntryFragment();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.data_entry_fragment, dataEntryFragment);
@@ -318,7 +317,14 @@ public class ScoutingFlowActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    public ScoutData getData() {
+    /**
+     * For data entry fragment only
+     */
+    protected FloatingActionButton getFab() {
+        return fab;
+    }
+
+    protected ScoutData getData() {
         return scoutData;
     }
 

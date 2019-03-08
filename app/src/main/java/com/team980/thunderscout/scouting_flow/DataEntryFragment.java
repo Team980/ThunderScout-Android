@@ -27,7 +27,9 @@ package com.team980.thunderscout.scouting_flow;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +45,7 @@ import com.team980.thunderscout.schema.enumeration.ClimbTime;
 import com.team980.thunderscout.schema.enumeration.HabLevel;
 import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 
-public class DataEntryFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class DataEntryFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, NestedScrollView.OnScrollChangeListener {
 
     ScoutingFlowActivity scoutingFlowActivity;
 
@@ -56,6 +58,9 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        NestedScrollView v = view.findViewById(R.id.data_entry_scrollView);
+        v.setOnScrollChangeListener(this);
+
         // Sandstorm
         Spinner startingLevel = view.findViewById(R.id.storm_spinnerStartingLevel);
         startingLevel.setOnItemSelectedListener(this);
@@ -64,6 +69,8 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
                 R.array.hab_level_array, R.layout.spinner_data_entry);
         adapter.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
         startingLevel.setAdapter(adapter);
+
+        startingLevel.setSelection(HabLevel.LEVEL_1.ordinal()); //Default value
 
         CheckBox crossedHabLine = view.findViewById(R.id.storm_checkBoxCrossedHabLine);
         crossedHabLine.setChecked(scoutingFlowActivity.getData().crossedHabLine());
@@ -124,7 +131,7 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
 
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),
                 R.array.hab_level_array, R.layout.spinner_data_entry);
-        adapter.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
+        adapter2.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
         climbLevel.setAdapter(adapter2);
 
         Spinner climbTime = view.findViewById(R.id.endgame_spinnerClimbTime);
@@ -132,8 +139,10 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
 
         ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getContext(),
                 R.array.climb_time_array, R.layout.spinner_data_entry);
-        adapter.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
+        adapter3.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
         climbTime.setAdapter(adapter3);
+
+        climbTime.setSelection(ClimbTime.GREATER_THAN_FIFTEEN_SECONDS.ordinal()); //Default value
 
         CheckBox supportedOtherRobot = view.findViewById(R.id.endgame_checkBoxSupportedOtherRobotsWhenClimbing);
         supportedOtherRobot.setChecked(scoutingFlowActivity.getData().supportedOtherRobots());
@@ -196,6 +205,20 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
 
             AppCompatCheckBox checkBox = (AppCompatCheckBox) view;
             scoutingFlowActivity.getData().setSupportedOtherRobots(checkBox.isChecked());
+        }
+    }
+
+    /**
+     * Show and hide the FAB
+     */
+    @Override
+    public void onScrollChange(NestedScrollView nestedScrollView, int i, int i1, int i2, int i3) {
+        FloatingActionButton fab = scoutingFlowActivity.getFab();
+
+        if (!nestedScrollView.canScrollVertically(Integer.MAX_VALUE)) {
+            fab.show();
+        } else {
+            fab.hide();
         }
     }
 }

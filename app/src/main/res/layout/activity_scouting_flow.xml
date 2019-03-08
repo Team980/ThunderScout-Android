@@ -63,6 +63,8 @@
         app:backgroundTint="@color/accent"
         app:elevation="6dp"
         app:fabSize="normal"
+        android:visibility="invisible"
+        tools:visibility="visible"
         app:pressedTranslationZ="12dp" />
 
 </android.support.design.widget.CoordinatorLayout>

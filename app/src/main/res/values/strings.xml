@@ -57,10 +57,10 @@
     </string-array>
 
     <string-array name="climb_time_array">
-        <item>&lt;5 seconds</item>
+        <item>&lt; 5 seconds</item>
         <item>5–10 seconds</item>
         <item>10–15 seconds</item>
-        <item>&gt;15 seconds</item>
+        <item>&gt; 15 seconds</item>
     </string-array>
 
     <string-array name="iexport_file_types">
