@@ -25,6 +25,8 @@
 package com.team980.thunderscout.analytics;
 
 import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.ClimbTime;
+import com.team980.thunderscout.schema.enumeration.HabLevel;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -34,7 +36,6 @@ import java.util.ArrayList;
 /**
  * Represents data for one team, for all the matches they played in.
  */
-@Deprecated //TODO update for 2019
 public class TeamWrapper implements Serializable {
 
     private String team;
@@ -64,36 +65,73 @@ public class TeamWrapper implements Serializable {
             case SORT_TEAM_NUMBER: //fall through
             case SORT_LAST_UPDATED:
                 return "Last updated " + SimpleDateFormat.getDateTimeInstance().format(ScoutDataStatistics.getLastUpdated(dataList));
-            /*case SORT_AUTO_LINE_CROSS_SUCCESS:
-                return "Crossed the auto line in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                        ScoutData::getCrossedAutoLine)) + "% of matches";
-            case SORT_AUTO_POWER_CUBE_ALLIANCE_SWITCH_AVERAGE:
-                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getAutoPowerCubeAllianceSwitchCount)) + " cubes";
-            case SORT_AUTO_POWER_CUBE_SCALE_AVERAGE:
-                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getAutoPowerCubeScaleCount)) + " cubes";
-            case SORT_AUTO_POWER_CUBE_PLAYER_STATION_AVERAGE:
-                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getAutoPowerCubePlayerStationCount)) + " cubes";
-            case SORT_TELEOP_POWER_CUBE_ALLIANCE_SWITCH_AVERAGE:
-                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getTeleopPowerCubeAllianceSwitchCount)) + " cubes";
-            case SORT_TELEOP_POWER_CUBE_SCALE_AVERAGE:
-                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getTeleopPowerCubeScaleCount)) + " cubes";
-            case SORT_TELEOP_POWER_CUBE_OPPOSING_SWITCH_AVERAGE:
-                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getTeleopPowerCubeOpposingSwitchCount)) + " cubes";
-            case SORT_TELEOP_POWER_CUBE_PLAYER_STATION_AVERAGE:
-                return "Delivered " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getTeleopPowerCubePlayerStationCount)) + " cubes";
-            case SORT_CLIMBING_STATS_PERCENTAGE:
-                return "Climbed in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                        data -> data.getClimbingStats() == ClimbingStats.CLIMBED)) + "% of matches";
+            case SORT_LEVEL_2_START_FREQUENCY:
+                return "Started on Level 2 in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                        data -> data.getStartingLevel() == HabLevel.LEVEL_2)) + "% of matches";
+            case SORT_HAB_LINE_CROSS_SUCCESS:
+                return "Crossed the hab line in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                        ScoutData::crossedHabLine)) + "% of matches";
+            case SORT_STORM_HIGH_ROCKET_HATCH_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormHighRocketHatchCount)) + " hatches";
+            case SORT_STORM_MID_ROCKET_HATCH_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormMidRocketHatchCount)) + " hatches";
+            case SORT_STORM_LOW_ROCKET_HATCH_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormLowRocketHatchCount)) + " hatches";
+            case SORT_STORM_CARGO_SHIP_HATCH_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormCargoShipHatchCount)) + " hatches";
+            case SORT_STORM_HIGH_ROCKET_CARGO_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormHighRocketCargoCount)) + " cargo";
+            case SORT_STORM_MID_ROCKET_CARGO_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormMidRocketCargoCount)) + " cargo";
+            case SORT_STORM_LOW_ROCKET_CARGO_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormLowRocketCargoCount)) + " cargo";
+            case SORT_STORM_CARGO_SHIP_CARGO_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormCargoShipCargoCount)) + " cargo";
+            case SORT_TELEOP_HIGH_ROCKET_HATCH_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopHighRocketHatchCount)) + " hatches";
+            case SORT_TELEOP_MID_ROCKET_HATCH_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopMidRocketHatchCount)) + " hatches";
+            case SORT_TELEOP_LOW_ROCKET_HATCH_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopLowRocketHatchCount)) + " hatches";
+            case SORT_TELEOP_CARGO_SHIP_HATCH_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopCargoShipHatchCount)) + " hatches";
+            case SORT_TELEOP_HIGH_ROCKET_CARGO_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopHighRocketCargoCount)) + " cargo";
+            case SORT_TELEOP_MID_ROCKET_CARGO_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopMidRocketCargoCount)) + " cargo";
+            case SORT_TELEOP_LOW_ROCKET_CARGO_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopLowRocketCargoCount)) + " cargo";
+            case SORT_TELEOP_CARGO_SHIP_CARGO_AVERAGE:
+                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopCargoShipCargoCount)) + " cargo";
+            case SORT_LEVEL_2_CLIMB_FREQUENCY:
+                return "Climbed to Level 2 in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                        data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_2)) + "% of matches";
+            case SORT_LEVEL_3_CLIMB_FREQUENCY:
+                return "Climbed to Level 3 in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                        data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_3)) + "% of matches";
+            case SORT_AVERAGE_CLIMB_TIME:
+                return "Climbed in " + formatter.format(ClimbTime.values()[
+                        (int) ScoutDataStatistics.getAverage(dataList, data -> data.getEndgameClimbTime().ordinal())
+                        ]) + " seconds";
             case SORT_SUPPORTED_OTHER_ROBOTS:
                 return "Supported other robots in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                        ScoutData::getSupportedOtherRobots)) + "% of matches";*/
+                        ScoutData::supportedOtherRobots)) + "% of matches";
             default: //Fallback - shouldn't trigger
                 return dataList.size() + " matches";
         }

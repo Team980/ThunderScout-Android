@@ -80,7 +80,7 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         storm_HighRocketHatchCount.setValue(scoutingFlowActivity.getData().getStormHighRocketHatchCount());
 
         CounterCompoundView storm_MidRocketHatchCount = view.findViewById(R.id.storm_counterMidRocketHatch);
-        storm_MidRocketHatchCount.setValue(scoutingFlowActivity.getData().getStormMiddleRocketHatchCount());
+        storm_MidRocketHatchCount.setValue(scoutingFlowActivity.getData().getStormMidRocketHatchCount());
 
         CounterCompoundView storm_LowRocketHatchCount = view.findViewById(R.id.storm_counterLowRocketHatch);
         storm_LowRocketHatchCount.setValue(scoutingFlowActivity.getData().getStormLowRocketHatchCount());
@@ -92,7 +92,7 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         storm_HighRocketCargoCount.setValue(scoutingFlowActivity.getData().getStormHighRocketCargoCount());
 
         CounterCompoundView storm_MidRocketCargoCount = view.findViewById(R.id.storm_counterMidRocketCargo);
-        storm_MidRocketCargoCount.setValue(scoutingFlowActivity.getData().getStormMiddleRocketCargoCount());
+        storm_MidRocketCargoCount.setValue(scoutingFlowActivity.getData().getStormMidRocketCargoCount());
 
         CounterCompoundView storm_LowRocketCargoCount = view.findViewById(R.id.storm_counterLowRocketCargo);
         storm_LowRocketCargoCount.setValue(scoutingFlowActivity.getData().getStormLowRocketCargoCount());
@@ -105,7 +105,7 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         teleop_HighRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopHighRocketHatchCount());
 
         CounterCompoundView teleop_MidRocketHatchCount = view.findViewById(R.id.teleop_counterMidRocketHatch);
-        teleop_MidRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopMiddleRocketHatchCount());
+        teleop_MidRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopMidRocketHatchCount());
 
         CounterCompoundView teleop_LowRocketHatchCount = view.findViewById(R.id.teleop_counterLowRocketHatch);
         teleop_LowRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopLowRocketHatchCount());
@@ -117,7 +117,7 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         teleop_HighRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopHighRocketCargoCount());
 
         CounterCompoundView teleop_MidRocketCargoCount = view.findViewById(R.id.teleop_counterMidRocketCargo);
-        teleop_MidRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopMiddleRocketCargoCount());
+        teleop_MidRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopMidRocketCargoCount());
 
         CounterCompoundView teleop_LowRocketCargoCount = view.findViewById(R.id.teleop_counterLowRocketCargo);
         teleop_LowRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopLowRocketCargoCount());

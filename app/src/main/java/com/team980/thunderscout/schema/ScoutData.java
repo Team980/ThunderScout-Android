@@ -198,7 +198,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         this.stormHighRocketHatchCount = stormHighRocketHatchCount;
     }
 
-    public int getStormMiddleRocketHatchCount() {
+    public int getStormMidRocketHatchCount() {
         return stormMiddleRocketHatchCount;
     }
 
@@ -230,7 +230,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         this.stormHighRocketCargoCount = stormHighRocketCargoCount;
     }
 
-    public int getStormMiddleRocketCargoCount() {
+    public int getStormMidRocketCargoCount() {
         return stormMiddleRocketCargoCount;
     }
 
@@ -264,7 +264,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         this.teleopHighRocketHatchCount = teleopHighRocketHatchCount;
     }
 
-    public int getTeleopMiddleRocketHatchCount() {
+    public int getTeleopMidRocketHatchCount() {
         return teleopMiddleRocketHatchCount;
     }
 
@@ -296,7 +296,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         this.teleopHighRocketCargoCount = teleopHighRocketCargoCount;
     }
 
-    public int getTeleopMiddleRocketCargoCount() {
+    public int getTeleopMidRocketCargoCount() {
         return teleopMiddleRocketCargoCount;
     }
 
@@ -428,23 +428,23 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         fieldList.add(String.valueOf(crossedHabLine()));
 
         fieldList.add(String.valueOf(getStormHighRocketHatchCount()));
-        fieldList.add(String.valueOf(getStormMiddleRocketHatchCount()));
+        fieldList.add(String.valueOf(getStormMidRocketHatchCount()));
         fieldList.add(String.valueOf(getStormLowRocketHatchCount()));
         fieldList.add(String.valueOf(getStormCargoShipHatchCount()));
 
         fieldList.add(String.valueOf(getStormHighRocketCargoCount()));
-        fieldList.add(String.valueOf(getStormMiddleRocketCargoCount()));
+        fieldList.add(String.valueOf(getStormMidRocketCargoCount()));
         fieldList.add(String.valueOf(getStormLowRocketCargoCount()));
         fieldList.add(String.valueOf(getStormCargoShipCargoCount()));
 
         //Teleoperated
         fieldList.add(String.valueOf(getTeleopHighRocketHatchCount()));
-        fieldList.add(String.valueOf(getTeleopMiddleRocketHatchCount()));
+        fieldList.add(String.valueOf(getTeleopMidRocketHatchCount()));
         fieldList.add(String.valueOf(getTeleopLowRocketHatchCount()));
         fieldList.add(String.valueOf(getTeleopCargoShipHatchCount()));
 
         fieldList.add(String.valueOf(getTeleopHighRocketCargoCount()));
-        fieldList.add(String.valueOf(getTeleopMiddleRocketCargoCount()));
+        fieldList.add(String.valueOf(getTeleopMidRocketCargoCount()));
         fieldList.add(String.valueOf(getTeleopLowRocketCargoCount()));
         fieldList.add(String.valueOf(getTeleopCargoShipCargoCount()));
 
