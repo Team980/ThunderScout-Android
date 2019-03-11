@@ -71,50 +71,34 @@ public class TeamWrapper implements Serializable {
             case SORT_HAB_LINE_CROSS_SUCCESS:
                 return "Crossed the hab line in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
                         ScoutData::crossedHabLine)) + "% of matches";
-            case SORT_STORM_HIGH_ROCKET_HATCH_AVERAGE:
+            case SORT_STORM_ROCKET_HATCH_AVERAGE:
                 return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getStormHighRocketHatchCount)) + " hatches";
-            case SORT_STORM_MID_ROCKET_HATCH_AVERAGE:
-                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getStormMidRocketHatchCount)) + " hatches";
-            case SORT_STORM_LOW_ROCKET_HATCH_AVERAGE:
-                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormHighRocketHatchCount) + ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormMidRocketHatchCount) + ScoutDataStatistics.getAverage(dataList,
                         ScoutData::getStormLowRocketHatchCount)) + " hatches";
             case SORT_STORM_CARGO_SHIP_HATCH_AVERAGE:
                 return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
                         ScoutData::getStormCargoShipHatchCount)) + " hatches";
-            case SORT_STORM_HIGH_ROCKET_CARGO_AVERAGE:
+            case SORT_STORM_ROCKET_CARGO_AVERAGE:
                 return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getStormHighRocketCargoCount)) + " cargo";
-            case SORT_STORM_MID_ROCKET_CARGO_AVERAGE:
-                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getStormMidRocketCargoCount)) + " cargo";
-            case SORT_STORM_LOW_ROCKET_CARGO_AVERAGE:
-                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormHighRocketCargoCount) + ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getStormMidRocketCargoCount) + ScoutDataStatistics.getAverage(dataList,
                         ScoutData::getStormLowRocketCargoCount)) + " cargo";
             case SORT_STORM_CARGO_SHIP_CARGO_AVERAGE:
                 return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
                         ScoutData::getStormCargoShipCargoCount)) + " cargo";
-            case SORT_TELEOP_HIGH_ROCKET_HATCH_AVERAGE:
+            case SORT_TELEOP_ROCKET_HATCH_AVERAGE:
                 return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getTeleopHighRocketHatchCount)) + " hatches";
-            case SORT_TELEOP_MID_ROCKET_HATCH_AVERAGE:
-                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getTeleopMidRocketHatchCount)) + " hatches";
-            case SORT_TELEOP_LOW_ROCKET_HATCH_AVERAGE:
-                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopHighRocketHatchCount) + ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopMidRocketHatchCount) + ScoutDataStatistics.getAverage(dataList,
                         ScoutData::getTeleopLowRocketHatchCount)) + " hatches";
             case SORT_TELEOP_CARGO_SHIP_HATCH_AVERAGE:
                 return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
                         ScoutData::getTeleopCargoShipHatchCount)) + " hatches";
-            case SORT_TELEOP_HIGH_ROCKET_CARGO_AVERAGE:
+            case SORT_TELEOP_ROCKET_CARGO_AVERAGE:
                 return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getTeleopHighRocketCargoCount)) + " cargo";
-            case SORT_TELEOP_MID_ROCKET_CARGO_AVERAGE:
-                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
-                        ScoutData::getTeleopMidRocketCargoCount)) + " cargo";
-            case SORT_TELEOP_LOW_ROCKET_CARGO_AVERAGE:
-                return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopHighRocketCargoCount) + ScoutDataStatistics.getAverage(dataList,
+                        ScoutData::getTeleopMidRocketCargoCount) + ScoutDataStatistics.getAverage(dataList,
                         ScoutData::getTeleopLowRocketCargoCount)) + " cargo";
             case SORT_TELEOP_CARGO_SHIP_CARGO_AVERAGE:
                 return "Scored " + formatter.format(ScoutDataStatistics.getAverage(dataList,
@@ -126,9 +110,8 @@ public class TeamWrapper implements Serializable {
                 return "Climbed to Level 3 in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
                         data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_3)) + "% of matches";
             case SORT_AVERAGE_CLIMB_TIME:
-                return "Climbed in " + formatter.format(ClimbTime.values()[
-                        (int) ScoutDataStatistics.getAverage(dataList, data -> data.getEndgameClimbTime().ordinal())
-                        ]) + " seconds";
+                return "Climbed in " + ClimbTime.values()[
+                        (int) ScoutDataStatistics.getAverage(dataList, data -> data.getEndgameClimbTime().ordinal())];
             case SORT_SUPPORTED_OTHER_ROBOTS:
                 return "Supported other robots in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
                         ScoutData::supportedOtherRobots)) + "% of matches";

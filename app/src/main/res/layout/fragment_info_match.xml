@@ -40,10 +40,10 @@
         <android.support.v7.widget.GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="8dp"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp"
             android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
             app:columnCount="2"
             app:orientation="horizontal"
             app:rowCount="2">
@@ -86,12 +86,40 @@
 
         </android.support.v7.widget.GridLayout>
 
-        <include layout="@layout/layout_info_match_auto" />
+        <include layout="@layout/layout_info_match_storm" />
 
         <include layout="@layout/layout_info_match_teleop" />
 
-        <include layout="@layout/layout_info_match_summary" />
+        <include layout="@layout/layout_info_match_endgame" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_floating"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/arimo"
+                android:text="Notes"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="25sp" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/info_match_notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
+            android:textSize="22sp"
+            tools:text="N/A" />
+        
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

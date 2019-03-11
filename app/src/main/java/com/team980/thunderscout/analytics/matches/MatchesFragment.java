@@ -98,7 +98,6 @@ public class MatchesFragment extends Fragment implements SwipeRefreshLayout.OnRe
         MainActivity activity = (MainActivity) getActivity();
 
         toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setSubtitle("Local storage");
         activity.setSupportActionBar(toolbar);
 
         drawer = getActivity().findViewById(R.id.drawer_layout);

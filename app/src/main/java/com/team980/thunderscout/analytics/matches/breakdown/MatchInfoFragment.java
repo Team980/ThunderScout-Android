@@ -38,7 +38,6 @@ import com.team980.thunderscout.schema.ScoutData;
 
 import java.text.SimpleDateFormat;
 
-@Deprecated // TODO update for 2019
 public class MatchInfoFragment extends Fragment {
 
     public static final String EXTRA_SCOUT_DATA = "com.team980.thunderscout.SCOUT_DATA";

@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Auto"
+            android:text="Sandstorm"
             android:fontFamily="@font/arimo"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="25sp" />
@@ -57,13 +57,26 @@
         app:rowCount="2">
 
         <TextView
-            android:text="Crossed Auto Line"
+            android:text="Starting Level"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_autoCrossedAutoLine"
+            android:id="@+id/info_match_stormStartingLevel"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="Level 1" />
+
+        <TextView
+            android:text="Crossed Hab Line"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_stormCrossedHabLine"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
@@ -76,7 +89,76 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="Power Cubes Delivered To..."
+        android:text="Hatches Scored"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="22sp" />
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
+
+        <TextView
+            android:text="High Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_stormHighRocketHatchCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Mid Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_stormMidRocketHatchCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Low Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_stormLowRocketHatchCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Cargo Ship"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_stormCargoShipHatchCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+    </android.support.v7.widget.GridLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Cargo Scored"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 
@@ -91,54 +173,52 @@
         app:rowCount="2">
 
         <TextView
-            android:text="Alliance Switch"
+            android:text="High Rocket"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_autoPowerCubeAllianceSwitchCount"
+            android:id="@+id/info_match_stormHighRocketCargoCount"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0" />
 
         <TextView
-            android:text="Central Scale"
+            android:text="Mid Rocket"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_autoPowerCubeScaleCount"
+            android:id="@+id/info_match_stormMidRocketCargoCount"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0" />
 
         <TextView
-            android:text="Player Station"
+            android:text="Low Rocket"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_autoPowerCubePlayerStationCount"
+            android:id="@+id/info_match_stormLowRocketCargoCount"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0" />
 
-        <!--<TextView
-            android:text="Total Power Cubes Scored"
-            android:textColor="@color/white"
+        <TextView
+            android:text="Cargo Ship"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_autoPowerCubeTotalCount"
+            android:id="@+id/info_match_stormCargoShipCargoCount"
             android:gravity="right"
-            android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0" />-->
+            tools:text="0" />
 
     </android.support.v7.widget.GridLayout>
 

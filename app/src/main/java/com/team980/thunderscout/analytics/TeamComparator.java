@@ -48,7 +48,7 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_LEVEL_2_START_FREQUENCY("Level 2 start frequency") {
+    SORT_LEVEL_2_START_FREQUENCY("Level 2 Start Frequency") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getStartingLevel() == HabLevel.LEVEL_2),
                     ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getStartingLevel() == HabLevel.LEVEL_2));
@@ -62,140 +62,100 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_STORM_HIGH_ROCKET_HATCH_AVERAGE("Avg. Storm hatches scored in High Rocket") {
+    SORT_STORM_ROCKET_HATCH_AVERAGE("Avg. Storm Rocket Hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketHatchCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormHighRocketHatchCount));
+            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketHatchCount)
+                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormMidRocketHatchCount)
+                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormLowRocketHatchCount),
+                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormHighRocketHatchCount)
+                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormMidRocketHatchCount)
+                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormLowRocketHatchCount));
         }
     },
 
-    SORT_STORM_MID_ROCKET_HATCH_AVERAGE("Avg. Storm hatches scored in Mid Rocket") {
-        public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormMidRocketHatchCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormMidRocketHatchCount));
-        }
-    },
-
-    SORT_STORM_LOW_ROCKET_HATCH_AVERAGE("Avg. Storm hatches scored in Low Rocket") {
-        public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormLowRocketHatchCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormLowRocketHatchCount));
-        }
-    },
-
-    SORT_STORM_CARGO_SHIP_HATCH_AVERAGE("Avg. Storm hatches scored in Cargo Ship") {
+    SORT_STORM_CARGO_SHIP_HATCH_AVERAGE("Avg. Storm Ship Hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormCargoShipHatchCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormCargoShipHatchCount));
         }
     },
 
-    SORT_STORM_HIGH_ROCKET_CARGO_AVERAGE("Avg. Storm cargo scored in High Rocket") {
+    SORT_STORM_ROCKET_CARGO_AVERAGE("Avg. Storm Rocket Cargo") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketCargoCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormHighRocketCargoCount));
+            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketCargoCount)
+                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormMidRocketCargoCount)
+                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormLowRocketCargoCount),
+                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormHighRocketCargoCount)
+                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormMidRocketCargoCount)
+                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormLowRocketCargoCount));
         }
     },
 
-    SORT_STORM_MID_ROCKET_CARGO_AVERAGE("Avg. Storm cargo scored in Mid Rocket") {
-        public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormMidRocketCargoCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormMidRocketCargoCount));
-        }
-    },
-
-    SORT_STORM_LOW_ROCKET_CARGO_AVERAGE("Avg. Storm cargo scored in Low Rocket") {
-        public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormLowRocketCargoCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormLowRocketCargoCount));
-        }
-    },
-
-    SORT_STORM_CARGO_SHIP_CARGO_AVERAGE("Avg. Storm cargo scored in Cargo Ship") {
+    SORT_STORM_CARGO_SHIP_CARGO_AVERAGE("Avg. Storm Ship Cargo") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormCargoShipCargoCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormCargoShipCargoCount));
         }
     },
 
-    SORT_TELEOP_HIGH_ROCKET_HATCH_AVERAGE("Avg. Teleop hatches scored in High Rocket") {
+    SORT_TELEOP_ROCKET_HATCH_AVERAGE("Avg. Teleop Rocket Hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopHighRocketHatchCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopHighRocketHatchCount));
+            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopHighRocketHatchCount)
+                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopMidRocketHatchCount)
+                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopLowRocketHatchCount),
+                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopHighRocketHatchCount)
+                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopMidRocketHatchCount)
+                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopLowRocketHatchCount));
         }
     },
 
-    SORT_TELEOP_MID_ROCKET_HATCH_AVERAGE("Avg. Teleop hatches scored in Mid Rocket") {
-        public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopMidRocketHatchCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopMidRocketHatchCount));
-        }
-    },
-
-    SORT_TELEOP_LOW_ROCKET_HATCH_AVERAGE("Avg. Teleop hatches scored in Low Rocket") {
-        public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopLowRocketHatchCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopLowRocketHatchCount));
-        }
-    },
-
-    SORT_TELEOP_CARGO_SHIP_HATCH_AVERAGE("Avg. Teleop hatches scored in Cargo Ship") {
+    SORT_TELEOP_CARGO_SHIP_HATCH_AVERAGE("Avg. Teleop Ship Hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopCargoShipHatchCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopCargoShipHatchCount));
         }
     },
 
-    SORT_TELEOP_HIGH_ROCKET_CARGO_AVERAGE("Avg. Teleop cargo scored in High Rocket") {
+    SORT_TELEOP_ROCKET_CARGO_AVERAGE("Avg. Teleop Rocket Cargo") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopHighRocketCargoCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopHighRocketCargoCount));
+            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopHighRocketCargoCount)
+                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopMidRocketCargoCount)
+                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopLowRocketCargoCount),
+                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopHighRocketCargoCount)
+                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopMidRocketCargoCount)
+                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopLowRocketCargoCount));
         }
     },
 
-    SORT_TELEOP_MID_ROCKET_CARGO_AVERAGE("Avg. Teleop cargo scored in Mid Rocket") {
-        public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopMidRocketCargoCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopMidRocketCargoCount));
-        }
-    },
-
-    SORT_TELEOP_LOW_ROCKET_CARGO_AVERAGE("Avg. Teleop cargo scored in Low Rocket") {
-        public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopLowRocketCargoCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopLowRocketCargoCount));
-        }
-    },
-
-    SORT_TELEOP_CARGO_SHIP_CARGO_AVERAGE("Avg. Teleop cargo scored in Cargo Ship") {
+    SORT_TELEOP_CARGO_SHIP_CARGO_AVERAGE("Avg. Teleop Ship Cargo") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopCargoShipCargoCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopCargoShipCargoCount));
         }
     },
 
-    SORT_LEVEL_2_CLIMB_FREQUENCY("Level 2 climb frequency") {
+    SORT_LEVEL_2_CLIMB_FREQUENCY("Level 2 Climb Frequency") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_2),
                     ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_2));
         }
     },
 
-    SORT_LEVEL_3_CLIMB_FREQUENCY("Level 3 climb frequency") {
+    SORT_LEVEL_3_CLIMB_FREQUENCY("Level 3 Climb Frequency") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_2),
                     ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_2));
         }
     },
 
-    SORT_AVERAGE_CLIMB_TIME("Average climb time") {
+    SORT_AVERAGE_CLIMB_TIME("Average Climb Time") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), data -> data.getEndgameClimbTime().ordinal()),
                     ScoutDataStatistics.getAverage(o2.getDataList(), data -> data.getEndgameClimbTime().ordinal()));
         }
     },
 
-    SORT_SUPPORTED_OTHER_ROBOTS("Supported another robot") {
+    SORT_SUPPORTED_OTHER_ROBOTS("Supported Another Robot") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), ScoutData::supportedOtherRobots),
                     ScoutDataStatistics.getPercentage(o2.getDataList(), ScoutData::supportedOtherRobots));

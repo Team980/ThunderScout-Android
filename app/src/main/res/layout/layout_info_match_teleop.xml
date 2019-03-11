@@ -38,151 +38,152 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Teleop"
             android:fontFamily="@font/arimo"
+            android:text="Teleoperated"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="25sp" />
 
     </FrameLayout>
 
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
-        android:paddingRight="8dp"
         android:paddingTop="8dp"
-        android:text="Power Cubes Delivered To..."
+        android:paddingRight="16dp"
+        android:text="Hatches Scored"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="22sp"
-        app:layout_columnWeight="1" />
+        android:textSize="22sp" />
 
     <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        app:columnCount="2"
-        app:orientation="horizontal"
-        app:rowCount="2">
-
-        <TextView
-            android:text="Alliance Switch"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_teleopPowerCubeAllianceSwitchCount"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:text="Central Scale"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_teleopPowerCubeScaleCount"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:text="Opposing Switch"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_teleopPowerCubeOpposingSwitchCount"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:text="Player Station"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_teleopPowerCubePlayerStationCount"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-    </android.support.v7.widget.GridLayout>
-
-    <android.support.v7.widget.GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        app:columnCount="2"
-        app:orientation="horizontal"
-        app:rowCount="2">
-
-        <!--<TextView
-            android:text="Total Power Cubes Scored"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_teleopPowerCubeTotalCount"
-            android:gravity="right"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />-->
-
-        <TextView
-            android:text="Climbing Stats"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_teleopClimbingStats"
-            android:layout_width="0dp"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="7"
-            tools:text="ATTEMPTED CLIMB" />
-
-    </android.support.v7.widget.GridLayout>
-
-    <android.support.v7.widget.GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         app:columnCount="2"
         app:orientation="horizontal"
         app:rowCount="2">
 
         <TextView
-            android:layout_width="0dp"
-            android:text="Supported Other Robots"
+            android:text="High Rocket"
             android:textSize="22sp"
-            app:layout_columnWeight="3" />
+            app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_teleopSupportedOtherRobotsWhenClimbing"
-            android:layout_width="0dp"
+            android:id="@+id/info_match_teleopHighRocketHatchCount"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            app:layout_gravity="center_vertical"
-            tools:text="FALSE" />
+            tools:text="0" />
+
+        <TextView
+            android:text="Mid Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_teleopMidRocketHatchCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Low Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_teleopLowRocketHatchCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Cargo Ship"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_teleopCargoShipHatchCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+    </android.support.v7.widget.GridLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:text="Cargo Scored"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="22sp" />
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
+
+        <TextView
+            android:text="High Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_teleopHighRocketCargoCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Mid Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_teleopMidRocketCargoCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Low Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_teleopLowRocketCargoCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
+
+        <TextView
+            android:text="Cargo Ship"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_teleopCargoShipCargoCount"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0" />
 
     </android.support.v7.widget.GridLayout>
 

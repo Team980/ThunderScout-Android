@@ -23,6 +23,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -37,61 +38,98 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Summary"
             android:fontFamily="@font/arimo"
+            android:text="Endgame"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="25sp" />
 
     </FrameLayout>
 
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
+
+        <TextView
+            android:text="Climbed to"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_endgameClimbLevel"
+            android:layout_width="0dp"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="7"
+            tools:text="Level 3" />
+
+        <TextView
+            android:text="Climbing time"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_match_endgameClimbTime"
+            android:layout_width="0dp"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="7"
+            tools:text="> 15 seconds" />
+
+    </android.support.v7.widget.GridLayout>
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
+
+        <TextView
+            android:layout_width="0dp"
+            android:text="Supported another robot?"
+            android:textSize="22sp"
+            app:layout_columnWeight="3" />
+
+        <TextView
+            android:id="@+id/info_match_teleopSupportedOtherRobotsWhenClimbing"
+            android:layout_width="0dp"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical"
+            tools:text="FALSE" />
+
+    </android.support.v7.widget.GridLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="8dp"
         android:paddingLeft="16dp"
+        android:paddingTop="8dp"
         android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Strategies"
+            android:text="Climb description"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp" />
 
         <TextView
-            android:id="@+id/info_match_strategies"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            tools:text="N/A" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:text="Difficulties"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/info_match_difficulties"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            tools:text="N/A" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:text="Comments"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/info_match_comments"
+            android:id="@+id/info_match_endgameClimbDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
