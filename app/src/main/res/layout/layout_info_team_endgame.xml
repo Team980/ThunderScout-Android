@@ -23,6 +23,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -37,82 +38,76 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Summary"
             android:fontFamily="@font/arimo"
+            android:text="Endgame"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="25sp" />
 
     </FrameLayout>
 
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
+
+        <TextView
+            android:text="Climbing Success"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_team_teleopClimbPercentage"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0%" />
+
+        <TextView
+            android:text="Supported Other Robots"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_team_teleopSupportedRobotPercent"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0%" />
+
+    </android.support.v7.widget.GridLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="8dp"
         android:paddingLeft="16dp"
+        android:paddingTop="8dp"
         android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Strategies"
+            android:text="Climb Description"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="22sp" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/info_team_strategies"
+            android:id="@+id/info_team_endgameClimbDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             tools:listitem="@layout/comment_view" />
 
         <TextView
-            android:id="@+id/info_team_strategiesPlaceholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="N/A"
-            android:textSize="22sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:text="Difficulties"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/info_team_difficulties"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            tools:listitem="@layout/comment_view" />
-
-        <TextView
-            android:id="@+id/info_team_difficultiesPlaceholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="N/A"
-            android:textSize="22sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:text="Comments"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textSize="22sp" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/info_team_comments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            tools:listitem="@layout/comment_view" />
-
-        <TextView
-            android:id="@+id/info_team_commentsPlaceholder"
+            android:id="@+id/info_team_endgameClimbDescriptionPlaceholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N/A"

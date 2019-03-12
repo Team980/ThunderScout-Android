@@ -37,6 +37,7 @@ import com.team980.thunderscout.R;
 import com.team980.thunderscout.schema.ScoutData;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class MatchInfoFragment extends Fragment {
 
@@ -66,60 +67,87 @@ public class MatchInfoFragment extends Fragment {
         TextView source = view.findViewById(R.id.info_match_source);
         source.setText(data.getSource());
 
-        /*
-        // Auto
-        TextView crossedAutoLine = view.findViewById(R.id.info_match_autoCrossedAutoLine);
-        crossedAutoLine.setText(String.valueOf(data.getCrossedAutoLine()).toUpperCase(Locale.ROOT));
+        // Sandstorm
+        TextView startingLevel = view.findViewById(R.id.info_match_stormStartingLevel);
+        startingLevel.setText(String.valueOf(data.getStartingLevel()));
 
-        TextView auto_powerCubeAllianceSwitchCount = view.findViewById(R.id.info_match_autoPowerCubeAllianceSwitchCount);
-        auto_powerCubeAllianceSwitchCount.setText(data.getAutoPowerCubeAllianceSwitchCount() + "");
+        TextView crossedHabLine = view.findViewById(R.id.info_match_stormCrossedHabLine);
+        crossedHabLine.setText(String.valueOf(data.crossedHabLine()).toUpperCase(Locale.ROOT));
 
-        TextView auto_powerCubeScaleCount = view.findViewById(R.id.info_match_autoPowerCubeScaleCount);
-        auto_powerCubeScaleCount.setText(data.getAutoPowerCubeScaleCount() + "");
+        TextView storm_highRocketHatchCount = view.findViewById(R.id.info_match_stormHighRocketHatchCount);
+        storm_highRocketHatchCount.setText(String.valueOf(data.getStormHighRocketHatchCount()));
 
-        TextView auto_powerCubePlayerStationCount = view.findViewById(R.id.info_match_autoPowerCubePlayerStationCount);
-        auto_powerCubePlayerStationCount.setText(data.getAutoPowerCubePlayerStationCount() + "");
+        TextView storm_midRocketHatchCount = view.findViewById(R.id.info_match_stormMidRocketHatchCount);
+        storm_midRocketHatchCount.setText(String.valueOf(data.getStormMidRocketHatchCount()));
 
-        // Teleop
-        TextView teleop_powerCubeAllianceSwitchCount = view.findViewById(R.id.info_match_teleopPowerCubeAllianceSwitchCount);
-        teleop_powerCubeAllianceSwitchCount.setText(data.getTeleopPowerCubeAllianceSwitchCount() + "");
+        TextView storm_lowRocketHatchCount = view.findViewById(R.id.info_match_stormLowRocketHatchCount);
+        storm_lowRocketHatchCount.setText(String.valueOf(data.getStormLowRocketHatchCount()));
 
-        TextView teleop_powerCubeScaleCount = view.findViewById(R.id.info_match_teleopPowerCubeScaleCount);
-        teleop_powerCubeScaleCount.setText(data.getTeleopPowerCubeScaleCount() + "");
+        TextView storm_cargoShipHatchCount = view.findViewById(R.id.info_match_stormCargoShipHatchCount);
+        storm_cargoShipHatchCount.setText(String.valueOf(data.getStormCargoShipHatchCount()));
 
-        TextView teleop_powerCubeOpposingSwitchCount = view.findViewById(R.id.info_match_teleopPowerCubeOpposingSwitchCount);
-        teleop_powerCubeOpposingSwitchCount.setText(data.getTeleopPowerCubeOpposingSwitchCount() + "");
+        TextView storm_highRocketCargoCount = view.findViewById(R.id.info_match_stormHighRocketCargoCount);
+        storm_highRocketCargoCount.setText(String.valueOf(data.getStormHighRocketCargoCount()));
 
-        TextView teleop_powerCubePlayerStationCount = view.findViewById(R.id.info_match_teleopPowerCubePlayerStationCount);
-        teleop_powerCubePlayerStationCount.setText(data.getTeleopPowerCubePlayerStationCount() + "");
+        TextView storm_midRocketCargoCount = view.findViewById(R.id.info_match_stormMidRocketCargoCount);
+        storm_midRocketCargoCount.setText(String.valueOf(data.getStormMidRocketCargoCount()));
 
-        TextView climbingStats = view.findViewById(R.id.info_match_teleopClimbingStats);
-        climbingStats.setText(data.getClimbingStats().toString().toUpperCase());
+        TextView storm_lowRocketCargoCount = view.findViewById(R.id.info_match_stormLowRocketCargoCount);
+        storm_lowRocketCargoCount.setText(String.valueOf(data.getStormLowRocketCargoCount()));
 
-        TextView supportedOtherRobotsWhenClimbing = view.findViewById(R.id.info_match_teleopSupportedOtherRobotsWhenClimbing);
-        supportedOtherRobotsWhenClimbing.setText(String.valueOf(data.getSupportedOtherRobots()).toUpperCase(Locale.ROOT));
+        TextView storm_cargoShipCargoCount = view.findViewById(R.id.info_match_stormCargoShipCargoCount);
+        storm_cargoShipCargoCount.setText(String.valueOf(data.getStormCargoShipCargoCount()));
 
-        // Summary
-        TextView strategies = view.findViewById(R.id.info_match_strategies);
-        if (data.getStrategies() != null && !data.getStrategies().isEmpty()) {
-            strategies.setText(data.getStrategies());
+        // Teleoperated
+        TextView teleop_highRocketHatchCount = view.findViewById(R.id.info_match_teleopHighRocketHatchCount);
+        teleop_highRocketHatchCount.setText(String.valueOf(data.getTeleopHighRocketHatchCount()));
+
+        TextView teleop_midRocketHatchCount = view.findViewById(R.id.info_match_teleopMidRocketHatchCount);
+        teleop_midRocketHatchCount.setText(String.valueOf(data.getTeleopMidRocketHatchCount()));
+
+        TextView teleop_lowRocketHatchCount = view.findViewById(R.id.info_match_teleopLowRocketHatchCount);
+        teleop_lowRocketHatchCount.setText(String.valueOf(data.getTeleopLowRocketHatchCount()));
+
+        TextView teleop_cargoShipHatchCount = view.findViewById(R.id.info_match_teleopCargoShipHatchCount);
+        teleop_cargoShipHatchCount.setText(String.valueOf(data.getTeleopCargoShipHatchCount()));
+
+        TextView teleop_highRocketCargoCount = view.findViewById(R.id.info_match_teleopHighRocketCargoCount);
+        teleop_highRocketCargoCount.setText(String.valueOf(data.getTeleopHighRocketCargoCount()));
+
+        TextView teleop_midRocketCargoCount = view.findViewById(R.id.info_match_teleopMidRocketCargoCount);
+        teleop_midRocketCargoCount.setText(String.valueOf(data.getTeleopMidRocketCargoCount()));
+
+        TextView teleop_lowRocketCargoCount = view.findViewById(R.id.info_match_teleopLowRocketCargoCount);
+        teleop_lowRocketCargoCount.setText(String.valueOf(data.getTeleopLowRocketCargoCount()));
+
+        TextView teleop_cargoShipCargoCount = view.findViewById(R.id.info_match_teleopCargoShipCargoCount);
+        teleop_cargoShipCargoCount.setText(String.valueOf(data.getTeleopCargoShipCargoCount()));
+
+        // Endgame
+
+        TextView endgame_climbLevel = view.findViewById(R.id.info_match_endgameClimbLevel);
+        endgame_climbLevel.setText(String.valueOf(data.getEndgameClimbLevel()));
+
+        TextView endgame_climbTime = view.findViewById(R.id.info_match_endgameClimbTime);
+        endgame_climbTime.setText(String.valueOf(data.getEndgameClimbTime()));
+
+        TextView supportedAnotherRobot = view.findViewById(R.id.info_match_teleopSupportedOtherRobotsWhenClimbing);
+        supportedAnotherRobot.setText(String.valueOf(data.supportedOtherRobots()).toUpperCase(Locale.ROOT));
+
+        TextView climbDescription = view.findViewById(R.id.info_match_endgameClimbDescription);
+        if (data.getClimbDescription() != null && !data.getClimbDescription().isEmpty()) {
+            climbDescription.setText(data.getClimbDescription());
         } else {
-            strategies.setText("N/A");
+            climbDescription.setText("N/A");
         }
 
-        TextView difficulties = view.findViewById(R.id.info_match_difficulties);
-        if (data.getDifficulties() != null && !data.getDifficulties().isEmpty()) {
-            difficulties.setText(data.getDifficulties());
+        // Notes
+        TextView notes = view.findViewById(R.id.info_match_notes);
+        if (data.getNotes() != null && !data.getNotes().isEmpty()) {
+            notes.setText(data.getNotes());
         } else {
-            difficulties.setText("N/A");
+            notes.setText("N/A");
         }
-
-        TextView comments = view.findViewById(R.id.info_match_comments);
-        if (data.getComments() != null && !data.getComments().isEmpty()) {
-            comments.setText(data.getComments());
-        } else {
-            comments.setText("N/A");
-        }*/
     }
 
     @Override

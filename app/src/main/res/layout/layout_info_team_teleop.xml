@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Teleop"
+            android:text="Teleoperated"
             android:fontFamily="@font/arimo"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="25sp" />
@@ -113,31 +113,6 @@
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0.0" />
-
-        <TextView
-            android:text="Climbing Success"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_team_teleopClimbPercentage"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0%" />
-
-        <TextView
-            android:text="Supported Other Robots"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_team_teleopSupportedRobotPercent"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0%" />
 
     </android.support.v7.widget.GridLayout>
 
