@@ -40,4 +40,6 @@
 
     <color name="card_title_color">@android:color/primary_text_dark</color>
     <color name="about_icon_override">@android:color/primary_text_dark</color>
+
+    <color name="notification_background">@color/accent</color>
 </resources>

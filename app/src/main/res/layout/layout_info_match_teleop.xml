@@ -53,7 +53,7 @@
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
         android:paddingRight="16dp"
-        android:text="Hatches Scored"
+        android:text="Hatches scored"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 
@@ -123,7 +123,7 @@
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
         android:paddingRight="16dp"
-        android:text="Cargo Scored"
+        android:text="Cargo scored"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 

@@ -49,33 +49,70 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
         android:paddingTop="8dp"
+        android:paddingRight="16dp"
         app:columnCount="2"
         app:orientation="horizontal"
         app:rowCount="2">
 
         <TextView
-            android:text="Climbing Success"
+            android:text="Climbed to Level 3"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_team_teleopClimbPercentage"
+            android:id="@+id/info_team_endgameLevel3ClimbFrequency"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0%" />
 
         <TextView
-            android:text="Supported Other Robots"
+            android:text="Climbed to Level 2"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_team_teleopSupportedRobotPercent"
+            android:id="@+id/info_team_endgameLevel2ClimbFrequency"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0%" />
+
+        <TextView
+            android:text="Average climbing time"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_team_endgameClimbTimeAverage"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="> 15 seconds" />
+
+    </android.support.v7.widget.GridLayout>
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
+
+        <TextView
+            android:text="Supported another robot?"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_team_endgameSupportedRobotPercent"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
@@ -95,19 +132,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Climb Description"
+            android:text="Climb descriptions"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textSize="22sp" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/info_team_endgameClimbDescription"
+            android:id="@+id/info_team_endgameClimbDescriptions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             tools:listitem="@layout/comment_view" />
 
         <TextView
-            android:id="@+id/info_team_endgameClimbDescriptionPlaceholder"
+            android:id="@+id/info_team_endgameClimbDescriptionsPlaceholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N/A"

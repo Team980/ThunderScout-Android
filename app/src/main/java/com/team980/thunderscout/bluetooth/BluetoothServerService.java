@@ -152,7 +152,7 @@ public class BluetoothServerService extends Service {
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setColorized(true)
-                .setColor(getResources().getColor(R.color.primary))
+                .setColor(getResources().getColor(R.color.notification_background))
                 .setShowWhen(false)
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setGroup("BT_SERVER");

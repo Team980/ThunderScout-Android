@@ -29,10 +29,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
@@ -73,7 +71,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     //Instance state parameters
     private static final String KEY_SELECTION_MODE = "selection_mode";
-    private static final String KEY_BOTTOM_SHEET_STATE = "bottom_sheet_state";
 
     private Toolbar toolbar;
     private DrawerLayout drawer;
@@ -81,7 +78,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     private RecyclerView dataView;
     private RankingsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
-    private BottomSheetBehavior compareSheetBehavior;
 
     private BroadcastReceiver receiver;
 
@@ -134,36 +130,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
         swipeContainer.setColorSchemeResources(R.color.accent);
         swipeContainer.setProgressBackgroundColorSchemeResource(R.color.background_card);
 
-        compareSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.bottom_sheet_compare));
-        compareSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        compareSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) { //Tint status bar when fully expanded
-                if (newState == BottomSheetBehavior.STATE_HIDDEN && adapter.getSelectedItemCount() == 3) { //I wish there was a better way to check for a user initiated hide, but there isn't
-                    //Explicitly hiding the sheet should cause selection mode to close
-                    adapter.clearSelections();
-                    setSelectionMode(false);
-                } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
-                    }
-                    Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
-                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_more_24dp);
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.secondary_dark));
-                    }
-                    Toolbar sheetToolbar = bottomSheet.findViewById(R.id.toolbar);
-                    sheetToolbar.setNavigationIcon(R.drawable.ic_expand_less_24dp);
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                //do nothing
-            }
-        });
-
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -173,13 +139,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         if (savedInstanceState != null) {
             setSelectionMode(savedInstanceState.getBoolean(KEY_SELECTION_MODE, false));
-            compareSheetBehavior.setState(savedInstanceState.getInt(KEY_BOTTOM_SHEET_STATE, BottomSheetBehavior.STATE_HIDDEN));
             adapter.onRestoreInstanceState(savedInstanceState);
-
-            if (adapter.getSelectedItemCount() == 3) { //Three selected items? The bottom sheet should be bound and showing
-                CompareBottomSheetBinding.bindBottomSheet(getView().findViewById(R.id.bottom_sheet_compare),
-                        compareSheetBehavior, adapter.getSelectedItems()); //TODO this is VERY bad
-            }
         } else {
             AccountScope.getStorageWrapper(getContext()).queryData(adapter);
         }
@@ -201,10 +161,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public boolean onBackPressed() {
-        if (compareSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            compareSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            return true;
-        } else if (selectionMode) {
+        if (selectionMode) {
             adapter.clearSelections();
             return true;
         } else {
@@ -215,7 +172,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putBoolean(KEY_SELECTION_MODE, selectionMode);
-        outState.putInt(KEY_BOTTOM_SHEET_STATE, compareSheetBehavior.getState());
         adapter.onSaveInstanceState(outState);
 
         super.onSaveInstanceState(outState);
@@ -259,14 +215,12 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         dialog.dismiss();
                     });
 
+            builder.setNegativeButton("Cancel", (dialog, which) -> {
+                dialog.cancel();
+            });
+
             sortDialog = builder.create();
             sortDialog.show();
-        }
-
-        if (id == R.id.action_compare) {
-            setSelectionMode(true);
-            toolbar.setTitle("Select teams to compare");
-            Toast.makeText(getContext(), "You can also long press a team to select it", Toast.LENGTH_LONG).show();
         }
 
         if (id == R.id.action_import) {
@@ -396,9 +350,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
             toggle.syncState();
 
             swipeContainer.setEnabled(true);
-
-            compareSheetBehavior.setHideable(true);
-            compareSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         }
     }
 
@@ -408,15 +359,6 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
                 toolbar.setTitle("1 team selected");
             } else {
                 toolbar.setTitle(numItems + " teams selected");
-            }
-
-            if (numItems == 3) {
-                CompareBottomSheetBinding.bindBottomSheet(getView().findViewById(R.id.bottom_sheet_compare),
-                        compareSheetBehavior, adapter.getSelectedItems()); //TODO this is VERY bad
-
-                compareSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            } else {
-                compareSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
         }
     }
@@ -431,7 +373,7 @@ public class RankingsFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     @Override //Deletion dialog
-    public void onClick(DialogInterface dialog, int which) { //TODO CLOUD should prompt for password
+    public void onClick(DialogInterface dialog, int which) {
         if (selectionMode) {
             ArrayList<ScoutData> dataToRemove = new ArrayList<>();
             for (TeamWrapper wrapper : adapter.getSelectedItems()) {

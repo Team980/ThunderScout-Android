@@ -71,8 +71,6 @@ public class ExportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
 
-        getSupportActionBar().setSubtitle("Local storage");
-
         selectionInfo = findViewById(R.id.selectionInfo);
 
         exportButton = findViewById(R.id.button_export);
@@ -151,7 +149,7 @@ public class ExportActivity extends AppCompatActivity {
                 exportProgress.setMax(dataToExport.size());
 
                 CSVExportTask exportTask = new CSVExportTask(this);
-                exportTask.execute(dataToExport.toArray(new ScoutData[dataToExport.size()]));
+                exportTask.execute(dataToExport.toArray(new ScoutData[0]));
             } else {
                 //Why would you ever deny the permission?
                 Toast.makeText(this, "Please manually grant the permission", Toast.LENGTH_LONG).show();

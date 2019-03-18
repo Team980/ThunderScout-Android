@@ -64,8 +64,4 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include
-        layout="@layout/bottom_sheet_compare"
-        tools:visibility="invisible" />
-
 </android.support.design.widget.CoordinatorLayout>

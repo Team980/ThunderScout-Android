@@ -57,7 +57,7 @@
         app:rowCount="2">
 
         <TextView
-            android:text="Starting Level"
+            android:text="Starting level"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
@@ -70,7 +70,7 @@
             tools:text="Level 1" />
 
         <TextView
-            android:text="Crossed Hab Line"
+            android:text="Crossed hab line?"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="Hatches Scored"
+        android:text="Hatches scored"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 
@@ -158,7 +158,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="Cargo Scored"
+        android:text="Cargo scored"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 

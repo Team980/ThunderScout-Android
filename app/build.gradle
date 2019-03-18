@@ -40,7 +40,7 @@ android {
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 18 //Next public release: 19
-        versionName "2019.1-dev"
+        versionName "2019.1-rc"
         resConfigs "en"
     }
 

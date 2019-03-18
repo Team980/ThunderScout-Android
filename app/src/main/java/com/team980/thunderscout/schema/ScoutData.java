@@ -424,7 +424,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         fieldList.add(getSource());
 
         //Sandstorm
-        fieldList.add(String.valueOf(getStartingLevel()));
+        fieldList.add(getStartingLevel().name());
         fieldList.add(String.valueOf(crossedHabLine()));
 
         fieldList.add(String.valueOf(getStormHighRocketHatchCount()));
@@ -449,8 +449,8 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         fieldList.add(String.valueOf(getTeleopCargoShipCargoCount()));
 
         //Endgame
-        fieldList.add(String.valueOf(getEndgameClimbLevel()));
-        fieldList.add(String.valueOf(getEndgameClimbTime()));
+        fieldList.add(getEndgameClimbLevel().name());
+        fieldList.add(getEndgameClimbTime().name());
         fieldList.add(String.valueOf(supportedOtherRobots()));
         fieldList.add(getClimbDescription());
 

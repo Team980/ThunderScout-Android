@@ -51,7 +51,76 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
-        android:text="Avg. Power Cubes Delivered To..."
+        android:text="Average hatches scored"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="22sp" />
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
+
+        <TextView
+            android:text="High Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_team_teleopHighRocketHatchAverage"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0.0" />
+
+        <TextView
+            android:text="Mid Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_team_teleopMidRocketHatchAverage"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0.0" />
+
+        <TextView
+            android:text="Low Rocket"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_team_teleopLowRocketHatchAverage"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0.0" />
+
+        <TextView
+            android:text="Cargo Ship"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_team_teleopCargoShipHatchAverage"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0.0" />
+
+    </android.support.v7.widget.GridLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Average cargo scored"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 
@@ -66,49 +135,48 @@
         app:rowCount="2">
 
         <TextView
-            android:text="Alliance Switch"
+            android:text="High Rocket"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_team_teleopPowerCubeAllianceSwitchAverage"
+            android:id="@+id/info_team_teleopHighRocketCargoAverage"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0.0" />
 
         <TextView
-            android:text="Central Scale"
+            android:text="Mid Rocket"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_team_teleopPowerCubeScaleAverage"
+            android:id="@+id/info_team_teleopMidRocketCargoAverage"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0.0" />
 
         <TextView
-            android:text="Opposing Switch"
+            android:text="Low Rocket"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_team_teleopPowerCubeOpposingSwitchAverage"
+            android:id="@+id/info_team_teleopLowRocketCargoAverage"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
             tools:text="0.0" />
 
         <TextView
-            android:paddingBottom="16dp"
-            android:text="Player Station"
+            android:text="Cargo Ship"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_team_teleopPowerCubePlayerStationAverage"
+            android:id="@+id/info_team_teleopCargoShipCargoAverage"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"

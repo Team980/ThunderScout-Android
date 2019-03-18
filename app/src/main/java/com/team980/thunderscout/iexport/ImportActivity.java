@@ -73,8 +73,6 @@ public class ImportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import);
 
-        getSupportActionBar().setSubtitle("Local storage");
-
         dataToImport = new ArrayList<>();
 
         fileInfo = findViewById(R.id.fileInfo);
@@ -180,6 +178,15 @@ public class ImportActivity extends AppCompatActivity {
     }
 
     public void onImportCompletion(List<ScoutData> dataList) {
+        if (dataList == null) {
+            Toast.makeText(this, "Could not import data", Toast.LENGTH_SHORT).show();
+            fileInfo.setText("No file selected");
+            selectionInfo.setVisibility(View.GONE);
+            importProgress.setVisibility(View.GONE);
+            selectButton.setEnabled(true);
+            return;
+        }
+
         dataToImport.clear(); //TODO disable this once the data view is implemented
         dataToImport.addAll(dataList);
 

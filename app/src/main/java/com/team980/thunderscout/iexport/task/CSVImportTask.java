@@ -65,8 +65,12 @@ public class CSVImportTask extends AsyncTask<Uri, Integer, List<ScoutData>> {
                 if (!ThunderScout.isInteger(nextLine[0])) {
                     continue;
                 }
-
-                dataList.add(ScoutData.fromStringArray(nextLine));
+                try {
+                    dataList.add(ScoutData.fromStringArray(nextLine));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
                 publishProgress(dataList.size());
             }
         } catch (IOException e) {

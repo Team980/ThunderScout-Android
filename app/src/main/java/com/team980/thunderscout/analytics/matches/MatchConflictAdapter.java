@@ -112,7 +112,7 @@ public class MatchConflictAdapter extends RecyclerView.Adapter<MatchConflictAdap
             });
 
             deleteButton.setOnClickListener(v -> new AlertDialog.Builder(context)
-                    .setTitle("Delete this match from this account?")
+                    .setTitle("Delete this match?")
                     .setPositiveButton("Delete", (dialog, which) -> {
                         AccountScope.getStorageWrapper(context).removeData(data, parentAdapter); //TODO use snackbar
 

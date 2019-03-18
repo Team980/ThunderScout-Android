@@ -113,7 +113,7 @@ public class TeamWrapper implements Serializable {
                 return "Climbed in " + ClimbTime.values()[
                         (int) ScoutDataStatistics.getAverage(dataList, data -> data.getEndgameClimbTime().ordinal())];
             case SORT_SUPPORTED_OTHER_ROBOTS:
-                return "Supported other robots in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                return "Supported another robot in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
                         ScoutData::supportedOtherRobots)) + "% of matches";
             default: //Fallback - shouldn't trigger
                 return dataList.size() + " matches";

@@ -27,6 +27,8 @@ package com.team980.thunderscout.analytics.rankings.breakdown;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,13 +37,14 @@ import android.widget.TextView;
 import com.team980.thunderscout.R;
 import com.team980.thunderscout.analytics.ScoutDataStatistics;
 import com.team980.thunderscout.schema.ScoutData;
+import com.team980.thunderscout.schema.enumeration.ClimbTime;
+import com.team980.thunderscout.schema.enumeration.HabLevel;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated //TODO update for 2019
 public class TeamInfoFragment extends Fragment {
 
     public static final String EXTRA_SCOUT_DATA_LIST = "com.team980.thunderscout.SCOUT_DATA_LIST";
@@ -71,97 +74,111 @@ public class TeamInfoFragment extends Fragment {
         TextView lastUpdated = view.findViewById(R.id.info_team_lastUpdated);
         lastUpdated.setText(SimpleDateFormat.getDateTimeInstance().format(ScoutDataStatistics.getLastUpdated(dataList)));
 
-        /*
-        // Auto
-        TextView crossPercent = view.findViewById(R.id.info_team_autoCrossPercentage);
-        crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.getCrossedAutoLine())) + "%");
+        // Sandstorm
+        TextView startPercent = view.findViewById(R.id.info_team_stormLevel2StartFrequency);
+        startPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                data -> data.getStartingLevel().equals(HabLevel.LEVEL_2))) + "%");
 
-        TextView auto_powerCubeAllianceSwitchAverage = view.findViewById(R.id.info_team_autoPowerCubeAllianceSwitchAverage);
-        auto_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getAutoPowerCubeAllianceSwitchCount())));
+        TextView crossPercent = view.findViewById(R.id.info_team_stormCrossPercentage);
+        crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList, ScoutData::crossedHabLine)) + "%");
 
-        TextView auto_powerCubeScaleAverage = view.findViewById(R.id.info_team_autoPowerCubeScaleAverage);
-        auto_powerCubeScaleAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getAutoPowerCubeScaleCount())));
+        TextView storm_highRocketHatchAverage = view.findViewById(R.id.info_team_stormHighRocketHatchAverage);
+        storm_highRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormHighRocketHatchCount)));
 
-        TextView auto_powerCubePlayerStationAverage = view.findViewById(R.id.info_team_autoPowerCubePlayerStationAverage);
-        auto_powerCubePlayerStationAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getAutoPowerCubePlayerStationCount())));
+        TextView storm_midRocketHatchAverage = view.findViewById(R.id.info_team_stormMidRocketHatchAverage);
+        storm_midRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormMidRocketHatchCount)));
 
-        // Teleop
-        TextView teleop_powerCubeAllianceSwitchAverage = view.findViewById(R.id.info_team_teleopPowerCubeAllianceSwitchAverage);
-        teleop_powerCubeAllianceSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getTeleopPowerCubeAllianceSwitchCount())));
+        TextView storm_lowRocketHatchAverage = view.findViewById(R.id.info_team_stormLowRocketHatchAverage);
+        storm_lowRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormLowRocketHatchCount)));
 
-        TextView teleop_powerCubeScaleAverage = view.findViewById(R.id.info_team_teleopPowerCubeScaleAverage);
-        teleop_powerCubeScaleAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getTeleopPowerCubeScaleCount())));
+        TextView storm_cargoShipHatchAverage = view.findViewById(R.id.info_team_stormCargoShipHatchAverage);
+        storm_cargoShipHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormCargoShipHatchCount)));
 
-        TextView teleop_powerCubeOpposingSwitchAverage = view.findViewById(R.id.info_team_teleopPowerCubeOpposingSwitchAverage);
-        teleop_powerCubeOpposingSwitchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getTeleopPowerCubeOpposingSwitchCount())));
+        TextView storm_highRocketCargoAverage = view.findViewById(R.id.info_team_stormHighRocketCargoAverage);
+        storm_highRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormHighRocketCargoCount)));
 
-        TextView teleop_powerCubePlayerStationAverage = view.findViewById(R.id.info_team_teleopPowerCubePlayerStationAverage);
-        teleop_powerCubePlayerStationAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList,
-                data -> data.getTeleopPowerCubePlayerStationCount())));
+        TextView storm_midRocketCargoAverage = view.findViewById(R.id.info_team_stormMidRocketCargoAverage);
+        storm_midRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormMidRocketCargoCount)));
 
-        TextView climbPercent = view.findViewById(R.id.info_team_teleopClimbPercentage);
-        climbPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.getClimbingStats() == ClimbingStats.CLIMBED)) + "%");
+        TextView storm_lowRocketCargoAverage = view.findViewById(R.id.info_team_stormLowRocketCargoAverage);
+        storm_lowRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormLowRocketCargoCount)));
 
-        TextView supportedRobotPercent = view.findViewById(R.id.info_team_teleopSupportedRobotPercent);
-        supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.getSupportedOtherRobots())) + "%");
+        TextView storm_cargoShipCargoAverage = view.findViewById(R.id.info_team_stormCargoShipCargoAverage);
+        storm_cargoShipCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormCargoShipCargoCount)));
 
-        // Summary
-        RecyclerView strategies = view.findViewById(R.id.info_team_strategies);
-        TextView strategiesPlaceholder = view.findViewById(R.id.info_team_strategiesPlaceholder);
+        // Teleoperated
+        TextView teleop_highRocketHatchAverage = view.findViewById(R.id.info_team_teleopHighRocketHatchAverage);
+        teleop_highRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopHighRocketHatchCount)));
 
-        List<String> strategiesList = ScoutDataStatistics.getStringList(dataList,
-                ScoutData::getStrategies, data -> "[" + data.getMatchNumber() + "]");
-        if (strategiesList == null || strategiesList.isEmpty() || listContentsAreEmpty(strategiesList)) {
-            strategies.setVisibility(View.GONE);
-            strategiesPlaceholder.setVisibility(View.VISIBLE);
+        TextView teleop_midRocketHatchAverage = view.findViewById(R.id.info_team_teleopMidRocketHatchAverage);
+        teleop_midRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopMidRocketHatchCount)));
+
+        TextView teleop_lowRocketHatchAverage = view.findViewById(R.id.info_team_teleopLowRocketHatchAverage);
+        teleop_lowRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopLowRocketHatchCount)));
+
+        TextView teleop_cargoShipHatchAverage = view.findViewById(R.id.info_team_teleopCargoShipHatchAverage);
+        teleop_cargoShipHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopCargoShipHatchCount)));
+
+        TextView teleop_highRocketCargoAverage = view.findViewById(R.id.info_team_teleopHighRocketCargoAverage);
+        teleop_highRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopHighRocketCargoCount)));
+
+        TextView teleop_midRocketCargoAverage = view.findViewById(R.id.info_team_teleopMidRocketCargoAverage);
+        teleop_midRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopMidRocketCargoCount)));
+
+        TextView teleop_lowRocketCargoAverage = view.findViewById(R.id.info_team_teleopLowRocketCargoAverage);
+        teleop_lowRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopLowRocketCargoCount)));
+
+        TextView teleop_cargoShipCargoAverage = view.findViewById(R.id.info_team_teleopCargoShipCargoAverage);
+        teleop_cargoShipCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopCargoShipCargoCount)));
+
+        // Endgame
+        TextView level3ClimbPercent = view.findViewById(R.id.info_team_endgameLevel3ClimbFrequency);
+        level3ClimbPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                data -> data.getEndgameClimbLevel().equals(HabLevel.LEVEL_3))) + "%");
+
+        TextView level2ClimbPercent = view.findViewById(R.id.info_team_endgameLevel2ClimbFrequency);
+        level2ClimbPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                data -> data.getEndgameClimbLevel().equals(HabLevel.LEVEL_2))) + "%");
+
+        TextView climbTimeAverage = view.findViewById(R.id.info_team_endgameClimbTimeAverage);
+        climbTimeAverage.setText(ClimbTime.values()[(int) ScoutDataStatistics.getAverage(dataList,
+                data -> data.getEndgameClimbTime().ordinal())].toString());
+
+        TextView supportedRobotPercent = view.findViewById(R.id.info_team_endgameSupportedRobotPercent);
+        supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList, ScoutData::supportedOtherRobots)) + "%");
+
+        RecyclerView climbDescriptions = view.findViewById(R.id.info_team_endgameClimbDescriptions);
+        TextView climbDescriptionsPlaceholder = view.findViewById(R.id.info_team_endgameClimbDescriptionsPlaceholder);
+
+        List<String> climbDescriptionsList = ScoutDataStatistics.getStringList(dataList,
+                ScoutData::getClimbDescription, data -> "[" + data.getMatchNumber() + "]");
+        if (climbDescriptionsList == null || climbDescriptionsList.isEmpty() || listContentsAreEmpty(climbDescriptionsList)) {
+            climbDescriptions.setVisibility(View.GONE);
+            climbDescriptionsPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            strategies.setVisibility(View.VISIBLE);
-            strategiesPlaceholder.setVisibility(View.GONE);
+            climbDescriptions.setVisibility(View.VISIBLE);
+            climbDescriptionsPlaceholder.setVisibility(View.GONE);
 
-            strategies.setLayoutManager(new LinearLayoutManager(getContext()));
-            strategies.setAdapter(new CommentsAdapter(strategiesList));
+            climbDescriptions.setLayoutManager(new LinearLayoutManager(getContext()));
+            climbDescriptions.setAdapter(new CommentsAdapter(climbDescriptionsList));
         }
 
-        RecyclerView difficulties = view.findViewById(R.id.info_team_difficulties);
-        TextView difficultiesPlaceholder = view.findViewById(R.id.info_team_difficultiesPlaceholder);
+        // Notes
+        RecyclerView notes = view.findViewById(R.id.info_team_notes);
+        TextView notesPlaceholder = view.findViewById(R.id.info_team_notesPlaceholder);
 
-        List<String> difficultiesList = ScoutDataStatistics.getStringList(dataList,
-                ScoutData::getDifficulties, data -> "[" + data.getMatchNumber() + "]");
-        if (difficultiesList == null || difficultiesList.isEmpty() || listContentsAreEmpty(difficultiesList)) {
-            difficulties.setVisibility(View.GONE);
-            difficultiesPlaceholder.setVisibility(View.VISIBLE);
+        List<String> notesList = ScoutDataStatistics.getStringList(dataList,
+                ScoutData::getNotes, data -> "[" + data.getMatchNumber() + "]");
+        if (notesList == null || notesList.isEmpty() || listContentsAreEmpty(notesList)) {
+            notes.setVisibility(View.GONE);
+            notesPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            difficulties.setVisibility(View.VISIBLE);
-            difficultiesPlaceholder.setVisibility(View.GONE);
+            notes.setVisibility(View.VISIBLE);
+            notesPlaceholder.setVisibility(View.GONE);
 
-            difficulties.setLayoutManager(new LinearLayoutManager(getContext()));
-            difficulties.setAdapter(new CommentsAdapter(difficultiesList));
+            notes.setLayoutManager(new LinearLayoutManager(getContext()));
+            notes.setAdapter(new CommentsAdapter(notesList));
         }
-
-        RecyclerView comments = view.findViewById(R.id.info_team_comments);
-        TextView commentsPlaceholder = view.findViewById(R.id.info_team_commentsPlaceholder);
-
-        List<String> commentsList = ScoutDataStatistics.getStringList(dataList,
-                ScoutData::getComments, data -> "[" + data.getMatchNumber() + "]");
-        if (commentsList == null || commentsList.isEmpty() || listContentsAreEmpty(commentsList)) {
-            comments.setVisibility(View.GONE);
-            commentsPlaceholder.setVisibility(View.VISIBLE);
-        } else {
-            comments.setVisibility(View.VISIBLE);
-            commentsPlaceholder.setVisibility(View.GONE);
-
-            comments.setLayoutManager(new LinearLayoutManager(getContext()));
-            comments.setAdapter(new CommentsAdapter(commentsList));
-        }*/
     }
 
     private boolean listContentsAreEmpty(List<String> list) {

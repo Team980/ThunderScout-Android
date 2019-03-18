@@ -39,11 +39,11 @@
     <item
         android:id="@+id/action_export"
         android:orderInCategory="2"
-        android:title="Export All"
+        android:title="Export all"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_delete_all"
         android:orderInCategory="3"
-        android:title="Delete All"
+        android:title="Delete all"
         app:showAsAction="never" />
 </menu>
