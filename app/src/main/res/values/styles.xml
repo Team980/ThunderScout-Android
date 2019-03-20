@@ -45,8 +45,7 @@
         <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
         <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
 
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
-        </item>
+        <item name="android:navigationBarColor" tools:targetApi="O_MR1">@color/navigation_bar</item>
         <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
             @color/navigation_bar_divider
         </item>
@@ -72,7 +71,7 @@
         <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
         <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
 
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
+        <item name="android:navigationBarColor" tools:targetApi="O_MR1">@color/navigation_bar
         </item>
         <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
             @color/navigation_bar_divider
@@ -101,7 +100,7 @@
         <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
         <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
 
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
+        <item name="android:navigationBarColor" tools:targetApi="O_MR1">@color/navigation_bar
         </item>
         <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
             @color/navigation_bar_divider
@@ -122,7 +121,7 @@
         <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
         <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
 
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
+        <item name="android:navigationBarColor" tools:targetApi="O_MR1">@color/navigation_bar
         </item>
         <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
             @color/navigation_bar_divider
@@ -141,7 +140,7 @@
         <item name="android:alertDialogTheme">@style/ThunderScout.AlertDialog</item>
         <item name="alertDialogTheme">@style/ThunderScout.AlertDialog</item>
 
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigation_bar
+        <item name="android:navigationBarColor" tools:targetApi="O_MR1">@color/navigation_bar
         </item>
         <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">
             @color/navigation_bar_divider
@@ -167,7 +166,7 @@
         <item name="colorPrimaryDark">@color/splash_background</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
 
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">
+        <item name="android:navigationBarColor" tools:targetApi="O_MR1">
             @color/splash_background
         </item>
         <item name="android:navigationBarDividerColor" tools:targetApi="O_MR1">

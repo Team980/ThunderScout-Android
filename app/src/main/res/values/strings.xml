@@ -31,13 +31,10 @@
         \nTo get started, configure your device in the app settings, or dive in and scout your first match!
     </string>
 
-    <!--- TODO Last update: v18-edited -->
+    <!--- TODO Last update: v19 -->
     <string name="update_notes">
         ThunderScout 2019.1 adds support for the 2019 game, DESTINATION: DEEP SPACE.
         \nThe app also sports a new coat of paint (including a light theme, for the one person who wanted one).
-        \n
-        \nNote: Telemetry and ThunderCloud have been removed from the 2019 release.
-        \nI don\'t have anything to share about this now, but I will share more information about the future of ThunderScout post-2019 at a later date.
         </string>
 
     <string-array name="alliance_stations_array">

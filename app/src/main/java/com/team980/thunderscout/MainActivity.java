@@ -203,11 +203,11 @@ public class MainActivity extends AppCompatActivity
 
         ImageView image = navigationView.getHeaderView(0).findViewById(R.id.account_image);
 
-        image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_account_circle_72dp)); //TODO better image
+        image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_app_badge_48dp));
 
         ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_name)).setText(sharedPrefs
                 .getString(getResources().getString(R.string.pref_device_name), Build.MANUFACTURER + " " + Build.MODEL));
-        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText("Local storage");
+        ((TextView) navigationView.getHeaderView(0).findViewById(R.id.account_id)).setText(BuildConfig.VERSION_NAME);
     }
 
     public interface BackPressListener {

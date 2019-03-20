@@ -39,8 +39,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         multiDexEnabled true
-        versionCode 18 //Next public release: 19
-        versionName "2019.1-rc"
+        versionCode 19 //Next public release: 20
+        versionName "2019.1"
         resConfigs "en"
     }
 
@@ -54,8 +54,6 @@ android {
 
         debug {
             versionNameSuffix '-' + getDate() //Append build timestamp to version for debug builds
-
-            ext.enableCrashlytics = false //Disable Crashlytics mapping on debug builds
 
             //ONLY FOR TESTING - SLOWS DOWN BUILD TIME
             //minifyEnabled true
@@ -120,5 +118,3 @@ static def getDate() {
     df.setTimeZone(TimeZone.getTimeZone("UTC"))
     return df.format(new Date())
 }
-
-apply plugin: 'com.google.gms.google-services'

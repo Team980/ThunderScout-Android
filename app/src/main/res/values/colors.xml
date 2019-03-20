@@ -45,10 +45,9 @@
     <color name="background_floating">#EEEEEE</color>
     <color name="background_card">#FFFFFF</color>
 
-    <color name="splash_background">#fafafa</color>
+    <color name="splash_background">#212121</color>
 
-    <color name="navigation_bar">@color/background</color>
-    <color name="navigation_bar_divider">#32000000</color>
+    <color name="navigation_bar">@color/black</color>
 
     <color name="white">#ffffffff</color>
     <color name="black">#ff000000</color>

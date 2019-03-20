@@ -62,7 +62,7 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_STORM_ROCKET_HATCH_AVERAGE("Avg. storm Rocket hatches") {
+    SORT_STORM_ROCKET_HATCH_AVERAGE("Avg. Storm Rocket hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketHatchCount)
                             + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormMidRocketHatchCount)
@@ -73,14 +73,14 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_STORM_CARGO_SHIP_HATCH_AVERAGE("Avg. storm Cargo Ship hatches") {
+    SORT_STORM_CARGO_SHIP_HATCH_AVERAGE("Avg. Storm Cargo Ship hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormCargoShipHatchCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormCargoShipHatchCount));
         }
     },
 
-    SORT_STORM_ROCKET_CARGO_AVERAGE("Avg. storm Rocket cargo") {
+    SORT_STORM_ROCKET_CARGO_AVERAGE("Avg. Storm Rocket cargo") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketCargoCount)
                             + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormMidRocketCargoCount)
@@ -91,14 +91,14 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_STORM_CARGO_SHIP_CARGO_AVERAGE("Avg. storm Cargo Ship cargo") {
+    SORT_STORM_CARGO_SHIP_CARGO_AVERAGE("Avg. Storm Cargo Ship cargo") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormCargoShipCargoCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormCargoShipCargoCount));
         }
     },
 
-    SORT_TELEOP_ROCKET_HATCH_AVERAGE("Avg. teleop Rocket hatches") {
+    SORT_TELEOP_ROCKET_HATCH_AVERAGE("Avg. Teleop Rocket hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopHighRocketHatchCount)
                             + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopMidRocketHatchCount)
@@ -109,14 +109,14 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_TELEOP_CARGO_SHIP_HATCH_AVERAGE("Avg. teleop Cargo Ship hatches") {
+    SORT_TELEOP_CARGO_SHIP_HATCH_AVERAGE("Avg. Teleop Cargo Ship hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopCargoShipHatchCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopCargoShipHatchCount));
         }
     },
 
-    SORT_TELEOP_ROCKET_CARGO_AVERAGE("Avg. teleop Rocket cargo") {
+    SORT_TELEOP_ROCKET_CARGO_AVERAGE("Avg. Teleop Rocket cargo") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopHighRocketCargoCount)
                             + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopMidRocketCargoCount)
@@ -127,7 +127,7 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_TELEOP_CARGO_SHIP_CARGO_AVERAGE("Avg. teleop Cargo Ship cargo") {
+    SORT_TELEOP_CARGO_SHIP_CARGO_AVERAGE("Avg. Teleop Cargo Ship cargo") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopCargoShipCargoCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopCargoShipCargoCount));

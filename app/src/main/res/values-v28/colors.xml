@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ MIT License
   ~
   ~ Copyright (c) 2016 - 2019 Luke Myers (FRC Team 980 ThunderBots)
@@ -22,8 +23,9 @@
   ~ SOFTWARE.
   -->
 
-<font-family xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:fontProviderAuthority="com.google.android.gms.fonts"
-    app:fontProviderCerts="@array/com_google_android_gms_fonts_certs"
-    app:fontProviderPackage="com.google.android.gms"
-    app:fontProviderQuery="name=Montserrat&amp;weight=700" />
+<resources>
+    <color name="splash_background">#fafafa</color>
+
+    <color name="navigation_bar">@color/background</color>
+    <color name="navigation_bar_divider">#32000000</color>
+</resources>
