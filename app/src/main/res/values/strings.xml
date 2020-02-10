@@ -48,9 +48,16 @@
 
     <string-array name="hab_level_array">
         <item>None</item>
-        <item>Level 1</item>
-        <item>Level 2</item>
-        <item>Level 3</item>
+        <item>Front of Power Port</item>
+        <item>Left of Power Port</item>
+        <item>Right of Power Port</item>
+    </string-array>
+
+    <string-array name="power_cell_pickup_array">
+        <item>Does not Pickup</item>
+        <item>Floor Pickup</item>
+        <item>Loading Station pickup</item>
+        <item>Both Floor and Station</item>
     </string-array>
 
     <string-array name="climb_time_array">

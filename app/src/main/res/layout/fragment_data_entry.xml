@@ -31,7 +31,7 @@
     app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
     tools:context=".scouting_flow.ScoutingFlowActivity">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/arimo"
-                android:text="Sandstorm"
+                android:text="Autonomous"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textSize="25sp" />
 
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
-                android:text="Starting level"
+                android:text="Starting Position"
                 android:textSize="18sp" />
 
             <Spinner
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="8dp"
-                android:text="Crossed hab line?"
+                android:text="Move Off the Line?"
                 android:textSize="18sp" />
 
             <android.support.v7.widget.AppCompatCheckBox
@@ -105,6 +105,14 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Power Cells Scored"
+            android:textSize="18sp"
+            app:layout_gravity="center" />
+
         <android.support.v7.widget.GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,7 +123,7 @@
             app:columnCount="2"
             app:orientation="horizontal">
 
-            <TextView
+<!--            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -130,7 +138,7 @@
                 android:text="Cargo scored"
                 android:textSize="18sp"
                 app:layout_gravity="center" />
-
+-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,7 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="High Rocket"
+                    android:text="High Port"
                     android:textSize="18sp" />
 
                 <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
@@ -163,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="High Rocket"
+                    android:text="Low Port"
                     android:textSize="18sp" />
 
                 <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
@@ -173,7 +181,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
+<!--            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -298,6 +306,7 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+            -->
 
         </android.support.v7.widget.GridLayout>
 
@@ -329,7 +338,7 @@
             app:columnCount="2"
             app:orientation="horizontal">
 
-            <TextView
+<!--            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -344,7 +353,7 @@
                 android:text="Cargo scored"
                 android:textSize="18sp"
                 app:layout_gravity="center" />
-
+-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -355,14 +364,24 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="High Rocket"
+                    android:layout_gravity="left"
+                    android:text="Power Cell Pickup"
+                    android:layout_marginLeft="5dp"
                     android:textSize="18sp" />
 
-                <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
+<!--                <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
                     android:id="@+id/teleop_counterHighRocketHatch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+-->
+                <Spinner
+                    android:id="@+id/teleop_counterHighRocketHatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:entries="@array/power_cell_pickup_array" />
+
 
             </LinearLayout>
 

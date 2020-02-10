@@ -79,30 +79,39 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         CounterCompoundView storm_HighRocketHatchCount = view.findViewById(R.id.storm_counterHighRocketHatch);
         storm_HighRocketHatchCount.setValue(scoutingFlowActivity.getData().getStormHighRocketHatchCount());
 
-        CounterCompoundView storm_MidRocketHatchCount = view.findViewById(R.id.storm_counterMidRocketHatch);
+        /*CounterCompoundView storm_MidRocketHatchCount = view.findViewById(R.id.storm_counterMidRocketHatch);
         storm_MidRocketHatchCount.setValue(scoutingFlowActivity.getData().getStormMidRocketHatchCount());
 
         CounterCompoundView storm_LowRocketHatchCount = view.findViewById(R.id.storm_counterLowRocketHatch);
         storm_LowRocketHatchCount.setValue(scoutingFlowActivity.getData().getStormLowRocketHatchCount());
 
         CounterCompoundView storm_CargoShipHatchCount = view.findViewById(R.id.storm_counterCargoShipHatch);
-        storm_CargoShipHatchCount.setValue(scoutingFlowActivity.getData().getStormCargoShipHatchCount());
+        storm_CargoShipHatchCount.setValue(scoutingFlowActivity.getData().getStormCargoShipHatchCount());*/
 
         CounterCompoundView storm_HighRocketCargoCount = view.findViewById(R.id.storm_counterHighRocketCargo);
         storm_HighRocketCargoCount.setValue(scoutingFlowActivity.getData().getStormHighRocketCargoCount());
 
-        CounterCompoundView storm_MidRocketCargoCount = view.findViewById(R.id.storm_counterMidRocketCargo);
+        /*CounterCompoundView storm_MidRocketCargoCount = view.findViewById(R.id.storm_counterMidRocketCargo);
         storm_MidRocketCargoCount.setValue(scoutingFlowActivity.getData().getStormMidRocketCargoCount());
 
         CounterCompoundView storm_LowRocketCargoCount = view.findViewById(R.id.storm_counterLowRocketCargo);
         storm_LowRocketCargoCount.setValue(scoutingFlowActivity.getData().getStormLowRocketCargoCount());
 
         CounterCompoundView storm_CargoShipCargoCount = view.findViewById(R.id.storm_counterCargoShipCargo);
-        storm_CargoShipCargoCount.setValue(scoutingFlowActivity.getData().getStormCargoShipCargoCount());
+        storm_CargoShipCargoCount.setValue(scoutingFlowActivity.getData().getStormCargoShipCargoCount());*/
 
         // Teleoperated
-        CounterCompoundView teleop_HighRocketHatchCount = view.findViewById(R.id.teleop_counterHighRocketHatch);
-        teleop_HighRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopHighRocketHatchCount());
+        //CounterCompoundView teleop_HighRocketHatchCount = view.findViewById(R.id.teleop_counterHighRocketHatch);
+        //teleop_HighRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopHighRocketHatchCount());
+//convert to spinner from counter
+        Spinner powerCellPickup = view.findViewById(R.id.teleop_counterHighRocketHatch);
+        startingLevel.setOnItemSelectedListener(this);
+
+        ArrayAdapter<CharSequence> adapterPowerCellPickup = ArrayAdapter.createFromResource(getContext(),
+                R.array.power_cell_pickup_array, R.layout.spinner_data_entry);
+        adapterPowerCellPickup.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
+        startingLevel.setAdapter(adapterPowerCellPickup);
+//end convert
 
         CounterCompoundView teleop_MidRocketHatchCount = view.findViewById(R.id.teleop_counterMidRocketHatch);
         teleop_MidRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopMidRocketHatchCount());
