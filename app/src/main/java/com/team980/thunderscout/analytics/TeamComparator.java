@@ -48,32 +48,43 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_LEVEL_2_START_FREQUENCY("Started on Level 2") {
+    SORT_LEVEL_2_START_FREQUENCY("Started in front of Power Port?") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getStartingLevel() == HabLevel.LEVEL_2),
-                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getStartingLevel() == HabLevel.LEVEL_2));
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getStartingLevel() == HabLevel.LEVEL_1),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getStartingLevel() == HabLevel.LEVEL_1));
         }
     },
 
-    SORT_HAB_LINE_CROSS_SUCCESS("Crossed hab line?") {
+    SORT_HAB_LINE_CROSS_SUCCESS("Moved off initiation line?") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), ScoutData::crossedHabLine),
                     ScoutDataStatistics.getPercentage(o2.getDataList(), ScoutData::crossedHabLine));
         }
     },
-
-    SORT_STORM_ROCKET_HATCH_AVERAGE("Avg. Storm Rocket hatches") {
+//adapt new check boxes
+    SORT_CONTROL_PANEL_ROATION_SUCCESS("Rotated control panel") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), ScoutData::controlPanelRotation),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), ScoutData::controlPanelRotation));
+        }
+    },
+    SORT_CONTROL_PANEL_POSITION_SUCCESS("Rotated control panel") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), ScoutData::controlPanelPosition),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), ScoutData::controlPanelPosition));
+        }
+    },
+//end adapt
+    SORT_STORM_ROCKET_HATCH_AVERAGE("Avg. Auto Power Cells") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketHatchCount)
-                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormMidRocketHatchCount)
-                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormLowRocketHatchCount),
+                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketCargoCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormHighRocketHatchCount)
-                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormMidRocketHatchCount)
-                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormLowRocketHatchCount));
+                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketCargoCount));
         }
     },
 
-    SORT_STORM_CARGO_SHIP_HATCH_AVERAGE("Avg. Storm Cargo Ship hatches") {
+/*    SORT_STORM_CARGO_SHIP_HATCH_AVERAGE("Avg. Storm Cargo Ship hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormCargoShipHatchCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormCargoShipHatchCount));
@@ -82,8 +93,7 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
 
     SORT_STORM_ROCKET_CARGO_AVERAGE("Avg. Storm Rocket cargo") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketCargoCount)
-                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormMidRocketCargoCount)
+            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormMidRocketCargoCount)
                             + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormLowRocketCargoCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormHighRocketCargoCount)
                             + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormMidRocketCargoCount)
@@ -96,20 +106,32 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormCargoShipCargoCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getStormCargoShipCargoCount));
         }
+    },*/
+
+    SORT_FLOOR_PICKUP_FREQUENCY("Frequency of picking up off the floor"){
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getStartingLevel().equals("Floor Pickup")),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getStartingLevel().equals("Floor Pickup")));
+        }
     },
 
-    SORT_TELEOP_ROCKET_HATCH_AVERAGE("Avg. Teleop Rocket hatches") {
+    SORT_LOADING_STATION_PICKUP_FREQUENCY("Frequency of picking up from loading station"){
         public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopHighRocketHatchCount)
-                            + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopMidRocketHatchCount)
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getStartingLevel().equals("Loading Station pickup")),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getStartingLevel().equals("Loading Station pickup")));
+        }
+    },
+
+    SORT_TELEOP_ROCKET_HATCH_AVERAGE("Avg. Teleop Power Cells") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopMidRocketHatchCount)
                             + ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopLowRocketHatchCount),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopHighRocketHatchCount)
-                            + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopMidRocketHatchCount)
+                    ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopMidRocketHatchCount)
                             + ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopLowRocketHatchCount));
         }
     },
 
-    SORT_TELEOP_CARGO_SHIP_HATCH_AVERAGE("Avg. Teleop Cargo Ship hatches") {
+/*    SORT_TELEOP_CARGO_SHIP_HATCH_AVERAGE("Avg. Teleop Cargo Ship hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopCargoShipHatchCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopCargoShipHatchCount));
@@ -132,19 +154,19 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopCargoShipCargoCount),
                     ScoutDataStatistics.getAverage(o2.getDataList(), ScoutData::getTeleopCargoShipCargoCount));
         }
-    },
+    },*/
 
-    SORT_LEVEL_2_CLIMB_FREQUENCY("Climbed to Level 2") {
+    SORT_LEVEL_2_CLIMB_FREQUENCY("Climbed in the Middle") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_2),
-                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_2));
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getEndgameClimbLevel().equals("Center Climb")),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getEndgameClimbLevel().equals("Center Climb")));
         }
     },
 
-    SORT_LEVEL_3_CLIMB_FREQUENCY("Climbed to Level 3") {
+    SORT_LEVEL_3_CLIMB_FREQUENCY("Climbed at the ends") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_2),
-                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getEndgameClimbLevel() == HabLevel.LEVEL_2));
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getEndgameClimbLevel().equals("End Climb")),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getEndgameClimbLevel().equals("End Climb")));
         }
     },
 

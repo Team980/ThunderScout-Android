@@ -60,11 +60,18 @@
         <item>Both Floor and Station</item>
     </string-array>
 
-    <string-array name="climb_time_array">
-        <item>&lt; 5 seconds</item>
-        <item>5–10 seconds</item>
-        <item>10–15 seconds</item>
-        <item>&gt; 15 seconds</item>
+    <string-array name="climb_array">
+        <item>No climb</item>
+        <item>Parked only</item>
+        <item>Center Climb</item>
+        <item>End Climb</item>
+    </string-array>
+
+    <string-array name="climb_bar_array">
+        <item>No climb</item>
+        <item>Neutral Height</item>
+        <item>Low postition</item>
+        <item>high position</item>
     </string-array>
 
     <string-array name="iexport_file_types">

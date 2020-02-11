@@ -27,10 +27,10 @@ package com.team980.thunderscout.schema.enumeration;
 import android.support.annotation.NonNull;
 
 public enum ClimbTime {
-    LESS_THAN_FIVE_SECONDS("< 5 seconds"),
-    FIVE_TO_TEN_SECONDS("5-10 seconds"),
-    TEN_TO_FIFTEEN_SECONDS("10-15 seconds"),
-    GREATER_THAN_FIFTEEN_SECONDS("> 15 seconds");
+    LESS_THAN_FIVE_SECONDS("No Climb"),
+    FIVE_TO_TEN_SECONDS("Neutral Height"),
+    TEN_TO_FIFTEEN_SECONDS("Low Position"),
+    GREATER_THAN_FIFTEEN_SECONDS("High Position");
 
     private String displayString;
 

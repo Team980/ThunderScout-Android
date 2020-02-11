@@ -28,9 +28,9 @@ import android.support.annotation.NonNull;
 
 public enum HabLevel {
     NONE("None"),
-    LEVEL_1("Level 1"),
-    LEVEL_2("Level 2"),
-    LEVEL_3("Level 3");
+    LEVEL_1("Front of Power Port"),
+    LEVEL_2("Left of Power Port"),
+    LEVEL_3("Right of Power Port");
 
     private String displayString;
 

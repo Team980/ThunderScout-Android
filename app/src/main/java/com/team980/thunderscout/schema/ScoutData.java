@@ -61,6 +61,8 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
 
     private HabLevel startingLevel;
     private boolean crossedHabLine;
+    private boolean controlPanelRotation;//add ons
+    private boolean controlPanelPosition;
 
     private int stormHighRocketHatchCount;
     private int stormMiddleRocketHatchCount;
@@ -85,6 +87,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
     private HabLevel endgameClimbLevel;
     private ClimbTime endgameClimbTime;
     private boolean supportedOtherRobots;
+    private boolean barTranslation;
     private String climbDescription;
 
     private String notes;
@@ -96,10 +99,13 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
 
         startingLevel = HabLevel.LEVEL_1;
         crossedHabLine = false;
+        controlPanelPosition = false;
+        controlPanelRotation = false;
 
         endgameClimbLevel = HabLevel.NONE;
         endgameClimbTime = ClimbTime.GREATER_THAN_FIFTEEN_SECONDS;
         supportedOtherRobots = false;
+        barTranslation = false;
     }
 
     public ScoutData(String primaryKey) {
@@ -108,10 +114,13 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         //default values
         startingLevel = HabLevel.LEVEL_1;
         crossedHabLine = false;
+        controlPanelPosition = false;
+        controlPanelRotation = false;
 
         endgameClimbLevel = HabLevel.NONE;
         endgameClimbTime = ClimbTime.GREATER_THAN_FIFTEEN_SECONDS;
         supportedOtherRobots = false;
+        barTranslation = false;
     }
 
     // --- INIT ---
@@ -176,25 +185,37 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
 
     public HabLevel getStartingLevel() {
         return startingLevel;
-    }
+    }//starting position
 
     public void setStartingLevel(HabLevel startingLevel) {
         this.startingLevel = startingLevel;
-    }
+    }//starting position
 
-    public boolean crossedHabLine() {
+    public boolean crossedHabLine() {//move off line
         return crossedHabLine;
     }
-
-    public void setCrossedHabLine(boolean crossedHabLine) {
-        this.crossedHabLine = crossedHabLine;
+    public boolean controlPanelRotation(){//control panel data
+        return controlPanelRotation;
+    }
+    public boolean controlPanelPosition(){//control panel data
+        return controlPanelPosition;
     }
 
-    public int getStormHighRocketHatchCount() {
+    public void setCrossedHabLine(boolean crossedHabLine) {//move off line
+        this.crossedHabLine = crossedHabLine;
+    }
+    public void setControlPanelRotation(boolean controlPanelRotation){//control panel data
+        this.controlPanelRotation = controlPanelRotation;
+    }
+    public void setControlPanelPosition(boolean controlPanelPosition){//control panel data
+        this.controlPanelPosition = controlPanelPosition;
+    }
+
+    public int getStormHighRocketHatchCount() {//Auto high port
         return stormHighRocketHatchCount;
     }
 
-    public void setStormHighRocketHatchCount(int stormHighRocketHatchCount) {
+    public void setStormHighRocketHatchCount(int stormHighRocketHatchCount) {//Auto high port
         this.stormHighRocketHatchCount = stormHighRocketHatchCount;
     }
 
@@ -222,11 +243,11 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         this.stormCargoShipHatchCount = stormCargoShipHatchCount;
     }
 
-    public int getStormHighRocketCargoCount() {
+    public int getStormHighRocketCargoCount() {//Auto low port
         return stormHighRocketCargoCount;
     }
 
-    public void setStormHighRocketCargoCount(int stormHighRocketCargoCount) {
+    public void setStormHighRocketCargoCount(int stormHighRocketCargoCount) {//Auto low port
         this.stormHighRocketCargoCount = stormHighRocketCargoCount;
     }
 
@@ -344,6 +365,14 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
 
     public void setSupportedOtherRobots(boolean supportedOtherRobots) {
         this.supportedOtherRobots = supportedOtherRobots;
+    }
+
+    public boolean barTranslation(){
+        return barTranslation;
+    }
+
+    public void setBarTranslation(boolean barTranslation){
+        this.barTranslation = barTranslation;
     }
 
     public String getClimbDescription() {

@@ -396,13 +396,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="High Rocket"
+                    android:text="Control Panel"
                     android:textSize="18sp" />
 
-                <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
+<!--                <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
                     android:id="@+id/teleop_counterHighRocketCargo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Rotation?"
+                    android:textSize="18sp" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/teleop_counterHighRocketCargo"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:button="@drawable/abc_btn_check_material" />
 
             </LinearLayout>
 
@@ -417,7 +432,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Mid Rocket"
+                    android:text="High Port"
                     android:textSize="18sp" />
 
                 <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
@@ -438,13 +453,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Mid Rocket"
+                    android:text="Position"
                     android:textSize="18sp" />
 
-                <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
+<!--                <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
                     android:id="@+id/teleop_counterMidRocketCargo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                    -->
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/teleop_counterMidRocketCargo"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:button="@drawable/abc_btn_check_material" />
 
             </LinearLayout>
 
@@ -459,7 +482,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Low Rocket"
+                    android:text="Low Port"
                     android:textSize="18sp" />
 
                 <com.team980.thunderscout.scouting_flow.view.CounterCompoundView
@@ -469,7 +492,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
+ <!--           <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -531,6 +554,7 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+            -->
 
         </android.support.v7.widget.GridLayout>
 
@@ -566,7 +590,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
-                android:text="Climbed to"
+                android:text="Climbing"
                 android:textSize="18sp" />
 
             <Spinner
@@ -575,7 +599,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                android:entries="@array/hab_level_array" />
+                android:entries="@array/climb_array" />
 
         </LinearLayout>
 
@@ -593,7 +617,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
-                android:text="Climbing time"
+                android:text="Climbing bar position"
                 android:textSize="18sp" />
 
             <Spinner
@@ -602,7 +626,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                android:entries="@array/climb_time_array" />
+                android:entries="@array/climb_bar_array" />
 
         </LinearLayout>
 
@@ -619,11 +643,36 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="8dp"
-                android:text="Supported another robot?"
+                android:text="Partner Lift?"
                 android:textSize="18sp" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/endgame_checkBoxSupportedOtherRobotsWhenClimbing"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="5dp"
+                android:button="@drawable/abc_btn_check_material" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp"
+                android:text="Bar Translation?"
+                android:textSize="18sp" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/endgame_checkBox_bar_translation"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="5dp"

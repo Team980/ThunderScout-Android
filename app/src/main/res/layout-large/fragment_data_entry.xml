@@ -607,7 +607,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                android:entries="@array/climb_time_array" />
+                android:entries="@array/climb_array" />
 
         </LinearLayout>
 

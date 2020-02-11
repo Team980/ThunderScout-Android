@@ -110,7 +110,7 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         ArrayAdapter<CharSequence> adapterPowerCellPickup = ArrayAdapter.createFromResource(getContext(),
                 R.array.power_cell_pickup_array, R.layout.spinner_data_entry);
         adapterPowerCellPickup.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
-        startingLevel.setAdapter(adapterPowerCellPickup);
+        powerCellPickup.setAdapter(adapterPowerCellPickup);
 //end convert
 
         CounterCompoundView teleop_MidRocketHatchCount = view.findViewById(R.id.teleop_counterMidRocketHatch);
@@ -119,27 +119,37 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         CounterCompoundView teleop_LowRocketHatchCount = view.findViewById(R.id.teleop_counterLowRocketHatch);
         teleop_LowRocketHatchCount.setValue(scoutingFlowActivity.getData().getTeleopLowRocketHatchCount());
 
-        CounterCompoundView teleop_CargoShipHatchCount = view.findViewById(R.id.teleop_counterCargoShipHatch);
-        teleop_CargoShipHatchCount.setValue(scoutingFlowActivity.getData().getTeleopCargoShipHatchCount());
+        /*CounterCompoundView teleop_CargoShipHatchCount = view.findViewById(R.id.teleop_counterCargoShipHatch);
+        teleop_CargoShipHatchCount.setValue(scoutingFlowActivity.getData().getTeleopCargoShipHatchCount());*/
 
-        CounterCompoundView teleop_HighRocketCargoCount = view.findViewById(R.id.teleop_counterHighRocketCargo);
-        teleop_HighRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopHighRocketCargoCount());
+//convert from counter to two check boxes
+        /*CounterCompoundView teleop_HighRocketCargoCount = view.findViewById(R.id.teleop_counterHighRocketCargo);
+        teleop_HighRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopHighRocketCargoCount());*/
 
-        CounterCompoundView teleop_MidRocketCargoCount = view.findViewById(R.id.teleop_counterMidRocketCargo);
-        teleop_MidRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopMidRocketCargoCount());
+        CheckBox controlPanelRotation = view.findViewById(R.id.teleop_counterHighRocketCargo);
+        controlPanelRotation.setChecked(scoutingFlowActivity.getData().controlPanelRotation());
+        controlPanelRotation.setOnClickListener(this);
 
-        CounterCompoundView teleop_LowRocketCargoCount = view.findViewById(R.id.teleop_counterLowRocketCargo);
+        CheckBox controlPanelPosition = view.findViewById(R.id.teleop_counterMidRocketCargo);
+        controlPanelPosition.setChecked(scoutingFlowActivity.getData().controlPanelPosition());
+        controlPanelPosition.setOnClickListener(this);
+
+        /*CounterCompoundView teleop_MidRocketCargoCount = view.findViewById(R.id.teleop_counterMidRocketCargo);
+        teleop_MidRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopMidRocketCargoCount());*/
+//end convert
+
+        /*CounterCompoundView teleop_LowRocketCargoCount = view.findViewById(R.id.teleop_counterLowRocketCargo);
         teleop_LowRocketCargoCount.setValue(scoutingFlowActivity.getData().getTeleopLowRocketCargoCount());
 
         CounterCompoundView teleop_CargoShipCargoCount = view.findViewById(R.id.teleop_counterCargoShipCargo);
-        teleop_CargoShipCargoCount.setValue(scoutingFlowActivity.getData().getTeleopCargoShipCargoCount());
+        teleop_CargoShipCargoCount.setValue(scoutingFlowActivity.getData().getTeleopCargoShipCargoCount());*/
 
         // Endgame
         Spinner climbLevel = view.findViewById(R.id.endgame_spinnerClimbLevel);
         climbLevel.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),
-                R.array.hab_level_array, R.layout.spinner_data_entry);
+                R.array.climb_array, R.layout.spinner_data_entry);
         adapter2.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
         climbLevel.setAdapter(adapter2);
 
@@ -147,15 +157,19 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         climbTime.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getContext(),
-                R.array.climb_time_array, R.layout.spinner_data_entry);
+                R.array.climb_bar_array, R.layout.spinner_data_entry);
         adapter3.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
         climbTime.setAdapter(adapter3);
 
-        climbTime.setSelection(ClimbTime.GREATER_THAN_FIFTEEN_SECONDS.ordinal()); //Default value
+        climbTime.setSelection(ClimbTime. LESS_THAN_FIVE_SECONDS.ordinal()); //Default value no climb
 
         CheckBox supportedOtherRobot = view.findViewById(R.id.endgame_checkBoxSupportedOtherRobotsWhenClimbing);
         supportedOtherRobot.setChecked(scoutingFlowActivity.getData().supportedOtherRobots());
         supportedOtherRobot.setOnClickListener(this);
+
+        CheckBox barTranslation = view.findViewById(R.id.endgame_checkBox_bar_translation);
+        barTranslation.setChecked(scoutingFlowActivity.getData().barTranslation());
+        barTranslation.setOnClickListener(this);
 
         EditText climbDescription = view.findViewById(R.id.endgame_edittextClimbDescription);
         climbDescription.setText(scoutingFlowActivity.getData().getClimbDescription());
