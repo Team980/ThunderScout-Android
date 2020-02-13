@@ -45,13 +45,37 @@
 
     </FrameLayout>
 
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:columnCount="2"
+        app:orientation="horizontal"
+        app:rowCount="2">
+
+    <TextView
+        android:text="Power Cell Floor Pickup"
+        android:textSize="22sp"
+        app:layout_columnWeight="1" />
+
+    <TextView
+       android:id="@+id/info_team_teleopHighRocketHatchAverage"
+        android:gravity="right"
+        android:textSize="22sp"
+        app:layout_columnWeight="1"
+        tools:text="0%" />
+
+    </android.support.v7.widget.GridLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
-        android:text="Average hatches scored"
+        android:text="Average Power Cells scored"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 
@@ -65,20 +89,8 @@
         app:orientation="horizontal"
         app:rowCount="2">
 
-        <TextView
-            android:text="High Rocket"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_team_teleopHighRocketHatchAverage"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0.0" />
-
-        <TextView
-            android:text="Mid Rocket"
+       <TextView
+            android:text="High Port"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
@@ -90,7 +102,7 @@
             tools:text="0.0" />
 
         <TextView
-            android:text="Low Rocket"
+            android:text="Low Port"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
@@ -101,17 +113,6 @@
             app:layout_columnWeight="1"
             tools:text="0.0" />
 
-        <TextView
-            android:text="Cargo Ship"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_team_teleopCargoShipHatchAverage"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0.0" />
 
     </android.support.v7.widget.GridLayout>
 
@@ -120,7 +121,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="Average cargo scored"
+        android:text="Control Panel"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 
@@ -135,7 +136,7 @@
         app:rowCount="2">
 
         <TextView
-            android:text="High Rocket"
+            android:text="Rotation Control"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
@@ -144,10 +145,10 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0.0" />
+            tools:text="0%" />
 
         <TextView
-            android:text="Mid Rocket"
+            android:text="Position Control"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
@@ -156,31 +157,8 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="0.0" />
+            tools:text="0%" />
 
-        <TextView
-            android:text="Low Rocket"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_team_teleopLowRocketCargoAverage"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0.0" />
-
-        <TextView
-            android:text="Cargo Ship"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_team_teleopCargoShipCargoAverage"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0.0" />
 
     </android.support.v7.widget.GridLayout>
 

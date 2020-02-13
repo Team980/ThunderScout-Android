@@ -56,7 +56,7 @@
         app:rowCount="2">
 
         <TextView
-            android:text="Climbed to Level 3"
+            android:text="End of switch Climb"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
@@ -69,7 +69,7 @@
             tools:text="0%" />
 
         <TextView
-            android:text="Climbed to Level 2"
+            android:text="Middle of switch climb"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
@@ -82,7 +82,7 @@
             tools:text="0%" />
 
         <TextView
-            android:text="Average climbing time"
+            android:text="Grabbed neutral height"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
@@ -92,7 +92,20 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="> 15 seconds" />
+            tools:text="0%" />
+
+        <TextView
+            android:text="Grabbed High"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_team_endgameClimbHigh"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0%" />
 
     </android.support.v7.widget.GridLayout>
 
@@ -113,6 +126,18 @@
 
         <TextView
             android:id="@+id/info_team_endgameSupportedRobotPercent"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            tools:text="0%" />
+
+        <TextView
+            android:text="Able to move when hanging"
+            android:textSize="22sp"
+            app:layout_columnWeight="1" />
+
+        <TextView
+            android:id="@+id/info_team_endgameBarTranslation"
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"

@@ -61,20 +61,7 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
                     ScoutDataStatistics.getPercentage(o2.getDataList(), ScoutData::crossedHabLine));
         }
     },
-//adapt new check boxes
-    SORT_CONTROL_PANEL_ROATION_SUCCESS("Rotated control panel") {
-        public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), ScoutData::controlPanelRotation),
-                    ScoutDataStatistics.getPercentage(o2.getDataList(), ScoutData::controlPanelRotation));
-        }
-    },
-    SORT_CONTROL_PANEL_POSITION_SUCCESS("Rotated control panel") {
-        public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), ScoutData::controlPanelPosition),
-                    ScoutDataStatistics.getPercentage(o2.getDataList(), ScoutData::controlPanelPosition));
-        }
-    },
-//end adapt
+
     SORT_STORM_ROCKET_HATCH_AVERAGE("Avg. Auto Power Cells") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getStormHighRocketHatchCount)
@@ -131,6 +118,21 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
+    //adapt new check boxes
+    SORT_CONTROL_PANEL_ROATION_SUCCESS("Rotated control panel") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), ScoutData::controlPanelRotation),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), ScoutData::controlPanelRotation));
+        }
+    },
+    SORT_CONTROL_PANEL_POSITION_SUCCESS("Rotated control panel") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), ScoutData::controlPanelPosition),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), ScoutData::controlPanelPosition));
+        }
+    },
+//end adapt
+
 /*    SORT_TELEOP_CARGO_SHIP_HATCH_AVERAGE("Avg. Teleop Cargo Ship hatches") {
         public int compare(TeamWrapper o1, TeamWrapper o2) {
             return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), ScoutData::getTeleopCargoShipHatchCount),
@@ -170,10 +172,22 @@ public enum TeamComparator implements Comparator<TeamWrapper> {
         }
     },
 
-    SORT_AVERAGE_CLIMB_TIME("Average climbing time") {
+    SORT_AVERAGE_CLIMB_TIME("Climbed neutral height bar") {//neutral height bar
         public int compare(TeamWrapper o1, TeamWrapper o2) {
-            return Double.compare(ScoutDataStatistics.getAverage(o1.getDataList(), data -> data.getEndgameClimbTime().ordinal()),
-                    ScoutDataStatistics.getAverage(o2.getDataList(), data -> data.getEndgameClimbTime().ordinal()));
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getEndgameClimbTime().equals("Neutral Height")),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getEndgameClimbTime().equals("Neutral Height")));
+        }
+    },
+    SORT_HIGH_BAR_CLIMB_FREQUENCY("Climbed high height bar") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getEndgameClimbTime().equals("High Position")),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getEndgameClimbTime().equals("High Position")));
+        }
+    },
+    SORT_LOW_BAR_CLIMB_FREQUENCY("Climbed neutral height bar") {
+        public int compare(TeamWrapper o1, TeamWrapper o2) {
+            return Double.compare(ScoutDataStatistics.getPercentage(o1.getDataList(), data -> data.getEndgameClimbTime().equals("Neutral Height")),
+                    ScoutDataStatistics.getPercentage(o2.getDataList(), data -> data.getEndgameClimbTime().equals("Neutral Height")));
         }
     },
 

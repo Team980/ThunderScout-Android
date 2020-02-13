@@ -77,7 +77,7 @@ public class TeamInfoFragment extends Fragment {
         // Sandstorm
         TextView startPercent = view.findViewById(R.id.info_team_stormLevel2StartFrequency);
         startPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.getStartingLevel().equals(HabLevel.LEVEL_2))) + "%");
+                data -> data.getStartingLevel().equals(HabLevel.LEVEL_1))) + "%");
 
         TextView crossPercent = view.findViewById(R.id.info_team_stormCrossPercentage);
         crossPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList, ScoutData::crossedHabLine)) + "%");
@@ -85,30 +85,17 @@ public class TeamInfoFragment extends Fragment {
         TextView storm_highRocketHatchAverage = view.findViewById(R.id.info_team_stormHighRocketHatchAverage);
         storm_highRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormHighRocketHatchCount)));
 
-        TextView storm_midRocketHatchAverage = view.findViewById(R.id.info_team_stormMidRocketHatchAverage);
-        storm_midRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormMidRocketHatchCount)));
-
-        TextView storm_lowRocketHatchAverage = view.findViewById(R.id.info_team_stormLowRocketHatchAverage);
-        storm_lowRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormLowRocketHatchCount)));
-
-        TextView storm_cargoShipHatchAverage = view.findViewById(R.id.info_team_stormCargoShipHatchAverage);
-        storm_cargoShipHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormCargoShipHatchCount)));
-
         TextView storm_highRocketCargoAverage = view.findViewById(R.id.info_team_stormHighRocketCargoAverage);
         storm_highRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormHighRocketCargoCount)));
 
-        TextView storm_midRocketCargoAverage = view.findViewById(R.id.info_team_stormMidRocketCargoAverage);
-        storm_midRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormMidRocketCargoCount)));
-
-        TextView storm_lowRocketCargoAverage = view.findViewById(R.id.info_team_stormLowRocketCargoAverage);
-        storm_lowRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormLowRocketCargoCount)));
-
-        TextView storm_cargoShipCargoAverage = view.findViewById(R.id.info_team_stormCargoShipCargoAverage);
-        storm_cargoShipCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getStormCargoShipCargoCount)));
-
         // Teleoperated
         TextView teleop_highRocketHatchAverage = view.findViewById(R.id.info_team_teleopHighRocketHatchAverage);
-        teleop_highRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopHighRocketHatchCount)));
+        teleop_highRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                data -> data.getTeleopHighRocketHatchCount().equals("Floor Pickup"))) + "%");
+
+
+        /*TextView teleop_highRocketHatchAverage = view.findViewById(R.id.info_team_teleopHighRocketHatchAverage);
+        teleop_highRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopHighRocketHatchCount)));*/
 
         TextView teleop_midRocketHatchAverage = view.findViewById(R.id.info_team_teleopMidRocketHatchAverage);
         teleop_midRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopMidRocketHatchCount)));
@@ -116,36 +103,40 @@ public class TeamInfoFragment extends Fragment {
         TextView teleop_lowRocketHatchAverage = view.findViewById(R.id.info_team_teleopLowRocketHatchAverage);
         teleop_lowRocketHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopLowRocketHatchCount)));
 
-        TextView teleop_cargoShipHatchAverage = view.findViewById(R.id.info_team_teleopCargoShipHatchAverage);
-        teleop_cargoShipHatchAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopCargoShipHatchCount)));
-
         TextView teleop_highRocketCargoAverage = view.findViewById(R.id.info_team_teleopHighRocketCargoAverage);
+        teleop_highRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList, ScoutData::controlPanelPosition)) + "%");
+
+        TextView teleop_midRocketCargoAverage = view.findViewById(R.id.info_team_teleopMidRocketCargoAverage);
+        teleop_midRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList, ScoutData::controlPanelRotation)) + "%");
+
+/*        TextView teleop_highRocketCargoAverage = view.findViewById(R.id.info_team_teleopHighRocketCargoAverage);
         teleop_highRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopHighRocketCargoCount)));
 
         TextView teleop_midRocketCargoAverage = view.findViewById(R.id.info_team_teleopMidRocketCargoAverage);
         teleop_midRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopMidRocketCargoCount)));
-
-        TextView teleop_lowRocketCargoAverage = view.findViewById(R.id.info_team_teleopLowRocketCargoAverage);
-        teleop_lowRocketCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopLowRocketCargoCount)));
-
-        TextView teleop_cargoShipCargoAverage = view.findViewById(R.id.info_team_teleopCargoShipCargoAverage);
-        teleop_cargoShipCargoAverage.setText(formatter.format(ScoutDataStatistics.getAverage(dataList, ScoutData::getTeleopCargoShipCargoCount)));
-
+*/
         // Endgame
         TextView level3ClimbPercent = view.findViewById(R.id.info_team_endgameLevel3ClimbFrequency);
         level3ClimbPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.getEndgameClimbLevel().equals(HabLevel.LEVEL_3))) + "%");
+                data -> data.getEndgameClimbLevel().equals("End Climb"))) + "%");
 
         TextView level2ClimbPercent = view.findViewById(R.id.info_team_endgameLevel2ClimbFrequency);
         level2ClimbPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
-                data -> data.getEndgameClimbLevel().equals(HabLevel.LEVEL_2))) + "%");
+                data -> data.getEndgameClimbLevel().equals("Center Climb"))) + "%");
 
-        TextView climbTimeAverage = view.findViewById(R.id.info_team_endgameClimbTimeAverage);
-        climbTimeAverage.setText(ClimbTime.values()[(int) ScoutDataStatistics.getAverage(dataList,
-                data -> data.getEndgameClimbTime().ordinal())].toString());
+        TextView climbTimeAverage = view.findViewById(R.id.info_team_endgameClimbTimeAverage);//how often they climbed from neutral postition
+        climbTimeAverage.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                data -> data.getEndgameClimbLevel().equals("Neutral Height"))) + "%");
+
+        TextView climbHighPercentage = view.findViewById(R.id.info_team_endgameClimbHigh);//how often they climbed from High postition
+        climbHighPercentage.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                data -> data.getEndgameClimbLevel().equals("High Position"))) + "%");
 
         TextView supportedRobotPercent = view.findViewById(R.id.info_team_endgameSupportedRobotPercent);
         supportedRobotPercent.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList, ScoutData::supportedOtherRobots)) + "%");
+
+        TextView barTranslation = view.findViewById(R.id.info_team_endgameBarTranslation);
+        barTranslation.setText(formatter.format(ScoutDataStatistics.getPercentage(dataList, ScoutData::barTranslation)) + "%");
 
         RecyclerView climbDescriptions = view.findViewById(R.id.info_team_endgameClimbDescriptions);
         TextView climbDescriptionsPlaceholder = view.findViewById(R.id.info_team_endgameClimbDescriptionsPlaceholder);

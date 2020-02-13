@@ -77,26 +77,9 @@ public class MatchInfoFragment extends Fragment {
         TextView storm_highRocketHatchCount = view.findViewById(R.id.info_match_stormHighRocketHatchCount);
         storm_highRocketHatchCount.setText(String.valueOf(data.getStormHighRocketHatchCount()));
 
-        TextView storm_midRocketHatchCount = view.findViewById(R.id.info_match_stormMidRocketHatchCount);
-        storm_midRocketHatchCount.setText(String.valueOf(data.getStormMidRocketHatchCount()));
-
-        TextView storm_lowRocketHatchCount = view.findViewById(R.id.info_match_stormLowRocketHatchCount);
-        storm_lowRocketHatchCount.setText(String.valueOf(data.getStormLowRocketHatchCount()));
-
-        TextView storm_cargoShipHatchCount = view.findViewById(R.id.info_match_stormCargoShipHatchCount);
-        storm_cargoShipHatchCount.setText(String.valueOf(data.getStormCargoShipHatchCount()));
-
         TextView storm_highRocketCargoCount = view.findViewById(R.id.info_match_stormHighRocketCargoCount);
         storm_highRocketCargoCount.setText(String.valueOf(data.getStormHighRocketCargoCount()));
 
-        TextView storm_midRocketCargoCount = view.findViewById(R.id.info_match_stormMidRocketCargoCount);
-        storm_midRocketCargoCount.setText(String.valueOf(data.getStormMidRocketCargoCount()));
-
-        TextView storm_lowRocketCargoCount = view.findViewById(R.id.info_match_stormLowRocketCargoCount);
-        storm_lowRocketCargoCount.setText(String.valueOf(data.getStormLowRocketCargoCount()));
-
-        TextView storm_cargoShipCargoCount = view.findViewById(R.id.info_match_stormCargoShipCargoCount);
-        storm_cargoShipCargoCount.setText(String.valueOf(data.getStormCargoShipCargoCount()));
 
         // Teleoperated
         TextView teleop_highRocketHatchCount = view.findViewById(R.id.info_match_teleopHighRocketHatchCount);
@@ -108,20 +91,11 @@ public class MatchInfoFragment extends Fragment {
         TextView teleop_lowRocketHatchCount = view.findViewById(R.id.info_match_teleopLowRocketHatchCount);
         teleop_lowRocketHatchCount.setText(String.valueOf(data.getTeleopLowRocketHatchCount()));
 
-        TextView teleop_cargoShipHatchCount = view.findViewById(R.id.info_match_teleopCargoShipHatchCount);
-        teleop_cargoShipHatchCount.setText(String.valueOf(data.getTeleopCargoShipHatchCount()));
-
         TextView teleop_highRocketCargoCount = view.findViewById(R.id.info_match_teleopHighRocketCargoCount);
-        teleop_highRocketCargoCount.setText(String.valueOf(data.getTeleopHighRocketCargoCount()));
+        teleop_highRocketCargoCount.setText(String.valueOf(data.controlPanelPosition()).toUpperCase(Locale.ROOT));
 
         TextView teleop_midRocketCargoCount = view.findViewById(R.id.info_match_teleopMidRocketCargoCount);
-        teleop_midRocketCargoCount.setText(String.valueOf(data.getTeleopMidRocketCargoCount()));
-
-        TextView teleop_lowRocketCargoCount = view.findViewById(R.id.info_match_teleopLowRocketCargoCount);
-        teleop_lowRocketCargoCount.setText(String.valueOf(data.getTeleopLowRocketCargoCount()));
-
-        TextView teleop_cargoShipCargoCount = view.findViewById(R.id.info_match_teleopCargoShipCargoCount);
-        teleop_cargoShipCargoCount.setText(String.valueOf(data.getTeleopCargoShipCargoCount()));
+        teleop_midRocketCargoCount.setText(String.valueOf(data.controlPanelRotation()).toUpperCase(Locale.ROOT));
 
         // Endgame
 

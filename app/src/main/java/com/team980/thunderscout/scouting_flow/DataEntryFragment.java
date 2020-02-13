@@ -48,6 +48,8 @@ import com.team980.thunderscout.scouting_flow.view.CounterCompoundView;
 public class DataEntryFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, NestedScrollView.OnScrollChangeListener {
 
     ScoutingFlowActivity scoutingFlowActivity;
+    String[] climbArray = {"No climb" , "Parked only" , "Center Climb" , "End Climb"};
+    String[] climbBarArray = {"No climb" , "Neutral Height" , "Low Postition" , "High Position"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -145,7 +147,7 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         teleop_CargoShipCargoCount.setValue(scoutingFlowActivity.getData().getTeleopCargoShipCargoCount());*/
 
         // Endgame
-        Spinner climbLevel = view.findViewById(R.id.endgame_spinnerClimbLevel);
+        Spinner climbLevel = view.findViewById(R.id.endgame_spinnerClimbLevel);//position where they climbed: center end parked or not
         climbLevel.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),
@@ -153,7 +155,7 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
         adapter2.setDropDownViewResource(R.layout.spinner_data_entry_dropdown);
         climbLevel.setAdapter(adapter2);
 
-        Spinner climbTime = view.findViewById(R.id.endgame_spinnerClimbTime);
+        Spinner climbTime = view.findViewById(R.id.endgame_spinnerClimbTime);//wheither they climbed with the bar high low or neutral
         climbTime.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getContext(),
@@ -201,11 +203,11 @@ public class DataEntryFragment extends Fragment implements View.OnClickListener,
             scoutingFlowActivity.getData().setStartingLevel(startingLevel);
 
         } else if (parent.getId() == R.id.endgame_spinnerClimbLevel) {
-            HabLevel climbLevel = HabLevel.values()[position];
+            String climbLevel = climbArray[position];
             scoutingFlowActivity.getData().setEndgameClimbLevel(climbLevel);
 
         } else if (parent.getId() == R.id.endgame_spinnerClimbTime) {
-            ClimbTime climbTime = ClimbTime.values()[position];
+            String climbTime = climbBarArray[position];
             scoutingFlowActivity.getData().setEndgameClimbTime(climbTime);
         }
     }

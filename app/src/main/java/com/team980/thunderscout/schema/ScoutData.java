@@ -74,7 +74,8 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
     private int stormLowRocketCargoCount;
     private int stormCargoShipCargoCount;
 
-    private int teleopHighRocketHatchCount;
+    private String teleopHighRocketHatchCount;//now power cell pickup type
+
     private int teleopMiddleRocketHatchCount;
     private int teleopLowRocketHatchCount;
     private int teleopCargoShipHatchCount;
@@ -84,8 +85,8 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
     private int teleopLowRocketCargoCount;
     private int teleopCargoShipCargoCount;
 
-    private HabLevel endgameClimbLevel;
-    private ClimbTime endgameClimbTime;
+    private String endgameClimbLevel;//now climbing position
+    private String endgameClimbTime;//now tracking bar height
     private boolean supportedOtherRobots;
     private boolean barTranslation;
     private String climbDescription;
@@ -99,11 +100,12 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
 
         startingLevel = HabLevel.LEVEL_1;
         crossedHabLine = false;
+
         controlPanelPosition = false;
         controlPanelRotation = false;
 
-        endgameClimbLevel = HabLevel.NONE;
-        endgameClimbTime = ClimbTime.GREATER_THAN_FIFTEEN_SECONDS;
+        endgameClimbLevel = "No Climb";
+        endgameClimbTime = "No Climb";
         supportedOtherRobots = false;
         barTranslation = false;
     }
@@ -117,8 +119,8 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         controlPanelPosition = false;
         controlPanelRotation = false;
 
-        endgameClimbLevel = HabLevel.NONE;
-        endgameClimbTime = ClimbTime.GREATER_THAN_FIFTEEN_SECONDS;
+        endgameClimbLevel = "no Climb";
+        endgameClimbTime = "no Climb";
         supportedOtherRobots = false;
         barTranslation = false;
     }
@@ -277,11 +279,11 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
 
     // --- TELEOPERATED ---
 
-    public int getTeleopHighRocketHatchCount() {
+    public String getTeleopHighRocketHatchCount() {
         return teleopHighRocketHatchCount;
     }
 
-    public void setTeleopHighRocketHatchCount(int teleopHighRocketHatchCount) {
+    public void setTeleopHighRocketHatchCount(String teleopHighRocketHatchCount) {
         this.teleopHighRocketHatchCount = teleopHighRocketHatchCount;
     }
 
@@ -343,19 +345,19 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
 
     // --- ENDGAME ---
 
-    public HabLevel getEndgameClimbLevel() {
+    public String getEndgameClimbLevel() {
         return endgameClimbLevel;
     }
 
-    public void setEndgameClimbLevel(HabLevel endgameClimbLevel) {
+    public void setEndgameClimbLevel(String endgameClimbLevel) {
         this.endgameClimbLevel = endgameClimbLevel;
     }
 
-    public ClimbTime getEndgameClimbTime() {
+    public String getEndgameClimbTime() {
         return endgameClimbTime;
     }
 
-    public void setEndgameClimbTime(ClimbTime endgameClimbTime) {
+    public void setEndgameClimbTime(String endgameClimbTime) {
         this.endgameClimbTime = endgameClimbTime;
     }
 
@@ -420,7 +422,7 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         data.setStormCargoShipCargoCount(Integer.parseInt(array[14]));
 
         //Teleoperated
-        data.setTeleopHighRocketHatchCount(Integer.parseInt(array[15]));
+        data.setTeleopHighRocketHatchCount(array[15]);
         data.setTeleopMiddleRocketHatchCount(Integer.parseInt(array[16]));
         data.setTeleopLowRocketHatchCount(Integer.parseInt(array[17]));
         data.setTeleopCargoShipHatchCount(Integer.parseInt(array[18]));
@@ -428,12 +430,13 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         data.setTeleopHighRocketCargoCount(Integer.parseInt(array[19]));
         data.setTeleopMiddleRocketCargoCount(Integer.parseInt(array[20]));
         data.setTeleopLowRocketCargoCount(Integer.parseInt(array[21]));
-        data.setTeleopCargoShipCargoCount(Integer.parseInt(array[22]));
+        //data.setTeleopCargoShipCargoCount(Integer.parseInt(array[22]));need another space
 
         //Endgame
-        data.setEndgameClimbLevel(HabLevel.valueOf(array[23]));
-        data.setEndgameClimbTime(ClimbTime.valueOf(array[24]));
+        data.setEndgameClimbLevel(array[23]);
+        data.setEndgameClimbTime(array[24]);
         data.setSupportedOtherRobots(Boolean.parseBoolean(array[25]));
+        data.setBarTranslation((Boolean.parseBoolean(array[22])));
         data.setClimbDescription(array[26]);
 
         //Notes
@@ -478,8 +481,8 @@ public class ScoutData implements Comparable<ScoutData>, Serializable {
         fieldList.add(String.valueOf(getTeleopCargoShipCargoCount()));
 
         //Endgame
-        fieldList.add(getEndgameClimbLevel().name());
-        fieldList.add(getEndgameClimbTime().name());
+        fieldList.add(getEndgameClimbLevel());
+        fieldList.add(getEndgameClimbTime());
         fieldList.add(String.valueOf(supportedOtherRobots()));
         fieldList.add(getClimbDescription());
 

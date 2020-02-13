@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Sandstorm"
+            android:text="Autonomous"
             android:fontFamily="@font/arimo"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="25sp" />
@@ -57,7 +57,7 @@
         app:rowCount="2">
 
         <TextView
-            android:text="Starting level"
+            android:text="Starting position"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
@@ -67,10 +67,10 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="1"
-            tools:text="Level 1" />
+            tools:text="Front of Port" />
 
         <TextView
-            android:text="Crossed hab line?"
+            android:text="Moved off Initiation Line?"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="Hatches scored"
+        android:text="Power Cells scored"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp" />
 
@@ -104,7 +104,7 @@
         app:rowCount="2">
 
         <TextView
-            android:text="High Rocket"
+            android:text="High Port"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
@@ -115,65 +115,9 @@
             app:layout_columnWeight="1"
             tools:text="0" />
 
-        <TextView
-            android:text="Mid Rocket"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
 
         <TextView
-            android:id="@+id/info_match_stormMidRocketHatchCount"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:text="Low Rocket"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_stormLowRocketHatchCount"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:text="Cargo Ship"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_stormCargoShipHatchCount"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-    </android.support.v7.widget.GridLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="Cargo scored"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="22sp" />
-
-    <android.support.v7.widget.GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        app:columnCount="2"
-        app:orientation="horizontal"
-        app:rowCount="2">
-
-        <TextView
-            android:text="High Rocket"
+            android:text="Low Port"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
 
@@ -184,41 +128,6 @@
             app:layout_columnWeight="1"
             tools:text="0" />
 
-        <TextView
-            android:text="Mid Rocket"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_stormMidRocketCargoCount"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:text="Low Rocket"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_stormLowRocketCargoCount"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
-
-        <TextView
-            android:text="Cargo Ship"
-            android:textSize="22sp"
-            app:layout_columnWeight="1" />
-
-        <TextView
-            android:id="@+id/info_match_stormCargoShipCargoCount"
-            android:gravity="right"
-            android:textSize="22sp"
-            app:layout_columnWeight="1"
-            tools:text="0" />
 
     </android.support.v7.widget.GridLayout>
 

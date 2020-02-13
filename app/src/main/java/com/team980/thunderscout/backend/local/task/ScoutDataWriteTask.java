@@ -102,8 +102,8 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, List<ScoutDat
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_CARGO_COUNT, data.getTeleopCargoShipCargoCount());
 
             // Endgame
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_LEVEL, data.getEndgameClimbLevel().name());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_TIME, data.getEndgameClimbTime().name());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_LEVEL, data.getEndgameClimbLevel());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_TIME, data.getEndgameClimbTime());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING, data.supportedOtherRobots());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_DESCRIPTION, data.getClimbDescription());
 

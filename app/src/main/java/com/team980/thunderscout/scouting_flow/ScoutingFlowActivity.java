@@ -367,8 +367,8 @@ public class ScoutingFlowActivity extends AppCompatActivity implements View.OnCl
         scoutData.setStormCargoShipCargoCount((int) storm_CargoShipCargoCount.getValue());
 
         // Teleoperated
-        CounterCompoundView teleop_HighRocketHatchCount = findViewById(R.id.teleop_counterHighRocketHatch);
-        scoutData.setTeleopHighRocketHatchCount((int) teleop_HighRocketHatchCount.getValue());
+        Spinner teleop_HighRocketHatchCount = findViewById(R.id.teleop_counterHighRocketHatch);
+        scoutData.setTeleopHighRocketHatchCount(teleop_HighRocketHatchCount.getSelectedItem().toString());
 
         CounterCompoundView teleop_MidRocketHatchCount = findViewById(R.id.teleop_counterMidRocketHatch);
         scoutData.setTeleopMiddleRocketHatchCount((int) teleop_MidRocketHatchCount.getValue());
@@ -393,10 +393,10 @@ public class ScoutingFlowActivity extends AppCompatActivity implements View.OnCl
 
         // Endgame
         Spinner climbLevel = findViewById(R.id.endgame_spinnerClimbLevel);
-        scoutData.setEndgameClimbLevel(HabLevel.values()[climbLevel.getSelectedItemPosition()]);
+        scoutData.setEndgameClimbLevel(climbLevel.getSelectedItem().toString());
 
         Spinner climbTime = findViewById(R.id.endgame_spinnerClimbTime);
-        scoutData.setEndgameClimbTime(ClimbTime.values()[climbTime.getSelectedItemPosition()]);
+        scoutData.setEndgameClimbTime(climbTime.getSelectedItem().toString());
 
         CheckBox supportedOtherRobots = findViewById(R.id.endgame_checkBoxSupportedOtherRobotsWhenClimbing);
         scoutData.setSupportedOtherRobots(supportedOtherRobots.isChecked());

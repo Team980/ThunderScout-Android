@@ -183,7 +183,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
         data.setStormCargoShipCargoCount(stormCargoShipCargoCount);
 
         // Teleoperated
-        int teleopHighRocketHatchCount = cursor.getInt(
+        String teleopHighRocketHatchCount = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_HATCH_COUNT));
 
         data.setTeleopHighRocketHatchCount(teleopHighRocketHatchCount);
@@ -227,12 +227,12 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
         String endgameClimbLevel = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_LEVEL));
 
-        data.setEndgameClimbLevel(HabLevel.valueOf(endgameClimbLevel));
+        data.setEndgameClimbLevel(endgameClimbLevel);
 
         String endgameClimbTime = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_TIME));
 
-        data.setEndgameClimbTime(ClimbTime.valueOf(endgameClimbTime));
+        data.setEndgameClimbTime(endgameClimbTime);
 
         int supportedOtherRobotWhenClimbing = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING));

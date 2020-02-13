@@ -126,8 +126,14 @@ public class TeamWrapper implements Serializable {
                 return "Climbed at the end of the bar in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
                         data -> data.getEndgameClimbLevel().equals("End Climb"))) + "% of matches";
             case SORT_AVERAGE_CLIMB_TIME:
-                return "Climbed in " + ClimbTime.values()[
-                        (int) ScoutDataStatistics.getAverage(dataList, data -> data.getEndgameClimbTime().ordinal())];
+                return "Climbed on neutral position bar in  " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                        data -> data.getEndgameClimbTime().equals("Neutral Height"))) + "% of matches";
+            case SORT_HIGH_BAR_CLIMB_FREQUENCY:
+                return "Climbed on high position bar in  " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                        data -> data.getEndgameClimbTime().equals("High Position"))) + "% of matches";
+            case SORT_LOW_BAR_CLIMB_FREQUENCY:
+                return "Climbed on low position bar in  " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
+                        data -> data.getEndgameClimbTime().equals("Low Position"))) + "% of matches";
             case SORT_SUPPORTED_OTHER_ROBOTS:
                 return "Supported another robot in " + formatter.format(ScoutDataStatistics.getPercentage(dataList,
                         ScoutData::supportedOtherRobots)) + "% of matches";
