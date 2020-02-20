@@ -45,33 +45,33 @@ public final class ScoutDataContract {
         public static final String COLUMN_NAME_DATA_SOURCE = "data_source";
 
         // --- SANDSTORM ---
-        public static final String COLUMN_NAME_STORM_STARTING_LEVEL = "storm_starting_level";
-        public static final String COLUMN_NAME_STORM_CROSSED_HAB_LINE = "storm_crossed_hab_line";
+        public static final String COLUMN_NAME_STORM_STARTING_LEVEL = "auto_starting_position";
+        public static final String COLUMN_NAME_STORM_CROSSED_HAB_LINE = "auto_moved_off_line";
 
-        public static final String COLUMN_NAME_STORM_HIGH_ROCKET_HATCH_COUNT = "storm_high_rocket_hatch_count";
-        public static final String COLUMN_NAME_STORM_MIDDLE_ROCKET_HATCH_COUNT = "storm_middle_rocket_hatch_count";
+        public static final String COLUMN_NAME_STORM_HIGH_ROCKET_HATCH_COUNT = "auto_high_port";
+    /*    public static final String COLUMN_NAME_STORM_MIDDLE_ROCKET_HATCH_COUNT = "storm_middle_rocket_hatch_count";
         public static final String COLUMN_NAME_STORM_LOW_ROCKET_HATCH_COUNT = "storm_low_rocket_hatch_count";
         public static final String COLUMN_NAME_STORM_CARGO_SHIP_HATCH_COUNT = "storm_cargo_ship_hatch_count";
-
-        public static final String COLUMN_NAME_STORM_HIGH_ROCKET_CARGO_COUNT = "storm_high_rocket_cargo_count";
-        public static final String COLUMN_NAME_STORM_MIDDLE_ROCKET_CARGO_COUNT = "storm_middle_rocket_cargo_count";
+*/
+        public static final String COLUMN_NAME_STORM_HIGH_ROCKET_CARGO_COUNT = "auto_low_port";
+        /*public static final String COLUMN_NAME_STORM_MIDDLE_ROCKET_CARGO_COUNT = "storm_middle_rocket_cargo_count";
         public static final String COLUMN_NAME_STORM_LOW_ROCKET_CARGO_COUNT = "storm_low_rocket_cargo_count";
         public static final String COLUMN_NAME_STORM_CARGO_SHIP_CARGO_COUNT = "storm_cargo_ship_cargo_count";
-
+*/
         // --- TELEOPERATED ---
-        public static final String COLUMN_NAME_TELEOP_HIGH_ROCKET_HATCH_COUNT = "teleop_high_rocket_hatch_count";
-        public static final String COLUMN_NAME_TELEOP_MIDDLE_ROCKET_HATCH_COUNT = "teleop_middle_rocket_hatch_count";
-        public static final String COLUMN_NAME_TELEOP_LOW_ROCKET_HATCH_COUNT = "teleop_low_rocket_hatch_count";
-        public static final String COLUMN_NAME_TELEOP_CARGO_SHIP_HATCH_COUNT = "teleop_cargo_ship_hatch_count";
+        public static final String COLUMN_NAME_TELEOP_HIGH_ROCKET_HATCH_COUNT = "teleop_power_cell_pickup";
+        public static final String COLUMN_NAME_TELEOP_MIDDLE_ROCKET_HATCH_COUNT = "teleop_high_port_count";
+        public static final String COLUMN_NAME_TELEOP_LOW_ROCKET_HATCH_COUNT = "teleop_low_port_count";
+       // public static final String COLUMN_NAME_TELEOP_CARGO_SHIP_HATCH_COUNT = "teleop_cargo_ship_hatch_count";
 
-        public static final String COLUMN_NAME_TELEOP_HIGH_ROCKET_CARGO_COUNT = "teleop_high_rocket_cargo_count";
-        public static final String COLUMN_NAME_TELEOP_MIDDLE_ROCKET_CARGO_COUNT = "teleop_middle_rocket_cargo_count";
-        public static final String COLUMN_NAME_TELEOP_LOW_ROCKET_CARGO_COUNT = "teleop_low_rocket_cargo_count";
+        public static final String COLUMN_NAME_TELEOP_HIGH_ROCKET_CARGO_COUNT = "teleop_control_panel_rotation";
+        public static final String COLUMN_NAME_TELEOP_MIDDLE_ROCKET_CARGO_COUNT = "teleop_control_panel_position";
+        /*public static final String COLUMN_NAME_TELEOP_LOW_ROCKET_CARGO_COUNT = "teleop_low_rocket_cargo_count";
         public static final String COLUMN_NAME_TELEOP_CARGO_SHIP_CARGO_COUNT = "teleop_cargo_ship_cargo_count";
-
+*/
         // --- ENDGAME ---
-        public static final String COLUMN_NAME_ENDGAME_CLIMB_LEVEL = "endgame_climb_level";
-        public static final String COLUMN_NAME_ENDGAME_CLIMB_TIME = "endgame_climb_time";
+        public static final String COLUMN_NAME_ENDGAME_CLIMB_LEVEL = "endgame_climbing";
+        public static final String COLUMN_NAME_ENDGAME_CLIMB_TIME = "endgame_bar_position";
         public static final String COLUMN_NAME_ENDGAME_SUPPORTED_OTHER_ROBOT_WHEN_CLIMBING = "endgame_supported_other_robot_when_climbing";
         public static final String COLUMN_NAME_ENDGAME_CLIMB_DESCRIPTION = "endgame_climb_description";
 

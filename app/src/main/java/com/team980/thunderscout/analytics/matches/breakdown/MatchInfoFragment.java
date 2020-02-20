@@ -108,6 +108,9 @@ public class MatchInfoFragment extends Fragment {
         TextView supportedAnotherRobot = view.findViewById(R.id.info_match_teleopSupportedOtherRobotsWhenClimbing);
         supportedAnotherRobot.setText(String.valueOf(data.supportedOtherRobots()).toUpperCase(Locale.ROOT));
 
+        TextView barTranslation = view.findViewById(R.id.info_match_teleopBarTranslation);
+        supportedAnotherRobot.setText(String.valueOf(data.supportedOtherRobots()).toUpperCase(Locale.ROOT));
+
         TextView climbDescription = view.findViewById(R.id.info_match_endgameClimbDescription);
         if (data.getClimbDescription() != null && !data.getClimbDescription().isEmpty()) {
             climbDescription.setText(data.getClimbDescription());

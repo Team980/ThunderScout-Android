@@ -53,24 +53,24 @@ public class ScoutDataDbHelper extends SQLiteOpenHelper {
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CROSSED_HAB_LINE + INTEGER_TYPE + COMMA_SEP +
 
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    /*ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_LOW_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +*/
 
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    /*ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_LOW_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +*/
 
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MIDDLE_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    //ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_HATCH_COUNT + INTEGER_TYPE + COMMA_SEP +
 
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MIDDLE_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
-                    ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    //ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
+                    //ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_CARGO_COUNT + INTEGER_TYPE + COMMA_SEP +
 
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_LEVEL + TEXT_TYPE + COMMA_SEP +
                     ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_TIME + TEXT_TYPE + COMMA_SEP +

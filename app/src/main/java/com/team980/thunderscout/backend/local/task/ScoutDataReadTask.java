@@ -147,7 +147,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
 
         data.setStormHighRocketHatchCount(stormHighRocketHatchCount);
 
-        int stormMiddleRocketHatchCount = cursor.getInt(
+        /*int stormMiddleRocketHatchCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_HATCH_COUNT));
 
         data.setStormMiddleRocketHatchCount(stormMiddleRocketHatchCount);
@@ -161,13 +161,13 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_HATCH_COUNT));
 
         data.setStormCargoShipHatchCount(stormCargoShipHatchCount);
-
+*/
         int stormHighRocketCargoCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_CARGO_COUNT));
 
         data.setStormHighRocketCargoCount(stormHighRocketCargoCount);
 
-        int stormMiddleRocketCargoCount = cursor.getInt(
+/*        int stormMiddleRocketCargoCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_CARGO_COUNT));
 
         data.setStormMiddleRocketCargoCount(stormMiddleRocketCargoCount);
@@ -181,7 +181,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_CARGO_COUNT));
 
         data.setStormCargoShipCargoCount(stormCargoShipCargoCount);
-
+*/
         // Teleoperated
         String teleopHighRocketHatchCount = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_HATCH_COUNT));
@@ -198,11 +198,11 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
 
         data.setTeleopLowRocketHatchCount(teleopLowRocketHatchCount);
 
-        int teleopCargoShipHatchCount = cursor.getInt(
+        /*int teleopCargoShipHatchCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_HATCH_COUNT));
 
         data.setTeleopCargoShipHatchCount(teleopCargoShipHatchCount);
-
+*/
         int teleopHighRocketCargoCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_CARGO_COUNT));
 
@@ -213,7 +213,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
 
         data.setTeleopMiddleRocketCargoCount(teleopMiddleRocketCargoCount);
 
-        int teleopLowRocketCargoCount = cursor.getInt(
+        /*int teleopLowRocketCargoCount = cursor.getInt(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_CARGO_COUNT));
 
         data.setTeleopLowRocketCargoCount(teleopLowRocketCargoCount);
@@ -222,7 +222,7 @@ public class ScoutDataReadTask extends AsyncTask<Void, Void, List<ScoutData>> {
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_CARGO_COUNT));
 
         data.setTeleopCargoShipCargoCount(teleopCargoShipCargoCount);
-
+*/
         // Endgame
         String endgameClimbLevel = cursor.getString(
                 cursor.getColumnIndexOrThrow(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_LEVEL));

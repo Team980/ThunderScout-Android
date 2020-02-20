@@ -56,7 +56,7 @@
         app:rowCount="2">
 
         <TextView
-            android:text="Climbed to"
+            android:text="Climbing"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
@@ -67,10 +67,10 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="7"
-            tools:text="Level 3" />
+            tools:text="No Climb" />
 
         <TextView
-            android:text="Climbing time"
+            android:text="Climbing bar Position"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="22sp"
             app:layout_columnWeight="1" />
@@ -81,7 +81,7 @@
             android:gravity="right"
             android:textSize="22sp"
             app:layout_columnWeight="7"
-            tools:text="> 15 seconds" />
+            tools:text="No Climb" />
 
     </android.support.v7.widget.GridLayout>
 
@@ -97,12 +97,27 @@
 
         <TextView
             android:layout_width="0dp"
-            android:text="Supported another robot?"
+            android:text="Partner Lift"
             android:textSize="22sp"
             app:layout_columnWeight="3" />
 
         <TextView
             android:id="@+id/info_match_teleopSupportedOtherRobotsWhenClimbing"
+            android:layout_width="0dp"
+            android:gravity="right"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="center_vertical"
+            tools:text="FALSE" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:text="Bar Translation"
+            android:textSize="22sp"
+            app:layout_columnWeight="3" />
+
+        <TextView
+            android:id="@+id/info_match_teleopBarTranslation"
             android:layout_width="0dp"
             android:gravity="right"
             android:textSize="22sp"

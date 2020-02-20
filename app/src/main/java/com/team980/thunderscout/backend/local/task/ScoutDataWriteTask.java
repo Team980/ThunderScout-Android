@@ -81,25 +81,25 @@ public class ScoutDataWriteTask extends AsyncTask<ScoutData, Void, List<ScoutDat
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CROSSED_HAB_LINE, data.crossedHabLine());
 
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_HATCH_COUNT, data.getStormHighRocketHatchCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_HATCH_COUNT, data.getStormMidRocketHatchCount());
+            /*values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_HATCH_COUNT, data.getStormMidRocketHatchCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_LOW_ROCKET_HATCH_COUNT, data.getStormLowRocketHatchCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_HATCH_COUNT, data.getStormCargoShipHatchCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_HATCH_COUNT, data.getStormCargoShipHatchCount());*/
 
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_HIGH_ROCKET_CARGO_COUNT, data.getStormHighRocketCargoCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_CARGO_COUNT, data.getStormMidRocketCargoCount());
+            /*values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_MIDDLE_ROCKET_CARGO_COUNT, data.getStormMidRocketCargoCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_LOW_ROCKET_CARGO_COUNT, data.getStormLowRocketCargoCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_CARGO_COUNT, data.getStormCargoShipCargoCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_STORM_CARGO_SHIP_CARGO_COUNT, data.getStormCargoShipCargoCount());*/
 
             // Teleoperated
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_HATCH_COUNT, data.getTeleopHighRocketHatchCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MIDDLE_ROCKET_HATCH_COUNT, data.getTeleopMidRocketHatchCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_HATCH_COUNT, data.getTeleopLowRocketHatchCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_HATCH_COUNT, data.getTeleopCargoShipHatchCount());
+            //values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_HATCH_COUNT, data.getTeleopCargoShipHatchCount());
 
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_HIGH_ROCKET_CARGO_COUNT, data.getTeleopHighRocketCargoCount());
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_MIDDLE_ROCKET_CARGO_COUNT, data.getTeleopMidRocketCargoCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_CARGO_COUNT, data.getTeleopLowRocketCargoCount());
-            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_CARGO_COUNT, data.getTeleopCargoShipCargoCount());
+            /*values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_LOW_ROCKET_CARGO_COUNT, data.getTeleopLowRocketCargoCount());
+            values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_TELEOP_CARGO_SHIP_CARGO_COUNT, data.getTeleopCargoShipCargoCount());*/
 
             // Endgame
             values.put(ScoutDataContract.ScoutDataTable.COLUMN_NAME_ENDGAME_CLIMB_LEVEL, data.getEndgameClimbLevel());
